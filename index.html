@@ -2,24 +2,31 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NEONEX-PAY</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Ethers.js -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <h1>NEONEX-PAY</h1>
-  <p>Pagamentos P2P Web3</p>
+  <div class="container">
+    <h1>NEONEX-PAY</h1>
+    <p>Pagamentos P2P Web3 • Você é seu próprio banco</p>
 
-  <button onclick="conectar()">Conectar Carteira</button>
+    <button id="connectBtn">Conectar Carteira</button>
 
-  <script>
-    function conectar() {
-      alert("Conexão Web3 em desenvolvimento 🚀");
-    }
-  </script>
+    <div id="walletInfo" class="hidden">
+      <p><strong>Endereço:</strong> <span id="address"></span></p>
+      <p><strong>Saldo:</strong> <span id="balance"></span></p>
+      <p><strong>Rede:</strong> <span id="network"></span></p>
+    </div>
+  </div>
 
+  <script src="app.js"></script>
 </body>
-
 </html>
+
 
