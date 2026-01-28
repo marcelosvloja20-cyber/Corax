@@ -43,3 +43,29 @@ connectBtn.onclick = async () =>document.getElementById("sendBox").classList.rem
     alert("Erro ao conectar carteira");
   }
 };
+document.getElementById("sendBtn").onclick = async () => {
+  const to = document.getElementById("to").value;
+  const amount = document.getElementById("amount").value;
+
+  if (!to || !amount) {
+    alert("Preencha todos os campos");
+    return;
+  }
+
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+
+    const tx = await signer.sendTransaction({
+      to: to,
+      value: ethers.parseEther(amount)
+    });
+
+    alert("Pagamento enviado 🚀\nTx: " + tx.hash);
+
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao enviar pagamento");
+  }
+};
+
