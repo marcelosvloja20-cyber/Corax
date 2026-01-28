@@ -1,3 +1,14 @@
+// Aviso para celular sem provider
+if (!window.ethereum) {
+  alert(
+    "Para usar a NEONEX-PAY no celular:\n\n" +
+    "1️⃣ Abra o app MetaMask\n" +
+    "2️⃣ Vá em Browser 🌐\n" +
+    "3️⃣ Cole o link do site\n\n" +
+    "No computador, use Chrome + MetaMask."
+  );
+}
+
 const connectBtn = document.getElementById("connectBtn");
 const walletInfo = document.getElementById("walletInfo");
 
@@ -7,7 +18,6 @@ const networkSpan = document.getElementById("network");
 
 connectBtn.onclick = async () => {
   if (!window.ethereum) {
-    alert("Instale a MetaMask para continuar 🚀");
     return;
   }
 
