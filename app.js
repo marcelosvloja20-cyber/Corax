@@ -1,4 +1,5 @@
-const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI"; // substitua pelo seu endereço real
+// Substitua pelo seu endereço real
+const RECEIVER = "0xd8deaef57da7b8804fecfbfbaeb31ccd335749f5";
 
 let provider, signer, walletAddress;
 let history = [];
@@ -12,20 +13,26 @@ const statusEl = document.getElementById('status');
 const walletAddressEl = document.getElementById('walletAddress');
 const qrcodeContainer = document.getElementById('qrcode');
 const toast = document.getElementById('toast');
+const sidebar = document.getElementById('sidebar');
 
+// Chart
 let paymentChart;
 const ctx = document.getElementById('paymentChart').getContext('2d');
 
 // Sidebar toggle
-const sidebar = document.getElementById('sidebar');
 document.getElementById('toggleSidebar').onclick = () => sidebar.classList.toggle('active');
 
-// Toast
+// Toast notification
 function showToast(msg){
   toast.innerText = msg;
   toast.classList.add('show');
   setTimeout(()=>{ toast.classList.remove('show'); },3000);
 }
+
+// Quick Actions
+function quickSend(){ showToast("Enviar ativo selecionado..."); sidebar.classList.add('active'); }
+function quickReceive(){ showToast("Receber ativo selecionado..."); sidebar.classList.add('active'); }
+function quickSwap(){ showToast("Troca iniciada..."); sidebar.classList.add('active'); }
 
 // Conectar carteira
 connectWalletBtn.onclick = async () => {
@@ -37,13 +44,16 @@ connectWalletBtn.onclick = async () => {
       walletAddress = await signer.getAddress();
       walletAddressEl.innerText = walletAddress;
       showToast("Carteira conectada!");
-    }catch(err){ console.error(err); showToast("Erro ao conectar carteira"); }
-  }else{
+    }catch(err){
+      console.error(err);
+      showToast("Erro ao conectar carteira");
+    }
+  } else {
     alert("Instale MetaMask ou carteira compatível.");
   }
 };
 
-// Enviar pagamento real
+// Enviar pagamento
 sendPaymentBtn.onclick = async () => {
   const amount = amountInput.value;
   const token = tokenSelect.value;
@@ -56,22 +66,20 @@ sendPaymentBtn.onclick = async () => {
   try{
     const txAmount = ethers.parseUnits(amount.toString(), 18);
     let tx;
-    if(token === "USDT_ARB"){
-      tx = await signer.sendTransaction({ to: RECEIVER, value: txAmount });
-    } else if(token === "USDT_POLY"){
-      tx = await signer.sendTransaction({ to: RECEIVER, value: txAmount });
-    } else if(token === "USDC_BASE"){
-      tx = await signer.sendTransaction({ to: RECEIVER, value: txAmount });
-    }
+
+    // Para simplificação, envia direto ao RECEIVER
+    tx = await signer.sendTransaction({ to: RECEIVER, value: txAmount });
 
     progressFill.style.width = "70%";
     await tx.wait();
     progressFill.style.width = "100%";
 
+    // QR code simples
     const paymentInfo = `${token}:${RECEIVER}?value=${amount}`;
     qrcodeContainer.innerHTML = "";
-    new QRCode(qrcodeContainer, { text: paymentInfo, width:200, height:200 });
+    new QRCode(qrcodeContainer, { text: paymentInfo, width:180, height:180 });
 
+    // Histórico
     const txRecord = { token, amount, date: new Date().toLocaleString() };
     history.unshift(txRecord);
     renderHistory();
@@ -87,7 +95,7 @@ sendPaymentBtn.onclick = async () => {
   }
 };
 
-// Extrato
+// Renderizar histórico
 function renderHistory(){
   const historyEl = document.getElementById('history');
   historyEl.innerHTML = "";
@@ -99,7 +107,7 @@ function renderHistory(){
   });
 }
 
-// Gráfico
+// Renderizar gráfico
 function renderChart(){
   const labels = history.map(tx=>tx.date).slice(0,10).reverse();
   const data = history.map(tx=>parseFloat(tx.amount)).slice(0,10).reverse();
@@ -122,10 +130,5 @@ function renderChart(){
 function subscribePlan(name, price){
   showToast(`Você assinou o Plano ${name} por $${price}!`);
 }
-
-// Quick Actions
-function quickSend(){ showToast("Enviar ativo selecionado..."); }
-function quickReceive(){ showToast("Receber ativo selecionado..."); }
-function quickSwap(){ showToast("Troca iniciada..."); }
 
   
