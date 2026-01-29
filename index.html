@@ -16,6 +16,29 @@ body, html {
   overflow-x:hidden;
 }
 
+/* Botões rápidos topo */
+.quick-actions {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+.quick-actions button {
+  flex:1;
+  padding:16px;
+  border-radius:12px;
+  border:none;
+  background:#111;
+  color:#ffd700;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+  font-size:14px;
+}
+.quick-actions button:hover {
+  background:#222;
+}
+
 /* Sidebar */
 .sidebar {
   position: fixed;
@@ -139,12 +162,21 @@ button:hover{transform:scale(1.05);}
 
 <body>
 
+<!-- Botão toggle sidebar -->
 <div class="toggle-btn" id="toggleSidebar">Menu</div>
 
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="mascot">🐍</div>
     <div class="brand-name">NEONEX</div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <button onclick="quickSend()">Enviar</button>
+    <button onclick="quickReceive()">Receber</button>
+    <button onclick="quickSwap()">Troca</button>
   </div>
 
   <!-- Checkout -->
