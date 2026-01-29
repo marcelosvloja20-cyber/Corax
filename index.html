@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEONEX Dapp</title>
+<title>NEONEX</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
 <style>
@@ -16,24 +16,47 @@ body, html {
   overflow-x:hidden;
 }
 
-/* Botões rápidos topo */
+/* Corpo central */
+.main {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  padding:20px;
+}
+
+.brand-symbol {
+  font-size:80px;
+  margin-bottom:12px;
+}
+
+.brand-message {
+  font-family:'Montserrat', sans-serif;
+  font-size:18px;
+  margin-bottom:25px;
+  max-width:300px;
+  line-height:1.4;
+}
+
+/* Quick actions */
 .quick-actions {
   display:flex;
   justify-content:center;
   gap:15px;
-  margin-bottom:25px;
 }
 .quick-actions button {
   flex:1;
   padding:16px;
   border-radius:12px;
-  border:none;
+  border:1px solid #ffd700;
   background:#111;
   color:#ffd700;
   font-weight:bold;
+  font-size:14px;
   cursor:pointer;
   transition:0.2s;
-  font-size:14px;
 }
 .quick-actions button:hover {
   background:#222;
@@ -53,7 +76,7 @@ body, html {
   overflow-y:auto;
   z-index:999;
 }
-.sidebar.active{ left:0; }
+.sidebar.active { left:0; }
 
 /* Toggle */
 .toggle-btn {
@@ -68,23 +91,7 @@ body, html {
   z-index:1000;
 }
 
-/* Mascote topo */
-.sidebar-header {
-  text-align:center;
-  margin-bottom:20px;
-}
-.mascot {
-  font-size:80px;
-  margin-bottom:12px;
-  animation: bounce 1.2s infinite;
-}
-@keyframes bounce {
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-15px);}
-}
-.brand-name { font-family:'Montserrat', sans-serif; font-size:28px; font-weight:700; }
-
-/* Inputs e botões */
+/* Inputs e botões da sidebar */
 input, select {
   width:100%;
   padding:12px;
@@ -95,7 +102,7 @@ input, select {
   font-size:14px;
   margin-top:10px;
 }
-button {
+button.sidebar-btn {
   width:100%;
   padding:12px;
   margin-top:12px;
@@ -108,7 +115,7 @@ button {
   color:#000;
   transition:transform 0.2s ease;
 }
-button:hover{transform:scale(1.05);}
+button.sidebar-btn:hover{transform:scale(1.05);}
 
 /* Progress */
 .progress-bar {
@@ -134,12 +141,6 @@ button:hover{transform:scale(1.05);}
 .history-card{background:#000;padding:10px;border-radius:10px;margin-bottom:8px;}
 #chartContainer{margin-top:15px;background:#000;padding:10px;border-radius:10px;}
 
-/* Premium */
-.premium-section {margin-top:25px;}
-.premium-plan {background:#000;padding:12px;border:1px solid #ffd700;border-radius:10px;margin-bottom:12px;}
-.premium-plan h4{margin:0;margin-bottom:8px;}
-.premium-plan button{margin-top:5px;width:100%;}
-
 /* Toast */
 .toast {
   position: fixed;
@@ -161,72 +162,68 @@ button:hover{transform:scale(1.05);}
 </head>
 
 <body>
+  <!-- Toggle sidebar -->
+  <div class="toggle-btn" id="toggleSidebar">Menu</div>
 
-<!-- Botão toggle sidebar -->
-<div class="toggle-btn" id="toggleSidebar">Menu</div>
+  <!-- Landing minimalista -->
+  <div class="main">
+    <div class="brand-symbol">🐍</div>
+    <div class="brand-message">O seu melhor método de pagamento, vem para NEONEX</div>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <div class="mascot">🐍</div>
-    <div class="brand-name">NEONEX</div>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="quick-actions">
-    <button onclick="quickSend()">Enviar</button>
-    <button onclick="quickReceive()">Receber</button>
-    <button onclick="quickSwap()">Troca</button>
-  </div>
-
-  <!-- Checkout -->
-  <h2>Checkout</h2>
-  <div class="product-name" id="productName">Serviço Premium NEONEX</div>
-  <button id="connectWallet">Conectar Carteira</button>
-  <select id="tokenSelect">
-    <option value="USDT_ARB">USDT Arbitrum</option>
-    <option value="USDT_POLY">USDT Polygon</option>
-    <option value="USDC_BASE">USDC Base</option>
-  </select>
-  <input id="amount" placeholder="Valor">
-  <button id="sendPayment">Pagar Agora</button>
-  <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-  <div id="qrcode"></div>
-  <p id="walletAddress"></p>
-  <p id="status"></p>
-
-  <!-- Extrato -->
-  <h3>Extrato</h3>
-  <div id="history"></div>
-  <div id="chartContainer"><canvas id="paymentChart"></canvas></div>
-
-  <!-- Premium -->
-  <div class="premium-section">
-    <h3>Planos Premium</h3>
-    <div class="premium-plan" id="planBasic">
-      <h4>Plano Bronze</h4>
-      <p>+0.5% rentabilidade/mês</p>
-      <button onclick="subscribePlan('Bronze',10)">Assinar $10</button>
-    </div>
-    <div class="premium-plan" id="planSilver">
-      <h4>Plano Prata</h4>
-      <p>+1% rentabilidade/mês</p>
-      <button onclick="subscribePlan('Prata',25)">Assinar $25</button>
-    </div>
-    <div class="premium-plan" id="planGold">
-      <h4>Plano Ouro</h4>
-      <p>+2% rentabilidade/mês</p>
-      <button onclick="subscribePlan('Ouro',50)">Assinar $50</button>
+    <div class="quick-actions">
+      <button onclick="quickSend()">Enviar</button>
+      <button onclick="quickReceive()">Receber</button>
+      <button onclick="quickSwap()">Troca</button>
     </div>
   </div>
-</div>
 
-<div id="toast" class="toast"></div>
+  <!-- Sidebar com Dapp completo -->
+  <div class="sidebar" id="sidebar">
+    <h2>Checkout NEONEX</h2>
+    <div class="product-name" id="productName">Serviço Premium NEONEX</div>
+    <button class="sidebar-btn" id="connectWallet">Conectar Carteira</button>
+    <select id="tokenSelect">
+      <option value="USDT_ARB">USDT Arbitrum</option>
+      <option value="USDT_POLY">USDT Polygon</option>
+      <option value="USDC_BASE">USDC Base</option>
+    </select>
+    <input id="amount" placeholder="Valor">
+    <button class="sidebar-btn" id="sendPayment">Pagar Agora</button>
+    <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+    <div id="qrcode"></div>
+    <p id="walletAddress"></p>
+    <p id="status"></p>
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="app.js"></script>
+    <h3>Extrato</h3>
+    <div id="history"></div>
+    <div id="chartContainer"><canvas id="paymentChart"></canvas></div>
+
+    <div class="premium-section">
+      <h3>Planos Premium</h3>
+      <div class="premium-plan" id="planBasic">
+        <h4>Plano Bronze</h4>
+        <p>+0.5% rentabilidade/mês</p>
+        <button class="sidebar-btn" onclick="subscribePlan('Bronze',10)">Assinar $10</button>
+      </div>
+      <div class="premium-plan" id="planSilver">
+        <h4>Plano Prata</h4>
+        <p>+1% rentabilidade/mês</p>
+        <button class="sidebar-btn" onclick="subscribePlan('Prata',25)">Assinar $25</button>
+      </div>
+      <div class="premium-plan" id="planGold">
+        <h4>Plano Ouro</h4>
+        <p>+2% rentabilidade/mês</p>
+        <button class="sidebar-btn" onclick="subscribePlan('Ouro',50)">Assinar $50</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
    
