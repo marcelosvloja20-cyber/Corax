@@ -8,22 +8,20 @@ const qrBox = document.getElementById("qrcode");
 const walletBox = document.getElementById("walletAddress");
 const historyBox = document.getElementById("history");
 const productNameBox = document.getElementById("productName");
+const tokenSelect = document.getElementById("tokenSelect");
 
-let provider;
-let signer;
-let userAddress = null;
+let provider, signer, userAddress = null;
 
-// USDT na Arbitrum
-const USDT_ADDRESS = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
-const USDT_ABI = [
-  "function transfer(address to, uint amount) returns (bool)",
-  "function decimals() view returns (uint8)"
-];
+const TOKENS = {
+  USDT_ARB: { address: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9", network: 42161 },
+  USDT_POLY: { address: "0x3813e82e6f7098b9583FC0F33a962D02018B6803", network: 137 },
+  USDC_BASE: { address: "0x0c12b7D63d2f87662e5E2E93E502eF32fC073c47", network: 8453 }
+};
 
-const RECEIVER = "0xd8deaef57da7b8804fecfbfbaeb31ccd335749f5";
+const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI";
 
-function showToast(message) {
-  toast.innerText = message;
+function showToast(msg) {
+  toast.innerText = msg;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 3000);
 }
@@ -40,16 +38,13 @@ function loadHistory() {
   history.forEach(tx => {
     const div = document.createElement("div");
     div.style.marginTop = "10px";
-    div.innerHTML = `<strong>${tx.amount} USDT</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash}</small><hr>`;
+    div.innerHTML = `<strong>${tx.amount}</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash}</small><hr>`;
     historyBox.appendChild(div);
   });
 }
 
 async function connectWallet() {
-  if (!window.ethereum) {
-    alert("MetaMask não encontrada");
-    return;
-  }
+  if (!window.ethereum) { alert("MetaMask não encontrada"); return; }
   provider = new ethers.BrowserProvider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
   signer = await provider.getSigner();
@@ -74,12 +69,15 @@ loadAmountFromURL();
 function generateQR() {
   if (!userAddress) return;
   qrBox.innerHTML = "";
+  const tokenKey = tokenSelect.value;
+  const token = TOKENS[tokenKey];
   const amount = amountInput.value || 0;
-  const qrData = `ethereum:${RECEIVER}@42161/transfer?address=${USDT_ADDRESS}&uint256=${amount}`;
+  const qrData = `ethereum:${RECEIVER}@${token.network}/transfer?address=${token.address}&uint256=${amount}`;
   new QRCode(qrBox, { text: qrData, width: 180, height: 180, colorDark: "#ffd700", colorLight: "#000" });
 }
 
 amountInput.addEventListener("input", generateQR);
+tokenSelect.addEventListener("change", generateQR);
 
 async function createPaymentLink(amount, product) {
   try {
@@ -90,7 +88,7 @@ async function createPaymentLink(amount, product) {
     });
     const data = await res.json();
     if (data.link) {
-      showToast("Link de pagamento criado ✅");
+      showToast("Link criado ✅");
       window.history.replaceState({}, "", data.link);
     }
   } catch (err) {
@@ -99,19 +97,15 @@ async function createPaymentLink(amount, product) {
   }
 }
 
-async function sendUSDT() {
-  if (!signer) {
-    showToast("Conecte a carteira");
-    return;
-  }
+async function sendPayment() {
+  if (!signer) { showToast("Conecte a carteira"); return; }
   const value = amountInput.value;
   const product = productNameBox.innerText;
-  if (!value || value <= 0) {
-    showToast("Digite um valor válido");
-    return;
-  }
+  if (!value || value <= 0) { showToast("Valor inválido"); return; }
 
   try {
+    const tokenKey = tokenSelect.value;
+    const token = TOKENS[tokenKey];
     progressFill.style.width = "30%";
     statusText.innerText = "Criando pagamento...";
     await createPaymentLink(value, product);
@@ -119,7 +113,11 @@ async function sendUSDT() {
     progressFill.style.width = "50%";
     statusText.innerText = "Enviando pagamento...";
 
-    const contract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
+    const contract = new ethers.Contract(token.address, [
+      "function transfer(address to, uint amount) returns (bool)",
+      "function decimals() view returns (uint8)"
+    ], signer);
+
     const decimals = await contract.decimals();
     const amount = ethers.parseUnits(value, decimals);
     const tx = await contract.transfer(RECEIVER, amount);
@@ -130,9 +128,9 @@ async function sendUSDT() {
 
     progressFill.style.width = "100%";
     statusText.innerText = "Pagamento confirmado 🎉";
-    showToast("Pagamento recebido com sucesso");
+    showToast("Pagamento recebido ✅");
 
-    saveTransaction({ amount: value, product: product, date: new Date().toLocaleString(), hash: tx.hash });
+    saveTransaction({ amount: value + " " + tokenKey, product, date: new Date().toLocaleString(), hash: tx.hash });
     loadHistory();
     generateQR();
   } catch (err) {
@@ -142,8 +140,7 @@ async function sendUSDT() {
   }
 }
 
-sendBtn.onclick = sendUSDT;
-
+sendBtn.onclick = sendPayment;
 loadHistory();
 generateQR();
 
