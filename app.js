@@ -123,3 +123,54 @@ qrBtn.onclick = async () => {
     height: 220
   });
 };
+/* ===== PAGAMENTO VIA LINK (ESTILO PIX WEB3) ===== */
+
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    to: params.get("to"),
+    amount: params.get("amount")
+  };
+}
+
+window.addEventListener("load", async () => {
+  const { to, amount } = getQueryParams();
+
+  if (!to) return;
+
+  if (!ethers.isAddress(to)) {
+    alert("Link inválido");
+    return;
+  }
+
+  document.getElementById("to").value = to;
+
+  if (amount) {
+    document.getElementById("amount").value = amount;
+    document.getElementById("qrAmount").value = amount;
+  }
+
+  if (userAddress) return;
+
+  if (window.ethereum) {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+  }
+
+  const network = await provider.getNetwork();
+  const chainId = network.chainId.toString();
+
+  const valuePart = amount ? `?value=${ethers.parseEther(amount)}` : "";
+  const qrUrl = `ethereum:${to}@${chainId}${valuePart}`;
+
+  const qrContainer = document.getElementById("qrcode");
+  qrContainer.replaceChildren();
+
+  new QRCode(qrContainer, {
+    text: qrUrl,
+    width: 220,
+    height: 220
+  });
+});
