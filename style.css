@@ -1,6 +1,3 @@
-/* ========================== */
-/* BODY E TIPOGRAFIA           */
-/* ========================== */
 body, html {
   margin:0;
   padding:0;
@@ -10,9 +7,6 @@ body, html {
   overflow-x:hidden;
 }
 
-/* ========================== */
-/* LANDING CENTRAL             */
-/* ========================== */
 .main {
   display:flex;
   flex-direction:column;
@@ -23,7 +17,6 @@ body, html {
   padding:20px;
 }
 
-/* LOGO E MENSAGEM */
 .brand-symbol {
   font-family:'Montserrat', sans-serif;
   font-size:70px;
@@ -41,7 +34,6 @@ body, html {
   color:#FFFFFF;
 }
 
-/* QUICK ACTIONS PREMIUM */
 .quick-actions {
   display:flex;
   justify-content:center;
@@ -67,7 +59,6 @@ body, html {
   box-shadow:0 0 12px #00E5FF;
 }
 
-/* SIDEBAR PREMIUM */
 .sidebar {
   position: fixed;
   top:0; left:-360px;
@@ -84,7 +75,6 @@ body, html {
 }
 .sidebar.active { left:0; }
 
-/* Toggle button */
 .toggle-btn {
   position: fixed;
   top:15px; left:15px;
@@ -98,7 +88,6 @@ body, html {
   box-shadow:0 0 10px #00E5FF;
 }
 
-/* Inputs e botões */
 input, select {
   width:100%;
   padding:14px;
@@ -132,7 +121,6 @@ button.sidebar-btn:hover {
   box-shadow:0 0 12px #00E5FF;
 }
 
-/* PROGRESS BAR */
 .progress-bar {
   width:100%;
   height:12px;
@@ -148,7 +136,6 @@ button.sidebar-btn:hover {
   transition:width 0.8s ease;
 }
 
-/* QR + HISTÓRICO */
 #qrcode{margin-top:20px;}
 #walletAddress{font-size:12px;margin-top:10px;word-break:break-all;color:#7B61FF;}
 #status{margin-top:10px;font-size:12px;color:#FFFFFF;}
@@ -169,7 +156,6 @@ button.sidebar-btn:hover {
   box-shadow:0 0 12px #00E5FF;
 }
 
-/* TOAST PREMIUM */
 .toast {
   position: fixed;
   bottom: 20px;
