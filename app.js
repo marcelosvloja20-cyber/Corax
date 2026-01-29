@@ -1,88 +1,120 @@
 
-window.onload = () => {
+import { ethers } from "ethers";
 
-  // 🔗 Parâmetros da URL (QR / link de pagamento)
-  const params = new URLSearchParams(window.location.search);
-  const toParam = params.get("to");
-  const amountParam = params.get("amount");
+/* ===== CONECTAR CARTEIRA ===== */
 
-  if (toParam) document.getElementById("to").value = toParam;
-  if (amountParam) document.getElementById("amount").value = amountParam;
+const connectBtn = document.getElementById("connectBtn");
+const sendBtn = document.getElementById("sendBtn");
+const qrBtn = document.getElementById("qrBtn");
 
-  // 📦 Elementos principais
-  const connectBtn = document.getElementById("connectBtn");
-  const walletInfo = document.getElementById("walletInfo");
+const addressSpan = document.getElementById("address");
+const balanceSpan = document.getElementById("balance");
+const networkSpan = document.getElementById("network");
+const walletInfo = document.getElementById("walletInfo");
+const qrBox = document.getElementById("qrBox");
 
-  const addressSpan = document.getElementById("address");
-  const balanceSpan = document.getElementById("balance");
-  const networkSpan = document.getElementById("network");
+let provider;
+let signer;
+let userAddress;
 
-  // 🔐 Conectar carteira
-  connectBtn.onclick = async () => {
-    if (!window.ethereum) {
-      alert(
-        "Abra este site dentro do browser da MetaMask.\n\n" +
-        "MetaMask → Browser → Cole o link"
-      );
-      return;
-    }
+connectBtn.onclick = async () => {
+  if (!window.ethereum) {
+    alert("MetaMask não encontrada");
+    return;
+  }
 
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
+  try {
+    connectBtn.innerText = "Conectando...";
 
-      const signer = await provider.getSigner();
-      const address = await signer.getAddress();
-      const balance = await provider.getBalance(address);
-      const network = await provider.getNetwork();
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
 
-      addressSpan.innerText = address;
-      balanceSpan.innerText = ethers.formatEther(balance) + " ETH";
-      networkSpan.innerText = network.name;
+    userAddress = await signer.getAddress();
+    const balance = await provider.getBalance(userAddress);
+    const network = await provider.getNetwork();
 
-      walletInfo.classList.remove("hidden");
-      document.getElementById("sendBox").classList.remove("hidden");
-      document.getElementById("qrBox").classList.remove("hidden");
+    addressSpan.innerText = userAddress;
+    balanceSpan.innerText = ethers.formatEther(balance) + " ETH";
+    networkSpan.innerText = network.name;
 
-      connectBtn.innerText = "Carteira Conectada ✅";
+    walletInfo.classList.remove("hidden");
+    qrBox.classList.remove("hidden");
 
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao conectar carteira");
-    }
-  };
+    connectBtn.innerText = "Carteira Conectada ✅";
 
-  // 💸 Enviar pagamento (ETH)
-  document.getElementById("sendBtn").onclick = async () => {
-    if (!window.ethereum) {
-      alert("MetaMask não encontrada");
-      return;
-    }
-
-    const to = document.getElementById("to").value;
-    const amount = document.getElementById("amount").value;
-
-    if (!to || !amount) {
-      alert("Preencha endereço e valor");
-      return;
-    }
-
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-
-      const tx = await signer.sendTransaction({
-        to: to,
-        value: ethers.parseEther(amount)
-      });
-
-      alert("Transação enviada 🚀\nHash:\n" + tx.hash);
-
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao enviar pagamento");
-    }
-  };
-
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao conectar carteira");
+    connectBtn.innerText = "Conectar Carteira";
+  }
 };
-  
+
+/* ===== ENVIAR PAGAMENTO ===== */
+
+sendBtn.onclick = async () => {
+  if (!provider || !signer) {
+    alert("Conecte a carteira primeiro");
+    return;
+  }
+
+  const to = document.getElementById("to").value.trim();
+  const amount = document.getElementById("amount").value.trim();
+
+  if (!to || !amount) {
+    alert("Preencha endereço e valor");
+    return;
+  }
+
+  if (!ethers.isAddress(to)) {
+    alert("Endereço inválido");
+    return;
+  }
+
+  const network = await provider.getNetwork();
+  if (network.chainId !== 1n) {
+    alert("Conecte na rede Ethereum Mainnet");
+    return;
+  }
+
+  try {
+    sendBtn.innerText = "Enviando...";
+
+    const tx = await signer.sendTransaction({
+      to: to,
+      value: ethers.parseEther(amount)
+    });
+
+    alert(`Transação enviada!
+https://etherscan.io/tx/${tx.hash}`);
+
+    sendBtn.innerText = "Enviar ETH";
+
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao enviar pagamento");
+    sendBtn.innerText = "Enviar ETH";
+  }
+};
+
+/* ===== GERAR QR CODE ===== */
+
+qrBtn.onclick = () => {
+  const amount = document.getElementById("qrAmount").value.trim();
+  if (!userAddress) {
+    alert("Conecte a carteira primeiro");
+    return;
+  }
+
+  const valuePart = amount ? `?value=${ethers.parseEther(amount)}` : "";
+  const qrUrl = `ethereum:${userAddress}@1${valuePart}`;
+
+  const qrContainer = document.getElementById("qrcode");
+  qrContainer.replaceChildren();
+
+  new QRCode(qrContainer, {
+    text: qrUrl,
+    width: 220,
+    height: 220
+  });
+};
