@@ -3,150 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEONEX-PAY Multi-Chain</title>
+<title>NEONEX-PAY Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body {
-  margin: 0;
-  padding: 0;
-  background: #000;
-  color: #ffd700;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.container {
-  max-width: 420px;
-  margin: auto;
-  padding: 25px;
-  text-align: center;
-}
-
-.logo {
-  font-size: 48px;
-  font-weight: 900;
-  letter-spacing: 4px;
-}
-
-.snake-bar {
-  width: 100%;
-  height: 14px;
-  background: repeating-linear-gradient(
-    45deg,
-    #ffd700,
-    #ffd700 10px,
-    #000 10px,
-    #000 20px
-  );
-  border-radius: 10px;
-  margin: 15px 0 30px;
-}
-
-h2 {
-  margin-bottom: 15px;
-}
-
-.product-name {
-  font-size: 20px;
-  margin: 12px 0;
-}
-
-input, select {
-  width: 100%;
-  padding: 14px;
-  background: #111;
-  border: 1px solid #ffd700;
-  border-radius: 12px;
-  color: #ffd700;
-  font-size: 16px;
-  margin-top: 12px;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ffd700, #ffb700);
-  color: #000;
-  transition: transform 0.2s ease;
-}
-
-button:hover {
-  transform: scale(1.03);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: #222;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 18px;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #ffd700, #ffb700);
-  transition: width 0.8s ease;
-}
-
-#qrcode {
-  margin-top: 25px;
-}
-
-#walletAddress {
-  font-size: 12px;
-  margin-top: 10px;
-  word-break: break-all;
-  color: #aaa;
-}
-
-#status {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #fff;
-}
-
-#history {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.toast {
-  position: fixed;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ffd700;
-  color: #000;
-  padding: 14px 22px;
-  border-radius: 18px;
-  font-weight: bold;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.4s ease;
-  box-shadow: 0 0 15px rgba(255,215,0,0.6);
-}
-
-.toast.show {
-  opacity: 1;
-  bottom: 45px;
-}
+body { margin:0; padding:0; background:#000; color:#ffd700; font-family:Arial, Helvetica, sans-serif; }
+.container { max-width:440px; margin:auto; padding:25px; text-align:center; }
+.header { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:20px; }
+.logo { font-family:'Montserrat', sans-serif; font-size:50px; font-weight:900; }
+.brand-name { font-family:'Montserrat', sans-serif; font-size:28px; font-weight:700; }
+.snake-bar { width:100%; height:14px; background:repeating-linear-gradient(45deg,#ffd700,#ffd700 10px,#000 10px,#000 20px); border-radius:10px; margin:20px 0 30px; }
+h2{margin-bottom:12px;}
+.product-name{font-size:20px;margin:12px 0;}
+input,select{width:100%;padding:14px;background:#111;border:1px solid #ffd700;border-radius:12px;color:#ffd700;font-size:16px;margin-top:12px;}
+button{width:100%;padding:14px;margin-top:15px;border:none;border-radius:14px;font-size:16px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#ffd700,#ffb700);color:#000;transition:transform 0.2s ease;}
+button:hover{transform:scale(1.05);}
+.progress-bar{width:100%;height:10px;background:#222;border-radius:20px;overflow:hidden;margin-top:18px;}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#ffd700,#ffb700);transition:width 0.8s ease;}
+#qrcode{margin-top:25px;}
+#walletAddress{font-size:12px;margin-top:10px;word-break:break-all;color:#aaa;}
+#status{margin-top:12px;font-size:14px;color:#fff;}
+#history{margin-top:20px;text-align:left;}
+.history-card{background:#111;padding:12px;border-radius:12px;margin-bottom:10px;}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#ffd700;color:#000;padding:14px 22px;border-radius:18px;font-weight:bold;opacity:0;pointer-events:none;transition:all 0.4s ease;box-shadow:0 0 15px rgba(255,215,0,0.6);}
+.toast.show{opacity:1;bottom:45px;}
+#chartContainer{margin-top:30px;background:#111;padding:15px;border-radius:12px;}
 </style>
 </head>
-
 <body>
 <div class="container">
 
-  <div class="logo">N</div>
+  <div class="header">
+    <div class="logo">N</div>
+    <div class="brand-name">NEONEX</div>
+  </div>
+
   <div class="snake-bar"></div>
 
-  <h2>Checkout Multi-Chain</h2>
+  <h2>Checkout</h2>
   <div class="product-name" id="productName">Serviço Premium NEONEX</div>
 
   <button id="connectWallet">Conectar MetaMask</button>
@@ -171,6 +66,10 @@ button:hover {
 
   <h3>Extrato</h3>
   <div id="history"></div>
+
+  <div id="chartContainer">
+    <canvas id="paymentChart" width="400" height="200"></canvas>
+  </div>
 
 </div>
 
