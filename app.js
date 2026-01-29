@@ -2,10 +2,11 @@ let provider;
 let signer;
 let userAddress;
 
-const statusBox = document.getElementById("status");
 const connectBtn = document.getElementById("connectWallet");
 const sendBtn = document.getElementById("sendPayment");
 const amountInput = document.getElementById("amount");
+const statusBox = document.getElementById("status");
+const progressBar = document.getElementById("progressFill");
 
 connectBtn.onclick = connectWallet;
 sendBtn.onclick = sendPayment;
@@ -21,7 +22,7 @@ async function connectWallet() {
   signer = await provider.getSigner();
   userAddress = await signer.getAddress();
 
-  statusBox.innerText = "Carteira conectada: " + userAddress;
+  statusBox.innerText = "Carteira conectada com sucesso ✅";
 }
 
 async function sendPayment() {
@@ -31,25 +32,40 @@ async function sendPayment() {
   }
 
   const amount = amountInput.value;
+  startProgress("Enviando transação...");
 
   const tx = await signer.sendTransaction({
-    to: userAddress, // depois você troca pelo endereço do recebedor
+    to: userAddress, // depois troque pelo recebedor real
     value: ethers.parseEther(amount)
   });
 
-  statusBox.innerText = "Transação enviada... aguardando confirmação ⏳";
+  startProgress("Aguardando confirmação na blockchain...");
 
-  await waitForConfirmation(tx.hash);
-}
-
-async function waitForConfirmation(hash) {
-  const receipt = await provider.waitForTransaction(hash);
+  const receipt = await provider.waitForTransaction(tx.hash);
 
   if (receipt.status === 1) {
-    statusBox.innerText = "Pagamento confirmado na blockchain ✅";
+    finishProgress("Pagamento confirmado com sucesso 🎉");
   } else {
-    statusBox.innerText = "Falha na transação ❌";
+    finishProgress("Transação falhou ❌");
   }
+}
+
+function startProgress(message) {
+  statusBox.innerText = message;
+  progressBar.style.width = "30%";
+
+  setTimeout(() => {
+    progressBar.style.width = "65%";
+  }, 1200);
+}
+
+function finishProgress(message) {
+  progressBar.style.width = "100%";
+  statusBox.innerText = message;
+
+  setTimeout(() => {
+    progressBar.style.width = "0%";
+  }, 2000);
 }
 
   
