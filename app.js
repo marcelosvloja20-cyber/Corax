@@ -1,7 +1,8 @@
 let provider = null;
 let signer = null;
+let userAddress = null;
 
-// USDT na Polygon
+// USDT Polygon
 const USDT_ADDRESS = "0x3813e82e6f7098b9583FC0F33a962D02018B6803";
 
 const USDT_ABI = [
@@ -13,11 +14,7 @@ const POLYGON_PARAMS = {
   chainId: "0x89",
   chainName: "Polygon Mainnet",
   rpcUrls: ["https://polygon-rpc.com"],
-  nativeCurrency: {
-    name: "MATIC",
-    symbol: "MATIC",
-    decimals: 18
-  },
+  nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 },
   blockExplorerUrls: ["https://polygonscan.com"]
 };
 
@@ -26,6 +23,8 @@ const sendBtn = document.getElementById("sendPayment");
 const amountInput = document.getElementById("amount");
 const statusBox = document.getElementById("status");
 const progressFill = document.getElementById("progressFill");
+const qrBox = document.getElementById("qrcode");
+const walletBox = document.getElementById("walletAddress");
 
 connectBtn.onclick = connectWallet;
 sendBtn.onclick = sendPayment;
@@ -42,6 +41,11 @@ async function connectWallet() {
     provider = new ethers.BrowserProvider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+
+    walletBox.innerText = "Endereço: " + userAddress;
+
+    generateQR();
 
     statusBox.innerText = "Carteira conectada na Polygon ✅";
   } catch (e) {
@@ -56,8 +60,8 @@ async function switchToPolygon() {
       method: "wallet_switchEthereumChain",
       params: [{ chainId: POLYGON_PARAMS.chainId }]
     });
-  } catch (switchError) {
-    if (switchError.code === 4902) {
+  } catch (err) {
+    if (err.code === 4902) {
       await window.ethereum.request({
         method: "wallet_addEthereumChain",
         params: [POLYGON_PARAMS]
@@ -66,10 +70,28 @@ async function switchToPolygon() {
   }
 }
 
+function generateQR() {
+  qrBox.innerHTML = "";
+
+  const amount = amountInput.value || 0;
+
+  const qrData = `ethereum:${userAddress}@137/transfer?address=${USDT_ADDRESS}&uint256=${amount}`;
+
+  new QRCode(qrBox, {
+    text: qrData,
+    width: 180,
+    height: 180,
+    colorDark: "#ffd700",
+    colorLight: "#000"
+  });
+}
+
+amountInput.addEventListener("input", generateQR);
+
 async function sendPayment() {
   try {
     if (!signer) {
-      alert("Conecte a carteira primeiro");
+      alert("Conecte a carteira");
       return;
     }
 
@@ -79,23 +101,20 @@ async function sendPayment() {
       return;
     }
 
-    startProgress("Enviando USDT na Polygon...");
+    startProgress("Enviando USDT...");
 
     const usdt = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
     const decimals = await usdt.decimals();
     const value = ethers.parseUnits(amount, decimals);
 
-    const tx = await usdt.transfer(
-      await signer.getAddress(), // depois troque pelo endereço real de recebimento
-      value
-    );
+    const tx = await usdt.transfer(userAddress, value);
 
     startProgress("Confirmando pagamento...");
 
     const receipt = await provider.waitForTransaction(tx.hash);
 
     if (receipt.status === 1) {
-      finishProgress("USDT confirmado com sucesso 🎉");
+      finishProgress("Pagamento confirmado 🎉");
     } else {
       finishProgress("Falha no pagamento ❌");
     }
@@ -112,7 +131,7 @@ function startProgress(text) {
 
   setTimeout(() => {
     progressFill.style.width = "70%";
-  }, 900);
+  }, 800);
 }
 
 function finishProgress(text) {
