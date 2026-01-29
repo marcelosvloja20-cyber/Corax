@@ -1,60 +1,102 @@
-const NEX_TOKEN_ADDRESS = "COLOQUE_AQUI_ENDERECO_DO_TOKEN";
-const NEX_ABI = [
-  "function balanceOf(address) view returns (uint256)",
-  "function transfer(address to, uint amount) returns (bool)"
-];
-
 let provider, signer, walletAddress;
 
-const sidebar = document.getElementById("sidebar");
-document.getElementById("toggleSidebar").onclick = () => sidebar.classList.toggle("active");
-
 async function connectWallet() {
-    if (!window.ethereum) return alert("Instale a MetaMask");
+
+  if (window.ethereum) {
     provider = new ethers.BrowserProvider(window.ethereum);
-    signer = await provider.getSigner();
-    walletAddress = await signer.getAddress();
-    document.getElementById("walletAddress").innerText = walletAddress;
-    showToast("Carteira conectada!");
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  } else {
+    const wcProvider = new WalletConnectProvider.default({
+      rpc: {
+        1: "https://rpc.ankr.com/eth",
+        42161: "https://rpc.ankr.com/arbitrum",
+        137: "https://rpc.ankr.com/polygon"
+      }
+    });
+
+    await wcProvider.enable();
+    provider = new ethers.BrowserProvider(wcProvider);
+  }
+
+  signer = await provider.getSigner();
+  walletAddress = await signer.getAddress();
+
+  document.getElementById("walletAddress").innerText = walletAddress;
+  showToast("Carteira conectada com sucesso!");
 }
 
-async function sendNEX(to, amount) {
-    const token = new ethers.Contract(NEX_TOKEN_ADDRESS, NEX_ABI, signer);
-    const tx = await token.transfer(to, ethers.parseUnits(amount.toString(), 18));
-    await tx.wait();
-    showToast(`Enviado ${amount} NEX para ${to}`);
-    updateHistory(`Enviado ${amount} NEX para ${to}`);
+// Envio nativo (ETH / MATIC / ARB etc)
+async function sendNative(to, amount) {
+  const tx = await signer.sendTransaction({
+    to,
+    value: ethers.parseEther(amount)
+  });
+
+  progress(40);
+  await tx.wait();
+  progress(100);
+
+  updateHistory(`Pagamento enviado → ${amount}`);
+  showToast("Pagamento confirmado!");
 }
 
+// Quick buttons
 function quickSend() {
-    const to = prompt("Endereço do destinatário:");
-    const amount = prompt("Quantos NEX enviar?");
-    sendNEX(to, amount);
-}
-function quickReceive() { showToast("Mostre seu QR para receber NEX"); }
-function quickSwap() { showToast("Swap interno $NEX / USDT em breve"); }
-
-function showToast(msg) {
-    const t = document.getElementById("toast");
-    t.innerText = msg;
-    t.classList.add("show");
-    setTimeout(()=>t.classList.remove("show"), 3500);
+  const to = prompt("Endereço destino:");
+  const amount = prompt("Valor:");
+  sendNative(to, amount);
 }
 
-function updateHistory(msg) {
-    const h = document.getElementById("history");
-    const div = document.createElement("div");
-    div.classList.add("history-card");
-    div.innerText = msg;
-    h.prepend(div);
+function quickReceive() {
+  generateQR(walletAddress);
+  showToast("QR gerado para receber");
 }
 
-// Botões MetaMask
+function quickSwap() {
+  showToast("Swap interno em breve");
+}
+
+// Progress bar
+function progress(val){
+  document.getElementById("progressFill").style.width = val + "%";
+}
+
+// QR Code
+function generateQR(address){
+  document.getElementById("qrcode").innerHTML = "";
+  new QRCode(document.getElementById("qrcode"), address);
+}
+
+// Toast
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+// Histórico
+function updateHistory(msg){
+  const h = document.getElementById("history");
+  const d = document.createElement("div");
+  d.className = "history-card";
+  d.innerText = msg;
+  h.prepend(d);
+}
+
+// Botões
 document.getElementById("connectWallet").onclick = connectWallet;
+
 document.getElementById("sendPayment").onclick = () => {
-    const to = prompt("Endereço do destinatário:");
-    const amount = document.getElementById("amount").value;
-    sendNEX(to, amount);
+  const to = prompt("Endereço destino:");
+  const amount = document.getElementById("amount").value;
+  sendNative(to, amount);
+};
+
+// Sidebar toggle
+document.getElementById("toggleSidebar").onclick = () => {
+  document.getElementById("sidebar").classList.toggle("active");
 };
 
   
