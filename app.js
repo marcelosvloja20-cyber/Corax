@@ -19,7 +19,7 @@ const TOKENS = {
   USDC_BASE: { address: "0x0c12b7D63d2f87662e5E2E93E502eF32fC073c47", network: 8453 }
 };
 
-const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI";
+const RECEIVER = "0xd8deaef57da7b8804fecfbfbaeb31ccd335749f5";
 
 function showToast(msg) {
   toast.innerText = msg;
