@@ -174,3 +174,47 @@ window.addEventListener("load", async () => {
     height: 220
   });
 });
+/* ===== PAGAMENTO STABLECOIN (USDT / USDC) ===== */
+
+const erc20ABI = [
+  "function transfer(address to, uint amount) returns (bool)",
+  "function decimals() view returns (uint8)"
+];
+
+// escolha qual stable quer usar
+const STABLE_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT Polygon
+// const STABLE_ADDRESS = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"; // USDC Polygon
+
+async function sendStable(to, amount) {
+  if (!ethers.isAddress(to)) {
+    alert("Endereço inválido");
+    return;
+  }
+
+  const network = await provider.getNetwork();
+
+  if (network.chainId !== 137n) {
+    alert("Conecte na rede Polygon");
+    return;
+  }
+
+  const token = new ethers.Contract(
+    STABLE_ADDRESS,
+    erc20ABI,
+    signer
+  );
+
+  const decimals = await token.decimals();
+  const value = ethers.parseUnits(amount, decimals);
+
+  try {
+    const tx = await token.transfer(to, value);
+
+    alert(`Pagamento enviado!
+https://polygonscan.com/tx/${tx.hash}`);
+
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao enviar stablecoin");
+  }
+}
