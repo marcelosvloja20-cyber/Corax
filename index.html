@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>NEONEX-PAY</title>
 
 <style>
@@ -16,8 +15,6 @@ body {
 }
 
 .container {
-<h3>Extrato</h3>
-<div id="history"></div>
   max-width: 420px;
   margin: auto;
   padding: 25px;
@@ -66,6 +63,11 @@ button {
   cursor: pointer;
   background: linear-gradient(135deg, #ffd700, #ffb700);
   color: #000;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
 }
 
 .progress-bar {
@@ -97,7 +99,34 @@ button {
 
 #status {
   margin-top: 12px;
+  font-size: 14px;
   color: #fff;
+}
+
+#history {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffd700;
+  color: #000;
+  padding: 14px 22px;
+  border-radius: 18px;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
+}
+
+.toast.show {
+  opacity: 1;
+  bottom: 45px;
 }
 </style>
 </head>
@@ -120,15 +149,134 @@ button {
   </div>
 
   <div id="qrcode"></div>
-
   <p id="walletAddress"></p>
   <p id="status"></p>
 
+  <h3>Extrato</h3>
+  <div id="history"></div>
 </div>
+
+<div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-<script src="app.js"></script>
+<script>
+const connectBtn = document.getElementById("connectWallet");
+const sendBtn = document.getElementById("sendPayment");
+const statusText = document.getElementById("status");
+const amountInput = document.getElementById("amount");
+const progressFill = document.getElementById("progressFill");
+const toast = document.getElementById("toast");
+const qrBox = document.getElementById("qrcode");
+const walletBox = document.getElementById("walletAddress");
+const historyBox = document.getElementById("history");
+
+let provider;
+let signer;
+let userAddress = null;
+
+// USDT na Arbitrum
+const USDT_ADDRESS = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
+const USDT_ABI = [
+  "function transfer(address to, uint amount) returns (bool)",
+  "function decimals() view returns (uint8)"
+];
+
+// Coloque aqui seu endereço de recebimento
+const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI";
+
+function showToast(message) {
+  toast.innerText = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+function saveTransaction(data) {
+  const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
+  history.unshift(data);
+  localStorage.setItem("neonex_history", JSON.stringify(history));
+}
+
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
+  historyBox.innerHTML = "";
+  history.forEach(tx => {
+    const div = document.createElement("div");
+    div.style.marginTop = "10px";
+    div.innerHTML = `<strong>${tx.amount} USDT</strong><br>${tx.date}<br><small>${tx.hash}</small><hr>`;
+    historyBox.appendChild(div);
+  });
+}
+
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert("MetaMask não encontrada");
+    return;
+  }
+  provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  signer = await provider.getSigner();
+  userAddress = await signer.getAddress();
+  walletBox.innerText = "Endereço: " + userAddress;
+  showToast("Carteira conectada ✅");
+  generateQR();
+}
+
+connectBtn.onclick = connectWallet;
+
+function loadAmountFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const value = params.get("amount");
+  if (value) amountInput.value = value;
+}
+
+loadAmountFromURL();
+
+function generateQR() {
+  if (!userAddress) return;
+  qrBox.innerHTML = "";
+  const amount = amountInput.value || 0;
+  const qrData = `ethereum:${RECEIVER}@42161/transfer?address=${USDT_ADDRESS}&uint256=${amount}`;
+  new QRCode(qrBox, { text: qrData, width: 180, height: 180, colorDark: "#ffd700", colorLight: "#000" });
+}
+
+amountInput.addEventListener("input", generateQR);
+
+async function sendUSDT() {
+  if (!signer) {
+    showToast("Conecte a carteira");
+    return;
+  }
+  const value = amountInput.value;
+  if (!value || value <= 0) {
+    showToast("Digite um valor válido");
+    return;
+  }
+  try {
+    progressFill.style.width = "30%";
+    statusText.innerText = "Enviando pagamento...";
+    const contract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
+    const decimals = await contract.decimals();
+    const amount = ethers.parseUnits(value, decimals);
+    const tx = await contract.transfer(RECEIVER, amount);
+    progressFill.style.width = "70%";
+    statusText.innerText = "Confirmando...";
+    await tx.wait();
+    progressFill.style.width = "100%";
+    statusText.innerText = "Pagamento confirmado 🎉";
+    showToast("Pagamento recebido com sucesso");
+    saveTransaction({ amount: value, date: new Date().toLocaleString(), hash: tx.hash });
+    loadHistory();
+  } catch {
+    showToast("Erro na transação ❌");
+    progressFill.style.width = "0%";
+  }
+}
+
+sendBtn.onclick = sendUSDT;
+
+loadHistory();
+</script>
 
 </body>
 </html>
