@@ -2,137 +2,129 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>NEONEX-PAY</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<title>NEONEX-PAY</title>
 
 <style>
-body{
-  background:#000;
-  color:#ffd700;
-  font-family:Arial,Helvetica,sans-serif;
-  display:flex;
-  justify-content:center;
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #ffd700;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.app{
-  max-width:420px;
-  padding:20px;
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 25px;
+  text-align: center;
 }
 
-/* ===== HEADER FINTECH ===== */
-
-.header{
-  text-align:center;
-  margin-bottom:20px;
+.logo {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 4px;
 }
 
-.logoN{
-  font-size:64px;
-  font-weight:900;
-  letter-spacing:6px;
-}
-
-.snake{
-  margin:14px 0;
-  height:12px;
-  border-radius:20px;
-  background:repeating-linear-gradient(
+.snake-bar {
+  width: 100%;
+  height: 14px;
+  background: repeating-linear-gradient(
     45deg,
     #ffd700,
-    #ffd700 12px,
-    #000 12px,
-    #000 24px
+    #ffd700 10px,
+    #000 10px,
+    #000 20px
   );
-  animation: move 3s linear infinite;
+  border-radius: 10px;
+  margin: 15px 0 30px;
 }
 
-@keyframes move{
-  from{background-position:0 0;}
-  to{background-position:200px 0;}
+input {
+  width: 100%;
+  padding: 14px;
+  background: #111;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  color: #ffd700;
+  font-size: 16px;
+  margin-top: 12px;
 }
 
-/* ===== UI ===== */
-
-button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  background:#ffd700;
-  color:#000;
-  border:none;
-  border-radius:12px;
-  font-weight:bold;
-  cursor:pointer;
+input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #ffd700;
 }
 
-input{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:10px;
-  border:none;
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #000;
+  transition: transform 0.2s ease;
 }
 
-.box{
-  margin-top:16px;
-  background:#0c0c0c;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid #ffd70055;
+button:hover {
+  transform: scale(1.03);
 }
 
-#qrcode{
-  margin-top:12px;
-  display:flex;
-  justify-content:center;
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #222;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ffd700, #ffb700);
+  transition: width 0.8s ease;
+}
+
+#status {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #fff;
 }
 </style>
 </head>
 
 <body>
-<div class="app">
 
-<!-- ===== TOPO FINTECH ===== -->
-<div class="header">
-  <div class="logoN">N</div>
-  <div class="snake"></div>
-  <h2>NEONEX-PAY</h2>
-</div>
+<div class="container">
 
-<!-- ===== CONEXÃO ===== -->
-<button id="connectBtn">Conectar Carteira</button>
+  <div class="logo">N</div>
 
-<div id="walletBox" class="box" style="display:none">
-<p>Endereço: <span id="address"></span></p>
-<p>Saldo: <span id="balance"></span></p>
-<p>Rede: <span id="network"></span></p>
-</div>
+  <div class="snake-bar"></div>
 
-<!-- ===== PAGAMENTO ===== -->
-<div class="box">
-<h3>Enviar pagamento</h3>
-<input id="to" placeholder="Carteira destino">
-<input id="amount" placeholder="Valor">
+  <button id="connectWallet">Conectar MetaMask</button>
 
-<button id="sendETH">Enviar ETH</button>
-<button id="sendUSDT">Enviar USDT (Polygon)</button>
-</div>
+  <input id="amount" placeholder="Valor em ETH">
 
-<!-- ===== QR ===== -->
-<div class="box">
-<h3>Receber com QR</h3>
-<input id="qrAmount" placeholder="Valor opcional">
-<button id="qrBtn">Gerar QR</button>
-<div id="qrcode"></div>
-</div>
+  <button id="sendPayment">Enviar Pagamento</button>
+
+  <div class="progress-bar">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+
+  <p id="status"></p>
 
 </div>
 
-<!-- SEMPRE NO FINAL -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
 <script src="app.js"></script>
+
 </body>
 </html>
 
