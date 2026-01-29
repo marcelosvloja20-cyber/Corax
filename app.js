@@ -4,7 +4,7 @@
 let provider;
 let signer;
 let userAddress;
-const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI"; // Coloque seu endereço público do smart contract ou carteira
+const RECEIVER = "0xd8deaef57da7b8804fecfbfbaeb31ccd335749f5"; // Coloque seu endereço público do smart contract ou carteira
 
 // Elementos do DOM
 const sidebar = document.getElementById("sidebar");
@@ -20,7 +20,7 @@ const qrcodeEl = document.getElementById("qrcode");
 const historyEl = document.getElementById("history");
 const toastEl = document.getElementById("toast");
 
-// Histórico local (exemplo simples)
+// Histórico local simples
 let transactionHistory = [];
 
 // ================================
@@ -70,15 +70,13 @@ async function sendPayment() {
   }
 
   try {
-    // Animação barra progresso
+    // Barra de progresso inicial
     progressFill.style.width = "30%";
+    statusEl.textContent = "Preparando transação...";
 
     let tx;
     if (token === "USDT_ARB" || token === "USDT_POLY" || token === "USDC_BASE") {
-      // Simulação de pagamento ERC20 simples
-      const erc20Abi = [
-        "function transfer(address to, uint amount) public returns (bool)"
-      ];
+      const erc20Abi = ["function transfer(address to, uint amount) public returns (bool)"];
       const tokenAddress = {
         USDT_ARB: "0xUSDT_ARBITRUM_ADDRESS",
         USDT_POLY: "0xUSDT_POLYGON_ADDRESS",
@@ -86,11 +84,11 @@ async function sendPayment() {
       }[token];
 
       const contract = new ethers.Contract(tokenAddress, erc20Abi, signer);
-      const decimals = 6; // USDT / USDC geralmente
+      const decimals = 6;
       tx = await contract.transfer(RECEIVER, ethers.parseUnits(amount, decimals));
+
     } else if (token === "NEX") {
-      // Aqui será seu token $NEX futuramente
-      showToast("Pagamento em $NEX não implementado ainda!");
+      showToast("Pagamento em $NEX ainda não implementado!");
       progressFill.style.width = "0%";
       return;
     }
@@ -110,8 +108,8 @@ async function sendPayment() {
       text: `https://neonex.io/pago?tx=${tx.hash}`,
       width: 120,
       height: 120,
-      colorDark: "#ffd700",
-      colorLight: "#000"
+      colorDark: "#00E5FF",
+      colorLight: "#0B0B0F"
     });
 
     // Salvar histórico
@@ -123,7 +121,7 @@ async function sendPayment() {
     });
     renderHistory();
 
-    // Reset barra
+    // Reset barra após animação
     setTimeout(() => { progressFill.style.width = "0%"; }, 1500);
 
   } catch (err) {
@@ -144,7 +142,7 @@ function renderHistory() {
     div.className = "history-card";
     div.innerHTML = `
       <b>${tx.token}</b> - ${tx.amount}<br>
-      Tx: <a href="https://arbiscan.io/tx/${tx.txHash}" target="_blank">${tx.txHash.slice(0,10)}...</a><br>
+      Tx: <a href="https://arbiscan.io/tx/${tx.txHash}" target="_blank" style="color:#00E5FF">${tx.txHash.slice(0,10)}...</a><br>
       ${tx.timestamp}
     `;
     historyEl.appendChild(div);
@@ -154,9 +152,9 @@ function renderHistory() {
 // ================================
 // QUICK ACTIONS
 // ================================
-function quickSend(){toggleSidebar(); showToast("Abra a sidebar para enviar!");}
-function quickReceive(){toggleSidebar(); showToast("Abra a sidebar para receber!");}
-function quickSwap(){toggleSidebar(); showToast("Funcionalidade Swap futura");}
+function quickSend(){sidebar.classList.add("active"); showToast("Abra a sidebar para enviar!");}
+function quickReceive(){sidebar.classList.add("active"); showToast("Abra a sidebar para receber!");}
+function quickSwap(){sidebar.classList.add("active"); showToast("Funcionalidade Swap futura");}
 
 // ================================
 // TOAST
@@ -166,10 +164,5 @@ function showToast(msg) {
   toastEl.classList.add("show");
   setTimeout(() => { toastEl.classList.remove("show"); }, 2500);
 }
-
-// ================================
-// FUNÇÃO TOGGLE SIDEBAR SIMPLES
-// ================================
-function toggleSidebar(){sidebar.classList.add("active");}
 
   
