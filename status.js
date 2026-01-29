@@ -1,6 +1,4 @@
-let payments = JSON.parse(
-  global.payments || "[]"
-); // temporário, ideal: banco real
+let payments = JSON.parse(global.payments || "[]"); // temporário
 
 export default async function handler(req, res) {
   const { hash } = req.query;
