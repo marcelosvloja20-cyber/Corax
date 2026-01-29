@@ -1,3 +1,4 @@
+// Elementos do DOM
 const connectBtn = document.getElementById("connectWallet");
 const sendBtn = document.getElementById("sendPayment");
 const statusText = document.getElementById("status");
@@ -9,30 +10,34 @@ const walletBox = document.getElementById("walletAddress");
 const historyBox = document.getElementById("history");
 const productNameBox = document.getElementById("productName");
 const tokenSelect = document.getElementById("tokenSelect");
-const chartCanvas = document.getElementById("paymentChart").getContext("2d");
 
 let provider, signer, userAddress = null;
 
+// Tokens multi-chain
 const TOKENS = {
   USDT_ARB: { address: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9", network: 42161 },
   USDT_POLY: { address: "0x3813e82e6f7098b9583FC0F33a962D02018B6803", network: 137 },
   USDC_BASE: { address: "0x0c12b7D63d2f87662e5E2E93E502eF32fC073c47", network: 8453 }
 };
 
+// Endereço do recebedor
 const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI";
 
+// Função de toast
 function showToast(msg) {
   toast.innerText = msg;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
+// Salvar transações localmente
 function saveTransaction(data) {
   const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
   history.unshift(data);
   localStorage.setItem("neonex_history", JSON.stringify(history));
 }
 
+// Carregar histórico
 function loadHistory() {
   const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
   historyBox.innerHTML = "";
@@ -42,22 +47,9 @@ function loadHistory() {
     div.innerHTML = `<strong>${tx.amount}</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash}</small>`;
     historyBox.appendChild(div);
   });
-  updateChart(history);
 }
 
-function updateChart(history) {
-  const labels = history.slice(0, 10).map(h => h.date).reverse();
-  const amounts = history.slice(0, 10).map(h => parseFloat(h.amount)).reverse();
-
-  if (window.paymentChart) window.paymentChart.destroy();
-
-  window.paymentChart = new Chart(chartCanvas, {
-    type: 'bar',
-    data: { labels, datasets: [{ label: 'Pagamentos Recentes', data: amounts, backgroundColor: '#FFD700' }] },
-    options: { scales: { y: { beginAtZero:true } } }
-  });
-}
-
+// Conectar MetaMask
 async function connectWallet() {
   if (!window.ethereum) { alert("MetaMask não encontrada"); return; }
   provider = new ethers.BrowserProvider(window.ethereum);
@@ -71,15 +63,7 @@ async function connectWallet() {
 
 connectBtn.onclick = connectWallet;
 
-function loadAmountFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const value = params.get("amount");
-  const product = params.get("product");
-  if (value) amountInput.value = value;
-  if (product) productNameBox.innerText = product;
-}
-loadAmountFromURL();
-
+// Gerar QR dinâmico
 function generateQR() {
   if (!userAddress) return;
   qrBox.innerHTML = "";
@@ -93,6 +77,7 @@ function generateQR() {
 amountInput.addEventListener("input", generateQR);
 tokenSelect.addEventListener("change", generateQR);
 
+// Criar link de pagamento (fictício, pode integrar API real depois)
 async function createPaymentLink(amount, product) {
   try {
     const res = await fetch("/api/create-payment", {
@@ -105,9 +90,13 @@ async function createPaymentLink(amount, product) {
       showToast("Link criado ✅");
       window.history.replaceState({}, "", data.link);
     }
-  } catch (err) { console.error(err); showToast("Erro ao criar link ❌"); }
+  } catch (err) {
+    console.error(err);
+    showToast("Erro ao criar link ❌");
+  }
 }
 
+// Enviar pagamento
 async function sendPayment() {
   if (!signer) { showToast("Conecte a carteira"); return; }
   const value = amountInput.value;
@@ -126,6 +115,7 @@ async function sendPayment() {
 
     progressFill.style.width = "50%";
     statusText.innerText = "Enviando pagamento...";
+
     const contract = new ethers.Contract(token.address, [
       "function transfer(address to, uint amount) returns (bool)",
       "function decimals() view returns (uint8)"
@@ -146,11 +136,18 @@ async function sendPayment() {
     saveTransaction({ amount: value, product, date: new Date().toLocaleString(), hash: tx.hash });
     loadHistory();
     generateQR();
-  } catch (err) { console.error(err); showToast("Erro na transação ❌"); progressFill.style.width="0%"; }
+  } catch (err) {
+    console.error(err);
+    showToast("Erro na transação ❌");
+    progressFill.style.width="0%";
+  }
 }
 
 sendBtn.onclick = sendPayment;
+
+// Inicializar
 loadHistory();
 generateQR();
+
 
   
