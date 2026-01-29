@@ -1,161 +1,138 @@
-const toggleBtn = document.getElementById("toggleSidebar");
-const sidebar = document.getElementById("sidebar");
-toggleBtn.onclick = () => sidebar.classList.toggle("active");
+// Endereço público para receber pagamentos
+const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI"; // substitua pelo seu endereço real
 
-const connectBtn = document.getElementById("connectWallet");
-const sendBtn = document.getElementById("sendPayment");
-const statusText = document.getElementById("status");
-const amountInput = document.getElementById("amount");
-const progressFill = document.getElementById("progressFill");
-const toast = document.getElementById("toast");
-const qrBox = document.getElementById("qrcode");
-const walletBox = document.getElementById("walletAddress");
-const historyBox = document.getElementById("history");
-const productNameBox = document.getElementById("productName");
-const tokenSelect = document.getElementById("tokenSelect");
-const chartCanvas = document.getElementById("paymentChart");
+// Variáveis globais
+let provider, signer, walletAddress;
+let history = [];
 
-let provider, signer, userAddress = null;
+// Elementos
+const connectWalletBtn = document.getElementById('connectWallet');
+const sendPaymentBtn = document.getElementById('sendPayment');
+const tokenSelect = document.getElementById('tokenSelect');
+const amountInput = document.getElementById('amount');
+const progressFill = document.getElementById('progressFill');
+const statusEl = document.getElementById('status');
+const walletAddressEl = document.getElementById('walletAddress');
+const qrcodeContainer = document.getElementById('qrcode');
+const toast = document.getElementById('toast');
 
-const TOKENS = {
-  USDT_ARB: { address: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9", network: 42161 },
-  USDT_POLY: { address: "0x3813e82e6f7098b9583FC0F33a962D02018B6803", network: 137 },
-  USDC_BASE: { address: "0x0c12b7D63d2f87662e5E2E93E502eF32fC073c47", network: 8453 }
+// Gráfico
+let paymentChart;
+const ctx = document.getElementById('paymentChart').getContext('2d');
+
+// Sidebar toggle
+const sidebar = document.getElementById('sidebar');
+document.getElementById('toggleSidebar').onclick = () => {
+  sidebar.classList.toggle('active');
 };
 
-const RECEIVER = "SEU_ENDERECO_PUBLICO_AQUI";
-
+// Função para mostrar Toast
 function showToast(msg) {
   toast.innerText = msg;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 3000);
+  toast.classList.add('show');
+  setTimeout(()=>{ toast.classList.remove('show'); },3000);
 }
 
-function saveTransaction(data) {
-  const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
-  history.unshift(data);
-  localStorage.setItem("neonex_history", JSON.stringify(history));
-}
+// Conectar carteira
+connectWalletBtn.onclick = async () => {
+  if (window.ethereum) {
+    try {
+      provider = new ethers.BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      signer = await provider.getSigner();
+      walletAddress = await signer.getAddress();
+      walletAddressEl.innerText = walletAddress;
+      showToast("Carteira conectada!");
+    } catch(err) {
+      console.error(err);
+      showToast("Erro ao conectar carteira.");
+    }
+  } else {
+    alert("Instale MetaMask ou carteira compatível.");
+  }
+};
 
-function loadHistory() {
-  const history = JSON.parse(localStorage.getItem("neonex_history")) || [];
-  historyBox.innerHTML = "";
-  history.forEach(tx => {
-    const div = document.createElement("div");
-    div.className = "history-card";
-    div.innerHTML = `<strong>${tx.amount}</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash || ''}</small>`;
-    historyBox.appendChild(div);
-  });
-  updateChart(history);
-}
+// Enviar pagamento
+sendPaymentBtn.onclick = async () => {
+  const amount = amountInput.value;
+  const token = tokenSelect.value;
 
-async function connectWallet() {
-  if (!window.ethereum) { alert("MetaMask não encontrada"); return; }
-  provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  signer = await provider.getSigner();
-  userAddress = await signer.getAddress();
-  walletBox.innerText = "Endereço: " + userAddress;
-  showToast("Carteira conectada ✅");
-  generateQR();
-}
+  if (!walletAddress) { showToast("Conecte sua carteira."); return; }
+  if (!amount || isNaN(amount) || amount <= 0) { showToast("Valor inválido."); return; }
 
-connectBtn.onclick = connectWallet;
-
-function generateQR() {
-  if (!userAddress) return;
-  qrBox.innerHTML = "";
-  const tokenKey = tokenSelect.value;
-  const token = TOKENS[tokenKey];
-  const amount = amountInput.value || 0;
-  const qrData = `ethereum:${RECEIVER}@${token.network}/transfer?address=${token.address}&uint256=${amount}`;
-  new QRCode(qrBox, { text: qrData, width: 160, height: 160, colorDark: "#ffd700", colorLight: "#000" });
-}
-
-amountInput.addEventListener("input", generateQR);
-tokenSelect.addEventListener("change", generateQR);
-
-async function sendPayment() {
-  if (!signer) { showToast("Conecte a carteira"); return; }
-  const value = amountInput.value;
-  const product = productNameBox.innerText;
-  if (!value || value <= 0) { showToast("Valor inválido"); return; }
+  progressFill.style.width = "30%";
+  statusEl.innerText = "Preparando pagamento...";
 
   try {
-    const tokenKey = tokenSelect.value;
-    const token = TOKENS[tokenKey];
+    // Para simplificação, apenas QR + histórico, real tx depende do smart contract
+    const paymentInfo = `${token}:${RECEIVER}?value=${amount}`;
+    qrcodeContainer.innerHTML = "";
+    new QRCode(qrcodeContainer, { text: paymentInfo, width:200, height:200 });
 
-    progressFill.style.width = "30%";
-    statusText.innerText = "Iniciando pagamento...";
-    showToast("Iniciando pagamento...");
-
-    progressFill.style.width = "50%";
-    statusText.innerText = "Enviando pagamento...";
-
-    const contract = new ethers.Contract(token.address, [
-      "function transfer(address to, uint amount) returns (bool)",
-      "function decimals() view returns (uint8)"
-    ], signer);
-
-    const decimals = await contract.decimals();
-    const amountParsed = ethers.parseUnits(value, decimals);
-    const tx = await contract.transfer(RECEIVER, amountParsed);
-
-    progressFill.style.width = "70%";
-    statusText.innerText = "Confirmando...";
-    await tx.wait();
+    // Atualiza histórico
+    const tx = { token, amount, date: new Date().toLocaleString() };
+    history.unshift(tx);
+    renderHistory();
+    renderChart();
 
     progressFill.style.width = "100%";
-    statusText.innerText = "Pagamento confirmado 🎉";
-    showToast("Pagamento recebido ✅");
-
-    saveTransaction({ amount: value, product, date: new Date().toLocaleString(), hash: tx.hash });
-    loadHistory();
-    generateQR();
-  } catch (err) {
+    statusEl.innerText = "Pagamento pronto via QR!";
+    showToast("Pagamento gerado!");
+  } catch(err){
     console.error(err);
-    showToast("Erro na transação ❌");
-    progressFill.style.width="0%";
+    showToast("Erro ao gerar pagamento.");
+    progressFill.style.width = "0%";
+    statusEl.innerText = "";
   }
+};
+
+// Renderizar extrato
+function renderHistory(){
+  const historyEl = document.getElementById('history');
+  historyEl.innerHTML = "";
+  history.forEach(tx=>{
+    const card = document.createElement('div');
+    card.className = 'history-card';
+    card.innerHTML = `<strong>${tx.token}</strong> → ${tx.amount} <br><small>${tx.date}</small>`;
+    historyEl.appendChild(card);
+  });
 }
 
-sendBtn.onclick = sendPayment;
+// Gráfico de pagamentos
+function renderChart(){
+  const labels = history.map(tx=>tx.date).slice(0,10).reverse();
+  const data = history.map(tx=>parseFloat(tx.amount)).slice(0,10).reverse();
 
-// Gráfico Chart.js
-let paymentChart;
-function updateChart(history) {
-  const labels = history.slice(0,10).map(tx => tx.date).reverse();
-  const data = history.slice(0,10).map(tx => parseFloat(tx.amount)).reverse();
-
-  if (!paymentChart) {
-    paymentChart = new Chart(chartCanvas, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Pagamentos Recentes',
-          data,
-          backgroundColor: '#ffd700'
-        }]
+  if(paymentChart) paymentChart.destroy();
+  paymentChart = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'Pagamentos Recentes',
+        data,
+        backgroundColor:'#ffd700'
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{ display:false },
+        tooltip:{ mode:'index', intersect:false }
       },
-      options: {
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color: '#fff' }, grid: { color: '#222' } },
-          y: { ticks: { color: '#fff' }, grid: { color: '#222' } }
-        }
+      scales:{
+        x:{ ticks:{color:'#fff'}, grid:{color:'#222'} },
+        y:{ ticks:{color:'#fff'}, grid:{color:'#222'} }
       }
-    });
-  } else {
-    paymentChart.data.labels = labels;
-    paymentChart.data.datasets[0].data = data;
-    paymentChart.update();
-  }
+    }
+  });
 }
 
-// Inicializar
-loadHistory();
-generateQR();
+// Planos Premium
+function subscribePlan(name, price){
+  showToast(`Você assinou o Plano ${name} por $${price}!`);
+  // Aqui pode integrar API real para assinatura / smart contract
+}
 
 
   
