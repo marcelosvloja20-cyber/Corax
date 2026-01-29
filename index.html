@@ -6,6 +6,7 @@
 <title>NEONEX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
@@ -13,53 +14,87 @@ body {
   background: #000;
   color: #ffd700;
   font-family: 'Arial', Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-.container {
-  max-width: 440px;
-  margin: auto;
-  padding: 30px;
+.header-center {
   text-align: center;
+  margin-top: 120px;
 }
-
-.header {margin-bottom: 30px;}
 
 .brand-symbol {
   font-family: 'Montserrat', sans-serif;
-  font-size: 60px;
+  font-size: 70px;
   font-weight: 900;
-  color: #ffd700;
-  margin-bottom: 10px;
 }
 
 .brand-name {
   font-family: 'Montserrat', sans-serif;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  color: #ffd700;
+  margin-top: 8px;
 }
 
-h2{margin-bottom:12px;}
-.product-name{font-size:20px;margin:12px 0;}
+.brand-message {
+  font-size: 16px;
+  margin-top: 12px;
+  color: #fff;
+}
+
+/* Aba lateral */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 320px;
+  height: 100%;
+  background: #111;
+  border-right: 2px solid #ffd700;
+  padding: 25px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #ffd700;
+  color: #000;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+h2 {margin-bottom:12px;}
+.product-name {font-size:18px;margin:12px 0;}
 
 input, select {
   width: 100%;
-  padding: 14px;
-  background: #111;
+  padding: 12px;
+  background: #000;
   border: 1px solid #ffd700;
-  border-radius: 12px;
+  border-radius: 10px;
   color: #ffd700;
-  font-size: 16px;
-  margin-top: 12px;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 button {
   width: 100%;
-  padding: 14px;
-  margin-top: 15px;
+  padding: 12px;
+  margin-top: 12px;
   border: none;
-  border-radius: 14px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   background: linear-gradient(135deg, #ffd700, #ffb700);
@@ -75,7 +110,7 @@ button:hover {transform: scale(1.05);}
   background:#222;
   border-radius:20px;
   overflow:hidden;
-  margin-top:18px;
+  margin-top:12px;
 }
 
 .progress-fill {
@@ -85,51 +120,54 @@ button:hover {transform: scale(1.05);}
   transition:width 0.8s ease;
 }
 
-#qrcode{margin-top:25px;}
-#walletAddress{font-size:12px;margin-top:10px;word-break:break-all;color:#aaa;}
-#status{margin-top:12px;font-size:14px;color:#fff;}
+#qrcode{margin-top:15px;}
+#walletAddress{font-size:12px;margin-top:8px;word-break:break-all;color:#aaa;}
+#status{margin-top:10px;font-size:12px;color:#fff;}
 
-#history{margin-top:20px;text-align:left;}
-.history-card{background:#111;padding:12px;border-radius:12px;margin-bottom:10px;}
+#history{margin-top:15px;text-align:left;}
+.history-card{background:#000;padding:10px;border-radius:10px;margin-bottom:8px;}
 
 #chartContainer {
-  margin-top: 25px;
-  background:#111;
-  padding:15px;
-  border-radius:12px;
+  margin-top: 15px;
+  background:#000;
+  padding:10px;
+  border-radius:10px;
 }
 
 .toast {
   position: fixed;
-  bottom: 25px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background: #ffd700;
   color: #000;
-  padding: 14px 22px;
-  border-radius: 18px;
+  padding: 10px 18px;
+  border-radius: 14px;
   font-weight: bold;
   opacity: 0;
   pointer-events: none;
   transition: all 0.4s ease;
-  box-shadow: 0 0 15px rgba(255,215,0,0.6);
+  box-shadow: 0 0 12px rgba(255,215,0,0.6);
 }
 
 .toast.show {
   opacity: 1;
-  bottom: 45px;
+  bottom: 35px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-  <div class="header">
-    <div class="brand-symbol">⚡</div>
-    <div class="brand-name">NEONEX</div>
-  </div>
+<div class="header-center">
+  <div class="brand-symbol">🌐</div>
+  <div class="brand-name">NEONEX</div>
+  <div class="brand-message">O seu melhor método de pagamento, vem para NEONEX</div>
+</div>
 
+<div class="toggle-btn" id="toggleSidebar">Menu</div>
+
+<div class="sidebar" id="sidebar">
   <h2>Checkout</h2>
   <div class="product-name" id="productName">Serviço Premium NEONEX</div>
 
@@ -159,7 +197,6 @@ button:hover {transform: scale(1.05);}
   <div id="chartContainer">
     <canvas id="paymentChart"></canvas>
   </div>
-
 </div>
 
 <div id="toast" class="toast"></div>
