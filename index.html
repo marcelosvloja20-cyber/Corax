@@ -1,51 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>NEONEX-PAY</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<title>NEONEX-PAY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Ethers v6 -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
-  <!-- QR Code -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
-  <link rel="stylesheet" href="style.css">
+<style>
+body{
+  background:#0b0f1a;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+}
+.app{
+  max-width:420px;
+  padding:20px;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  background:#00f5ff;
+  border:none;
+  font-weight:bold;
+  border-radius:8px;
+  cursor:pointer;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:6px;
+  border:none;
+}
+.box{
+  margin-top:16px;
+  background:#12182a;
+  padding:14px;
+  border-radius:12px;
+}
+#qrcode{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>NEONEX-PAY</h1>
-    <p>Pagamentos Web3 P2P — você é seu próprio banco</p>
+<div class="app">
 
-    <button id="connectBtn">Conectar Carteira</button>
+<h2>NEONEX-PAY</h2>
 
-    <div id="walletInfo" class="hidden">
-      <div class="infoBox">
-        <p><strong>Endereço:</strong> <span id="address"></span></p>
-        <p><strong>Saldo:</strong> <span id="balance"></span></p>
-        <p><strong>Rede:</strong> <span id="network"></span></p>
-      </div>
+<button id="connectBtn">Conectar Carteira</button>
 
-      <div id="sendBox">
-        <h3>Enviar ETH</h3>
-        <input id="to" placeholder="Endereço de destino" />
-        <input id="amount" placeholder="Valor em ETH" />
-        <button id="sendBtn">Enviar Pagamento</button>
-      </div>
+<div id="walletBox" class="box" style="display:none">
+<p><b>Endereço:</b> <span id="address"></span></p>
+<p><b>Saldo:</b> <span id="balance"></span></p>
+<p><b>Rede:</b> <span id="network"></span></p>
+</div>
 
-      <div id="qrBox">
-        <h3>Receber com QR Code</h3>
-        <input id="qrAmount" placeholder="Valor opcional (ETH)" />
-        <button id="qrBtn">Gerar QR Code</button>
-        <div id="qrcode"></div>
-      </div>
-    </div>
-  </div>
+<div class="box">
+<h3>Enviar pagamento</h3>
+<input id="to" placeholder="Carteira destino"/>
+<input id="amount" placeholder="Valor"/>
 
-  <script type="module" src="app.js"></script>
+<button id="sendETH">Enviar ETH</button>
+<button id="sendUSDT">Enviar USDT (Polygon)</button>
+</div>
+
+<div class="box">
+<h3>Receber com QR</h3>
+<input id="qrAmount" placeholder="Valor opcional"/>
+<button id="qrBtn">Gerar QR</button>
+<div id="qrcode"></div>
+</div>
+
+</div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
-
-
