@@ -3,98 +3,198 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEONEX</title>
+<title>NEONEX Dapp</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
 <style>
-/* Reset */
-body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font-family: 'Arial', Helvetica, sans-serif; }
+body, html {
+  margin:0;
+  padding:0;
+  font-family: 'Arial', Helvetica, sans-serif;
+  background:#000;
+  color:#ffd700;
+  overflow-x:hidden;
+}
 
-/* Vídeo de fundo */
-#bgVideo {
+/* Sidebar */
+.sidebar {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.15; /* transparência sutil */
+  top:0; left:-360px;
+  width:360px;
+  height:100%;
+  background:#111;
+  border-right:2px solid #ffd700;
+  padding:25px;
+  box-sizing:border-box;
+  transition:left 0.3s ease;
+  overflow-y:auto;
+  z-index:999;
+}
+.sidebar.active{ left:0; }
+
+/* Toggle */
+.toggle-btn {
+  position: fixed;
+  top:15px; left:15px;
+  background:#ffd700;
+  color:#000;
+  padding:12px 14px;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:1000;
 }
 
-/* Container central */
-.content {
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #ffd700;
-  z-index: 2;
+/* Mascote topo */
+.sidebar-header {
+  text-align:center;
+  margin-bottom:20px;
 }
-
-.brand-symbol {
-  font-size: 100px;
-  margin-bottom: 20px;
+.mascot {
+  font-size:80px;
+  margin-bottom:12px;
   animation: bounce 1.2s infinite;
 }
-
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-15px);}
+}
+.brand-name { font-family:'Montserrat', sans-serif; font-size:28px; font-weight:700; }
+
+/* Inputs e botões */
+input, select {
+  width:100%;
+  padding:12px;
+  background:#000;
+  border:1px solid #ffd700;
+  border-radius:10px;
+  color:#ffd700;
+  font-size:14px;
+  margin-top:10px;
+}
+button {
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ffd700,#ffb700);
+  color:#000;
+  transition:transform 0.2s ease;
+}
+button:hover{transform:scale(1.05);}
+
+/* Progress */
+.progress-bar {
+  width:100%;
+  height:10px;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:12px;
+}
+.progress-fill {
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ffd700,#ffb700);
+  transition:width 0.8s ease;
 }
 
-.brand-name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 48px;
-  font-weight: 900;
-  margin-bottom: 12px;
-}
+/* QR + extrato */
+#qrcode{margin-top:15px;}
+#walletAddress{font-size:12px;margin-top:8px;word-break:break-all;color:#aaa;}
+#status{margin-top:10px;font-size:12px;color:#fff;}
+#history{margin-top:15px;text-align:left;}
+.history-card{background:#000;padding:10px;border-radius:10px;margin-bottom:8px;}
+#chartContainer{margin-top:15px;background:#000;padding:10px;border-radius:10px;}
 
-.brand-message {
-  font-size: 20px;
-  margin-bottom: 40px;
-  color: #fff;
-}
+/* Premium */
+.premium-section {margin-top:25px;}
+.premium-plan {background:#000;padding:12px;border:1px solid #ffd700;border-radius:10px;margin-bottom:12px;}
+.premium-plan h4{margin:0;margin-bottom:8px;}
+.premium-plan button{margin-top:5px;width:100%;}
 
-.open-menu-btn {
-  background: linear-gradient(135deg, #ffd700, #ffb700);
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffd700;
   color: #000;
-  border: none;
-  padding: 16px 28px;
-  font-size: 16px;
+  padding: 10px 18px;
+  border-radius: 14px;
   font-weight: bold;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  box-shadow:0 0 12px rgba(255,215,0,0.6);
 }
-
-.open-menu-btn:hover {
-  transform: scale(1.05);
-}
+.toast.show {opacity:1; bottom:35px;}
 </style>
 </head>
 
 <body>
 
-<!-- Vídeo de fundo -->
-<video autoplay muted loop id="bgVideo">
-  <source src="onca.mp4" type="video/mp4">
-  Seu navegador não suporta vídeo em background.
-</video>
+<div class="toggle-btn" id="toggleSidebar">Menu</div>
 
-<div class="content">
-  <div class="brand-symbol">🐍</div>
-  <div class="brand-name">NEONEX</div>
-  <div class="brand-message">Bem-vindos ao Mundo NEONEX</div>
-  <button class="open-menu-btn" id="openSidebar">Entrar</button>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="mascot">🐍</div>
+    <div class="brand-name">NEONEX</div>
+  </div>
+
+  <!-- Checkout -->
+  <h2>Checkout</h2>
+  <div class="product-name" id="productName">Serviço Premium NEONEX</div>
+  <button id="connectWallet">Conectar Carteira</button>
+  <select id="tokenSelect">
+    <option value="USDT_ARB">USDT Arbitrum</option>
+    <option value="USDT_POLY">USDT Polygon</option>
+    <option value="USDC_BASE">USDC Base</option>
+  </select>
+  <input id="amount" placeholder="Valor">
+  <button id="sendPayment">Pagar Agora</button>
+  <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+  <div id="qrcode"></div>
+  <p id="walletAddress"></p>
+  <p id="status"></p>
+
+  <!-- Extrato -->
+  <h3>Extrato</h3>
+  <div id="history"></div>
+  <div id="chartContainer"><canvas id="paymentChart"></canvas></div>
+
+  <!-- Premium -->
+  <div class="premium-section">
+    <h3>Planos Premium</h3>
+    <div class="premium-plan" id="planBasic">
+      <h4>Plano Bronze</h4>
+      <p>+0.5% rentabilidade/mês</p>
+      <button onclick="subscribePlan('Bronze',10)">Assinar $10</button>
+    </div>
+    <div class="premium-plan" id="planSilver">
+      <h4>Plano Prata</h4>
+      <p>+1% rentabilidade/mês</p>
+      <button onclick="subscribePlan('Prata',25)">Assinar $25</button>
+    </div>
+    <div class="premium-plan" id="planGold">
+      <h4>Plano Ouro</h4>
+      <p>+2% rentabilidade/mês</p>
+      <button onclick="subscribePlan('Ouro',50)">Assinar $50</button>
+    </div>
+  </div>
 </div>
 
-<script>
-document.getElementById('openSidebar').onclick = () => {
-  // Redirecionar para app completo
-  window.location.href = "app.html";
-};
-</script>
+<div id="toast" class="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
    
