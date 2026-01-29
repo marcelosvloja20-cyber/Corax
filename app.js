@@ -9,6 +9,7 @@ const walletBox = document.getElementById("walletAddress");
 const historyBox = document.getElementById("history");
 const productNameBox = document.getElementById("productName");
 const tokenSelect = document.getElementById("tokenSelect");
+const chartCanvas = document.getElementById("paymentChart").getContext("2d");
 
 let provider, signer, userAddress = null;
 
@@ -37,9 +38,23 @@ function loadHistory() {
   historyBox.innerHTML = "";
   history.forEach(tx => {
     const div = document.createElement("div");
-    div.style.marginTop = "10px";
-    div.innerHTML = `<strong>${tx.amount}</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash}</small><hr>`;
+    div.className = "history-card";
+    div.innerHTML = `<strong>${tx.amount}</strong> - ${tx.product}<br>${tx.date}<br><small>${tx.hash}</small>`;
     historyBox.appendChild(div);
+  });
+  updateChart(history);
+}
+
+function updateChart(history) {
+  const labels = history.slice(0, 10).map(h => h.date).reverse();
+  const amounts = history.slice(0, 10).map(h => parseFloat(h.amount)).reverse();
+
+  if (window.paymentChart) window.paymentChart.destroy();
+
+  window.paymentChart = new Chart(chartCanvas, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Pagamentos Recentes', data: amounts, backgroundColor: '#FFD700' }] },
+    options: { scales: { y: { beginAtZero:true } } }
   });
 }
 
@@ -63,7 +78,6 @@ function loadAmountFromURL() {
   if (value) amountInput.value = value;
   if (product) productNameBox.innerText = product;
 }
-
 loadAmountFromURL();
 
 function generateQR() {
@@ -91,10 +105,7 @@ async function createPaymentLink(amount, product) {
       showToast("Link criado ✅");
       window.history.replaceState({}, "", data.link);
     }
-  } catch (err) {
-    console.error(err);
-    showToast("Erro ao criar link ❌");
-  }
+  } catch (err) { console.error(err); showToast("Erro ao criar link ❌"); }
 }
 
 async function sendPayment() {
@@ -106,21 +117,23 @@ async function sendPayment() {
   try {
     const tokenKey = tokenSelect.value;
     const token = TOKENS[tokenKey];
+
     progressFill.style.width = "30%";
     statusText.innerText = "Criando pagamento...";
+    showToast("Iniciando pagamento...");
+
     await createPaymentLink(value, product);
 
     progressFill.style.width = "50%";
     statusText.innerText = "Enviando pagamento...";
-
     const contract = new ethers.Contract(token.address, [
       "function transfer(address to, uint amount) returns (bool)",
       "function decimals() view returns (uint8)"
     ], signer);
 
     const decimals = await contract.decimals();
-    const amount = ethers.parseUnits(value, decimals);
-    const tx = await contract.transfer(RECEIVER, amount);
+    const amountParsed = ethers.parseUnits(value, decimals);
+    const tx = await contract.transfer(RECEIVER, amountParsed);
 
     progressFill.style.width = "70%";
     statusText.innerText = "Confirmando...";
@@ -130,14 +143,10 @@ async function sendPayment() {
     statusText.innerText = "Pagamento confirmado 🎉";
     showToast("Pagamento recebido ✅");
 
-    saveTransaction({ amount: value + " " + tokenKey, product, date: new Date().toLocaleString(), hash: tx.hash });
+    saveTransaction({ amount: value, product, date: new Date().toLocaleString(), hash: tx.hash });
     loadHistory();
     generateQR();
-  } catch (err) {
-    console.error(err);
-    showToast("Erro na transação ❌");
-    progressFill.style.width = "0%";
-  }
+  } catch (err) { console.error(err); showToast("Erro na transação ❌"); progressFill.style.width="0%"; }
 }
 
 sendBtn.onclick = sendPayment;
