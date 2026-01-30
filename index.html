@@ -18,7 +18,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: Inter, system-ui, sans-serif;
     }
 
     body {
@@ -41,40 +41,9 @@
       box-shadow: 0 0 40px rgba(0,229,255,0.18);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .logo-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 20px;
-      color: #000;
-    }
-
-    .logo-text {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .logo-text span {
-      color: var(--neon-blue);
-    }
-
     h1 {
       font-size: 26px;
-      line-height: 1.2;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     h1 span {
@@ -82,159 +51,100 @@
     }
 
     p {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--text-muted);
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .feature {
-      background: rgba(255,255,255,0.03);
-      border-radius: 16px;
-      padding: 14px 8px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .feature span {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .feature small {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .btn {
-      flex: 1;
+      width: 100%;
       padding: 14px;
       border-radius: 16px;
       border: none;
       font-weight: 700;
-      font-size: 14px;
+      margin-bottom: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-primary {
       background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
       color: #000;
     }
 
-    .btn-secondary {
+    .secondary {
       background: transparent;
-      border: 1px solid rgba(0,229,255,0.4);
+      border: 1px solid var(--neon-blue);
       color: var(--neon-blue);
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(0,229,255,0.3);
+    .hidden {
+      display: none;
     }
 
-    footer {
-      margin-top: 24px;
+    .qr-box {
       text-align: center;
-      font-size: 11px;
-      color: #666;
+      margin-top: 20px;
+    }
+
+    .address {
+      word-break: break-all;
+      font-size: 12px;
+      margin-top: 12px;
+      color: var(--text-muted);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
+  <h1>NEONEX <span>PAY</span></h1>
+  <p>Receba pagamentos P2P com 0% taxas</p>
 
-    <div class="logo">
-      <div class="logo-icon">N</div>
-      <div class="logo-text">NEONEX <span>PAY</span></div>
-    </div>
+  <button class="btn" id="connectBtn">Conectar Wallet</button>
+  <button class="btn secondary hidden" id="receiveBtn">Receber Pagamento</button>
 
-    <h1>
-      Pagamentos P2P <span>instantâneos</span><br/>
-      com <span>0% taxas</span>
-    </h1>
-
-    <p>
-      Você no controle total da sua crypto.<br/>
-      Sem bancos. Sem intermediários.<br/>
-      Cold wallet por design.
-    </p>
-
-    <div class="features">
-      <div class="feature">
-        <span>⚡</span>
-        <small>P2P Rápido</small>
-      </div>
-      <div class="feature">
-        <span>0%</span>
-        <small>Zero Taxas</small>
-      </div>
-      <div class="feature">
-        <span>🔒</span>
-        <small>Cold Wallet</small>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-primary" id="connectBtn">
-        Conectar Wallet
-      </button>
-      <button class="btn btn-secondary">
-        Saiba Mais
-      </button>
-    </div>
-
-    <footer>
-      © 2026 NEONEX Network — Seu dinheiro. Suas regras.
-    </footer>
-
+  <div class="qr-box hidden" id="qrBox">
+    <canvas id="qr"></canvas>
+    <div class="address" id="walletAddress"></div>
   </div>
+</div>
 
-  <!-- Web3 / Ethers -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
-  <script>
-    const connectBtn = document.getElementById("connectBtn");
+<script>
+  let userAddress = "";
 
-    async function connectWallet() {
-      if (!window.ethereum) {
-        alert("MetaMask não encontrada. Instale para continuar.");
-        return;
-      }
+  const connectBtn = document.getElementById("connectBtn");
+  const receiveBtn = document.getElementById("receiveBtn");
+  const qrBox = document.getElementById("qrBox");
+  const walletText = document.getElementById("walletAddress");
 
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const accounts = await provider.send("eth_requestAccounts", []);
-        const address = accounts[0];
-
-        connectBtn.innerText =
-          address.slice(0, 6) + "..." + address.slice(-4);
-
-        connectBtn.style.background =
-          "linear-gradient(135deg, #00e5ff, #7b61ff)";
-      } catch (error) {
-        console.error(error);
-        alert("Conexão recusada pelo usuário.");
-      }
+  connectBtn.onclick = async () => {
+    if (!window.ethereum) {
+      alert("Instale MetaMask");
+      return;
     }
 
-    connectBtn.addEventListener("click", connectWallet);
-  </script>
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+    userAddress = accounts[0];
+
+    connectBtn.innerText =
+      userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+
+    receiveBtn.classList.remove("hidden");
+  };
+
+  receiveBtn.onclick = () => {
+    qrBox.classList.remove("hidden");
+    walletText.innerText = userAddress;
+
+    QRCode.toCanvas(
+      document.getElementById("qr"),
+      userAddress,
+      { width: 220 }
+    );
+  };
+</script>
 
 </body>
 </html>
