@@ -3,17 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEONEX PAY — Link de Pagamento</title>
+<title>NEONEX PAY</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00e5ff">
 
 <style>
 :root{
   --bg:#0b0b0f;
   --blue:#00e5ff;
   --purple:#7b61ff;
-  --text:#fff;
+  --text:#ffffff;
   --muted:#a0a0b5;
 }
-*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:Inter,system-ui,sans-serif;
+}
 body{
   background:radial-gradient(circle at top,#141420,var(--bg));
   min-height:100vh;
@@ -32,9 +39,21 @@ body{
   border:1px solid rgba(123,97,255,.25);
   box-shadow:0 0 40px rgba(0,229,255,.18);
 }
-h1{font-size:24px;margin-bottom:6px}
+.badge{
+  font-size:11px;
+  color:var(--blue);
+  margin-bottom:8px;
+}
+h1{
+  font-size:26px;
+  margin-bottom:6px;
+}
 h1 span{color:var(--blue)}
-p{font-size:14px;color:var(--muted);margin-bottom:16px}
+p{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:18px;
+}
 button,input,select{
   width:100%;
   padding:14px;
@@ -53,8 +72,11 @@ input,select{
   border:1px solid rgba(255,255,255,.1);
 }
 .hidden{display:none}
-.status{font-size:12px;color:var(--muted);margin-top:8px}
-.badge{font-size:11px;color:var(--blue);margin-bottom:8px}
+.status{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
 .link-box{
   font-size:12px;
   word-break:break-all;
@@ -69,10 +91,10 @@ input,select{
 <body>
 
 <div class="container">
-  <div class="badge">LINK DE PAGAMENTO</div>
+  <div class="badge">P2P • ZERO TAXAS</div>
 
   <h1>NEONEX <span>PAY</span></h1>
-  <p>P2P • Zero taxas • Compartilhável</p>
+  <p>Pagamentos rápidos, seguros e sem intermediários</p>
 
   <button id="connectBtn" class="primary">Conectar Wallet</button>
 
@@ -86,7 +108,7 @@ input,select{
     <input id="amount" placeholder="Valor">
 
     <button id="sendBtn" class="primary">Pagar Agora</button>
-    <button id="linkBtn" class="primary">Gerar Link</button>
+    <button id="linkBtn" class="primary">Gerar Link de Pagamento</button>
 
     <div id="linkBox" class="link-box hidden"></div>
   </div>
@@ -185,8 +207,16 @@ linkBtn.onclick=()=>{
 };
 </script>
 
+<!-- Service Worker -->
+<script>
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
 </body>
 </html>
+
 
 
 
