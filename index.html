@@ -112,6 +112,89 @@ input,select{
 
     <div id="linkBox" class="link-box hidden"></div>
   </div>
+<!-- ================= NFC TAP TO PAY ================= -->
+<style>
+#nfcSection{
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+</style>
+
+<div id="nfcSection" class="hidden">
+
+  <div class="badge">NFC • TAP TO PAY</div>
+
+  <p style="margin-bottom:10px">
+    Ative o pagamento por aproximação.<br>
+    Encoste o celular do cliente para abrir o pagamento.
+  </p>
+
+  <button id="activateNfcBtn" class="primary">
+    Ativar NFC Crypto
+  </button>
+
+  <div id="nfcStatus" class="status"></div>
+
+</div>
+
+<script>
+/* ================= NFC TAP TO PAY ================= */
+const nfcSection = document.getElementById("nfcSection");
+const activateNfcBtn = document.getElementById("activateNfcBtn");
+const nfcStatus = document.getElementById("nfcStatus");
+
+/* Mostra NFC após conectar wallet */
+const originalConnect = connectBtn.onclick;
+connectBtn.onclick = async () => {
+  await originalConnect();
+  setTimeout(()=>{
+    nfcSection.classList.remove("hidden");
+  },500);
+};
+
+activateNfcBtn.onclick = async () => {
+
+  if (!("NDEFReader" in window)) {
+    nfcStatus.innerText =
+      "❌ NFC não suportado neste dispositivo. Use QR ou link.";
+    return;
+  }
+
+  const token = document.getElementById("token").value;
+  const to = document.getElementById("to").value;
+  const amount = document.getElementById("amount").value;
+
+  if (!to || !amount) {
+    nfcStatus.innerText =
+      "⚠️ Preencha endereço e valor antes de ativar o NFC.";
+    return;
+  }
+
+  const paymentURL =
+    window.location.origin +
+    window.location.pathname +
+    `?to=${to}&amount=${amount}&token=${token}`;
+
+  try {
+    const ndef = new NDEFReader();
+    await ndef.write({
+      records:[
+        { recordType:"url", data:paymentURL }
+      ]
+    });
+
+    nfcStatus.innerText =
+      "✅ NFC ativo! Aproxime o celular do pagador.";
+
+  } catch (err) {
+    console.error(err);
+    nfcStatus.innerText =
+      "❌ Erro ao ativar NFC. Tente novamente.";
+  }
+};
+</script>
+<!-- =============== FIM NFC TAP TO PAY =============== -->
 
   <div class="status" id="status"></div>
 </div>
