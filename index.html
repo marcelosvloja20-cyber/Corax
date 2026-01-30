@@ -97,7 +97,54 @@ input,select{
   <p>Pagamentos rápidos, seguros e sem intermediários</p>
 
   <button id="connectBtn" class="primary">Conectar Wallet</button>
+<!-- ================= QR CODE DINÂMICO ================= -->
 
+<button id="qrBtn" class="primary">
+  Gerar QR Code
+</button>
+
+<div id="qrBox" class="hidden" style="margin-top:16px;text-align:center">
+  <div id="qrcode"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<script>
+const qrBtn = document.getElementById("qrBtn");
+const qrBox = document.getElementById("qrBox");
+const qrContainer = document.getElementById("qrcode");
+
+qrBtn.onclick = () => {
+  const token = document.getElementById("token").value;
+  const to = document.getElementById("to").value;
+  const amount = document.getElementById("amount").value;
+
+  if (!to || !amount) {
+    alert("Preencha endereço e valor");
+    return;
+  }
+
+  const paymentURL =
+    window.location.origin +
+    window.location.pathname +
+    `?to=${to}&amount=${amount}&token=${token}`;
+
+  qrContainer.innerHTML = "";
+  qrBox.classList.remove("hidden");
+
+  new QRCode(qrContainer, {
+    text: paymentURL,
+    width: 220,
+    height: 220,
+    colorDark: "#00e5ff",
+    colorLight: "#0b0b0f",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+};
+</script>
+
+<!-- =============== FIM QR CODE DINÂMICO =============== -->
+  
   <div id="sendBox" class="hidden">
     <select id="token">
       <option value="USDT">USDT</option>
