@@ -6,18 +6,16 @@
 <title>NEONEX PAY — P2P Zero Taxas</title>
 
 <style>
-:root {
-  --bg-dark:#0b0b0f;
-  --neon-blue:#00e5ff;
-  --neon-purple:#7b61ff;
+:root{
+  --bg:#0b0b0f;
+  --blue:#00e5ff;
+  --purple:#7b61ff;
   --text:#fff;
   --muted:#a0a0b5;
 }
-
 *{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
-
 body{
-  background:radial-gradient(circle at top,#141420,var(--bg-dark));
+  background:radial-gradient(circle at top,#141420,var(--bg));
   min-height:100vh;
   display:flex;
   align-items:center;
@@ -25,7 +23,6 @@ body{
   padding:24px;
   color:var(--text);
 }
-
 .container{
   width:100%;
   max-width:420px;
@@ -35,58 +32,55 @@ body{
   border:1px solid rgba(123,97,255,.25);
   box-shadow:0 0 40px rgba(0,229,255,.18);
 }
-
 h1{font-size:24px;margin-bottom:6px}
-h1 span{color:var(--neon-blue)}
+h1 span{color:var(--blue)}
 p{font-size:14px;color:var(--muted);margin-bottom:16px}
-
-button{
+button,input{
   width:100%;
   padding:14px;
   border-radius:16px;
   border:none;
-  font-weight:700;
   margin-top:10px;
+  font-weight:700;
+}
+.primary{
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#000;
   cursor:pointer;
 }
-
-.primary{
-  background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));
-  color:#000;
-}
-
 .secondary{
   background:transparent;
-  border:1px solid var(--neon-blue);
-  color:var(--neon-blue);
+  border:1px solid var(--blue);
+  color:var(--blue);
 }
-
 input{
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.1);
   background:#0e0e1a;
   color:#fff;
-  margin-bottom:10px;
+  border:1px solid rgba(255,255,255,.1);
 }
-
 .hidden{display:none}
 .status{font-size:12px;color:var(--muted);margin-top:8px}
+.badge{
+  font-size:11px;
+  color:var(--blue);
+  margin-bottom:8px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+  <div class="badge">REDE: Polygon</div>
+
   <h1>NEONEX <span>PAY</span></h1>
-  <p>P2P • Zero taxas • Você no controle</p>
+  <p>P2P • Zero taxas • Rápido e barato</p>
 
   <button id="connectBtn" class="primary">Conectar Wallet</button>
 
   <div id="sendBox" class="hidden">
     <input id="to" placeholder="Endereço de destino" />
-    <input id="amount" placeholder="Valor (ETH)" />
+    <input id="amount" placeholder="Valor (MATIC)" />
     <button id="sendBtn" class="primary">Enviar Pagamento</button>
   </div>
 
@@ -98,10 +92,40 @@ input{
 <script>
 let provider, signer;
 
+const POLYGON = {
+  chainId: "0x89",
+  chainName: "Polygon Mainnet",
+  nativeCurrency: {
+    name: "MATIC",
+    symbol: "MATIC",
+    decimals: 18
+  },
+  rpcUrls: ["https://polygon-rpc.com"],
+  blockExplorerUrls: ["https://polygonscan.com"]
+};
+
 const connectBtn = document.getElementById("connectBtn");
 const sendBox = document.getElementById("sendBox");
 const sendBtn = document.getElementById("sendBtn");
 const statusText = document.getElementById("status");
+
+async function switchToPolygon() {
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: POLYGON.chainId }]
+    });
+  } catch (err) {
+    if (err.code === 4902) {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [POLYGON]
+      });
+    } else {
+      throw err;
+    }
+  }
+}
 
 connectBtn.onclick = async () => {
   if (!window.ethereum) {
@@ -109,15 +133,23 @@ connectBtn.onclick = async () => {
     return;
   }
 
-  provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  signer = await provider.getSigner();
+  try {
+    await switchToPolygon();
 
-  const address = await signer.getAddress();
-  connectBtn.innerText =
-    address.slice(0,6)+"..."+address.slice(-4);
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
 
-  sendBox.classList.remove("hidden");
+    const address = await signer.getAddress();
+    connectBtn.innerText =
+      address.slice(0,6)+"..."+address.slice(-4);
+
+    sendBox.classList.remove("hidden");
+    statusText.innerText = "Conectado à Polygon ✅";
+  } catch (err) {
+    console.error(err);
+    statusText.innerText = "Erro ao conectar à rede ❌";
+  }
 };
 
 sendBtn.onclick = async () => {
@@ -130,23 +162,23 @@ sendBtn.onclick = async () => {
   }
 
   try {
-    statusText.innerText = "Enviando transação...";
+    statusText.innerText = "Enviando pagamento...";
     const tx = await signer.sendTransaction({
       to,
       value: ethers.parseEther(amount)
     });
-
     await tx.wait();
     statusText.innerText = "Pagamento enviado com sucesso ✅";
   } catch (err) {
     console.error(err);
-    statusText.innerText = "Erro ao enviar pagamento ❌";
+    statusText.innerText = "Falha no envio ❌";
   }
 };
 </script>
 
 </body>
 </html>
+
 
   
    
