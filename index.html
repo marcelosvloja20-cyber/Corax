@@ -194,6 +194,165 @@
       });
     };
   </script>
+<!-- ================= NEONEX | BLOCO P2P COMPLETO ================= -->
 
+<!-- Ethers.js -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
+
+<style>
+  .neonex-card {
+    background: rgba(20, 20, 30, 0.75);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+  }
+
+  .neonex-card h3 {
+    margin-top: 0;
+    color: #00e5ff;
+  }
+
+  .neonex-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    background: #0b0b0f;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .neonex-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #00e5ff, #7c4dff);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+  }
+
+  .neonex-btn:hover {
+    filter: brightness(1.15);
+  }
+
+  .neonex-status {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #00e5ff;
+    word-break: break-all;
+  }
+</style>
+
+<section id="p2p" class="neonex-card">
+  <h3>💸 Pagamento P2P — Polygon</h3>
+
+  <button id="createWalletBtn" class="neonex-btn" style="margin-bottom:12px">
+    Criar / Carregar Wallet
+  </button>
+
+  <div id="walletInfo" style="display:none;margin-bottom:12px">
+    <p><strong>Carteira:</strong></p>
+    <p id="walletAddress" style="font-size:12px"></p>
+    <p><strong>Saldo:</strong> <span id="walletBalance">0</span> MATIC</p>
+  </div>
+
+  <input
+    id="toAddress"
+    class="neonex-input"
+    placeholder="Endereço de destino"
+  />
+
+  <input
+    id="sendAmount"
+    class="neonex-input"
+    type="number"
+    step="0.0001"
+    placeholder="Valor em MATIC"
+  />
+
+  <button id="sendBtn" class="neonex-btn">
+    Enviar Pagamento
+  </button>
+
+  <p id="txStatus" class="neonex-status"></p>
+</section>
+
+<script>
+  const RPC_URL = "https://polygon-rpc.com";
+  const provider = new ethers.JsonRpcProvider(RPC_URL);
+
+  let wallet;
+
+  const createWalletBtn = document.getElementById("createWalletBtn");
+  const walletInfo = document.getElementById("walletInfo");
+  const walletAddressEl = document.getElementById("walletAddress");
+  const walletBalanceEl = document.getElementById("walletBalance");
+  const sendBtn = document.getElementById("sendBtn");
+  const txStatus = document.getElementById("txStatus");
+
+  function loadWallet() {
+    const savedKey = localStorage.getItem("neonex_private_key");
+    if (savedKey) {
+      wallet = new ethers.Wallet(savedKey, provider);
+      showWallet();
+    }
+  }
+
+  async function showWallet() {
+    walletInfo.style.display = "block";
+    walletAddressEl.textContent = wallet.address;
+
+    const balance = await provider.getBalance(wallet.address);
+    walletBalanceEl.textContent = ethers.formatEther(balance);
+  }
+
+  createWalletBtn.onclick = async () => {
+    if (!wallet) {
+      wallet = ethers.Wallet.createRandom().connect(provider);
+      localStorage.setItem("neonex_private_key", wallet.privateKey);
+    }
+    showWallet();
+  };
+
+  sendBtn.onclick = async () => {
+    try {
+      if (!wallet) {
+        txStatus.textContent = "❌ Crie ou carregue uma wallet primeiro";
+        return;
+      }
+
+      const to = document.getElementById("toAddress").value;
+      const amount = document.getElementById("sendAmount").value;
+
+      if (!ethers.isAddress(to)) {
+        txStatus.textContent = "❌ Endereço inválido";
+        return;
+      }
+
+      txStatus.textContent = "⏳ Enviando transação...";
+
+      const tx = await wallet.sendTransaction({
+        to,
+        value: ethers.parseEther(amount)
+      });
+
+      txStatus.textContent = "✅ TX enviada: " + tx.hash;
+    } catch (err) {
+      txStatus.textContent = "❌ Erro: " + err.message;
+    }
+  };
+
+  loadWallet();
+</script>
+
+<!-- ================= FIM BLOCO NEONEX ================= -->
+  
 </body>
 </html>
