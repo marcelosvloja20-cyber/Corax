@@ -11,48 +11,73 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
-        .btn-neon { background: linear-gradient(90deg, #6366f1, #a855f7); transition: 0.3s; }
-        .btn-neon:disabled { opacity: 0.5; cursor: not-allowed; }
-        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; outline: none; width: 100%; }
-        input:focus { border-color: #6366f1; }
+        .neon-glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+        .btn-neon { background: linear-gradient(90deg, #6366f1, #a855f7); transition: 0.3s; border: none; }
+        .btn-neon:hover { transform: scale(1.02); opacity: 0.9; }
+        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px; color: white; outline: none; width: 100%; font-size: 14px; }
+        input:focus { border-color: #6366f1; background: rgba(255,255,255,0.08); }
     </style>
 </head>
 <body class="p-4">
     <main class="w-full max-w-md space-y-6">
         <header class="flex justify-between items-center px-2">
             <h1 class="text-2xl font-800 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">NEONEX</h1>
-            <button id="connectBtn" class="glass px-4 py-2 text-xs font-bold uppercase tracking-widest border border-white/10">Conectar</button>
+            <button id="connectBtn" class="glass px-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5 transition-all">Conectar Carteira</button>
         </header>
 
-        <section class="glass p-6 space-y-4">
+        <section class="glass p-6 space-y-5 neon-glow">
             <div class="text-center pb-4 border-b border-white/5">
-                <p class="text-gray-400 text-xs">Saldo Disponível</p>
+                <p class="text-gray-400 text-[10px] uppercase tracking-widest mb-1">Saldo em Conta</p>
                 <h2 id="balance" class="text-3xl font-bold">0.00 POL</h2>
             </div>
 
-            <!-- Interface de Envio estilo Pix -->
-            <div class="space-y-3">
-                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Enviar para (@usuario ou 0x)</label>
-                <input type="text" id="target" placeholder="Ex: @alex ou endereço 0x...">
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[10px] uppercase text-gray-500 font-bold ml-1 mb-2 block">Destinatário</label>
+                    <input type="text" id="target" placeholder="@usuario ou 0x...">
+                </div>
                 
-                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Valor</label>
-                <input type="number" id="amount" placeholder="0.00">
+                <div>
+                    <label class="text-[10px] uppercase text-gray-500 font-bold ml-1 mb-2 block">Valor do Envio</label>
+                    <input type="number" id="amount" placeholder="0.00" oninput="updateFee()">
+                </div>
+
+                <!-- Painel de Taxa -->
+                <div class="bg-white/5 rounded-xl p-4 space-y-2">
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span>Taxa de Serviço NEONEX</span>
+                        <span class="text-indigo-400 font-bold">+ 0.05 POL</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-bold border-t border-white/5 pt-2">
+                        <span>Total a Debitar</span>
+                        <span id="totalDisplay">0.00 POL</span>
+                    </div>
+                </div>
                 
-                <button id="sendBtn" class="w-full btn-neon py-4 rounded-xl font-800 text-sm uppercase tracking-widest shadow-lg shadow-indigo-500/20">
-                    Confirmar Pagamento Zero Taxa
+                <button id="sendBtn" class="w-full btn-neon py-4 rounded-xl font-800 text-xs uppercase tracking-[2px] shadow-xl shadow-indigo-500/10">
+                    Confirmar Transação
                 </button>
             </div>
         </section>
 
-        <div class="flex items-center justify-center gap-2">
-            <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></div>
-            <p class="text-[9px] text-gray-500 uppercase tracking-[3px]">Protocolo Neonex v2.0 Ativo</p>
-        </div>
+        <footer class="flex flex-col items-center gap-3">
+            <div class="flex items-center gap-2">
+                <div class="w-1 h-1 bg-indigo-500 rounded-full"></div>
+                <p class="text-[8px] text-gray-600 uppercase tracking-[4px]">Blockchain Secure Layer</p>
+                <div class="w-1 h-1 bg-indigo-500 rounded-full"></div>
+            </div>
+        </footer>
     </main>
 
     <script>
         lucide.createIcons();
         let provider, signer, address;
+        const FEE = 0.05;
+
+        function updateFee() {
+            const amt = parseFloat(document.getElementById('amount').value) || 0;
+            document.getElementById('totalDisplay').innerText = (amt > 0 ? (amt + FEE).toFixed(4) : "0.00") + " POL";
+        }
 
         async function connect() {
             if (window.ethereum) {
@@ -69,13 +94,13 @@
             const target = document.getElementById('target').value;
             const amount = document.getElementById('amount').value;
 
-            if(!address || !target || !amount) return alert("Preencha todos os campos e conecte a carteira.");
+            if(!address || !target || !amount) return alert("Erro: Verifique os campos e a conexão.");
 
-            document.getElementById('sendBtn').innerText = "PROCESSANDO...";
-            document.getElementById('sendBtn').disabled = true;
+            const btn = document.getElementById('sendBtn');
+            btn.innerText = "ESTABELECENDO CANAL...";
+            btn.disabled = true;
 
             try {
-                // Chamada para a sua API na Vercel (Taxa Zero)
                 const res = await fetch('/api/transfer', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -88,16 +113,16 @@
 
                 const data = await res.json();
                 if(data.success) {
-                    alert("PAGAMENTO REALIZADO!\nHash: " + data.hash);
+                    alert("SUCESSO!\nPagamento enviado via Protocolo NEONEX.\nTaxa de 0.05 aplicada.");
                     location.reload();
                 } else {
-                    alert("Erro: " + data.error);
+                    alert("Falha: " + data.error);
                 }
             } catch (err) {
-                alert("Falha na Rede NEONEX");
+                alert("Erro de comunicação com a rede.");
             } finally {
-                document.getElementById('sendBtn').innerText = "Confirmar Pagamento Zero Taxa";
-                document.getElementById('sendBtn').disabled = false;
+                btn.innerText = "Confirmar Transação";
+                btn.disabled = false;
             }
         }
 
