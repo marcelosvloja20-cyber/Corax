@@ -1,53 +1,40 @@
-// api/transfer.js
+import { createClient } from '@supabase/supabase-js';
 import { ethers } from 'ethers';
 
-// Simulação de banco de dados (Substituir por algo real depois)
-const USER_REGISTRY = {
-    "@suporte": "0xSeuEnderecoDeSuporteAqui",
-    "@teste": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
-};
+// Conexão com Supabase (Pegue as chaves no painel do Supabase)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Apenas POST permitido' });
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Apenas POST' });
 
-    let { to, amount } = req.body;
-    const SERVICE_FEE = 0.05; // A taxa que o usuário paga
+    let { to, amount, action, username, wallet } = req.body;
 
-    // 1. Resolver Nome de Usuário (@)
+    // --- LÓGICA DE REGISTRO DE NOVO @USUÁRIO ---
+    if (action === 'register') {
+        const { error } = await supabase.from('registros').insert([{ username: username.toLowerCase(), wallet_address: wallet }]);
+        if (error) return res.status(400).json({ error: 'Nome já ocupado ou erro no banco.' });
+        return res.status(200).json({ success: true, message: 'Nome registrado!' });
+    }
+
+    // --- LÓGICA DE TRANSFERÊNCIA P2P ---
     if (to.startsWith('@')) {
-        const resolved = USER_REGISTRY[to.toLowerCase()];
-        if (!resolved) return res.status(400).json({ error: 'Usuário NEONEX não cadastrado.' });
-        to = resolved;
+        const { data } = await supabase.from('registros').select('wallet_address').eq('username', to.toLowerCase()).single();
+        if (!data) return res.status(404).json({ error: 'Usuário NEONEX não encontrado.' });
+        to = data.wallet_address;
     }
 
     try {
         const provider = new ethers.JsonRpcProvider("https://polygon-rpc.com");
-        
-        // Esta é a carteira da NEONEX que assina a transação
         const masterWallet = new ethers.Wallet(process.env.NEONEX_PRIVATE_KEY, provider);
-
-        // Lógica de Negócio:
-        // O valor total que sai da "reserva" da NEONEX é o que o usuário pediu.
-        // Em um sistema real, você descontaria os 0.05 do saldo interno do usuário.
-        
-        console.log(`Iniciando transferência P2P: ${amount} POL para ${to}`);
 
         const tx = await masterWallet.sendTransaction({
             to: to,
-            value: ethers.parseEther(amount.toString()),
-            // Opcional: Aqui você poderia enviar os 0.05 para uma carteira de lucro separada
+            value: ethers.parseEther(amount.toString())
         });
+        await tx.wait();
 
-        const receipt = await tx.wait();
-
-        return res.status(200).json({ 
-            success: true, 
-            hash: receipt.hash,
-            feeCharged: SERVICE_FEE
-        });
-
-    } catch (error) {
-        return res.status(500).json({ error: 'Saldo insuficiente na reserva NEONEX ou erro de rede.' });
+        return res.status(200).json({ success: true, hash: tx.hash });
+    } catch (err) {
+        return res.status(500).json({ error: 'Erro na rede ou saldo insuficiente na reserva.' });
     }
 }
-
