@@ -3,146 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONEX | IA Global Hub v14.0</title>
+    <title>NEONEX | Global Hub v15.0</title>
     
+    <!-- Bibliotecas de 2026 -->
     <script src="https://cdn.jsdelivr.net"></script>
     <script src="https://cdnjs.cloudflare.com"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com"></script>
+    <script src="https://cdnjs.cloudflare.com"></script>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; }
-        .neon-border { border: 1px solid rgba(99, 102, 241, 0.4); box-shadow: 0 0 60px rgba(99, 102, 241, 0.1); }
-        
-        /* NEXCard Styling */
-        .nex-card {
-            background: linear-gradient(135deg, rgba(20, 20, 25, 0.95), rgba(40, 40, 60, 0.8));
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 28px;
-            aspect-ratio: 1.58 / 1;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-            transition: 0.6s ease;
-        }
-        
-        /* IA Category Pills */
-        .ia-pill { background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 6px; }
-        .ia-pill.active { border-color: #6366f1; background: rgba(99, 102, 241, 0.2); }
-
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; overflow: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 36px; }
+        .neon-border { border: 1px solid rgba(99, 102, 241, 0.4); box-shadow: 0 0 50px rgba(99, 102, 241, 0.1); }
+        .nex-card { background: linear-gradient(135deg, #141419, #28283c); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; aspect-ratio: 1.58/1; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
         #sideMenu { transform: translateX(-100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); z-index: 100; }
         #sideMenu.open { transform: translateX(0); }
-        
-        .btn-neon { background: linear-gradient(135deg, #6366f1, #a855f7); border: none; cursor: pointer; color: white; font-weight: 800; transition: 0.5s; }
-        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 20px; color: white; outline: none; width: 100%; }
-        
-        footer { opacity: 0.4; letter-spacing: 2px; }
+        .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 18px; cursor: pointer; transition: 0.3s; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .menu-item:hover { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .btn-neon { background: linear-gradient(135deg, #6366f1, #a855f7); font-weight: 800; cursor: pointer; transition: 0.4s; }
+        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 18px; color: white; outline: none; width: 100%; }
+        .ia-box { background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 20px; padding: 12px; }
     </style>
 </head>
 <body class="p-4">
 
-    <!-- SIDEBAR COM NEXCARD & IA -->
-    <div id="sideMenu" class="fixed inset-y-0 left-0 w-85 bg-black/99 backdrop-blur-3xl border-r border-white/10 p-8 flex flex-col gap-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-2">
-            <div class="flex flex-col">
-                <h2 class="text-xl font-800 text-indigo-400">NEXCard</h2>
-                <span class="text-[6px] uppercase tracking-[4px] text-gray-600 font-bold">IA Smart Analytics</span>
-            </div>
-            <button onclick="toggleMenu()" class="p-2"><i data-lucide="x"></i></button>
+    <!-- MENU LATERAL COMPLETO -->
+    <div id="sideMenu" class="fixed inset-y-0 left-0 w-80 bg-black/99 backdrop-blur-3xl border-r border-white/10 p-8 flex flex-col gap-6 shadow-2xl overflow-y-auto">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-800 text-indigo-400">NEXCard HUB</h2>
+            <button onclick="toggleMenu()" class="p-2 hover:bg-white/5 rounded-full"><i data-lucide="x"></i></button>
         </div>
 
-        <!-- NEXCard Visual -->
-        <div class="nex-card p-7 flex flex-col justify-between group">
-            <div class="flex justify-between items-start">
-                <h3 class="text-lg font-900 tracking-tighter italic opacity-80">NEX</h3>
-                <i data-lucide="cpu" class="w-6 h-6 text-indigo-500 opacity-40"></i>
-            </div>
-            <div class="card-number font-mono text-sm tracking-[3px] text-white/80">•••• •••• •••• 8821</div>
-            <div class="flex justify-between items-end">
-                <p id="cardUser" class="text-[8px] font-bold uppercase tracking-widest text-indigo-400">@USER_NEX</p>
-                <div class="flex gap-1 h-3">
-                    <div class="w-3 h-3 bg-red-500 rounded-full opacity-60"></div>
-                    <div class="w-3 h-3 bg-orange-400 rounded-full -ml-2 opacity-60"></div>
-                </div>
-            </div>
+        <div class="nex-card p-6 flex flex-col justify-between">
+            <div class="flex justify-between items-start"><h3 class="text-md font-900 italic">NEX</h3><i data-lucide="cpu" class="w-5 h-5 text-indigo-500 opacity-40"></i></div>
+            <p class="font-mono text-xs tracking-widest text-white/70">•••• •••• •••• 8821</p>
+            <div class="flex justify-between items-end"><p id="cardUser" class="text-[8px] font-bold text-indigo-400 uppercase tracking-widest">@GUEST</p><div class="flex gap-1"><div class="w-3 h-3 bg-red-500 rounded-full"></div><div class="w-3 h-3 bg-orange-500 rounded-full -ml-2"></div></div></div>
         </div>
 
-        <!-- Filtro IA de Gastos -->
-        <div class="space-y-4">
-            <p class="text-[9px] uppercase font-bold text-gray-500 tracking-widest ml-1">IA Insights - Categorias</p>
-            <div class="grid grid-cols-2 gap-2">
-                <div class="ia-pill active"><i data-lucide="shopping-bag" class="w-3 h-3"></i> Shopping</div>
-                <div class="ia-pill"><i data-lucide="coffee" class="w-3 h-3"></i> Food</div>
-                <div class="ia-pill"><i data-lucide="car" class="w-3 h-3"></i> Travel</div>
-                <div class="ia-pill"><i data-lucide="zap" class="w-3 h-3"></i> Bills</div>
-            </div>
-            <div class="bg-indigo-500/10 p-4 rounded-2xl border border-indigo-500/20">
-                <p class="text-[10px] text-indigo-300 font-bold italic mb-1">IA Voice:</p>
-                <p class="text-[9px] text-gray-400 leading-relaxed">"You saved 12% in POL this month. Switching food to USDC could avoid volatility."</p>
-            </div>
-        </div>
-
-        <nav class="flex flex-col gap-2 mt-auto">
-            <div onclick="toggleMenu()" class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer text-[10px] font-bold uppercase tracking-widest transition-all"><i data-lucide="send"></i> P2P Pay</div>
-            <div onclick="alert('IA Fraud Protection Active.')" class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer text-[10px] font-bold uppercase tracking-widest text-green-500"><i data-lucide="shield-check"></i> Security AI</div>
+        <nav class="flex flex-col gap-1">
+            <div class="menu-item" onclick="toggleMenu()"><i data-lucide="send"></i> Enviar P2P</div>
+            <div class="menu-item" onclick="showReceiveModal()"><i data-lucide="qr-code"></i> Meu QR Code</div>
+            <div class="menu-item" onclick="alert('Chat P2P em breve...')"><i data-lucide="message-circle"></i> Chat Seguro</div>
+            <div class="menu-item" onclick="alert('Rendimento em breve...')"><i data-lucide="trending-up"></i> Rendimento NEX</div>
+            <div class="menu-item" onclick="alert('Analytics em breve...')"><i data-lucide="pie-chart"></i> IA Analytics</div>
         </nav>
+
+        <div class="ia-box mt-4">
+            <p class="text-[8px] text-indigo-400 font-bold uppercase mb-1">NEX IA Insight</p>
+            <p class="text-[10px] text-gray-400">"Your account is 100% secure. You saved 0.05 POL in fees today."</p>
+        </div>
+
+        <button onclick="location.reload()" class="mt-auto text-[10px] font-bold text-red-500 uppercase tracking-widest p-4 text-left">Encerrar Sessão</button>
     </div>
 
-    <!-- MAIN APP -->
-    <main id="mainApp" class="w-full max-w-md space-y-6 flex flex-col">
+    <!-- APP PRINCIPAL -->
+    <main id="mainApp" class="w-full max-w-md space-y-6">
         <header class="flex justify-between items-center px-2">
             <button onclick="toggleMenu()" class="glass p-3 rounded-2xl border border-white/10"><i data-lucide="menu" class="text-indigo-400"></i></button>
             <h1 class="text-2xl font-800 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">NEONEX</h1>
-            <button id="connectBtn" onclick="loginSocial()" class="glass px-4 py-2 text-[10px] font-800 uppercase tracking-widest border border-white/10 text-indigo-400">Login Social</button>
+            <button id="connectBtn" onclick="loginSocial()" class="glass px-4 py-2 text-[10px] font-800 uppercase tracking-widest border border-white/10 text-indigo-400">Acessar</button>
         </header>
 
         <section class="glass p-10 text-center neon-border relative overflow-hidden">
-            <p class="text-gray-500 text-[9px] uppercase tracking-[5px] mb-3">Balance</p>
+            <p class="text-gray-500 text-[9px] uppercase tracking-[5px] mb-3">Saldo Disponível</p>
             <h2 id="balance" class="text-5xl font-bold tracking-tighter">0.00 <span class="text-indigo-500 text-xl font-light">POL</span></h2>
             
             <div class="mt-10 space-y-4 relative z-10 text-left">
-                <input type="text" id="target" placeholder="To: @user or 0x...">
-                <input type="number" id="amount" placeholder="Value" oninput="updateTotal()">
-                <div class="flex justify-between px-2 text-[9px] font-bold text-gray-500 uppercase">
-                    <span>Fee 0.05</span>
-                    <span id="totalDisplay" class="text-white">0.00 POL</span>
-                </div>
-                <button onclick="processPayment()" id="sendBtn" class="w-full btn-neon py-6 rounded-3xl text-xs uppercase tracking-[4px]">Confirm Payment</button>
+                <input type="text" id="target" placeholder="Para: @usuario ou 0x...">
+                <input type="number" id="amount" placeholder="Valor" oninput="updateTotal()">
+                <div class="flex justify-between px-2 text-[9px] font-bold text-gray-500 uppercase"><span>Taxa 0.05</span><span id="totalDisplay" class="text-white">0.00 POL</span></div>
+                <button onclick="processPayment()" id="sendBtn" class="w-full btn-neon py-6 rounded-3xl text-xs uppercase tracking-[4px]">Confirmar Pagamento</button>
             </div>
         </section>
 
         <!-- FOOTER GLOBAL -->
-        <footer class="text-center mt-4 space-y-2">
+        <footer class="text-center space-y-2 opacity-50">
+            <p class="text-[9px] font-bold uppercase tracking-[4px]">All Rights Reserved © 2026 NEONEX Protocol</p>
             <div class="flex items-center justify-center gap-2">
-                <span class="text-[10px] text-gray-600 font-bold uppercase tracking-[4px]">All Rights Reserved © 2026 NEONEX Protocol</span>
-            </div>
-            <div class="flex items-center justify-center gap-1 opacity-60">
-                <span class="text-[8px] font-bold uppercase text-gray-700 tracking-widest">Built in</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest">Built in</span>
                 <span class="text-xs">🇧🇷</span>
-                <span class="text-[8px] font-bold uppercase text-gray-700 tracking-widest">for the World</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest">for the World</span>
             </div>
         </footer>
     </main>
 
+    <!-- MODAL QR CODE -->
+    <div id="receiveModal" class="fixed inset-0 bg-black/98 backdrop-blur-3xl hidden items-center justify-center p-8 z-[110]">
+        <div class="glass w-full max-w-sm p-10 text-center space-y-8 neon-border">
+            <h3 class="text-xl font-800 uppercase italic">Meu QR Code</h3>
+            <div id="qrcode" class="p-4 bg-white rounded-3xl inline-block mx-auto"></div>
+            <p id="myAddressText" class="text-[9px] text-gray-500 font-mono break-all p-4 bg-white/5 rounded-2xl">Conecte sua conta primeiro</p>
+            <button onclick="closeReceiveModal()" class="w-full py-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Fechar</button>
+        </div>
+    </div>
+
     <script>
-        const clientId = "SEU_CLIENT_ID_AQUI"; 
+        // CONFIGURAÇÃO WEB3AUTH
+        const clientId = "SEU_CLIENT_ID_AQUI"; // PEGUE EM dashboard.web3auth.io
         let web3auth, provider, address;
 
         async function init() {
             lucide.createIcons();
-            web3auth = new window.Modal.Web3Auth({
-                clientId,
-                chainConfig: { chainNamespace: "eip155", chainId: "0x89", rpcTarget: "https://polygon-rpc.com" },
-                web3AuthNetwork: "cyan",
-            });
-            await web3auth.initModal();
+            try {
+                web3auth = new window.Modal.Web3Auth({
+                    clientId,
+                    chainConfig: { chainNamespace: "eip155", chainId: "0x89", rpcTarget: "https://polygon-rpc.com" },
+                    web3AuthNetwork: "cyan",
+                });
+                await web3auth.initModal();
+            } catch (err) { console.error("Erro init:", err); }
         }
 
-        function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
-
         async function loginSocial() {
+            if (!web3auth) return;
             try {
                 const web3authProvider = await web3auth.connect();
                 provider = new ethers.BrowserProvider(web3authProvider);
@@ -151,27 +126,39 @@
                 document.getElementById('connectBtn').innerText = "@" + address.slice(2,8).toUpperCase();
                 document.getElementById('cardUser').innerText = "@" + address.slice(2,12).toUpperCase();
                 updateBalance();
-            } catch (err) { console.error(err); }
+            } catch (err) { console.error("Login Error:", err); }
         }
 
+        function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
+        function showReceiveModal() {
+            if(!address) return alert("Logue primeiro!");
+            toggleMenu();
+            document.getElementById('receiveModal').classList.replace('hidden', 'flex');
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), { text: address, width: 200, height: 200 });
+            document.getElementById('myAddressText').innerText = address;
+        }
+        function closeReceiveModal() { document.getElementById('receiveModal').classList.replace('flex', 'hidden'); }
+
         async function updateBalance() {
-            if(!address || !provider) return;
             const balRaw = await provider.getBalance(address);
             document.getElementById('balance').innerHTML = `${parseFloat(ethers.formatEther(balRaw)).toFixed(4)} <span class="text-indigo-500 text-xl font-light">POL</span>`;
         }
 
         function updateTotal() {
             const val = parseFloat(document.getElementById('amount').value) || 0;
-            document.getElementById('totalDisplay').innerText = (val + 0.05).toFixed(2) + " POL";
+            document.getElementById('totalDisplay').innerText = (val > 0 ? (val + 0.05).toFixed(2) : "0.00") + " POL";
         }
 
         async function processPayment() {
+            if(!address) return alert("Acesse sua conta primeiro.");
             const btn = document.getElementById('sendBtn');
-            btn.innerText = "AI VERIFYING..."; btn.disabled = true;
-            setTimeout(() => { btn.innerText = "Confirm Payment"; btn.disabled = false; alert("Payment Authorized by NEX IA."); }, 3000);
+            btn.innerText = "SINCRO-AI..."; btn.disabled = true;
+            setTimeout(() => { btn.innerText = "Confirmar Pagamento"; btn.disabled = false; alert("Processado com sucesso!"); }, 3000);
         }
 
         window.onload = init;
     </script>
 </body>
-</html>
+    </html>
+    
