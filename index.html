@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONEX | Universal Hub v11.0</title>
+    <title>NEONEX | NEXCard Protocol v13.0</title>
     
     <script src="https://cdn.jsdelivr.net"></script>
     <script src="https://cdnjs.cloudflare.com"></script>
@@ -14,123 +14,116 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; overflow: hidden; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; }
-        .neon-border { border: 1px solid rgba(99, 102, 241, 0.4); box-shadow: 0 0 60px rgba(99, 102, 241, 0.1); }
-        .btn-neon { background: linear-gradient(135deg, #6366f1, #a855f7); border: none; cursor: pointer; color: white; font-weight: 800; transition: 0.5s; }
-        .btn-neon:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4); }
-        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 20px; color: white; outline: none; width: 100%; font-size: 14px; }
         
-        /* Menu Lateral Avançado */
-        #sideMenu { transform: translateX(-100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* NEXCard - Estética 2026 */
+        .nex-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            aspect-ratio: 1.58 / 1;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+        .nex-card:hover { transform: translateY(-5px) rotateX(5deg) rotateY(-5px); border-color: rgba(168, 85, 247, 0.5); }
+        .nex-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); transition: 0.8s; }
+        .nex-card:hover::before { left: 100%; }
+
+        .card-data-blur { filter: blur(6px); transition: 0.3s; }
+        .card-data-visible { filter: blur(0); }
+        
+        #sideMenu { transform: translateX(-100%); transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); z-index: 100; }
         #sideMenu.open { transform: translateX(0); }
-        .submenu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(255,255,255,0.02); border-radius: 20px; }
-        .submenu.active { max-height: 300px; margin-top: 10px; padding: 10px; }
-        .rotate-icon { transition: transform 0.3s; }
-        .rotate-icon.active { transform: rotate(180deg); }
         
-        .token-opt { padding: 12px; border-radius: 14px; cursor: pointer; font-size: 12px; transition: 0.2s; border: 1px solid transparent; }
-        .token-opt:hover { background: rgba(99, 102, 241, 0.1); border-color: #6366f1; }
-        .token-opt.selected { border-color: #6366f1; background: rgba(99, 102, 241, 0.2); }
+        .btn-neon { background: linear-gradient(135deg, #6366f1, #a855f7); border: none; cursor: pointer; color: white; font-weight: 800; transition: 0.4s; }
+        .btn-neon:hover { box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4); }
+        input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; color: white; outline: none; width: 100%; }
     </style>
 </head>
 <body class="p-4">
 
-    <!-- MENU LATERAL (SIDEBAR) COM ACORDEÃO -->
-    <div id="sideMenu" class="fixed inset-y-0 left-0 w-80 bg-black/98 backdrop-blur-3xl z-50 border-r border-white/10 p-8 flex flex-col gap-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-800 text-indigo-400 italic uppercase">Dashboard</h2>
+    <!-- SIDEBAR COM NEXCard -->
+    <div id="sideMenu" class="fixed inset-y-0 left-0 w-85 bg-black/98 backdrop-blur-3xl border-r border-white/10 p-8 flex flex-col gap-6 shadow-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <h2 class="text-xl font-800 text-indigo-400 leading-none">NEXCard</h2>
+                <span class="text-[6px] uppercase tracking-[4px] text-gray-600 font-bold">Virtual Debit Protocol</span>
+            </div>
             <button onclick="toggleMenu()" class="p-2 hover:bg-white/10 rounded-full"><i data-lucide="x"></i></button>
         </div>
 
-        <nav class="flex flex-col gap-2">
-            <!-- Item de Menu com Seta (Multi-Chain/Token) -->
-            <div class="flex flex-col">
-                <div onclick="toggleSubmenu()" class="flex justify-between items-center p-4 hover:bg-white/5 rounded-2xl cursor-pointer group">
-                    <div class="flex items-center gap-3"><i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i> <span class="text-sm font-bold uppercase tracking-widest">Ativos & Redes</span></div>
-                    <i data-lucide="chevron-down" id="arrowIcon" class="w-4 h-4 rotate-icon"></i>
+        <!-- O CARTÃO NEXCard -->
+        <div class="nex-card p-7 flex flex-col justify-between group cursor-pointer" onclick="toggleCardData()">
+            <div class="flex justify-between items-start">
+                <div class="flex flex-col">
+                    <h3 class="text-lg font-900 tracking-tighter italic opacity-80">NEX</h3>
+                    <span class="text-[6px] uppercase tracking-[2px] text-indigo-400 font-bold">Platinum</span>
                 </div>
-                <div id="tokenSubmenu" class="submenu flex flex-col gap-1">
-                    <div onclick="setAsset('POL', 'Polygon')" class="token-opt selected" id="opt-POL">Polygon (POL)</div>
-                    <div onclick="setAsset('USDC', 'Polygon')" class="token-opt" id="opt-USDC">Dólar (USDC)</div>
-                    <div onclick="setAsset('ETH', 'Arbitrum')" class="token-opt" id="opt-ETH">Arbitrum (ETH)</div>
-                    <div onclick="setAsset('SOL', 'Solana')" class="token-opt" id="opt-SOL text-gray-500">Solana (Breve)</div>
-                </div>
+                <i data-lucide="nfc" class="w-5 h-5 text-white/30"></i>
+            </div>
+            
+            <div id="cardNumber" class="card-data-blur font-mono text-xl tracking-[4px] text-white/90 my-4">
+                4452 8801 9923 0012
             </div>
 
-            <div onclick="showPage('pay')" class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer"><i data-lucide="send"></i> <span class="text-sm font-bold uppercase tracking-widest">P2P Pay</span></div>
-            <div onclick="showPage('swap')" class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer"><i data-lucide="refresh-cw"></i> <span class="text-sm font-bold uppercase tracking-widest">Swap</span></div>
-            <div class="flex items-center gap-3 p-4 opacity-20 cursor-not-allowed"><i data-lucide="credit-card"></i> <span class="text-sm font-bold uppercase tracking-widest">Virtual Card</span></div>
-        </nav>
-
-        <div class="mt-auto p-4 glass text-center border-indigo-500/20">
-             <p class="text-[7px] text-gray-600 uppercase tracking-[4px]">Sincronizado com Polygon Mainnet</p>
+            <div class="flex justify-between items-end">
+                <div class="space-y-1">
+                    <p class="text-[7px] uppercase tracking-widest text-gray-500 font-bold">Member Since 2026</p>
+                    <p id="cardHolder" class="text-[9px] font-bold uppercase tracking-widest text-indigo-300">@USUARIO_NEX</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[7px] uppercase tracking-widest text-gray-500 font-bold">Exp</p>
+                    <p class="text-[9px] font-bold text-white">08/32</p>
+                </div>
+                <div class="w-10 h-6 bg-white/10 rounded-md flex items-center justify-center border border-white/10">
+                    <span class="text-[8px] font-900 italic">VISA</span>
+                </div>
+            </div>
         </div>
+
+        <nav class="flex flex-col gap-2 mt-4">
+            <div class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer text-sm font-bold uppercase tracking-widest" onclick="alert('Funcionalidade de aproximar em breve!')">
+                <i data-lucide="smartphone" class="w-5 h-5 text-indigo-400"></i> Apple / Google Pay
+            </div>
+            <div class="flex items-center gap-3 p-4 hover:bg-white/5 rounded-2xl cursor-pointer text-sm font-bold uppercase tracking-widest" onclick="toggleMenu()">
+                <i data-lucide="send" class="w-5 h-5"></i> Enviar P2P
+            </div>
+            <div class="flex items-center gap-3 p-4 text-red-400 hover:bg-red-500/10 rounded-2xl cursor-pointer text-sm font-bold uppercase tracking-widest" onclick="alert('NEXCard bloqueado temporariamente.')">
+                <i data-lucide="shield-off" class="w-5 h-5"></i> Bloquear NEXCard
+            </div>
+        </nav>
     </div>
 
-    <!-- APP PRINCIPAL -->
-    <main id="mainApp" class="w-full max-w-md space-y-6 transition-all duration-500">
-        
+    <!-- MAIN APP -->
+    <main id="mainApp" class="w-full max-w-md space-y-6">
         <header class="flex justify-between items-center px-2">
             <button onclick="toggleMenu()" class="glass p-3 rounded-2xl border border-white/10"><i data-lucide="menu" class="text-indigo-400"></i></button>
-            <div class="text-center">
-                <h1 class="text-2xl font-800 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 leading-none">NEONEX</h1>
-                <p id="currentNetwork" class="text-[6px] uppercase tracking-[5px] text-gray-600 font-bold mt-1">POLYGON NETWORK</p>
-            </div>
-            <button id="connectBtn" onclick="loginSocial()" class="glass px-4 py-2 text-[10px] font-800 uppercase tracking-widest border border-white/10 text-indigo-400">Login</button>
+            <h1 class="text-2xl font-800 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">NEONEX</h1>
+            <button id="connectBtn" onclick="loginSocial()" class="glass px-4 py-2 text-[10px] font-800 uppercase tracking-widest border border-white/10 text-indigo-400">Acessar</button>
         </header>
 
-        <!-- PÁGINA: PAGAMENTOS (LIMPA) -->
-        <section id="page-pay" class="space-y-6 animate-in fade-in duration-500">
-            <div class="glass p-10 text-center neon-border relative overflow-hidden">
-                <p class="text-gray-500 text-[9px] uppercase tracking-[5px] mb-3">Saldo em <span id="assetName">POL</span></p>
-                <h2 id="balance" class="text-5xl font-bold tracking-tighter">0.00</h2>
-                
-                <div class="mt-10 space-y-4 relative z-10">
-                    <input type="text" id="target" placeholder="Destinatário (@nome)">
-                    <div class="relative">
-                        <input type="number" id="amount" placeholder="Valor" oninput="updateTotal()">
-                        <span id="assetSuffix" class="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-bold text-indigo-400">POL</span>
-                    </div>
-                    
-                    <div class="flex justify-between px-2 text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-2">
-                        <span>Taxa de Serviço</span>
-                        <span id="totalDisplay" class="text-white">0.05 POL</span>
-                    </div>
-
-                    <button onclick="processPayment()" id="sendBtn" class="w-full btn-neon py-6 rounded-3xl text-xs uppercase tracking-[4px]">Confirmar Pagamento</button>
+        <section class="glass p-10 text-center neon-border relative overflow-hidden">
+            <p class="text-gray-500 text-[9px] uppercase tracking-[5px] mb-3">Saldo NEXCard</p>
+            <h2 id="balance" class="text-5xl font-bold tracking-tighter">0.00 <span class="text-indigo-500 text-xl font-light">POL</span></h2>
+            
+            <div class="mt-10 space-y-4 relative z-10">
+                <input type="text" id="target" placeholder="Para: @usuario ou 0x...">
+                <input type="number" id="amount" placeholder="Valor" oninput="updateTotal()">
+                <div class="flex justify-between px-2 text-[9px] font-bold text-gray-600 uppercase tracking-widest">
+                    <span>Taxa NEONEX 0.05</span>
+                    <span id="totalDisplay" class="text-white">0.00 POL</span>
                 </div>
-                <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-indigo-600/10 blur-[80px] rounded-full"></div>
-            </div>
-        </section>
-
-        <!-- PÁGINA: SWAP (CÂMBIO) -->
-        <section id="page-swap" class="hidden space-y-6 animate-in fade-in duration-500">
-            <div class="glass p-8 space-y-6 neon-border">
-                <h3 class="text-center text-xs font-800 uppercase tracking-widest text-indigo-400">Conversão de Ativos</h3>
-                <div class="space-y-2 bg-white/5 p-5 rounded-[24px]">
-                    <p class="text-[8px] text-gray-500 uppercase font-bold">Vender</p>
-                    <div class="flex justify-between items-center">
-                        <input type="number" id="swapFrom" placeholder="0.00" class="bg-transparent border-none p-0 text-2xl w-2/3" oninput="calcSwap()">
-                        <span class="font-bold text-indigo-400">POL</span>
-                    </div>
-                </div>
-                <div class="flex justify-center -my-6 relative z-10">
-                    <div class="bg-black border border-white/10 p-3 rounded-full"><i data-lucide="repeat" class="w-4 h-4 text-indigo-400"></i></div>
-                </div>
-                <div class="space-y-2 bg-white/5 p-5 rounded-[24px]">
-                    <p class="text-[8px] text-gray-500 uppercase font-bold">Receber (Est.)</p>
-                    <div class="flex justify-between items-center">
-                        <input type="number" id="swapTo" placeholder="0.00" class="bg-transparent border-none p-0 text-2xl w-2/3" readonly>
-                        <span class="font-bold text-purple-400">USDC</span>
-                    </div>
-                </div>
-                <button onclick="executeSwap()" class="w-full btn-neon py-5 rounded-2xl text-[10px] uppercase tracking-widest">Executar Câmbio</button>
+                <button onclick="processPayment()" id="sendBtn" class="w-full btn-neon py-6 rounded-3xl text-xs uppercase tracking-[4px]">Confirmar Pagamento</button>
             </div>
         </section>
     </main>
 
     <script>
         const clientId = "SEU_CLIENT_ID_AQUI"; 
-        let web3auth, provider, address, currentAsset = 'POL';
+        let web3auth, provider, address, cardVisible = false;
 
         async function init() {
             lucide.createIcons();
@@ -144,31 +137,16 @@
 
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
         
-        function toggleSubmenu() {
-            document.getElementById('tokenSubmenu').classList.toggle('active');
-            document.getElementById('arrowIcon').classList.toggle('active');
-        }
-
-        function setAsset(symbol, network) {
-            currentAsset = symbol;
-            document.getElementById('assetName').innerText = symbol;
-            document.getElementById('assetSuffix').innerText = symbol;
-            document.getElementById('currentNetwork').innerText = network.toUpperCase() + " NETWORK";
-            
-            // UI Update no Menu
-            document.querySelectorAll('.token-opt').forEach(opt => opt.classList.remove('selected'));
-            document.getElementById(`opt-${symbol}`).classList.add('selected');
-            
-            updateBalance();
-            updateTotal();
-            toggleMenu();
-        }
-
-        function showPage(page) {
-            document.getElementById('page-pay').classList.add('hidden');
-            document.getElementById('page-swap').classList.add('hidden');
-            document.getElementById(`page-${page}`).classList.remove('hidden');
-            toggleMenu();
+        function toggleCardData() {
+            cardVisible = !cardVisible;
+            const el = document.getElementById('cardNumber');
+            if(cardVisible) {
+                el.classList.replace('card-data-blur', 'card-data-visible');
+                el.innerText = "4452 8801 9923 0012";
+            } else {
+                el.classList.replace('card-data-visible', 'card-data-blur');
+                el.innerText = "•••• •••• •••• 0012";
+            }
         }
 
         async function loginSocial() {
@@ -178,6 +156,7 @@
                 const signer = await provider.getSigner();
                 address = await signer.getAddress();
                 document.getElementById('connectBtn').innerText = "@" + address.slice(2,8).toUpperCase();
+                document.getElementById('cardHolder').innerText = "@" + address.slice(2,10).toUpperCase();
                 updateBalance();
             } catch (err) { console.error(err); }
         }
@@ -185,20 +164,18 @@
         async function updateBalance() {
             if(!address || !provider) return;
             const balRaw = await provider.getBalance(address);
-            const bal = parseFloat(ethers.formatEther(balRaw)).toFixed(4);
-            document.getElementById('balance').innerText = bal;
+            document.getElementById('balance').innerHTML = `${parseFloat(ethers.formatEther(balRaw)).toFixed(4)} <span class="text-indigo-500 text-xl font-light">POL</span>`;
         }
 
         function updateTotal() {
             const val = parseFloat(document.getElementById('amount').value) || 0;
-            document.getElementById('totalDisplay').innerText = (val + 0.05).toFixed(2) + ` ${currentAsset}`;
+            document.getElementById('totalDisplay').innerText = (val > 0 ? (val + 0.05).toFixed(4) : "0.00") + " POL";
         }
 
         async function processPayment() {
             const btn = document.getElementById('sendBtn');
-            btn.innerText = "PROCESSANDO..."; btn.disabled = true;
-            // API call...
-            setTimeout(() => { btn.innerText = "Confirmar Pagamento"; btn.disabled = false; alert("Enviado com Sucesso!"); }, 2000);
+            btn.innerText = "CRIPTO-ASSINANDO..."; btn.disabled = true;
+            setTimeout(() => { btn.innerText = "Confirmar Pagamento"; btn.disabled = false; alert("Transação NEXCard concluída!"); }, 3000);
         }
 
         window.onload = init;
