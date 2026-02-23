@@ -148,9 +148,29 @@
         }
         function closeReceiveModal() { document.getElementById('receiveModal').classList.replace('flex', 'hidden'); }
 
-        async function updateBalance() {
-            const balRaw = await provider.getBalance(address);
-            document.getElementById('balance').innerHTML = `${parseFloat(ethers.formatEther(balRaw)).toFixed(4)} <span class="text-indigo-500 text-xl font-light">POL</span>`;
+      async function updateBalance() {
+
+    if (!address) return;
+
+    const rpc = RPCS[currentChain];
+
+    const customProvider =
+    new ethers.JsonRpcProvider(rpc);
+
+    const balRaw =
+    await customProvider.getBalance(address);
+
+    const symbol =
+    SYMBOLS[currentChain];
+
+    document.getElementById('balance').innerHTML =
+
+    `${parseFloat(ethers.formatEther(balRaw)).toFixed(4)}
+    <span class="text-indigo-500 text-xl font-light">
+    ${symbol}
+    </span>`;
+
+      }  
         }
 
         function updateTotal() {
