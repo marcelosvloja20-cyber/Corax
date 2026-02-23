@@ -3,194 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cold Wallet Dashboard | Next-Gen Pay</title>
-    <!-- Fontes e Ícones -->
+    <title>NEONEX | BLOCKCHAIN P2P V3.0</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <script src="https://unpkg.com"></script>
     <style>
         :root {
-            --primary-neon: #00f2ff;
-            --secondary-neon: #7000ff;
-            --glass-bg: rgba(255, 255, 255, 0.07);
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --bg-black: #000000;
+            --card-bg: #0a0a0a;
+            --neon-purple: #9d50bb;
+            --neon-purple-light: #6e48aa;
+            --text-gray: #888;
+            --input-bg: #111;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background: radial-gradient(circle at top right, #0d0d1a, #050505);
+            background-color: var(--bg-black);
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* Navbar Glassmorphism */
-        nav {
+        /* Header / Nav */
+        header {
+            width: 100%;
+            max-width: 400px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            margin-bottom: 40px;
+            margin-top: 20px;
         }
 
-        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; background: linear-gradient(to right, var(--primary-neon), var(--secondary-neon)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand h1 { font-size: 1.2rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
+        .brand span { font-size: 0.6rem; color: var(--text-gray); letter-spacing: 3px; display: block; }
 
-        /* Botão Hambúrguer Corrigido */
-        .menu-hamburger {
-            background: var(--glass-bg);
-            border: 1px solid var(--primary-neon);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
-            border-radius: 8px;
-            padding: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Main Dashboard */
-        .container { padding: 30px 5%; max-width: 1200px; margin: 0 auto; }
-
-        /* Card de Saldo e Rendimento */
-        .main-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        .main-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, var(--primary-neon) 360deg);
-            opacity: 0.05; animation: rotate 10s linear infinite;
-        }
-
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .balance-label { font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
-        .balance-amount { font-size: 3.5rem; font-weight: 800; margin: 10px 0; }
-        
-        /* Bloco de Rendimento Diário */
-        .yield-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-        }
-
-        /* Grid de Funções */
-        .grid-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .action-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 20px;
-            border-radius: 18px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .action-card:hover {
-            border-color: var(--primary-neon);
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Chat Integrated Preview */
-        .chat-preview {
-            margin-top: 30px;
-            background: var(--glass-bg);
+        .btn-social {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 6px 15px;
             border-radius: 20px;
-            padding: 20px;
-            border: 1px solid var(--glass-border);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            cursor: pointer;
         }
 
-        .status-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #00ff88; }
+        /* Card Principal */
+        .wallet-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+            text-align: center;
+        }
+
+        .label-sm { font-size: 0.65rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+        .balance-main { font-size: 2.2rem; font-weight: 700; margin: 10px 0 30px; }
+
+        /* Inputs Estilizados */
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; }
+        
+        input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 14px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        input::placeholder { color: #444; }
+
+        /* Info de Taxas */
+        .fee-container {
+            margin: 25px 0;
+            padding: 0 10px;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        .fee-label { color: var(--text-gray); }
+        .fee-value { color: var(--neon-purple); font-weight: 600; }
+        .total-row { font-size: 1rem; font-weight: 700; margin-top: 15px; }
+
+        /* Botão Principal com Gradient */
+        .btn-send {
+            width: 100%;
+            background: linear-gradient(to right, #6e48aa, #9d50bb);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .btn-send:active { opacity: 0.8; }
+
+        /* Footer Info */
+        .footer-status {
+            margin-top: 30px;
+            font-size: 0.6rem;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">COLD.PAY</div>
-    <div class="menu-hamburger" onclick="toggleMenu()">
-        <i data-lucide="menu" color="#00f2ff"></i>
-    </div>
-</nav>
-
-<div class="container">
-    <!-- Bloco de Saldo e Rendimento -->
-    <div class="main-card">
-        <p class="balance-label">Saldo Multichain Disponível</p>
-        <h1 class="balance-amount">R$ <span id="realtime-balance">12.450,00</span></h1>
-        <div class="yield-badge">
-            <i data-lucide="trending-up" size="18"></i>
-            Rendimento Diário: +R$ <span id="daily-yield">0,00</span>
+    <header>
+        <div class="brand">
+            <h1>NEONEX</h1>
+            <span>BLOCKCHAIN P2P V3.0</span>
         </div>
-    </div>
+        <button class="btn-social" onclick="loginSocial()">Login Social</button>
+    </header>
 
-    <!-- Ações Rápidas -->
-    <div class="grid-actions">
-        <div class="action-card">
-            <i data-lucide="send" color="#00f2ff"></i>
-            <p style="margin-top:10px">Pagar (Taxa 0.50)</p>
+    <main class="wallet-card">
+        <p class="label-sm">Saldo Disponível (Polygon)</p>
+        <h2 class="balance-main" id="display-balance">0.00 POL</h2>
+
+        <div class="input-group">
+            <label class="label-sm">Destinatário</label>
+            <input type="text" placeholder="@usuario ou endereço 0x...">
         </div>
-        <div class="action-card">
-            <i data-lucide="qr-code" color="#00f2ff"></i>
-            <p style="margin-top:10px">Receber</p>
+
+        <div class="input-group">
+            <label class="label-sm">Valor para enviar</label>
+            <input type="number" id="send-value" placeholder="0.00" oninput="updateTotal()">
         </div>
-        <div class="action-card">
-            <i data-lucide="layers" color="#7000ff"></i>
-            <p style="margin-top:10px">Stake</p>
+
+        <div class="fee-container">
+            <div class="fee-row">
+                <span class="fee-label">Taxa de Serviço NEONEX</span>
+                <span class="fee-value">+ 0.05 POL</span>
+            </div>
+            <div class="fee-row total-row">
+                <span>Total a Debitar</span>
+                <span id="total-debit">0.00 POL</span>
+            </div>
         </div>
-        <div class="action-card">
-            <i data-lucide="gift" color="#ff00c8"></i>
-            <p style="margin-top:10px">Cashback</p>
-        </div>
-    </div>
 
-    <!-- Chat Integrado Preview -->
-    <div class="chat-preview">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h3><i data-lucide="message-square" size="20" style="vertical-align: middle;"></i> Chat Recente</h3>
-            <span style="font-size: 0.8rem; color: #888;"><span class="status-dot"></span> Supabase Realtime Conectado</span>
-        </div>
-        <p style="color: #666; font-size: 0.9rem;">Toque para ver mensagens da sua última transação...</p>
-    </div>
-</div>
+        <button class="btn-send" onclick="confirmTransfer()">Confirmar Envio P2P</button>
+    </main>
 
-<script>
-    // Inicializa ícones
-    lucide.createIcons();
+    <div class="footer-status">Gerando Blockchain Segura...</div>
 
-    // Lógica do Rendimento Diário Progressivo (Simulação Visual)
-    let yieldValue = 0.00;
-    setInterval(() => {
-        yieldValue += 0.0001;
-        document.getElementById('daily-yield').innerText = yieldValue.toLocaleString('pt-BR', { minimumFractionDigits: 4 });
-    }, 1000);
+    <script>
+        function updateTotal() {
+            const val = parseFloat(document.getElementById('send-value').value) || 0;
+            const total = val + 0.05;
+            document.getElementById('total-debit').innerText = total.toFixed(2) + " POL";
+        }
 
-    function toggleMenu() {
-        console.log("Menu WebAuthn/Settings aberto");
-        // Aqui entra sua lógica de abrir o menu lateral ou modal do Supabase Auth
-    }
-</script>
+        function confirmTransfer() {
+            // Aqui entra a chamada do WebAuthn que discutimos!
+            alert("Iniciando assinatura biométrica WebAuthn...");
+        }
 
+        async function loginSocial() {
+            // Integração Supabase Auth
+            console.log("Abrindo Supabase Auth...");
+        }
+    </script>
 </body>
 </html>
