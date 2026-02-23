@@ -1,186 +1,96 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONEX | BLOCKCHAIN P2P V3.0</title>
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <script src="https://unpkg.com"></script>
-    <style>
-        :root {
-            --bg-black: #000000;
-            --card-bg: #0a0a0a;
-            --neon-purple: #9d50bb;
-            --neon-purple-light: #6e48aa;
-            --text-gray: #888;
-            --input-bg: #111;
-        }
+<!-- Adicione ao seu arquivo index.html -->
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+<!-- Menu Lateral (Sidebar) -->
+<div id="side-menu" class="sidebar-glass">
+    <div class="sidebar-header">
+        <div class="logo">NEONEX</div>
+        <button onclick="toggleMenu()" class="close-btn">✕</button>
+    </div>
 
-        body {
-            background-color: var(--bg-black);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* Header / Nav */
-        header {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            margin-top: 20px;
-        }
-
-        .brand h1 { font-size: 1.2rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
-        .brand span { font-size: 0.6rem; color: var(--text-gray); letter-spacing: 3px; display: block; }
-
-        .btn-social {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        /* Card Principal */
-        .wallet-card {
-            width: 100%;
-            max-width: 400px;
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px 20px;
-            border: 1px solid rgba(255,255,255,0.03);
-            text-align: center;
-        }
-
-        .label-sm { font-size: 0.65rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
-        .balance-main { font-size: 2.2rem; font-weight: 700; margin: 10px 0 30px; }
-
-        /* Inputs Estilizados */
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; }
-        
-        input {
-            width: 100%;
-            background: var(--input-bg);
-            border: 1px solid #1a1a1a;
-            border-radius: 12px;
-            padding: 14px;
-            color: white;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        input::placeholder { color: #444; }
-
-        /* Info de Taxas */
-        .fee-container {
-            margin: 25px 0;
-            padding: 0 10px;
-        }
-        .fee-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-        .fee-label { color: var(--text-gray); }
-        .fee-value { color: var(--neon-purple); font-weight: 600; }
-        .total-row { font-size: 1rem; font-weight: 700; margin-top: 15px; }
-
-        /* Botão Principal com Gradient */
-        .btn-send {
-            width: 100%;
-            background: linear-gradient(to right, #6e48aa, #9d50bb);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 16px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-        .btn-send:active { opacity: 0.8; }
-
-        /* Footer Info */
-        .footer-status {
-            margin-top: 30px;
-            font-size: 0.6rem;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="brand">
-            <h1>NEONEX</h1>
-            <span>BLOCKCHAIN P2P V3.0</span>
-        </div>
-        <button class="btn-social" onclick="loginSocial()">Login Social</button>
-    </header>
-
-    <main class="wallet-card">
-        <p class="label-sm">Saldo Disponível (Polygon)</p>
-        <h2 class="balance-main" id="display-balance">0.00 POL</h2>
-
-        <div class="input-group">
-            <label class="label-sm">Destinatário</label>
-            <input type="text" placeholder="@usuario ou endereço 0x...">
+    <div class="sidebar-content">
+        <!-- Item: Rendimento Diário -->
+        <div class="menu-item-yield">
+            <span class="label-sm">Rendimento Diário</span>
+            <div class="yield-value">+ R$ <span id="yield-counter">0,0000</span></div>
         </div>
 
-        <div class="input-group">
-            <label class="label-sm">Valor para enviar</label>
-            <input type="number" id="send-value" placeholder="0.00" oninput="updateTotal()">
+        <!-- Item: NEOCARD (Aproximação) -->
+        <div class="neocard-preview">
+            <div class="chip"></div>
+            <div class="card-number">NEOCARD P2P</div>
+            <div class="card-brand">VIRTUAL</div>
         </div>
 
-        <div class="fee-container">
-            <div class="fee-row">
-                <span class="fee-label">Taxa de Serviço NEONEX</span>
-                <span class="fee-value">+ 0.05 POL</span>
-            </div>
-            <div class="fee-row total-row">
-                <span>Total a Debitar</span>
-                <span id="total-debit">0.00 POL</span>
+        <!-- Seção: Multichain com Seta -->
+        <div class="menu-section">
+            <button class="accordion-btn" onclick="toggleTokens()">
+                Multichain Assets <i data-lucide="chevron-down" id="arrow-tokens"></i>
+            </button>
+            <div id="token-list" class="token-dropdown">
+                <div class="token-item"><img src="https://cryptologos.cc" width="15"> POL (Polygon)</div>
+                <div class="token-item"><img src="https://cryptologos.cc" width="15"> ETH (Base)</div>
+                <div class="token-item"><img src="https://cryptologos.cc" width="15"> SOL (Solana)</div>
+                <div class="token-item"><img src="https://cryptologos.cc" width="15"> USDT (Stable)</div>
             </div>
         </div>
 
-        <button class="btn-send" onclick="confirmTransfer()">Confirmar Envio P2P</button>
-    </main>
+        <!-- Links Rápidos -->
+        <a href="#" class="nav-link"><i data-lucide="message-circle-lock"></i> Chat Privado</a>
+        <a href="#" class="nav-link"><i data-lucide="shield-check"></i> Segurança WebAuthn</a>
+        <a href="#" class="nav-link"><i data-lucide="gift"></i> Cashback Hub</a>
+    </div>
 
-    <div class="footer-status">Gerando Blockchain Segura...</div>
+    <!-- Footer do Menu -->
+    <div class="sidebar-footer">
+        <div class="lang-br">
+            <img src="https://flagcdn.com" alt="Brasil"> Português (BR)
+        </div>
+        <p>ALL rights reserved 2026 ©</p>
+    </div>
+</div>
 
-    <script>
-        function updateTotal() {
-            const val = parseFloat(document.getElementById('send-value').value) || 0;
-            const total = val + 0.05;
-            document.getElementById('total-debit').innerText = total.toFixed(2) + " POL";
-        }
+<style>
+    /* CSS para o Menu Futurista */
+    .sidebar-glass {
+        position: fixed;
+        top: 0;
+        right: -300px; /* Escondido */
+        width: 300px;
+        height: 100%;
+        background: rgba(10, 10, 15, 0.95);
+        backdrop-filter: blur(25px);
+        border-left: 1px solid rgba(157, 80, 187, 0.3);
+        z-index: 1000;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+    }
 
-        function confirmTransfer() {
-            // Aqui entra a chamada do WebAuthn que discutimos!
-            alert("Iniciando assinatura biométrica WebAuthn...");
-        }
+    .sidebar-glass.active { right: 0; }
 
-        async function loginSocial() {
-            // Integração Supabase Auth
-            console.log("Abrindo Supabase Auth...");
-        }
-    </script>
-</body>
-</html>
+    /* Estilo NEOCARD */
+    .neocard-preview {
+        background: linear-gradient(135deg, #6e48aa, #9d50bb);
+        height: 140px;
+        border-radius: 15px;
+        margin: 20px 0;
+        padding: 20px;
+        position: relative;
+        box-shadow: 0 10px 20px rgba(110, 72, 170, 0.3);
+    }
+    .chip { width: 35px; height: 25px; background: rgba(255,255,255,0.2); border-radius: 4px; }
+    .card-number { margin-top: 50px; font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; }
+
+    /* Acordeão Multichain */
+    .token-dropdown { display: none; padding-left: 15px; margin-top: 10px; }
+    .token-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 0.85rem; color: #ccc; }
+    
+    .nav-link { 
+        display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; 
+        padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem;
+    }
+
+    .sidebar-footer { margin-top: auto; text-align: center; font-size: 0.65rem; color: #555; }
+    .lang-br { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 10px; color: #888; }
+</style>
