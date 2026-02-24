@@ -3,241 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONEX | P2P V3.0</title>
+    <title>NEONEX | BLOCKCHAIN P2P V3.0</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <script src="https://unpkg.com"></script>
     <style>
         :root {
-            --neon-purple: #bc13fe;
-            --neon-glow: #d660ff;
-            --bg-dark: #050505;
-            --glass: rgba(188, 19, 254, 0.1);
-            --glass-border: rgba(188, 19, 254, 0.3);
+            --bg-black: #000000;
+            --card-bg: #0a0a0a;
+            --neon-purple: #9d50bb;
+            --text-gray: #444;
+            --text-light-gray: #888;
+            --glass: rgba(157, 80, 187, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body { 
-            background-color: var(--bg-dark); 
-            color: white; 
-            min-height: 100vh; 
-            overflow-x: hidden;
-            background: radial-gradient(circle at 50% 0%, #1a002a 0%, #050505 100%);
-        }
+        body { background-color: var(--bg-black); color: white; min-height: 100vh; overflow-x: hidden; }
 
-        /* HEADER & HAMBURGER (Superior Esquerdo) */
-        header {
-            display: flex;
-            align-items: center;
-            padding: 25px 5%;
-            position: relative;
+        /* MENU HAMBÚRGUER (SUPERIOR ESQUERDO) */
+        .header-top {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 25px 20px; width: 100%; max-width: 500px; margin: 0 auto;
         }
 
         .hamburger {
-            cursor: pointer;
-            z-index: 1100;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 10px;
-            background: var(--glass);
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+            cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1100;
         }
-
         .hamburger span {
-            display: block;
-            width: 28px;
-            height: 3px;
-            background: var(--neon-purple);
-            box-shadow: 0 0 8px var(--neon-glow);
-            border-radius: 2px;
-            transition: 0.3s;
+            display: block; width: 25px; height: 2px; background: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple); border-radius: 2px;
         }
 
-        .brand { margin-left: 20px; }
-        .brand h1 { font-size: 1.4rem; font-weight: 900; letter-spacing: 3px; color: white; text-shadow: 0 0 10px var(--neon-purple); }
-        .brand span { font-size: 0.6rem; color: var(--neon-purple); letter-spacing: 4px; display: block; }
+        .login-social-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: white; padding: 8px 18px; border-radius: 20px; font-size: 0.7rem;
+            text-transform: uppercase; cursor: pointer; font-weight: 600;
+        }
 
-        /* MAIN CARD */
-        .container { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        /* BRANDING */
+        .brand-section { text-align: left; width: 100%; max-width: 400px; margin: 10px auto 30px; padding: 0 20px; }
+        .brand-section h1 { color: var(--neon-purple); font-size: 1.4rem; font-weight: 600; letter-spacing: 2px; }
+        .brand-section span { color: #333; font-size: 0.6rem; letter-spacing: 3px; display: block; margin-top: 5px; }
+
+        /* CARD PRINCIPAL (IDENTICO À IMAGEM) */
+        .container { display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
         .wallet-card {
-            width: 100%; max-width: 420px;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px 30px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 0 40px rgba(188, 19, 254, 0.15);
-            text-align: center;
+            width: 100%; max-width: 400px; background: var(--card-bg); border-radius: 24px;
+            padding: 40px 25px; border: 1px solid #111; text-align: center;
         }
 
-        .balance-label { font-size: 0.7rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
-        .balance-main { font-size: 2.8rem; font-weight: 900; margin: 15px 0 35px; color: white; }
+        .label-sm { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .balance-main { font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; }
 
+        .input-group { text-align: left; margin-bottom: 25px; }
         input {
-            width: 100%; background: #111; border: 1px solid #222; border-radius: 15px;
-            padding: 18px; color: white; font-size: 1rem; outline: none; margin-bottom: 20px;
-            transition: 0.3s;
+            width: 100%; background: #111; border: 1px solid #1a1a1a; border-radius: 12px;
+            padding: 15px; color: white; font-size: 0.9rem; outline: none;
         }
-        input:focus { border-color: var(--neon-purple); box-shadow: 0 0 10px rgba(188, 19, 254, 0.3); }
+        input::placeholder { color: #333; }
 
-        .fee-info { font-size: 0.85rem; color: #888; display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .fee-info b { color: var(--neon-purple); }
+        .fee-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin: 15px 0; }
+        .fee-label { color: #555; }
+        .fee-value { color: var(--neon-purple); font-weight: 600; }
+        .total-label { font-size: 0.9rem; font-weight: 700; }
 
-        .btn-send {
-            width: 100%; background: var(--neon-purple); color: white;
-            border: none; padding: 22px; border-radius: 20px; font-weight: 900; 
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 0 20px rgba(188, 19, 254, 0.4); transition: 0.3s;
+        .btn-confirm {
+            width: 100%; background: var(--neon-purple); color: white; border: none;
+            padding: 18px; border-radius: 15px; font-weight: 600; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px;
         }
-        .btn-send:hover { transform: scale(1.02); background: var(--neon-glow); }
 
-        /* SIDEBAR (Aba lateral) */
+        /* SIDEBAR GLASS */
         .sidebar {
-            position: fixed; top: 0; left: -350px; width: 320px; height: 100%;
-            background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(30px);
-            border-right: 1px solid var(--glass-border); z-index: 1050;
-            padding: 100px 30px 40px; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: -320px; width: 310px; height: 100%;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass); z-index: 1050;
+            padding: 40px 25px; transition: 0.4s; display: flex; flex-direction: column;
         }
         .sidebar.active { left: 0; }
 
-        .yield-box {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 20px; border-radius: 20px; margin-bottom: 30px;
-        }
-        .yield-value { color: var(--neon-purple); font-weight: 900; font-size: 1.2rem; text-shadow: 0 0 10px var(--neon-purple); }
+        .side-item { margin-bottom: 25px; }
+        .yield-val { color: var(--neon-purple); font-size: 1.2rem; font-weight: 700; text-shadow: 0 0 10px var(--neon-purple); }
 
-        /* NEOCARD */
         .neocard {
-            width: 100%; height: 160px;
-            background: linear-gradient(135deg, #222, #000);
-            border-radius: 20px; border: 1px solid var(--glass-border);
-            padding: 20px; position: relative; margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(188, 19, 254, 0.1);
+            width: 100%; height: 140px; background: linear-gradient(135deg, #111, #000);
+            border: 1px solid var(--neon-purple); border-radius: 16px; padding: 20px;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-        .neocard-chip { width: 40px; height: 30px; background: #444; border-radius: 5px; }
 
-        /* MULTICHAIN */
-        .accordion-item { border-bottom: 1px solid #222; padding: 15px 0; cursor: pointer; }
-        .token-list { display: none; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 10px; margin-top: 10px; }
-        .token-list.show { display: block; }
+        .multichain-btn { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px 0; border-bottom: 1px solid #111; }
+        .token-list { display: none; padding-top: 10px; font-size: 0.8rem; color: #666; }
+        .token-list.active { display: block; }
 
-        .sidebar-footer { margin-top: auto; text-align: center; }
-        .br-flag { display: flex; align-items: center; justify-content: center; gap: 10px; color: #555; font-size: 0.7rem; }
+        .footer-sidebar { margin-top: auto; text-align: center; }
+        .footer-sidebar img { width: 20px; opacity: 0.5; margin-bottom: 10px; }
+        .copyright { font-size: 0.55rem; color: #222; letter-spacing: 2px; }
 
+        .status-msg { margin-top: 30px; font-size: 0.55rem; color: #1a1a1a; letter-spacing: 4px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="hamburger" id="menuBtn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+    <header class="header-top">
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
         </div>
-        <div class="brand">
-            <h1>NEONEX</h1>
-            <span>P2P ECOSYSTEM</span>
-        </div>
+        <button class="login-social-btn">Login Social</button>
     </header>
+
+    <div class="brand-section">
+        <h1>NEONEX</h1>
+        <span>BLOCKCHAIN P2P V3.0</span>
+    </div>
 
     <div class="container">
         <main class="wallet-card">
-            <span class="balance-label">Saldo Disponível</span>
+            <span class="label-sm">Saldo Disponível (Polygon)</span>
             <h2 class="balance-main">0.00 POL</h2>
 
-            <input type="text" placeholder="@usuario ou 0x endereço">
-            <input type="number" placeholder="Valor 0.00" oninput="calc()" id="val">
-
-            <div class="fee-info">
-                <span>Taxa P2P fixa</span>
-                <b>+ 0.50 POL</b>
-            </div>
-            <div class="fee-info" style="color: white; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #222; padding-top: 15px;">
-                <span>Total</span>
-                <span id="total">0.00 POL</span>
+            <div class="input-group">
+                <span class="label-sm">Destinatário</span>
+                <input type="text" placeholder="@usuario ou endereço 0x...">
             </div>
 
-            <button class="btn-send" onclick="confirm()">Confirmar Envio</button>
+            <div class="input-group" style="margin-bottom: 15px;">
+                <span class="label-sm">Valor para enviar</span>
+                <input type="number" id="val" placeholder="0.00" oninput="updateTotal()">
+            </div>
+
+            <div class="fee-row">
+                <span class="fee-label">Taxa de Serviço NEONEX</span>
+                <span class="fee-value">+ 0.05 POL</span>
+            </div>
+            <div class="fee-row" style="margin-top: 25px;">
+                <span class="total-label">Total a Debitar</span>
+                <span class="total-label" id="total-val">0.00 POL</span>
+            </div>
+
+            <button class="btn-confirm" onclick="confirmTx()">Confirmar Envio P2P</button>
         </main>
+
+        <div class="status-msg">Gerando Blockchain Segura...</div>
     </div>
 
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar">
-        <div class="yield-box">
-            <span class="balance-label" style="color: var(--neon-purple);">Rendimento Diário</span>
-            <div class="yield-value">R$ <span id="yield-amt">0,0000</span></div>
+        <div class="side-item">
+            <span class="label-sm">Rendimento Diário</span>
+            <div class="yield-val">R$ <span id="yield-amt">0,0000</span></div>
         </div>
 
-        <div class="neocard">
-            <div class="neocard-chip"></div>
-            <div style="margin-top:60px; font-weight:900; font-size:0.9rem; letter-spacing:2px; color:white;">NEOCARD</div>
-            <div style="font-size:0.6rem; color:var(--neon-purple);">VIRTUAL ENCRYPTED</div>
-        </div>
-
-        <div class="accordion-item" onclick="toggleTokens()">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:700; font-size:0.9rem;">Multichain Tokens</span>
-                <i data-lucide="chevron-down" id="arrow"></i>
-            </div>
-            <div id="tokenList" class="token-list">
-                <div style="padding:8px 0; font-size:0.8rem; color:#ccc;">• Polygon (POL)</div>
-                <div style="padding:8px 0; font-size:0.8rem; color:#ccc;">• Solana (SOL)</div>
-                <div style="padding:8px 0; font-size:0.8rem; color:#ccc;">• Ethereum (ETH)</div>
+        <div class="side-item">
+            <div class="neocard">
+                <div style="width: 35px; height: 25px; background: #222; border-radius: 4px;"></div>
+                <div style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">NEOCARD P2P</div>
             </div>
         </div>
 
-        <div style="margin-top:20px; display:flex; flex-direction:column; gap:20px;">
-            <div style="display:flex; align-items:center; gap:15px; font-size:0.9rem; cursor:pointer;">
-                <i data-lucide="message-circle-lock" color="#bc13fe"></i> Chat Privado
+        <div class="side-item">
+            <div class="multichain-btn" onclick="toggleTokens()">
+                <span style="font-size: 0.8rem; font-weight: 600;">Multichain Tokens</span>
+                <i data-lucide="chevron-down" id="arrow" size="16"></i>
+            </div>
+            <div id="token-list" class="token-list">
+                <p>• Polygon (POL)</p>
+                <p style="margin: 10px 0;">• Solana (SOL)</p>
+                <p>• Ethereum (BASE)</p>
             </div>
         </div>
 
-        <div class="sidebar-footer">
-            <div class="br-flag">
-                <img src="https://flagcdn.com" alt="Brasil"> Português (BR)
-            </div>
-            <p style="font-size:0.6rem; color:#333; margin-top:10px; letter-spacing:2px;">ALL RIGHTS RESERVED 2026 ©</p>
+        <div class="side-item">
+            <span style="font-size: 0.8rem; display: flex; align-items: center; gap: 10px; color: #888;">
+                <i data-lucide="message-circle" size="18"></i> Chat Privado
+            </span>
+        </div>
+
+        <div class="footer-sidebar">
+            <img src="https://flagcdn.com" alt="Brasil">
+            <div class="copyright">ALL RIGHTS RESERVED 2026 ©</div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-            // Animação simples do hambúrguer
-            const spans = document.querySelectorAll('.hamburger span');
-            spans[0].style.transform = document.getElementById('sidebar').classList.contains('active') ? 'rotate(45deg) translate(5px, 8px)' : 'none';
-            spans[1].style.opacity = document.getElementById('sidebar').classList.contains('active') ? '0' : '1';
-            spans[2].style.transform = document.getElementById('sidebar').classList.contains('active') ? 'rotate(-45deg) translate(5px, -8px)' : 'none';
+        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
+        function toggleTokens() { 
+            const list = document.getElementById('token-list');
+            list.classList.toggle('active');
+            document.getElementById('arrow').style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
-
-        function toggleTokens() {
-            const list = document.getElementById('tokenList');
-            const arrow = document.getElementById('arrow');
-            list.classList.toggle('show');
-            arrow.style.transform = list.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-
-        function calc() {
+        function updateTotal() {
             const v = parseFloat(document.getElementById('val').value) || 0;
-            document.getElementById('total').innerText = (v + 0.50).toFixed(2) + " POL";
+            document.getElementById('total-val').innerText = (v + 0.05).toFixed(2) + " POL";
         }
-
-        // Rendimento Diário Progressivo
-        let val = 0;
-        setInterval(() => {
-            val += 0.0002;
-            document.getElementById('yield-amt').innerText = val.toLocaleString('pt-BR', {minimumFractionDigits: 4});
-        }, 1000);
-
-        function confirm() {
-            alert("Autenticando WebAuthn Biometria... Transação P2P Neonex Iniciada.");
-        }
+        // Rendimento Simulado
+        let r = 0; setInterval(() => { r += 0.0002; document.getElementById('yield-amt').innerText = r.toLocaleString('pt-BR', {minimumFractionDigits: 4}); }, 1000);
+        function confirmTx() { alert("Autenticando WebAuthn..."); }
     </script>
 </body>
 </html>
