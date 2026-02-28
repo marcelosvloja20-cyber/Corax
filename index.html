@@ -3,366 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONEX | BLOCKCHAIN P2P V3.0</title>
+    <title>NEONEX | P2P Blockchain</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-black: #000000;
-            --card-bg: #0a0a0f;
-            --neon-violet: #8b5cf6;
-            --neon-blue: #3b82f6;
-            --gradient-primary: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            --gradient-glow: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(59,130,246,0.3));
-            --glass: rgba(139, 92, 246, 0.08);
-            --text-light: #e0e7ff;
-            --text-muted: #94a3b8;
+            --bg: #000;
+            --card: #0f0f15;
+            --violet: #8b5cf6;
+            --blue: #3b82f6;
+            --gradient: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            --text: #e0e7ff;
+            --muted: #94a3b8;
+            --glass: rgba(139,92,246,0.06);
         }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+        body { background:var(--bg); color:var(--text); min-height:100vh; padding-bottom:90px; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { 
-            background: var(--bg-black); 
-            color: var(--text-light); 
-            min-height: 100vh; 
-            overflow-x: hidden; 
-            padding-bottom: 90px; 
+        header { 
+            position:fixed; top:0; left:0; right:0; 
+            display:flex; justify-content:space-between; align-items:center;
+            padding:16px 20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(12px);
+            z-index:1100; max-width:500px; margin:0 auto;
         }
+        .hamburger { cursor:pointer; display:flex; flex-direction:column; gap:5px; }
+        .hamburger span { width:24px; height:2px; background:var(--violet); box-shadow:0 0 8px var(--violet); border-radius:1px; }
+        .login-btn { background:var(--gradient); color:white; border:none; padding:8px 16px; border-radius:24px; font-size:0.8rem; font-weight:600; cursor:pointer; box-shadow:0 0 12px rgba(139,92,246,0.3); }
 
-        /* HEADER TOP */
-        .header-top {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 20px; 
-            background: rgba(0,0,0,0.6); 
-            backdrop-filter: blur(12px);
-            z-index: 1100; 
-            max-width: 500px; 
-            margin: 0 auto;
+        .logo { text-align:center; margin:80px auto 32px; max-width:400px; }
+        .logo h1 { 
+            background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            font-size:2.2rem; font-weight:800; letter-spacing:4px; text-shadow:0 0 16px rgba(139,92,246,0.4);
         }
+        .logo span { color:var(--muted); font-size:0.7rem; letter-spacing:2px; }
 
-        .hamburger {
-            cursor: pointer; display: flex; flex-direction: column; gap: 6px;
+        .container { padding:0 20px; max-width:400px; margin:0 auto; }
+        .wallet-card { 
+            background:var(--card); border-radius:24px; padding:28px 20px; 
+            border:1px solid rgba(59,130,246,0.1); text-align:center;
         }
-        .hamburger span {
-            width: 28px; height: 3px; 
-            background: var(--neon-violet);
-            box-shadow: 0 0 12px var(--neon-violet);
-            border-radius: 2px;
-            transition: all 0.3s;
+        .label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block; }
+        .balance { font-size:2.8rem; font-weight:800; margin:12px 0 32px; letter-spacing:-1px; }
+        input { 
+            width:100%; background:rgba(20,20,40,0.6); border:1px solid rgba(139,92,246,0.15);
+            border-radius:14px; padding:14px 16px; color:white; font-size:1rem; margin-bottom:20px; outline:none;
         }
+        input:focus { border-color:var(--blue); box-shadow:0 0 10px rgba(59,130,246,0.2); }
+        .fee { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--muted); margin:10px 0; }
+        .fee strong { color:var(--violet); }
+        .btn { 
+            width:100%; background:var(--gradient); color:white; border:none; padding:16px; 
+            border-radius:18px; font-weight:700; font-size:0.95rem; cursor:pointer; 
+            box-shadow:0 0 16px rgba(139,92,246,0.4); transition:transform 0.2s;
+        }
+        .btn:hover { transform:translateY(-1px); }
 
-        .login-social-btn {
-            background: var(--gradient-primary);
-            color: white; 
-            border: none;
-            padding: 10px 20px; 
-            border-radius: 30px; 
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(139,92,246,0.4);
+        .sidebar { 
+            position:fixed; top:0; left:-320px; width:300px; height:100%; 
+            background:rgba(15,15,35,0.95); backdrop-filter:blur(20px); border-right:1px solid rgba(139,92,246,0.1);
+            z-index:1050; padding:60px 20px 20px; transition:left 0.4s;
         }
+        .sidebar.active { left:0; }
+        .benefit { background:rgba(139,92,246,0.08); border-radius:16px; padding:14px; margin-bottom:20px; text-align:center; }
+        .benefit-label { font-size:0.7rem; color:var(--muted); }
+        .benefit-val { font-size:1.3rem; font-weight:700; color:var(--violet); }
 
-        /* BRANDING / LOGO */
-        .brand-section { 
-            text-align: center; 
-            width: 100%; 
-            max-width: 400px; 
-            margin: 80px auto 30px; 
-            padding: 0 20px; 
+        .bottom-nav { 
+            position:fixed; bottom:0; left:0; right:0; background:rgba(15,15,35,0.9); backdrop-filter:blur(12px);
+            border-top:1px solid rgba(59,130,246,0.1); padding:10px 0; z-index:1000;
         }
-        .brand-section h1 {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: 6px;
-            text-shadow: 0 0 25px rgba(139,92,246,0.5), 0 0 50px rgba(59,130,246,0.3);
-        }
-        .brand-section span {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            display: block;
-            margin-top: 8px;
-            font-weight: 500;
-        }
+        .tabs { display:flex; justify-content:space-around; max-width:500px; margin:0 auto; }
+        .tab { color:var(--muted); text-align:center; text-decoration:none; font-size:0.7rem; }
+        .tab.active { color:var(--violet); }
+        .tab i { font-size:22px; display:block; margin-bottom:2px; }
 
-        /* MAIN CONTAINER */
-        .container { padding: 0 20px; max-width: 400px; margin: 0 auto; }
-
-        /* BENEFÍCIOS CARDS */
-        .benefits-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;
-        }
-        .benefit-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(139,92,246,0.2);
-            border-radius: 20px;
-            padding: 18px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-        }
-        .benefit-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
-        .benefit-value { 
-            font-size: 1.6rem; 
-            font-weight: 700; 
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .benefit-extra { font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; }
-
-        /* WALLET CARD */
-        .wallet-card {
-            background: var(--card-bg);
-            border-radius: 28px;
-            padding: 32px 24px;
-            border: 1px solid rgba(59,130,246,0.15);
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        }
-
-        .label-sm { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
-        .balance-main { font-size: 2.8rem; font-weight: 800; margin-bottom: 32px; }
-
-        .input-group { text-align: left; margin-bottom: 24px; }
-        input {
-            width: 100%; 
-            background: rgba(30,30,50,0.6);
-            border: 1px solid rgba(139,92,246,0.2);
-            border-radius: 16px;
-            padding: 16px;
-            color: white;
-            font-size: 1.1rem;
-            outline: none;
-            transition: border 0.3s;
-        }
-        input:focus { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(59,130,246,0.3); }
-        input::placeholder { color: #64748b; }
-
-        .fee-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin: 14px 0; }
-        .fee-label { color: var(--text-muted); }
-        .fee-value { color: var(--neon-violet); font-weight: 600; }
-        .total-label { font-size: 1.1rem; font-weight: 700; }
-
-        .btn-confirm {
-            width: 100%; 
-            background: var(--gradient-primary);
-            color: white; border: none;
-            padding: 18px; 
-            border-radius: 20px; 
-            font-weight: 700; 
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            box-shadow: 0 0 25px rgba(139,92,246,0.5);
-            transition: transform 0.2s;
-        }
-        .btn-confirm:hover { transform: translateY(-2px); }
-
-        /* SIDEBAR GLASS */
-        .sidebar {
-            position: fixed; top: 0; left: -340px; width: 320px; height: 100%;
-            background: rgba(10,10,30,0.92); backdrop-filter: blur(24px);
-            border-right: 1px solid rgba(139,92,246,0.15);
-            z-index: 1050;
-            padding: 70px 28px 20px;
-            transition: left 0.4s ease;
-            display: flex; flex-direction: column;
-        }
-        .sidebar.active { left: 0; }
-
-        .side-item { margin-bottom: 28px; }
-        .neocard {
-            width: 100%; height: 150px;
-            background: var(--gradient-glow);
-            border: 1px solid rgba(59,130,246,0.3);
-            border-radius: 20px;
-            padding: 24px;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-
-        .multichain-btn { 
-            display: flex; justify-content: space-between; align-items: center; 
-            cursor: pointer; padding: 12px 0; border-bottom: 1px solid rgba(139,92,246,0.15);
-            font-size: 0.95rem; font-weight: 600; color: var(--text-light);
-        }
-        .token-list { display: none; padding-top: 12px; font-size: 0.9rem; color: var(--text-muted); }
-        .token-list.active { display: block; }
-
-        .sidebar-footer { margin-top: auto; text-align: center; font-size: 0.65rem; color: #475569; }
-
-        /* BOTTOM NAV */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(10,10,30,0.9); backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(59,130,246,0.15);
-            padding: 12px 0;
-        }
-        .bottom-nav .tabs {
-            display: flex; justify-content: space-around; max-width: 500px; margin: 0 auto;
-        }
-        .tab {
-            color: var(--text-muted); text-align: center; text-decoration: none; font-size: 0.75rem;
-            transition: all 0.3s;
-        }
-        .tab.active { color: var(--neon-violet); }
-        .tab i { font-size: 26px; display: block; margin-bottom: 4px; }
-        .tab span { display: block; }
-
-        .status-msg { margin: 24px 0; font-size: 0.65rem; color: #475569; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
+        .status { margin:16px 0; font-size:0.6rem; color:#475569; text-align:center; }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="header-top">
-        <div class="hamburger" onclick="toggleMenu()">
+    <header>
+        <div class="hamburger" onclick="document.getElementById('sidebar').classList.toggle('active')">
             <span></span><span></span><span></span>
         </div>
-        <button class="login-social-btn">Login Social</button>
+        <button class="login-btn">Login Social</button>
     </header>
 
-    <!-- LOGO -->
-    <div class="brand-section">
+    <div class="logo">
         <h1>NEONEX</h1>
         <span>BLOCKCHAIN P2P V3.0</span>
     </div>
 
-    <!-- MAIN -->
     <div class="container">
-        <!-- BENEFÍCIOS -->
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="benefit-label">Rendimento Diário</div>
-                <div class="benefit-value">R$ <span id="yield-amt">0,0000</span></div>
-                <div class="benefit-extra">Automático • +8.4% APY</div>
+        <div class="wallet-card">
+            <span class="label">Saldo Disponível (Polygon)</span>
+            <div class="balance">0.00 POL</div>
+
+            <span class="label">Destinatário</span>
+            <input type="text" placeholder="@usuario ou 0x...">
+
+            <span class="label">Valor para Enviar</span>
+            <input type="number" id="val" placeholder="0.00" oninput="document.getElementById('total').textContent = (parseFloat(this.value)||0 + 0.05).toFixed(2) + ' POL'">
+
+            <div class="fee">
+                <span>Taxa NEONEX</span>
+                <span><strong>+0.05 POL</strong></span>
             </div>
-            <div class="benefit-card">
-                <div class="benefit-label">Cashback Acumulado</div>
-                <div class="benefit-value">R$ 45,20</div>
-                <div class="benefit-extra"><button style="background: var(--neon-blue); color: white; border: none; padding: 6px 14px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; margin-top: 4px;">Resgatar</button></div>
+            <div class="fee" style="font-weight:600;">
+                <span>Total a Debitar</span>
+                <span id="total">0.05 POL</span>
             </div>
+
+            <button class="btn">Confirmar Envio P2P</button>
         </div>
 
-        <!-- WALLET CARD -->
-        <main class="wallet-card">
-            <span class="label-sm">Saldo Disponível (Polygon)</span>
-            <h2 class="balance-main">0.00 POL</h2>
-
-            <div class="input-group">
-                <span class="label-sm">Destinatário</span>
-                <input type="text" placeholder="@usuario ou endereço 0x...">
-            </div>
-
-            <div class="input-group">
-                <span class="label-sm">Valor para enviar</span>
-                <input type="number" id="val" placeholder="0.00" oninput="updateTotal()">
-            </div>
-
-            <div class="fee-row">
-                <span class="fee-label">Taxa de Serviço NEONEX</span>
-                <span class="fee-value">+ 0.05 POL</span>
-            </div>
-            <div class="fee-row" style="margin-top: 24px;">
-                <span class="total-label">Total a Debitar</span>
-                <span class="total-label" id="total-val">0.00 POL</span>
-            </div>
-
-            <button class="btn-confirm" onclick="confirmTx()">Confirmar Envio P2P</button>
-        </main>
-
-        <div class="status-msg">Gerando Blockchain Segura...</div>
+        <div class="status">Conecte sua wallet para começar</div>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- Sidebar com benefícios -->
     <div id="sidebar" class="sidebar">
-        <div class="side-item">
-            <div class="neocard">
-                <div style="width: 45px; height: 30px; background: var(--gradient-primary); border-radius: 8px; opacity: 0.8;"></div>
-                <div style="font-size: 1rem; font-weight: 700; letter-spacing: 1.5px;">NEOCARD P2P</div>
-            </div>
+        <div class="benefit">
+            <div class="benefit-label">Rendimento Diário</div>
+            <div class="benefit-val">R$ 0,0000</div>
+            <div style="font-size:0.75rem;color:var(--muted);">+8.4% APY Automático</div>
         </div>
-
-        <div class="side-item">
-            <div class="multichain-btn" onclick="toggleTokens()">
-                <span>Multichain Tokens</span>
-                <i data-lucide="chevron-down" id="arrow"></i>
-            </div>
-            <div id="token-list" class="token-list">
-                <p>• Polygon (POL)</p>
-                <p>• Solana (SOL)</p>
-                <p>• Ethereum (BASE)</p>
-            </div>
+        <div class="benefit">
+            <div class="benefit-label">Cashback Acumulado</div>
+            <div class="benefit-val">R$ 45,20</div>
+            <button style="background:var(--blue);color:white;border:none;padding:6px 12px;border-radius:10px;font-size:0.8rem;margin-top:8px;cursor:pointer;">Resgatar</button>
         </div>
-
-        <div class="side-item">
-            <span style="font-size: 0.95rem; display: flex; align-items: center; gap: 12px; color: var(--text-light);">
-                <i data-lucide="message-circle"></i> Chat Privado
-            </span>
-        </div>
-
-        <div class="sidebar-footer">
-            <div>ALL RIGHTS RESERVED 2026 © NEONEX</div>
-        </div>
+        <!-- Outros itens sidebar aqui -->
     </div>
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <div class="tabs">
-            <a href="#" class="tab active">
-                <i data-lucide="home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#" class="tab">
-                <i data-lucide="send"></i>
-                <span>Pagar</span>
-            </a>
-            <a href="#" class="tab">
-                <i data-lucide="message-circle"></i>
-                <span>Chat</span>
-            </a>
-            <a href="#" class="tab">
-                <i data-lucide="wallet"></i>
-                <span>Carteira</span>
-            </a>
+            <a href="#" class="tab active"><i data-lucide="home"></i><span>Home</span></a>
+            <a href="#" class="tab"><i data-lucide="send"></i><span>Pagar</span></a>
+            <a href="#" class="tab"><i data-lucide="message-circle"></i><span>Chat</span></a>
+            <a href="#" class="tab"><i data-lucide="wallet"></i><span>Carteira</span></a>
         </div>
     </nav>
 
-    <script>
-        lucide.createIcons();
-
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-
-        function toggleTokens() {
-            const list = document.getElementById('token-list');
-            list.classList.toggle('active');
-            const arrow = document.getElementById('arrow');
-            arrow.style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-
-        function updateTotal() {
-            const v = parseFloat(document.getElementById('val').value) || 0;
-            document.getElementById('total-val').innerText = (v + 0.05).toFixed(2) + " POL";
-        }
-
-        // Yield simulado
-        let r = 0;
-        setInterval(() => {
-            r += 0.0002;
-            document.getElementById('yield-amt').innerText = r.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
-        }, 1000);
-
-        function confirmTx() {
-            alert("Autenticando com Web3Auth... Transação P2P em processamento!");
-        }
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
