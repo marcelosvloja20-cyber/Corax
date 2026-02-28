@@ -1,84 +1,295 @@
+/* ==============================================
+   CORAX - A NOVA CAMADA DO DINHEIRO
+   Identidade Visual Premium Minimalista
+   ============================================== */
+
 :root {
-  --bg-dark:#0B0B0F;
-  --neon-blue:#00E5FF;
-  --neon-purple:#7B61FF;
-  --text:#FFFFFF;
-  --muted:#9CA3AF;
+  --bg: #0B0B0F;                  /* Preto absoluto profundo */
+  --card: #111116;                /* Card ligeiramente mais claro */
+  --accent-blue: #0A84FF;         /* Azul elétrico principal */
+  --accent-green: #00A676;        /* Verde esmeralda sutil para yields */
+  --text: #F8FAFC;                /* Branco limpo com leve cinza para conforto */
+  --muted: #94A3B8;               /* Cinza médio elegante */
+  --border: rgba(10, 132, 255, 0.10);  /* Borda sutil azul */
+  --glow-blue: rgba(10, 132, 255, 0.25); /* Glow controlado */
+  --glow-green: rgba(0, 166, 118, 0.18);
+  --radius: 18px;                 /* Bordas suaves mas modernas */
+  --transition: all 0.25s ease;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  background:radial-gradient(circle at top,#161622,var(--bg-dark));
-  color:var(--text);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-.app{
-  width:100%;
-  max-width:420px;
-  background:#0f0f18;
-  border-radius:24px;
-  padding:28px;
-  box-shadow:0 0 40px rgba(0,229,255,.15);
-  border:1px solid rgba(123,97,255,.2);
+/* Header fixo */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: rgba(11, 11, 15, 0.88);
+  backdrop-filter: blur(16px);
+  max-width: 480px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
 }
 
-.logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:1px;
-  text-align:center;
+.hamburger {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
 }
 
-.logo span{
-  color:var(--neon-blue);
+.hamburger span {
+  width: 1.75rem;
+  height: 0.125rem;
+  background: var(--accent-blue);
+  border-radius: 1px;
+  box-shadow: 0 0 6px var(--glow-blue);
+  transition: var(--transition);
 }
 
-.subtitle{
-  text-align:center;
-  color:var(--muted);
-  line-height:1.6;
-  margin:14px 0 28px;
+.login-btn {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--glow-blue);
+  transition: var(--transition);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--glow-blue);
 }
 
-.card{
-  background:#141425;
-  border-radius:16px;
-  padding:14px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.05);
+/* Logo + Corvo */
+.logo-section {
+  text-align: center;
+  margin: 5.5rem auto 2rem;
+  max-width: 400px;
 }
 
-.card strong{
-  color:var(--neon-blue);
-  font-size:20px;
+.logo-section h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: 0.25rem;
+  background: linear-gradient(135deg, var(--accent-blue), #FFFFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 16px var(--glow-blue);
 }
 
-.btn{
-  margin-top:18px;
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  border:none;
-  font-weight:700;
-  cursor:pointer;
+.logo-section span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.125rem;
+  display: block;
+  margin-top: 0.5rem;
 }
 
-.primary{
-  background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));
-  color:#000;
+/* Corvo Digital - geométrico minimalista */
+.corvo-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  filter: drop-shadow(0 0 10px var(--glow-blue));
+}
+
+/* Conteúdo principal */
+.main-content {
+  padding: 0 1.25rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.wallet-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border);
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.label {
+  font-size: 0.6875rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+  margin-bottom: 0.375rem;
+  display: block;
+}
+
+.balance {
+  font-size: 3.25rem;
+  font-weight: 800;
+  margin: 0.5rem 0 2rem;
+  letter-spacing: -0.0625rem;
+}
+
+input {
+  width: 100%;
+  background: rgba(20, 20, 40, 0.65);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  padding: 1rem 1.125rem;
+  color: var(--text);
+  font-size: 1.0625rem;
+  margin-bottom: 1.25rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 12px var(--glow-blue);
+}
+
+.fee-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0.75rem 0;
+}
+
+.total {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.btn-send {
+  width: 100%;
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 1.125rem;
+  border-radius: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--glow-blue);
+  transition: var(--transition);
+}
+
+.btn-send:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px var(--glow-blue);
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 320px;
+  height: 100%;
+  background: rgba(17, 17, 22, 0.96);
+  backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border);
+  z-index: 1050;
+  padding: 5rem 1.5rem 1.5rem;
+  transition: left 0.35s ease;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-section {
+  margin-bottom: 1.75rem;
+}
+
+.benefit-box {
+  background: rgba(10, 132, 255, 0.07);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.benefit-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.375rem;
+}
+
+.benefit-value {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(17, 17, 22, 0.92);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 0;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: space-around;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.nav-item {
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.nav-item.active {
+  color: var(--accent-blue);
+}
+
+.nav-item i {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Status */
+.status {
+  font-size: 0.6875rem;
+  color: var(--muted);
+  text-align: center;
+  margin: 1.25rem 0;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .balance { font-size: 2.75rem; }
+  .wallet-card { padding: 1.75rem 1.25rem; }
 }
