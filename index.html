@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corax | P2P Blockchain</title>
+    <title>Corax | A nova camada do dinheiro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg: #0B0B0F;
+            --bg: #0B0B0F; /* Preto profundo */
             --card: #111116;
             --accent: #0A84FF; /* Azul elétrico */
             --accent-green: #00A676; /* Verde esmeralda sutil */
@@ -31,63 +31,62 @@
 
         .header-logo { text-align:center; margin:24px 0 32px; }
         .header-logo h1 {
-            font-size:2.2rem; font-weight:800; letter-spacing:3px;
+            font-size:2.4rem; font-weight:800; letter-spacing:4px;
             background:linear-gradient(135deg, #0A84FF, #FFFFFF); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
             text-shadow:0 0 12px rgba(10,132,255,0.3);
         }
-        .header-logo span { font-size:0.65rem; color:var(--muted); letter-spacing:1.5px; }
+        .header-logo span { font-size:0.7rem; color:var(--muted); letter-spacing:2px; }
+
+        .corvo-icon { width:60px; height:60px; margin:0 auto 16px; display:block; filter:drop-shadow(0 0 8px rgba(10,132,255,0.4)); }
 
         .main-content { padding:0 20px; max-width:400px; margin:0 auto; }
         .wallet-card {
-            background:var(--card); border-radius:20px; padding:28px 20px;
+            background:var(--card); border-radius:24px; padding:32px 24px;
             border:1px solid var(--border); text-align:center;
         }
-        .label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block; }
+        .label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:6px; display:block; }
         .balance { font-size:2.8rem; font-weight:800; margin:8px 0 32px; letter-spacing:-1px; }
         input {
             width:100%; background:rgba(20,20,40,0.6); border:1px solid var(--border);
-            border-radius:12px; padding:14px 16px; color:var(--text); font-size:1rem; margin-bottom:20px;
+            border-radius:14px; padding:16px; color:var(--text); font-size:1.05rem; margin-bottom:24px;
             outline:none; transition:border 0.2s;
         }
-        input:focus { border-color:var(--accent); box-shadow:0 0 8px rgba(10,132,255,0.2); }
-        .fee-info { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--muted); margin:10px 0; }
+        input:focus { border-color:var(--accent); box-shadow:0 0 10px rgba(10,132,255,0.25); }
+        .fee-info { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--muted); margin:12px 0; }
         .total { font-weight:600; color:var(--text); }
         .btn-send {
             width:100%; background:var(--accent); color:white; border:none;
-            padding:16px; border-radius:16px; font-size:0.95rem; font-weight:600;
-            cursor:pointer; box-shadow:0 6px 16px rgba(10,132,255,0.35); transition:0.2s;
+            padding:18px; border-radius:18px; font-size:1rem; font-weight:700;
+            cursor:pointer; box-shadow:0 6px 20px rgba(10,132,255,0.35); transition:0.2s;
         }
         .btn-send:hover { transform:translateY(-2px); }
 
         .sidebar {
-            position:fixed; top:0; left:-300px; width:300px; height:100%;
+            position:fixed; top:0; left:-320px; width:320px; height:100%;
             background:rgba(17,17,22,0.96); backdrop-filter:blur(20px);
             border-right:1px solid var(--border); z-index:1050;
-            padding:60px 20px 20px; transition:left 0.3s ease;
+            padding:70px 24px 20px; transition:left 0.3s ease;
         }
         .sidebar.active { left:0; }
-        .sidebar-section { margin-bottom:24px; }
+        .sidebar-section { margin-bottom:28px; }
         .benefit-box {
             background:rgba(10,132,255,0.08); border:1px solid var(--border);
-            border-radius:16px; padding:16px; text-align:center;
+            border-radius:18px; padding:18px; text-align:center;
         }
-        .benefit-label { font-size:0.7rem; color:var(--muted); margin-bottom:4px; }
-        .benefit-value { font-size:1.4rem; font-weight:700; color:var(--accent-green); }
+        .benefit-label { font-size:0.7rem; color:var(--muted); margin-bottom:6px; }
+        .benefit-value { font-size:1.5rem; font-weight:700; color:var(--accent-green); }
 
         .bottom-nav {
             position:fixed; bottom:0; left:0; right:0; z-index:1000;
             background:rgba(17,17,22,0.92); backdrop-filter:blur(12px);
-            border-top:1px solid var(--border); padding:10px 0;
+            border-top:1px solid var(--border); padding:12px 0;
         }
         .nav-tabs { display:flex; justify-content:space-around; max-width:480px; margin:0 auto; }
-        .nav-item { color:var(--muted); text-align:center; font-size:0.7rem; text-decoration:none; }
+        .nav-item { color:var(--muted); text-align:center; font-size:0.75rem; text-decoration:none; }
         .nav-item.active { color:var(--accent); }
-        .nav-item i { font-size:22px; display:block; margin-bottom:2px; }
+        .nav-item i { font-size:24px; display:block; margin-bottom:4px; }
 
-        .status { font-size:0.6rem; color:var(--muted); text-align:center; margin:16px 0; }
-
-        /* Corvo geométrico minimalista (placeholder SVG simples) */
-        .corvo-icon { width:40px; height:40px; margin:0 auto 12px; display:block; }
+        .status { font-size:0.65rem; color:var(--muted); text-align:center; margin:20px 0; }
     </style>
 </head>
 <body>
@@ -100,6 +99,19 @@
     </header>
 
     <div class="header-logo">
+        <!-- Corvo Digital geométrico minimalista (SVG inline simples) -->
+        <svg class="corvo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Corpo afiado -->
+            <polygon points="50,20 30,60 70,60" fill="none" stroke="#0A84FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Asas angulares -->
+            <line x1="30" y1="60" x2="10" y2="40" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
+            <line x1="70" y1="60" x2="90" y2="40" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
+            <!-- Cauda afiada -->
+            <polygon points="40,70 50,85 60,70" fill="none" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
+            <!-- Olho neon elétrico sutil -->
+            <circle cx="55" cy="45" r="6" fill="none" stroke="#00D4FF" stroke-width="3"/>
+            <circle cx="55" cy="45" r="2" fill="#00D4FF"/>
+        </svg>
         <h1>Corax</h1>
         <span>A nova camada do dinheiro</span>
     </div>
@@ -143,7 +155,7 @@
             <div class="benefit-box">
                 <div class="benefit-label">Cashback Acumulado</div>
                 <div class="benefit-value">R$ 45,20</div>
-                <button style="background:var(--accent-green); color:#fff; border:none; padding:6px 12px; border-radius:10px; font-size:0.8rem; margin-top:8px; cursor:pointer;">Resgatar</button>
+                <button style="background:var(--accent-green); color:#fff; border:none; padding:8px 16px; border-radius:12px; font-size:0.85rem; margin-top:8px; cursor:pointer;">Resgatar</button>
             </div>
         </div>
         <!-- Adicione chat, config, etc. aqui -->
