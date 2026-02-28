@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEONEX | BLOCKCHAIN P2P V3.0</title>
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <script src="https://unpkg.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --bg-black: #000000;
@@ -14,19 +14,23 @@
             --text-gray: #444;
             --text-light-gray: #888;
             --glass: rgba(157, 80, 187, 0.1);
+            --neon-green: #50bb9d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-black); color: white; min-height: 100vh; overflow-x: hidden; }
+        body { background-color: var(--bg-black); color: white; min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; } /* espaço pro bottom nav */
 
-        /* MENU HAMBÚRGUER (SUPERIOR ESQUERDO) */
+        /* HEADER TOP COM HAMBÚRGUER */
         .header-top {
+            position: fixed;
+            top: 0; left: 0; right: 0;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 25px 20px; width: 100%; max-width: 500px; margin: 0 auto;
+            padding: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+            z-index: 1100; max-width: 500px; margin: 0 auto;
         }
 
         .hamburger {
-            cursor: pointer; display: flex; flex-direction: column; gap: 5px; z-index: 1100;
+            cursor: pointer; display: flex; flex-direction: column; gap: 5px;
         }
         .hamburger span {
             display: block; width: 25px; height: 2px; background: var(--neon-purple);
@@ -40,69 +44,99 @@
         }
 
         /* BRANDING */
-        .brand-section { text-align: left; width: 100%; max-width: 400px; margin: 10px auto 30px; padding: 0 20px; }
-        .brand-section h1 { color: var(--neon-purple); font-size: 1.4rem; font-weight: 600; letter-spacing: 2px; }
-        .brand-section span { color: #333; font-size: 0.6rem; letter-spacing: 3px; display: block; margin-top: 5px; }
+        .brand-section { text-align: left; width: 100%; max-width: 400px; margin: 80px auto 20px; padding: 0 20px; }
+        .brand-section h1 { color: var(--neon-purple); font-size: 1.6rem; font-weight: 700; letter-spacing: 2px; }
+        .brand-section span { color: #555; font-size: 0.7rem; letter-spacing: 3px; display: block; margin-top: 5px; }
 
-        /* CARD PRINCIPAL (IDENTICO À IMAGEM) */
-        .container { display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
+        /* MAIN CONTAINER */
+        .container { padding: 0 20px; max-width: 400px; margin: 0 auto; }
+
+        /* CARDS DE BENEFÍCIOS (YIELDS + CASHBACK VISÍVEIS) */
+        .benefits-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;
+        }
+        .benefit-card {
+            background: linear-gradient(135deg, #111, #000);
+            border: 1px solid var(--neon-purple); border-radius: 16px; padding: 15px; text-align: center;
+        }
+        .benefit-label { font-size: 0.7rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .benefit-value { font-size: 1.4rem; font-weight: 700; color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple); }
+        .benefit-extra { font-size: 0.8rem; color: #666; margin-top: 5px; }
+        .badge { background: var(--neon-green); color: black; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; margin-left: 5px; }
+
+        /* WALLET CARD */
         .wallet-card {
-            width: 100%; max-width: 400px; background: var(--card-bg); border-radius: 24px;
-            padding: 40px 25px; border: 1px solid #111; text-align: center;
+            background: var(--card-bg); border-radius: 24px;
+            padding: 30px 20px; border: 1px solid #111; text-align: center;
         }
 
-        .label-sm { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
-        .balance-main { font-size: 2.2rem; font-weight: 700; margin-bottom: 40px; }
+        .label-sm { font-size: 0.65rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .balance-main { font-size: 2.4rem; font-weight: 700; margin-bottom: 30px; }
 
-        .input-group { text-align: left; margin-bottom: 25px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
         input {
             width: 100%; background: #111; border: 1px solid #1a1a1a; border-radius: 12px;
-            padding: 15px; color: white; font-size: 0.9rem; outline: none;
+            padding: 15px; color: white; font-size: 1rem; outline: none;
         }
-        input::placeholder { color: #333; }
+        input::placeholder { color: #444; }
 
-        .fee-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin: 15px 0; }
-        .fee-label { color: #555; }
+        .fee-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 12px 0; }
+        .fee-label { color: #666; }
         .fee-value { color: var(--neon-purple); font-weight: 600; }
-        .total-label { font-size: 0.9rem; font-weight: 700; }
+        .total-label { font-size: 1rem; font-weight: 700; }
 
         .btn-confirm {
             width: 100%; background: var(--neon-purple); color: white; border: none;
-            padding: 18px; border-radius: 15px; font-weight: 600; font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px;
+            padding: 18px; border-radius: 15px; font-weight: 600; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 20px;
         }
 
-        /* SIDEBAR GLASS */
+        /* SIDEBAR GLASS (SECUNDÁRIO) */
         .sidebar {
             position: fixed; top: 0; left: -320px; width: 310px; height: 100%;
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
             border-right: 1px solid var(--glass); z-index: 1050;
-            padding: 40px 25px; transition: 0.4s; display: flex; flex-direction: column;
+            padding: 60px 25px 20px; transition: left 0.4s ease; display: flex; flex-direction: column;
         }
         .sidebar.active { left: 0; }
 
         .side-item { margin-bottom: 25px; }
-        .yield-val { color: var(--neon-purple); font-size: 1.2rem; font-weight: 700; text-shadow: 0 0 10px var(--neon-purple); }
-
         .neocard {
             width: 100%; height: 140px; background: linear-gradient(135deg, #111, #000);
             border: 1px solid var(--neon-purple); border-radius: 16px; padding: 20px;
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .multichain-btn { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px 0; border-bottom: 1px solid #111; }
-        .token-list { display: none; padding-top: 10px; font-size: 0.8rem; color: #666; }
+        .multichain-btn { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px 0; border-bottom: 1px solid #111; font-size: 0.9rem; font-weight: 600; }
+        .token-list { display: none; padding-top: 10px; font-size: 0.85rem; color: #777; }
         .token-list.active { display: block; }
 
-        .footer-sidebar { margin-top: auto; text-align: center; }
-        .footer-sidebar img { width: 20px; opacity: 0.5; margin-bottom: 10px; }
-        .copyright { font-size: 0.55rem; color: #222; letter-spacing: 2px; }
+        .sidebar-footer { margin-top: auto; text-align: center; font-size: 0.6rem; color: #222; }
+        .sidebar-footer img { width: 24px; opacity: 0.6; margin-bottom: 8px; }
 
-        .status-msg { margin-top: 30px; font-size: 0.55rem; color: #1a1a1a; letter-spacing: 4px; text-transform: uppercase; }
+        /* BOTTOM TAB BAR */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid #111;
+            padding: 10px 0;
+        }
+        .bottom-nav .tabs {
+            display: flex; justify-content: space-around; max-width: 500px; margin: 0 auto;
+        }
+        .tab {
+            color: #888; text-align: center; text-decoration: none; font-size: 0.7rem;
+            transition: color 0.3s;
+        }
+        .tab.active { color: var(--neon-purple); }
+        .tab i { font-size: 24px; display: block; margin-bottom: 4px; }
+        .tab span { display: block; }
+
+        .status-msg { margin: 20px 0; font-size: 0.6rem; color: #333; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
     </style>
 </head>
 <body>
 
+    <!-- HEADER TOP -->
     <header class="header-top">
         <div class="hamburger" onclick="toggleMenu()">
             <span></span><span></span><span></span>
@@ -110,12 +144,29 @@
         <button class="login-social-btn">Login Social</button>
     </header>
 
+    <!-- BRANDING -->
     <div class="brand-section">
         <h1>NEONEX</h1>
         <span>BLOCKCHAIN P2P V3.0</span>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="container">
+        <!-- BENEFÍCIOS VISÍVEIS (YIELDS + CASHBACK) -->
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-label">Rendimento Diário</div>
+                <div class="benefit-value">R$ <span id="yield-amt">0,0000</span></div>
+                <div class="benefit-extra">Automático • +8.4% APY</div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-label">Cashback Acumulado <span class="badge">Novo!</span></div>
+                <div class="benefit-value">R$ 45,20</div>
+                <div class="benefit-extra"><button style="background: var(--neon-green); color: black; border: none; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; cursor: pointer;">Resgatar</button></div>
+            </div>
+        </div>
+
+        <!-- WALLET CARD PRINCIPAL -->
         <main class="wallet-card">
             <span class="label-sm">Saldo Disponível (Polygon)</span>
             <h2 class="balance-main">0.00 POL</h2>
@@ -125,7 +176,7 @@
                 <input type="text" placeholder="@usuario ou endereço 0x...">
             </div>
 
-            <div class="input-group" style="margin-bottom: 15px;">
+            <div class="input-group">
                 <span class="label-sm">Valor para enviar</span>
                 <input type="number" id="val" placeholder="0.00" oninput="updateTotal()">
             </div>
@@ -134,7 +185,7 @@
                 <span class="fee-label">Taxa de Serviço NEONEX</span>
                 <span class="fee-value">+ 0.05 POL</span>
             </div>
-            <div class="fee-row" style="margin-top: 25px;">
+            <div class="fee-row" style="margin-top: 20px;">
                 <span class="total-label">Total a Debitar</span>
                 <span class="total-label" id="total-val">0.00 POL</span>
             </div>
@@ -145,59 +196,96 @@
         <div class="status-msg">Gerando Blockchain Segura...</div>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR (SECUNDÁRIO) -->
     <div id="sidebar" class="sidebar">
         <div class="side-item">
-            <span class="label-sm">Rendimento Diário</span>
-            <div class="yield-val">R$ <span id="yield-amt">0,0000</span></div>
-        </div>
-
-        <div class="side-item">
             <div class="neocard">
-                <div style="width: 35px; height: 25px; background: #222; border-radius: 4px;"></div>
-                <div style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">NEOCARD P2P</div>
+                <div style="width: 40px; height: 30px; background: #222; border-radius: 6px;"></div>
+                <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 1px;">NEOCARD P2P</div>
             </div>
         </div>
 
         <div class="side-item">
             <div class="multichain-btn" onclick="toggleTokens()">
-                <span style="font-size: 0.8rem; font-weight: 600;">Multichain Tokens</span>
-                <i data-lucide="chevron-down" id="arrow" size="16"></i>
+                <span>Multichain Tokens</span>
+                <i data-lucide="chevron-down" id="arrow"></i>
             </div>
             <div id="token-list" class="token-list">
                 <p>• Polygon (POL)</p>
-                <p style="margin: 10px 0;">• Solana (SOL)</p>
+                <p>• Solana (SOL)</p>
                 <p>• Ethereum (BASE)</p>
             </div>
         </div>
 
         <div class="side-item">
-            <span style="font-size: 0.8rem; display: flex; align-items: center; gap: 10px; color: #888;">
-                <i data-lucide="message-circle" size="18"></i> Chat Privado
+            <span style="font-size: 0.9rem; display: flex; align-items: center; gap: 10px; color: #aaa;">
+                <i data-lucide="message-circle"></i> Chat Privado
             </span>
         </div>
 
-        <div class="footer-sidebar">
-            <img src="https://flagcdn.com" alt="Brasil">
-            <div class="copyright">ALL RIGHTS RESERVED 2026 ©</div>
+        <div class="side-item">
+            <span style="font-size: 0.9rem; display: flex; align-items: center; gap: 10px; color: #aaa;">
+                <i data-lucide="settings"></i> Configurações
+            </span>
+        </div>
+
+        <div class="sidebar-footer">
+            <img src="https://flagcdn.com/w20/br.png" alt="Brasil">
+            <div>ALL RIGHTS RESERVED 2026 © NEONEX</div>
         </div>
     </div>
 
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="bottom-nav">
+        <div class="tabs">
+            <a href="#" class="tab active">
+                <i data-lucide="home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="tab">
+                <i data-lucide="send"></i>
+                <span>Pagar</span>
+            </a>
+            <a href="#" class="tab">
+                <i data-lucide="message-circle"></i>
+                <span>Chat</span>
+            </a>
+            <a href="#" class="tab">
+                <i data-lucide="wallet"></i>
+                <span>Carteira</span>
+            </a>
+        </div>
+    </nav>
+
     <script>
         lucide.createIcons();
-        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
-        function toggleTokens() { 
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function toggleTokens() {
             const list = document.getElementById('token-list');
             list.classList.toggle('active');
-            document.getElementById('arrow').style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            const arrow = document.getElementById('arrow');
+            arrow.style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
+
         function updateTotal() {
             const v = parseFloat(document.getElementById('val').value) || 0;
             document.getElementById('total-val').innerText = (v + 0.05).toFixed(2) + " POL";
         }
-        // Rendimento Simulado
-        let r = 0; setInterval(() => { r += 0.0002; document.getElementById('yield-amt').innerText = r.toLocaleString('pt-BR', {minimumFractionDigits: 4}); }, 1000);
-        function confirmTx() { alert("Autenticando WebAuthn..."); }
+
+        // Yield simulado crescendo
+        let r = 0;
+        setInterval(() => {
+            r += 0.0002;
+            document.getElementById('yield-amt').innerText = r.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+        }, 1000);
+
+        function confirmTx() {
+            alert("Autenticando com Web3Auth... Transação P2P em processamento!");
+        }
     </script>
 </body>
 </html>
