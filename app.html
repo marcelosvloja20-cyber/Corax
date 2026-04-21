@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Dashboard</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        /* Header do App */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .logo-small { font-family: 'Orbitron', sans-serif; letter-spacing: 5px; color: var(--p); font-size: 1.2rem; }
+
+        .wallet-info { background: var(--glass); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.8rem; font-family: 'Orbitron'; }
+
+        /* Grid de Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .card { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            padding: 30px; 
+            border-radius: 15px; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--p);
+        }
+
+        .card h3 { font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px; margin-bottom: 10px; }
+        .balance { font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
+        .symbol { color: var(--p); font-size: 1rem; }
+
+        /* Lista de Transações */
+        .history { margin-top: 30px; background: var(--glass); border-radius: 15px; padding: 20px; }
+        .history h2 { font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+
+        .item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #111; font-size: 0.9rem; }
+        .status-up { color: #4ade80; }
+        .status-down { color: var(--p); }
+
+        /* Botão de Voltar */
+        .back { color: #555; text-decoration: none; font-size: 0.7rem; margin-top: 40px; display: inline-block; text-transform: uppercase; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo-small">CORAX</div>
+            <div class="wallet-info">0x71...C42D</div>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h3>SALDO TOTAL</h3>
+                <div class="balance">14.250 <span class="symbol">CRX</span></div>
+                <p style="color: #4ade80; font-size: 0.8rem;">+ 12.5% nas últimas 24h</p>
+            </div>
+
+            <div class="card">
+                <h3>STATUS DA REDE</h3>
+                <div class="balance" style="font-size: 1.5rem; color: #4ade80;">ATIVO</div>
+                <p style="color: #888; font-size: 0.8rem;">Latência: 14ms</p>
+            </div>
+        </div>
+
+        <div class="history">
+            <h2>TRANSAÇÕES RECENTES</h2>
+            <div class="item">
+                <span>Recebido de 0x...a1b2</span>
+                <span class="status-up">+ 450 CRX</span>
+            </div>
+            <div class="item">
+                <span>Pagamento enviado (Nó 04)</span>
+                <span class="status-down">- 120 CRX</span>
+            </div>
+            <div class="item">
+                <span>Recompensa de Mineração</span>
+                <span class="status-up">+ 15 CRX</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="back">← Sair da conta</a>
+    </div>
+
+</body>
+</html>
