@@ -8,61 +8,37 @@
     <style>
         :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            background: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            min-height: 100vh;
-            padding: 20px;
-        }
-
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; overflow-x: hidden; }
         .container { max-width: 1000px; margin: 0 auto; }
 
-        /* Header do App */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
-            margin-bottom: 30px;
-        }
-
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.2); margin-bottom: 30px; }
         .logo-small { font-family: 'Orbitron', sans-serif; letter-spacing: 5px; color: var(--p); font-size: 1.2rem; }
+        .wallet-info { background: var(--glass); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.7rem; font-family: 'Orbitron'; }
 
-        .wallet-info { background: var(--glass); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.8rem; font-family: 'Orbitron'; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; position: relative; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--p); }
+        
+        h3 { font-family: 'Orbitron'; font-size: 0.6rem; color: #888; letter-spacing: 2px; margin-bottom: 10px; }
+        .balance { font-size: 2rem; font-weight: 700; }
+        .symbol { color: var(--p); font-size: 0.9rem; }
 
-        /* Grid de Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        /* Formulário de Envio */
+        .send-box { background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); padding: 25px; border-radius: 15px; margin-bottom: 30px; }
+        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 12px; border-radius: 5px; color: white; margin: 10px 0; outline: none; font-family: 'Inter'; }
+        input:focus { border-color: var(--p); }
+        
+        .btn-send { width: 100%; padding: 15px; background: var(--p); border: none; border-radius: 5px; color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-send:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--p); }
 
-        .card { 
-            background: var(--glass); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            padding: 30px; 
-            border-radius: 15px; 
-            position: relative;
-            overflow: hidden;
-        }
+        /* Status de Processamento */
+        #status-msg { margin-top: 15px; font-size: 0.8rem; display: none; text-align: center; font-family: 'Orbitron'; letter-spacing: 1px; }
 
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--p);
-        }
-
-        .card h3 { font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px; margin-bottom: 10px; }
-        .balance { font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
-        .symbol { color: var(--p); font-size: 1rem; }
-
-        /* Lista de Transações */
-        .history { margin-top: 30px; background: var(--glass); border-radius: 15px; padding: 20px; }
-        .history h2 { font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; }
-
-        .item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #111; font-size: 0.9rem; }
+        .history { background: var(--glass); border-radius: 15px; padding: 20px; }
+        .item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #111; font-size: 0.8rem; }
         .status-up { color: #4ade80; }
-        .status-down { color: var(--p); }
-
-        /* Botão de Voltar */
-        .back { color: #555; text-decoration: none; font-size: 0.7rem; margin-top: 40px; display: inline-block; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .back { color: #444; text-decoration: none; font-size: 0.7rem; margin-top: 40px; display: block; text-align: center; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -70,41 +46,74 @@
     <div class="container">
         <header>
             <div class="logo-small">CORAX</div>
-            <div class="wallet-info">0x71...C42D</div>
+            <div class="wallet-info" id="wallet-addr">0x71...C42D</div>
         </header>
 
         <div class="grid">
             <div class="card">
-                <h3>SALDO TOTAL</h3>
-                <div class="balance">14.250 <span class="symbol">CRX</span></div>
-                <p style="color: #4ade80; font-size: 0.8rem;">+ 12.5% nas últimas 24h</p>
+                <h3>SALDO DISPONÍVEL</h3>
+                <div class="balance" id="main-balance">14.250 <span class="symbol">CRX</span></div>
             </div>
-
             <div class="card">
-                <h3>STATUS DA REDE</h3>
-                <div class="balance" style="font-size: 1.5rem; color: #4ade80;">ATIVO</div>
-                <p style="color: #888; font-size: 0.8rem;">Latência: 14ms</p>
+                <h3>REDE CORAX</h3>
+                <div style="color: #4ade80; font-family: 'Orbitron'; font-size: 0.8rem;">● ESTÁVEL (14ms)</div>
             </div>
+        </div>
+
+        <div class="send-box">
+            <h3>EFETUAR PAGAMENTO</h3>
+            <input type="text" id="address" placeholder="Endereço da Carteira (0x...)">
+            <input type="number" id="amount" placeholder="Quantidade (CRX)">
+            <button class="btn-send" onclick="sendTransaction()">CONFIRMAR ENVIO</button>
+            <div id="status-msg"></div>
         </div>
 
         <div class="history">
-            <h2>TRANSAÇÕES RECENTES</h2>
-            <div class="item">
-                <span>Recebido de 0x...a1b2</span>
-                <span class="status-up">+ 450 CRX</span>
-            </div>
-            <div class="item">
-                <span>Pagamento enviado (Nó 04)</span>
-                <span class="status-down">- 120 CRX</span>
-            </div>
-            <div class="item">
-                <span>Recompensa de Mineração</span>
-                <span class="status-up">+ 15 CRX</span>
+            <h3>HISTÓRICO</h3>
+            <div id="history-list">
+                <div class="item"><span>Recebido de 0x...a1b2</span><span class="status-up">+ 450 CRX</span></div>
+                <div class="item"><span>Pagamento via Nó 04</span><span style="color: #888;">- 120 CRX</span></div>
             </div>
         </div>
 
-        <a href="index.html" class="back">← Sair da conta</a>
+        <a href="index.html" class="back">ENCERRAR SESSÃO NO TERMINAL</a>
     </div>
 
+    <script>
+        function sendTransaction() {
+            const addr = document.getElementById('address').value;
+            const val = document.getElementById('amount').value;
+            const msg = document.getElementById('status-msg');
+            const bal = document.getElementById('main-balance');
+
+            if(!addr || !val) {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+            msg.style.display = 'block';
+            msg.style.color = '#9d4edd';
+            msg.innerHTML = "CRIPTOGRAFANDO TRANSAÇÃO...";
+
+            setTimeout(() => {
+                msg.innerHTML = "VALIDANDO NA BLOCKCHAIN CORAX...";
+                setTimeout(() => {
+                    msg.style.color = '#4ade80';
+                    msg.innerHTML = "TRANSAÇÃO CONCLUÍDA COM SUCESSO!";
+                    
+                    // Atualiza o saldo fictício
+                    let currentBal = 14250 - parseInt(val);
+                    bal.innerHTML = currentBal.toLocaleString() + ' <span class="symbol">CRX</span>';
+                    
+                    // Adiciona ao histórico
+                    const list = document.getElementById('history-list');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'item';
+                    newItem.innerHTML = `<span>Enviado para ${addr.substring(0,6)}...</span><span style="color: #ff4d4d;">- ${val} CRX</span>`;
+                    list.prepend(newItem);
+                }, 2000);
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
