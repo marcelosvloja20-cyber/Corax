@@ -1,12 +1,100 @@
-        <div class="mission-box">
-            "Nossa missão é devolver a soberania financeira ao indivíduo através da escuridão criptográfica."
-        </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="contact.html" style="color: var(--p); font-family: 'Orbitron'; font-size: 0.8rem; text-decoration: none; border: 1px solid var(--p); padding: 10px 20px; border-radius: 4px;">FALAR COM O SUPORTE</a>
-        </div>
-
-        <footer>
-            PROJETO CORAX • 2026 • OPEN SOURCE PROTOCOL
-        </footer>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Suporte Direto</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(157, 78, 221, 0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
+        .container { max-width: 500px; width: 100%; position: relative; }
+        .back-link { position: absolute; top: -50px; left: 0; color: var(--p); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; }
+
+        h1 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px; margin-bottom: 10px; color: white; text-align: center; }
+        p { color: #888; font-size: 0.7rem; margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+
+        form { background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); }
+        
+        .field { margin-bottom: 20px; }
+        label { display: block; font-family: 'Orbitron'; font-size: 0.6rem; color: var(--p); margin-bottom: 8px; letter-spacing: 1px; }
+        
+        input, textarea { 
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #222; 
+            padding: 12px; border-radius: 5px; color: white; outline: none; 
+            font-family: 'Inter'; font-size: 0.9rem; transition: 0.3s;
+        }
+        
+        input:focus, textarea:focus { border-color: var(--p); box-shadow: 0 0 10px rgba(157, 78, 221, 0.2); }
+        
+        textarea { height: 120px; resize: none; }
+
+        .btn-send { 
+            width: 100%; padding: 15px; background: var(--p); border: none; 
+            border-radius: 5px; color: black; font-family: 'Orbitron'; 
+            font-weight: bold; cursor: pointer; transition: 0.3s; 
+            letter-spacing: 2px; margin-top: 10px;
+        }
+        
+        .btn-send:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--p); }
+
+        #success-msg { 
+            margin-top: 20px; font-family: 'Orbitron'; font-size: 0.7rem; 
+            color: #4ade80; text-align: center; display: none; 
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="about.html" class="back-link">← VOLTAR</a>
+        
+        <h1>CONTATO</h1>
+        <p>Envie uma mensagem criptografada</p>
+
+        <form id="contactForm" onsubmit="handleSend(event)">
+            <div class="field">
+                <label>IDENTIFICAÇÃO / NOME</label>
+                <input type="text" placeholder="Ex: Agente Corax" required>
+            </div>
+            
+            <div class="field">
+                <label>CANAL DE RESPOSTA / E-MAIL</label>
+                <input type="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="field">
+                <label>CONTEÚDO DA MENSAGEM</label>
+                <textarea placeholder="Descreva sua solicitação..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-send">TRANSMITIR MENSAGEM</button>
+        </form>
+
+        <div id="success-msg">MENSAGEM ENVIADA PARA A MAINNET COM SUCESSO!</div>
+    </div>
+
+    <script>
+        function handleSend(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-send');
+            const msg = document.getElementById('success-msg');
+            
+            btn.innerText = "CRIPTOGRAFANDO...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.style.display = 'none';
+                msg.style.display = 'block';
+                document.getElementById('contactForm').reset();
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
