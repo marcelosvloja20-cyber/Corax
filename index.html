@@ -141,7 +141,8 @@
         <div class="status"><div class="dot"></div> Mainnet Online</div>
     </header>
     <main>
-        <img id="mainLogo" src="logo.png" alt="Corax Logo" class="logo-main">
+        <!-- LINK DIRETO DO REPOSITÓRIO -->
+        <img src="https://githubusercontent.com" alt="Corax Logo" class="logo-main">
         <h1>COR<span>A</span>X</h1>
         <p class="slogan">Pagamentos Descentralizados</p>
         <div class="actions">
@@ -150,19 +151,5 @@
         </div>
     </main>
     <footer>&copy; 2026 CORAX ECOSYSTEM | SECURED BY BLOCKCHAIN</footer>
-
-    <script>
-        // Script para garantir que a imagem carregue idependente da pasta
-        const img = document.getElementById('mainLogo');
-        img.onerror = function() {
-            if (this.src.includes('assets/')) {
-                this.src = 'logo.png'; // Tenta na raiz
-            } else if (!this.src.includes('placeholder')) {
-                this.src = 'https://githubusercontent.com'; // Tenta link direto do seu GitHub
-            }
-        };
-        // Tenta primeiro no caminho que você tinha
-        img.src = 'assets/logo.png';
-    </script>
 </body>
 </html>
