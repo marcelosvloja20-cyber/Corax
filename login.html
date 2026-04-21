@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Secure Access</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Orbitron', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+        }
+        .lock-icon { font-size: 2rem; color: var(--p); margin-bottom: 20px; text-shadow: 0 0 15px var(--p); }
+        h2 { font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 30px; color: #888; }
+        
+        .pin-dots { display: flex; gap: 15px; margin-bottom: 40px; }
+        .dot { width: 12px; height: 12px; border: 2px solid var(--p); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: var(--p); box-shadow: 0 0 15px var(--p); }
+
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .key { 
+            width: 70px; height: 70px; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(157,78,221,0.2); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+        }
+        .key:active { background: var(--p); color: black; transform: scale(0.9); }
+        
+        #error-msg { margin-top: 20px; color: #ff4d4d; font-size: 0.6rem; letter-spacing: 1px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="lock-icon">🔒</div>
+    <h2>VERIFICAÇÃO DE SEGURANÇA</h2>
+
+    <div class="pin-dots">
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+        <div class="dot" id="d3"></div>
+        <div class="dot" id="d4"></div>
+    </div>
+
+    <div class="keypad">
+        <div class="key" onclick="press(1)">1</div>
+        <div class="key" onclick="press(2)">2</div>
+        <div class="key" onclick="press(3)">3</div>
+        <div class="key" onclick="press(4)">4</div>
+        <div class="key" onclick="press(5)">5</div>
+        <div class="key" onclick="press(6)">6</div>
+        <div class="key" onclick="press(7)">7</div>
+        <div class="key" onclick="press(8)">8</div>
+        <div class="key" onclick="press(9)">9</div>
+        <div></div>
+        <div class="key" onclick="press(0)">0</div>
+        <div class="key" onclick="del()">←</div>
+    </div>
+
+    <div id="error-msg">ACESSO NEGADO: PIN INCORRETO</div>
+
+    <script>
+        let pin = "";
+        const correctPin = "1234"; // Defina o PIN aqui
+
+        function press(num) {
+            if (pin.length < 4) {
+                pin += num;
+                document.getElementById(`d${pin.length}`).classList.add('active');
+            }
+            if (pin.length === 4) {
+                if (pin === correctPin) {
+                    window.location.href = "app.html";
+                } else {
+                    document.getElementById('error-msg').style.display = 'block';
+                    setTimeout(resetPin, 1000);
+                }
+            }
+        }
+
+        function del() {
+            if (pin.length > 0) {
+                document.getElementById(`d${pin.length}`).classList.remove('active');
+                pin = pin.slice(0, -1);
+            }
+        }
+
+        function resetPin() {
+            pin = "";
+            for(let i=1; i<=4; i++) document.getElementById(`d${i}`).classList.remove('active');
+            document.getElementById('error-msg').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
