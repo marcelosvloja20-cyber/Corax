@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Airdrop Portal</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        
+        .container { max-width: 500px; width: 100%; }
+        .back-link { position: absolute; top: 20px; left: 20px; color: var(--p); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; }
+
+        h1 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px; margin-bottom: 10px; color: var(--p); }
+        p { color: #888; font-size: 0.8rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Círculo de Mineração */
+        .miner-circle {
+            width: 200px; height: 200px; border: 2px solid #222; border-radius: 50%; margin: 0 auto 40px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; transition: 0.5s;
+        }
+        .miner-circle.active { border-color: var(--p); box-shadow: 0 0 30px var(--p); }
+
+        #progress-ring {
+            position: absolute; top: -2px; left: -2px; width: 200px; height: 200px;
+            border: 4px solid transparent; border-top-color: var(--p); border-radius: 50%;
+            display: none; animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .tokens { font-family: 'Orbitron'; font-size: 2rem; font-weight: bold; }
+        .tokens span { font-size: 0.8rem; color: var(--p); }
+
+        .btn-claim {
+            width: 100%; padding: 18px; background: transparent; border: 1px solid var(--p);
+            color: var(--p); font-family: 'Orbitron'; font-weight: bold; cursor: pointer;
+            border-radius: 4px; transition: 0.3s; letter-spacing: 2px;
+        }
+        .btn-claim:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-claim:not(:disabled):hover { background: var(--p); color: black; box-shadow: 0 0 20px var(--p); }
+
+        #status-log { margin-top: 20px; font-family: 'Orbitron'; font-size: 0.6rem; color: #4ade80; display: none; }
+    </style>
+</head>
+<body>
+
+    <a href="app.html" class="back-link">← DASHBOARD</a>
+
+    <div class="container">
+        <h1>AIRDROP PORTAL</h1>
+        <p>Reivindique seus tokens diários</p>
+
+        <div class="miner-circle" id="circle">
+            <div id="progress-ring"></div>
+            <div class="tokens" id="token-val">0</div>
+            <span>CRX TOKENS</span>
+        </div>
+
+        <button class="btn-claim" id="claimBtn" onclick="startClaim()">COLETAR RECOMPENSA</button>
+        
+        <div id="status-log">SINCRONIZANDO COM A MAINNET...</div>
+    </div>
+
+    <script>
+        function startClaim() {
+            const btn = document.getElementById('claimBtn');
+            const ring = document.getElementById('progress-ring');
+            const circle = document.getElementById('circle');
+            const val = document.getElementById('token-val');
+            const log = document.getElementById('status-log');
+
+            btn.disabled = true;
+            ring.style.display = 'block';
+            circle.classList.add('active');
+            log.style.display = 'block';
+
+            let count = 0;
+            const target = Math.floor(Math.random() * (150 - 50 + 1)) + 50;
+
+            const interval = setInterval(() => {
+                count += 2;
+                val.innerText = count;
+                
+                if(count >= target) {
+                    clearInterval(interval);
+                    ring.style.display = 'none';
+                    log.innerText = "TRANSFERÊNCIA CONCLUÍDA: +" + target + " CRX ADICIONADOS";
+                    btn.innerText = "COLETADO COM SUCESSO";
+                }
+            }, 50);
+        }
+    </script>
+</body>
+</html>
