@@ -3,68 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | Pagamentos Descentralizados</title>
+    <title>CORAX | Plataforma</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --p: #9d4edd; --bg: #050505; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
             background: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
             min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            text-align: center; 
         }
+
         .glow { 
             position: fixed; 
             width: 100%; 
             height: 100%; 
-            background: radial-gradient(circle at center, rgba(157,78,221,0.15) 0%, transparent 70%); 
+            background: radial-gradient(circle at center, rgba(157,78,221,0.12) 0%, transparent 70%); 
             z-index: -1; 
         }
-        .logo-main { 
-            width: 250px; 
-            max-width: 80%; 
-            filter: drop-shadow(0 0 20px rgba(157,78,221,0.5)); 
-            margin-bottom: 20px;
-            animation: float 4s ease-in-out infinite;
+
+        .logo-container {
+            width: 320px;
+            max-width: 85%;
+            margin-bottom: 40px;
+            /* Brilho pulsante atrás da logo */
+            filter: drop-shadow(0 0 15px rgba(157,78,221,0.3));
+            animation: float 5s ease-in-out infinite;
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 3rem; letter-spacing: 10px; margin-bottom: 10px; text-transform: uppercase; }
-        h1 span { color: var(--p); }
-        .slogan { color: #888; letter-spacing: 5px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 40px; }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px; /* Leve arredondado para combinar com o botão */
+        }
+
         .btn { 
-            padding: 15px 40px; 
+            padding: 18px 50px; 
             background: var(--p); 
-            color: black; 
+            color: #000; 
             text-decoration: none; 
             font-family: 'Orbitron', sans-serif; 
             font-weight: bold; 
-            font-size: 0.7rem; 
-            letter-spacing: 2px; 
+            font-size: 0.8rem; 
+            letter-spacing: 3px; 
             border-radius: 4px; 
-            transition: 0.3s; 
-            box-shadow: 0 0 20px rgba(157,78,221,0.4); 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 0 25px rgba(157,78,221,0.4); 
+            text-transform: uppercase;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 0 40px var(--p); }
+
+        .btn:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 0 50px var(--p); 
+            letter-spacing: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="glow"></div>
     
-    <!-- NOME DO ARQUIVO ATUALIZADO CONFORME SEU PRINT -->
-    <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" class="logo-main" alt="CORAX">
-    
-    <h1>COR<span>A</span>X</h1>
-    <p class="slogan">Pagamentos Descentralizados</p>
+    <div class="logo-container">
+        <!-- Mantendo o nome do arquivo que funcionou -->
+        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="CORAX Official">
+    </div>
     
     <a href="#" class="btn">LAUNCH APP</a>
+
 </body>
 </html>
+
