@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CORAX | Pagamentos Descentralizados</title>
-    <!-- Fontes Google -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
@@ -14,9 +13,7 @@
             --text-main: #ffffff;
             --text-dim: #888888;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
@@ -26,8 +23,6 @@
             display: flex;
             flex-direction: column;
         }
-
-        /* Efeito de Luz de Fundo */
         .bg-light {
             position: fixed;
             top: 50%;
@@ -39,7 +34,6 @@
             z-index: -1;
             filter: blur(80px);
         }
-
         header {
             padding: 25px;
             display: flex;
@@ -49,16 +43,13 @@
             margin: 0 auto;
             width: 100%;
         }
-
         .logo-text {
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             letter-spacing: 5px;
             font-size: 1.2rem;
         }
-
         .logo-text span { color: var(--corax-purple); }
-
         .status {
             font-size: 0.6rem;
             color: #4ade80;
@@ -68,19 +59,14 @@
             align-items: center;
             gap: 8px;
         }
-
         .dot {
-            width: 7px;
-            height: 7px;
+            width: 7px; height: 7px;
             background: #4ade80;
             border-radius: 50%;
             box-shadow: 0 0 10px #4ade80;
             animation: pulse 2s infinite;
         }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        /* Conteúdo Principal */
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         main {
             flex: 1;
             display: flex;
@@ -90,7 +76,6 @@
             text-align: center;
             padding: 20px;
         }
-
         .logo-main {
             width: 260px;
             max-width: 70%;
@@ -98,12 +83,10 @@
             filter: drop-shadow(0 0 25px var(--corax-glow));
             animation: float 5s ease-in-out infinite;
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-
         h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(2.5rem, 10vw, 4rem);
@@ -111,9 +94,7 @@
             text-transform: uppercase;
             margin-bottom: 10px;
         }
-
         h1 span { color: var(--corax-purple); }
-
         .slogan {
             color: var(--text-dim);
             letter-spacing: 6px;
@@ -121,15 +102,7 @@
             text-transform: uppercase;
             margin-bottom: 50px;
         }
-
-        /* Botões Estilizados */
-        .actions {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
+        .actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
         .btn {
             padding: 15px 35px;
             border-radius: 2px;
@@ -141,31 +114,17 @@
             letter-spacing: 2px;
             font-weight: bold;
         }
-
         .btn-primary {
             background: var(--corax-purple);
             color: black;
             border: none;
             box-shadow: 0 0 15px var(--corax-glow);
         }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px var(--corax-purple);
-        }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
         }
-
-        .btn-secondary:hover {
-            border-color: var(--corax-purple);
-            background: rgba(157, 78, 221, 0.1);
-        }
-
         footer {
             padding: 30px;
             text-align: center;
@@ -173,34 +132,37 @@
             color: #444;
             letter-spacing: 3px;
         }
-
     </style>
 </head>
 <body>
-
     <div class="bg-light"></div>
-
     <header>
         <div class="logo-text">COR<span>A</span>X</div>
         <div class="status"><div class="dot"></div> Mainnet Online</div>
     </header>
-
     <main>
-        <!-- TENTATIVA 1: Procure pelo arquivo logo.png na raiz -->
-        <img src="logo.png" alt="Corax Logo" class="logo-main" onerror="this.src='https://placeholder.com'">
-        
+        <img id="mainLogo" src="logo.png" alt="Corax Logo" class="logo-main">
         <h1>COR<span>A</span>X</h1>
         <p class="slogan">Pagamentos Descentralizados</p>
-
         <div class="actions">
             <a href="#" class="btn btn-primary">Launch App</a>
             <a href="#" class="btn btn-secondary">Documentation</a>
         </div>
     </main>
+    <footer>&copy; 2026 CORAX ECOSYSTEM | SECURED BY BLOCKCHAIN</footer>
 
-    <footer>
-        &copy; 2026 CORAX ECOSYSTEM | SECURED BY BLOCKCHAIN
-    </footer>
-
+    <script>
+        // Script para garantir que a imagem carregue idependente da pasta
+        const img = document.getElementById('mainLogo');
+        img.onerror = function() {
+            if (this.src.includes('assets/')) {
+                this.src = 'logo.png'; // Tenta na raiz
+            } else if (!this.src.includes('placeholder')) {
+                this.src = 'https://githubusercontent.com'; // Tenta link direto do seu GitHub
+            }
+        };
+        // Tenta primeiro no caminho que você tinha
+        img.src = 'assets/logo.png';
+    </script>
 </body>
 </html>
