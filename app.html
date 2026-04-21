@@ -3,51 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | Dashboard Live</title>
+    <title>CORAX | Dashboard OS</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 15px; }
-        .container { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            min-height: 100vh; 
+            padding: 15px; 
+            overflow-x: hidden;
+        }
 
-        /* Header com Botão de Configurações */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.2); margin-bottom: 25px; }
+        .container { max-width: 900px; margin: 0 auto; padding-bottom: 100px; }
+
+        /* Header */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 0; 
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2); 
+            margin-bottom: 25px; 
+        }
         .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; }
         .nav-right { display: flex; align-items: center; gap: 15px; }
-        .settings-link { text-decoration: none; font-size: 1.2rem; filter: drop-shadow(0 0 5px var(--p)); transition: 0.3s; }
-        .settings-link:hover { transform: rotate(45deg); }
-        .wallet-info { background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.6rem; font-family: 'Orbitron'; }
+        .settings-link { text-decoration: none; font-size: 1.2rem; transition: 0.3s; }
+        .wallet-info { 
+            background: var(--glass); 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            border: 1px solid var(--p); 
+            font-size: 0.6rem; 
+            font-family: 'Orbitron'; 
+        }
 
-        /* Gráfico Live */
-        .chart-box { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 20px; position: relative; }
+        /* Chart Section */
+        .chart-box { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 15px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+        }
         .chart-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .price { font-family: 'Orbitron'; font-size: 1.5rem; color: white; }
-        .price span { color: #4ade80; font-size: 0.8rem; margin-left: 10px; }
+        .price { font-family: 'Orbitron'; font-size: 1.4rem; color: white; }
+        .price span { color: var(--green); font-size: 0.8rem; margin-left: 10px; }
         .canvas-container { position: relative; height: 150px; width: 100%; }
 
-        /* Grid de Cards */
+        /* Grid Cards */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .card { background: var(--glass); border-left: 3px solid var(--p); padding: 20px; border-radius: 8px; }
+        .card { 
+            background: var(--glass); 
+            border-left: 3px solid var(--p); 
+            padding: 15px; 
+            border-radius: 8px; 
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .card:active { transform: scale(0.95); }
         .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
-        .balance { font-size: 1.4rem; font-weight: 700; }
+        .balance { font-size: 1.2rem; font-weight: 700; color: white; }
 
-        /* Caixa de Transferência */
-        .send-box { background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); padding: 20px; border-radius: 15px; }
-        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 12px; border-radius: 5px; color: white; margin: 8px 0; outline: none; font-size: 0.8rem; }
-        .btn-send { width: 100%; padding: 15px; background: var(--p); border: none; border-radius: 5px; color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-send:hover { box-shadow: 0 0 20px var(--p); transform: scale(1.02); }
+        /* Send Box */
+        .send-box { 
+            background: var(--glass); 
+            border: 1px solid rgba(157, 78, 221, 0.2); 
+            padding: 20px; 
+            border-radius: 15px; 
+        }
+        input { 
+            width: 100%; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid #222; 
+            padding: 12px; 
+            border-radius: 5px; 
+            color: white; 
+            margin: 8px 0; 
+            outline: none; 
+            font-size: 0.8rem; 
+        }
+        .btn-send { 
+            width: 100%; 
+            padding: 15px; 
+            background: var(--p); 
+            border: none; 
+            border-radius: 5px; 
+            color: black; 
+            font-family: 'Orbitron'; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 5px;
+        }
 
-        /* Widget de Chat */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--p); z-index: 100; font-size: 1.5rem; }
-        #chat-window { position: fixed; bottom: 90px; right: 20px; width: 300px; height: 400px; background: #0a0a0a; border: 1px solid var(--p); border-radius: 15px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 0 30px rgba(0,0,0,0.5); overflow: hidden; }
-        .chat-header { background: var(--p); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.7rem; font-weight: bold; text-align: center; }
-        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.8rem; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; line-height: 1.4; }
-        .msg.bot { background: #1a1a1a; align-self: flex-start; border-left: 2px solid var(--p); }
-        .msg.user { background: var(--p); color: black; align-self: flex-end; font-weight: bold; }
-        .chat-input { display: flex; padding: 10px; background: #111; border-top: 1px solid #222; }
-        .chat-input input { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 0.8rem; }
+        /* Chat Widget */
+        #chat-trigger { 
+            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; 
+            background: var(--p); border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; cursor: pointer; 
+            box-shadow: 0 0 20px var(--p); z-index: 100; font-size: 1.5rem; 
+        }
+        #chat-window { 
+            position: fixed; bottom: 90px; right: 20px; width: 280px; height: 380px; 
+            background: #0a0a0a; border: 1px solid var(--p); border-radius: 15px; 
+            display: none; flex-direction: column; z-index: 100; overflow: hidden; 
+        }
+        .chat-h { background: var(--p); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.6rem; font-weight: bold; text-align: center; }
+        #chat-ms { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.75rem; display: flex; flex-direction: column; gap: 8px; }
+        .m { padding: 8px 12px; border-radius: 10px; max-width: 85%; line-height: 1.4; }
+        .m.b { background: #1a1a1a; align-self: flex-start; border-left: 2px solid var(--p); }
+        .m.u { background: var(--p); color: black; align-self: flex-end; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -57,108 +125,102 @@
             <div class="logo-small">CORAX<span>•</span>OS</div>
             <div class="nav-right">
                 <a href="settings.html" class="settings-link">⚙️</a>
-                <div class="wallet-info">ID: 0x71...C42D</div>
+                <div class="wallet-info">0x71...C42D</div>
             </div>
         </header>
 
+        <!-- Market Chart -->
         <div class="chart-box">
             <div class="chart-header">
-                <div class="price">$ 42.083,12 <span id="percent">+2.4%</span></div>
-                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">MARKET LIVE</div>
+                <div class="price">$ 42.083,12 <span>+2.4%</span></div>
+                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">LIVE DATA</div>
             </div>
             <div class="canvas-container">
                 <canvas id="liveChart"></canvas>
             </div>
         </div>
 
+        <!-- Dashboard Cards -->
         <div class="grid">
-            <div class="card"><h3>SALDO CRX</h3><div class="balance">14.250</div></div>
-            <div class="card"><h3>NETWORK</h3><div style="color: #4ade80; font-family: 'Orbitron'; font-size: 0.6rem;">● ONLINE</div></div>
+            <div class="card">
+                <h3>SALDO CRX</h3>
+                <div class="balance">14.250</div>
+            </div>
+            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05);">
+                <h3 style="color: var(--green);">AIRDROP</h3>
+                <div class="balance" style="font-size: 0.9rem;">COLETAR →</div>
+            </a>
         </div>
 
+        <!-- Transaction Box -->
         <div class="send-box">
-            <input type="text" placeholder="Endereço de destino">
-            <input type="number" placeholder="Valor CRX">
-            <button class="btn-send" onclick="alert('Iniciando protocolo de transferência...')">EXECUTAR TRANSFERÊNCIA</button>
+            <h3>TRANSFERÊNCIA</h3>
+            <input type="text" id="dest" placeholder="Endereço 0x...">
+            <input type="number" id="amt" placeholder="Valor CRX">
+            <button class="btn-send" onclick="alert('Protocolo de segurança iniciado...')">ENVIAR AGORA</button>
         </div>
     </div>
 
-    <!-- Interface do Chat -->
+    <!-- Chat Trigger & Window -->
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
     <div id="chat-window">
-        <div class="chat-header">CORAX ASSISTANT</div>
-        <div id="chat-messages">
-            <div class="msg bot">Bem-vindo ao suporte Corax. Como posso ajudar com sua carteira hoje?</div>
+        <div class="chat-h">SUPORTE CORAX IA</div>
+        <div id="chat-ms">
+            <div class="m b">Olá Agente. Como posso auxiliar na sua navegação pela Mainnet hoje?</div>
         </div>
-        <div class="chat-input">
-            <input type="text" id="user-input" placeholder="Digite sua dúvida...">
-            <button onclick="sendMessage()" style="background:none; border:none; color:var(--p); font-weight:bold; cursor:pointer; margin-left:5px;">ENVIAR</button>
+        <div style="padding: 10px; background: #111; display: flex; border-top: 1px solid #222;">
+            <input type="text" id="chat-in" placeholder="Dúvida..." style="margin:0; border:none; background:transparent;">
+            <button onclick="sendMsg()" style="background:none; border:none; color:var(--p); font-weight:bold;">➤</button>
         </div>
     </div>
 
-    <!-- Scripts de Funcionalidade -->
     <script src="https://jsdelivr.net"></script>
     <script>
         // Inicialização do Gráfico
         window.onload = function() {
             const ctx = document.getElementById('liveChart').getContext('2d');
-            let dataPoints = [40, 45, 42, 48, 50, 47, 52, 49, 55, 53];
-            
+            let pts = [40, 45, 42, 48, 50, 47, 52, 55, 53, 58];
             const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['', '', '', '', '', '', '', '', '', ''],
+                    labels: pts.map(() => ''),
                     datasets: [{
-                        data: dataPoints,
-                        borderColor: '#9d4edd',
-                        borderWidth: 2,
-                        pointRadius: 0,
-                        fill: true,
-                        backgroundColor: 'rgba(157, 78, 221, 0.1)',
-                        tension: 0.4
+                        data: pts, borderColor: '#9d4edd', borderWidth: 2, pointRadius: 0, fill: true,
+                        backgroundColor: 'rgba(157, 78, 221, 0.1)', tension: 0.4
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: { y: { display: false }, x: { display: false } },
-                    plugins: { legend: { display: false } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { display: false } }, plugins: { legend: { display: false } } }
             });
-
             setInterval(() => {
-                dataPoints.shift();
-                dataPoints.push(Math.floor(Math.random() * (60 - 40 + 1)) + 40);
+                pts.shift(); pts.push(Math.floor(Math.random() * (65 - 40 + 1)) + 40);
                 chart.update();
             }, 2000);
         };
 
         // Lógica do Chat
         function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+            const w = document.getElementById('chat-window');
+            w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        function sendMessage() {
-            const input = document.getElementById('user-input');
-            const container = document.getElementById('chat-messages');
-            if (!input.value) return;
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'msg user';
-            userMsg.innerText = input.value;
-            container.appendChild(userMsg);
+        function sendMsg() {
+            const i = document.getElementById('chat-in');
+            const ms = document.getElementById('chat-ms');
+            if(!i.value) return;
             
-            const text = input.value.toLowerCase();
-            input.value = '';
-
+            const uM = document.createElement('div'); uM.className = 'm u'; uM.innerText = i.value;
+            ms.appendChild(uM);
+            
+            const t = i.value.toLowerCase();
+            i.value = '';
+            
             setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'msg bot';
-                if(text.includes('saldo')) botMsg.innerText = "Seu saldo está seguro na Mainnet. Total: 14.250 CRX.";
-                else botMsg.innerText = "Protocolo recebido. Estamos analisando sua solicitação nos nós da rede.";
-                container.appendChild(botMsg);
-                container.scrollTop = container.scrollHeight;
+                const bM = document.createElement('div'); bM.className = 'm b';
+                if(t.includes('airdrop')) bM.innerText = "O portal de Airdrop está aberto. Verifique o card verde no seu Dashboard.";
+                else if(t.includes('taxa')) bM.innerText = "A taxa atual da rede é de 0.0002 CRX.";
+                else bM.innerText = "Solicitação recebida. Analisando dados na blockchain...";
+                ms.appendChild(bM);
+                ms.scrollTop = ms.scrollHeight;
             }, 1000);
         }
     </script>
