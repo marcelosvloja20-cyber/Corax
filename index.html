@@ -1,181 +1,263 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corax | A nova camada do dinheiro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>CORAX | Decentralized Payments</title>
+    <!-- Fontes Modernas -->
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
-            --bg: #0B0B0F; /* Preto profundo */
-            --card: #111116;
-            --accent: #0A84FF; /* Azul elétrico */
-            --accent-green: #00A676; /* Verde esmeralda sutil */
-            --text: #FFFFFF;
-            --muted: #A0AEC0;
-            --border: rgba(10,132,255,0.12);
+            --bg-deep: #0a0a0b;
+            --corax-purple: #9d4edd;
+            --corax-light: #c8b6ff;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
         }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
-        body { background:var(--bg); color:var(--text); min-height:100vh; padding:80px 0 100px; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Fundo com gradiente radial */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
 
         header {
-            position:fixed; top:0; left:0; right:0; z-index:1100;
-            display:flex; justify-content:space-between; align-items:center;
-            padding:16px 20px; background:rgba(11,11,15,0.85); backdrop-filter:blur(12px);
-            max-width:480px; margin:0 auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .menu-btn { cursor:pointer; }
-        .menu-btn span { display:block; width:24px; height:2px; background:var(--accent); margin:5px 0; border-radius:1px; box-shadow:0 0 6px rgba(10,132,255,0.4); }
-        .login-btn { background:var(--accent); color:#fff; border:none; padding:8px 16px; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(10,132,255,0.3); }
 
-        .header-logo { text-align:center; margin:24px 0 32px; }
-        .header-logo h1 {
-            font-size:2.4rem; font-weight:800; letter-spacing:4px;
-            background:linear-gradient(135deg, #0A84FF, #FFFFFF); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            text-shadow:0 0 12px rgba(10,132,255,0.3);
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
         }
-        .header-logo span { font-size:0.7rem; color:var(--muted); letter-spacing:2px; }
 
-        .corvo-icon { width:60px; height:60px; margin:0 auto 16px; display:block; filter:drop-shadow(0 0 8px rgba(10,132,255,0.4)); }
+        .nav-logo span { color: var(--corax-purple); }
 
-        .main-content { padding:0 20px; max-width:400px; margin:0 auto; }
-        .wallet-card {
-            background:var(--card); border-radius:24px; padding:32px 24px;
-            border:1px solid var(--border); text-align:center;
+        /* Seção Principal (Hero) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 1.5rem;
+            min-height: 80vh;
         }
-        .label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:6px; display:block; }
-        .balance { font-size:2.8rem; font-weight:800; margin:8px 0 32px; letter-spacing:-1px; }
-        input {
-            width:100%; background:rgba(20,20,40,0.6); border:1px solid var(--border);
-            border-radius:14px; padding:16px; color:var(--text); font-size:1.05rem; margin-bottom:24px;
-            outline:none; transition:border 0.2s;
-        }
-        input:focus { border-color:var(--accent); box-shadow:0 0 10px rgba(10,132,255,0.25); }
-        .fee-info { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--muted); margin:12px 0; }
-        .total { font-weight:600; color:var(--text); }
-        .btn-send {
-            width:100%; background:var(--accent); color:white; border:none;
-            padding:18px; border-radius:18px; font-size:1rem; font-weight:700;
-            cursor:pointer; box-shadow:0 6px 20px rgba(10,132,255,0.35); transition:0.2s;
-        }
-        .btn-send:hover { transform:translateY(-2px); }
 
-        .sidebar {
-            position:fixed; top:0; left:-320px; width:320px; height:100%;
-            background:rgba(17,17,22,0.96); backdrop-filter:blur(20px);
-            border-right:1px solid var(--border); z-index:1050;
-            padding:70px 24px 20px; transition:left 0.3s ease;
+        .logo-main {
+            width: 280px;
+            max-width: 80%;
+            filter: drop-shadow(0 0 30px rgba(157, 78, 221, 0.4));
+            animation: float 6s ease-in-out infinite;
+            margin-bottom: 2rem;
         }
-        .sidebar.active { left:0; }
-        .sidebar-section { margin-bottom:28px; }
-        .benefit-box {
-            background:rgba(10,132,255,0.08); border:1px solid var(--border);
-            border-radius:18px; padding:18px; text-align:center;
-        }
-        .benefit-label { font-size:0.7rem; color:var(--muted); margin-bottom:6px; }
-        .benefit-value { font-size:1.5rem; font-weight:700; color:var(--accent-green); }
 
-        .bottom-nav {
-            position:fixed; bottom:0; left:0; right:0; z-index:1000;
-            background:rgba(17,17,22,0.92); backdrop-filter:blur(12px);
-            border-top:1px solid var(--border); padding:12px 0;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
-        .nav-tabs { display:flex; justify-content:space-around; max-width:480px; margin:0 auto; }
-        .nav-item { color:var(--muted); text-align:center; font-size:0.75rem; text-decoration:none; }
-        .nav-item.active { color:var(--accent); }
-        .nav-item i { font-size:24px; display:block; margin-bottom:4px; }
 
-        .status { font-size:0.65rem; color:var(--muted); text-align:center; margin:20px 0; }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            letter-spacing: 12px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .slogan {
+            font-size: 1rem;
+            color: var(--text-dim);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+        }
+
+        /* Botões */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--corax-purple);
+            color: black;
+            border: none;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px var(--corax-purple);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--corax-purple);
+            background: rgba(157, 78, 221, 0.05);
+        }
+
+        /* Seção de Recursos (Cards) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--corax-purple);
+            background: rgba(157, 78, 221, 0.02);
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--corax-light);
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Status da Rede */
+        .network-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: #4ade80;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
     </style>
 </head>
 <body>
 
+    <div class="bg-glow"></div>
+
     <header>
-        <div class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('active')">
-            <span></span><span></span><span></span>
+        <div class="nav-logo">COR<span>A</span>X</div>
+        <div class="network-status">
+            <div class="dot"></div> Mainnet Online
         </div>
-        <button class="login-btn">Login / Conectar</button>
     </header>
 
-    <div class="header-logo">
-        <!-- Corvo Digital geométrico minimalista (SVG inline simples) -->
-        <svg class="corvo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Corpo afiado -->
-            <polygon points="50,20 30,60 70,60" fill="none" stroke="#0A84FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Asas angulares -->
-            <line x1="30" y1="60" x2="10" y2="40" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
-            <line x1="70" y1="60" x2="90" y2="40" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
-            <!-- Cauda afiada -->
-            <polygon points="40,70 50,85 60,70" fill="none" stroke="#0A84FF" stroke-width="4" stroke-linecap="round"/>
-            <!-- Olho neon elétrico sutil -->
-            <circle cx="55" cy="45" r="6" fill="none" stroke="#00D4FF" stroke-width="3"/>
-            <circle cx="55" cy="45" r="2" fill="#00D4FF"/>
-        </svg>
-        <h1>Corax</h1>
-        <span>A nova camada do dinheiro</span>
-    </div>
+    <main>
+        <section class="hero">
+            <!-- NOTA: Certifique-se que o arquivo da imagem se chama logo.png e está na mesma pasta -->
+            <img src="assets/logo.png" alt="Corax Logo" class="logo-main">
+            
+            <h1>COR<span>A</span>X</h1>
+            <p class="slogan">Pagamentos Descentralizados</p>
 
-    <div class="main-content">
-        <div class="wallet-card">
-            <span class="label">Saldo Disponível (Polygon)</span>
-            <div class="balance">0.00 POL</div>
-
-            <span class="label">Destinatário</span>
-            <input type="text" placeholder="@usuario ou 0x...">
-
-            <span class="label">Valor para Enviar</span>
-            <input type="number" id="amount" placeholder="0.00" oninput="updateTotal()">
-
-            <div class="fee-info">
-                <span>Taxa Corax</span>
-                <span>+0.05 POL</span>
+            <div class="cta-group">
+                <a href="#" class="btn btn-primary">LAUNCH APP</a>
+                <a href="#" class="btn btn-secondary">DOCUMENTATION</a>
             </div>
-            <div class="fee-info total">
-                <span>Total</span>
-                <span id="total">0.05 POL</span>
+        </section>
+
+        <section class="features">
+            <div class="card">
+                <h3>SECURE PROTOCOL</h3>
+                <p>Criptografia de ponta a ponta em cada transação peer-to-peer.</p>
             </div>
-
-            <button class="btn-send">Confirmar Envio P2P</button>
-        </div>
-
-        <div class="status">Conecte sua wallet para ver saldo real</div>
-    </div>
-
-    <!-- Sidebar com benefícios -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-section">
-            <div class="benefit-box">
-                <div class="benefit-label">Rendimento Diário</div>
-                <div class="benefit-value">R$ 0,0000</div>
-                <div style="font-size:0.75rem; color:var(--muted);">+8.4% APY Automático</div>
+            <div class="card">
+                <h3>LOW LATENCY</h3>
+                <p>Confirmações em tempo real processadas pela rede distribuída.</p>
             </div>
-        </div>
-        <div class="sidebar-section">
-            <div class="benefit-box">
-                <div class="benefit-label">Cashback Acumulado</div>
-                <div class="benefit-value">R$ 45,20</div>
-                <button style="background:var(--accent-green); color:#fff; border:none; padding:8px 16px; border-radius:12px; font-size:0.85rem; margin-top:8px; cursor:pointer;">Resgatar</button>
+            <div class="card">
+                <h3>ZERO FEES</h3>
+                <p>Estrutura de taxas otimizada para microtransações globais.</p>
             </div>
-        </div>
-        <!-- Adicione chat, config, etc. aqui -->
-    </div>
+        </section>
+    </main>
 
-    <nav class="bottom-nav">
-        <div class="nav-tabs">
-            <a href="#" class="nav-item active"><i data-lucide="home"></i><span>Home</span></a>
-            <a href="#" class="nav-item"><i data-lucide="send"></i><span>Pagar</span></a>
-            <a href="#" class="nav-item"><i data-lucide="message-circle"></i><span>Chat</span></a>
-            <a href="#" class="nav-item"><i data-lucide="wallet"></i><span>Carteira</span></a>
-        </div>
-    </nav>
+    <footer>
+        &copy; 2026 CORAX ECOSYSTEM • BUILT ON BLOCKCHAIN
+    </footer>
 
-    <script>
-        lucide.createIcons();
-        function updateTotal() {
-            const val = parseFloat(document.getElementById('amount').value) || 0;
-            document.getElementById('total').textContent = (val + 0.05).toFixed(2) + ' POL';
-        }
-    </script>
 </body>
 </html>
