@@ -11,38 +11,43 @@
         body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 15px; }
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
 
+        /* Header com Botão de Configurações */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.2); margin-bottom: 25px; }
         .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .settings-link { text-decoration: none; font-size: 1.2rem; filter: drop-shadow(0 0 5px var(--p)); transition: 0.3s; }
+        .settings-link:hover { transform: rotate(45deg); }
         .wallet-info { background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.6rem; font-family: 'Orbitron'; }
 
         /* Gráfico Live */
-        .chart-box { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 20px; height: 250px; position: relative; }
+        .chart-box { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 20px; position: relative; }
         .chart-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .price { font-family: 'Orbitron'; font-size: 1.5rem; color: white; }
         .price span { color: #4ade80; font-size: 0.8rem; margin-left: 10px; }
-        
-        /* Ajuste do Canvas para Mobile */
         .canvas-container { position: relative; height: 150px; width: 100%; }
 
+        /* Grid de Cards */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .card { background: var(--glass); border-left: 3px solid var(--p); padding: 20px; border-radius: 8px; }
         .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
         .balance { font-size: 1.4rem; font-weight: 700; }
 
+        /* Caixa de Transferência */
         .send-box { background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); padding: 20px; border-radius: 15px; }
         input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 12px; border-radius: 5px; color: white; margin: 8px 0; outline: none; font-size: 0.8rem; }
         .btn-send { width: 100%; padding: 15px; background: var(--p); border: none; border-radius: 5px; color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        
+        .btn-send:hover { box-shadow: 0 0 20px var(--p); transform: scale(1.02); }
+
         /* Widget de Chat */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--p); z-index: 100; }
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--p); z-index: 100; font-size: 1.5rem; }
         #chat-window { position: fixed; bottom: 90px; right: 20px; width: 300px; height: 400px; background: #0a0a0a; border: 1px solid var(--p); border-radius: 15px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 0 30px rgba(0,0,0,0.5); overflow: hidden; }
-        .chat-header { background: var(--p); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.7rem; font-weight: bold; }
+        .chat-header { background: var(--p); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.7rem; font-weight: bold; text-align: center; }
         #chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.8rem; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; line-height: 1.4; }
         .msg.bot { background: #1a1a1a; align-self: flex-start; border-left: 2px solid var(--p); }
-        .msg.user { background: var(--p); color: black; align-self: flex-end; }
-        .chat-input { display: flex; padding: 10px; background: #111; }
-        .chat-input input { flex: 1; background: transparent; border: none; color: white; outline: none; }
+        .msg.user { background: var(--p); color: black; align-self: flex-end; font-weight: bold; }
+        .chat-input { display: flex; padding: 10px; background: #111; border-top: 1px solid #222; }
+        .chat-input input { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -50,7 +55,10 @@
     <div class="container">
         <header>
             <div class="logo-small">CORAX<span>•</span>OS</div>
-            <div class="wallet-info">ID: 0x71...C42D</div>
+            <div class="nav-right">
+                <a href="settings.html" class="settings-link">⚙️</a>
+                <div class="wallet-info">ID: 0x71...C42D</div>
+            </div>
         </header>
 
         <div class="chart-box">
@@ -71,25 +79,30 @@
         <div class="send-box">
             <input type="text" placeholder="Endereço de destino">
             <input type="number" placeholder="Valor CRX">
-            <button class="btn-send">EXECUTAR TRANSFERÊNCIA</button>
+            <button class="btn-send" onclick="alert('Iniciando protocolo de transferência...')">EXECUTAR TRANSFERÊNCIA</button>
         </div>
     </div>
 
-    <!-- Chat Interface -->
+    <!-- Interface do Chat -->
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
     <div id="chat-window">
         <div class="chat-header">CORAX ASSISTANT</div>
-        <div id="chat-messages"><div class="msg bot">Olá! Como posso ajudar na rede Corax?</div></div>
-        <div class="chat-input"><input type="text" id="user-input" placeholder="Mensagem..."><button onclick="sendMessage()" style="color:var(--p); background:none; border:none; margin-left:5px;">➤</button></div>
+        <div id="chat-messages">
+            <div class="msg bot">Bem-vindo ao suporte Corax. Como posso ajudar com sua carteira hoje?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Digite sua dúvida...">
+            <button onclick="sendMessage()" style="background:none; border:none; color:var(--p); font-weight:bold; cursor:pointer; margin-left:5px;">ENVIAR</button>
+        </div>
     </div>
 
-    <!-- Carregamento Seguro da Script -->
+    <!-- Scripts de Funcionalidade -->
     <script src="https://jsdelivr.net"></script>
     <script>
-        // Inicialização do Gráfico após carregamento da página
+        // Inicialização do Gráfico
         window.onload = function() {
             const ctx = document.getElementById('liveChart').getContext('2d');
-            let dataPoints = [40, 45, 42, 48, 50, 47, 52, 55, 53, 58];
+            let dataPoints = [40, 45, 42, 48, 50, 47, 52, 49, 55, 53];
             
             const chart = new Chart(ctx, {
                 type: 'line',
@@ -120,6 +133,7 @@
             }, 2000);
         };
 
+        // Lógica do Chat
         function toggleChat() {
             const win = document.getElementById('chat-window');
             win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
@@ -129,12 +143,23 @@
             const input = document.getElementById('user-input');
             const container = document.getElementById('chat-messages');
             if (!input.value) return;
+
             const userMsg = document.createElement('div');
             userMsg.className = 'msg user';
             userMsg.innerText = input.value;
             container.appendChild(userMsg);
+            
+            const text = input.value.toLowerCase();
             input.value = '';
-            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'msg bot';
+                if(text.includes('saldo')) botMsg.innerText = "Seu saldo está seguro na Mainnet. Total: 14.250 CRX.";
+                else botMsg.innerText = "Protocolo recebido. Estamos analisando sua solicitação nos nós da rede.";
+                container.appendChild(botMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
         }
     </script>
 </body>
