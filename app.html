@@ -20,7 +20,7 @@
 
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 100px; }
 
-        /* Header */
+        /* Header Atualizado com Histórico e Configurações */
         header { 
             display: flex; 
             justify-content: space-between; 
@@ -30,8 +30,9 @@
             margin-bottom: 25px; 
         }
         .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; }
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .settings-link { text-decoration: none; font-size: 1.2rem; transition: 0.3s; }
+        .nav-right { display: flex; align-items: center; gap: 18px; }
+        .nav-icon { text-decoration: none; font-size: 1.1rem; transition: 0.3s; filter: drop-shadow(0 0 5px var(--p)); }
+        .nav-icon:active { transform: scale(0.8); }
         .wallet-info { 
             background: var(--glass); 
             padding: 5px 12px; 
@@ -41,7 +42,7 @@
             font-family: 'Orbitron'; 
         }
 
-        /* Chart Section (SVG Nativo) */
+        /* Chart Section (SVG Dinâmico) */
         .chart-box { 
             background: var(--glass); 
             border: 1px solid rgba(255,255,255,0.05); 
@@ -52,10 +53,9 @@
         .chart-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .price { font-family: 'Orbitron'; font-size: 1.4rem; color: white; }
         .price span { color: var(--green); font-size: 0.8rem; margin-left: 10px; }
-        
         .svg-chart { width: 100%; height: 100px; stroke: var(--p); stroke-width: 2; fill: none; filter: drop-shadow(0 0 5px var(--p)); }
 
-        /* Grid Cards */
+        /* Grid de Navegação */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .card { 
             background: var(--glass); 
@@ -68,14 +68,14 @@
         .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
         .balance { font-size: 1.1rem; font-weight: 700; color: white; }
 
-        /* Send Box */
+        /* Módulo de Envio */
         .send-box { 
             background: var(--glass); 
             border: 1px solid rgba(157, 78, 221, 0.2); 
             padding: 20px; 
             border-radius: 15px; 
-            margin-top: 20px;
         }
+        h4 { font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px; margin-bottom: 10px; }
         input { 
             width: 100%; 
             background: rgba(255,255,255,0.05); 
@@ -99,7 +99,7 @@
             cursor: pointer; 
         }
 
-        /* Chat Widget */
+        /* Chat Flutuante */
         #chat-trigger { 
             position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; 
             background: var(--p); border-radius: 50%; display: flex; 
@@ -124,32 +124,33 @@
         <header>
             <div class="logo-small">CORAX<span>•</span>OS</div>
             <div class="nav-right">
-                <a href="settings.html" class="settings-link">⚙️</a>
+                <a href="history.html" class="nav-icon">🕒</a>
+                <a href="settings.html" class="nav-icon">⚙️</a>
                 <div class="wallet-info">0x71...C42D</div>
             </div>
         </header>
 
-        <!-- Market Chart SVG -->
+        <!-- Market Chart -->
         <div class="chart-box">
             <div class="chart-header">
                 <div class="price">$ 42.083,12 <span>+2.4%</span></div>
-                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">LIVE SVG MARKET</div>
+                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">LIVE SHADOW-SYNC</div>
             </div>
             <svg class="svg-chart" viewBox="0 0 400 100" preserveAspectRatio="none">
                 <path id="graph-line" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" />
             </svg>
         </div>
 
-        <!-- Dashboard Grid -->
+        <!-- Cards de Ação -->
         <div class="grid">
             <div class="card">
-                <h3>SALDO CRX</h3>
-                <div class="balance">14.250</div>
+                <h3>SALDO ATUAL</h3>
+                <div class="balance">14.250 CRX</div>
             </div>
             
             <a href="stake.html" class="card" style="border-color: var(--p); background: rgba(157, 78, 221, 0.05);">
                 <h3 style="color: var(--p);">STAKING</h3>
-                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO: 18.5% →</div>
+                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO →</div>
             </a>
 
             <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05); grid-column: span 2;">
@@ -158,30 +159,30 @@
             </a>
         </div>
 
-        <!-- Transaction Box -->
+        <!-- Seção de Transferência -->
         <div class="send-box">
-            <h3 style="font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px;">EFETUAR TRANSFERÊNCIA</h3>
+            <h4>EFETUAR TRANSFERÊNCIA</h4>
             <input type="text" placeholder="Endereço de destino 0x...">
-            <input type="number" placeholder="Valor CRX">
-            <button class="btn-send" onclick="alert('Iniciando protocolo Shadow-Sync...')">ENVIAR AGORA</button>
+            <input type="number" placeholder="Quantidade CRX">
+            <button class="btn-send" onclick="alert('Iniciando protocolo de segurança...')">CONFIRMAR ENVIO</button>
         </div>
     </div>
 
-    <!-- Chat Interface -->
+    <!-- Chat Bot -->
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
     <div id="chat-window">
         <div class="chat-h">CORAX ASSISTANT</div>
         <div id="chat-ms">
-            <div class="m b">Olá Agente. Alguma dúvida sobre o Staking ou Airdrop?</div>
+            <div class="m b">Saudações, Agente. Alguma inconsistência na Mainnet?</div>
         </div>
         <div style="padding: 10px; background: #111; display: flex; border-top: 1px solid #222;">
-            <input type="text" id="chat-in" placeholder="Mensagem..." style="margin:0; border:none; background:transparent;">
+            <input type="text" id="chat-in" placeholder="Dúvida..." style="margin:0; border:none; background:transparent;">
             <button onclick="sendMsg()" style="background:none; border:none; color:var(--p); font-weight:bold; margin-left:10px;">➤</button>
         </div>
     </div>
 
     <script>
-        // Animação do Gráfico SVG
+        // Animação SVG do Gráfico
         function updateGraph() {
             const line = document.getElementById('graph-line');
             let d = "M0," + (Math.random() * 60 + 20);
@@ -192,7 +193,7 @@
         }
         setInterval(updateGraph, 3000);
 
-        // Lógica do Chat
+        // Lógica de Interface do Chat
         function toggleChat() {
             const w = document.getElementById('chat-window');
             w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
