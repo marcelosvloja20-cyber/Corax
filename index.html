@@ -2,9 +2,17 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CORAX | Pagamentos Descentralizados</title>
-    <!-- Fontes Modernas -->
+    
+    <!-- INFRAESTRUTURA PWA (PASSO 1) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#9d4edd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="9a79db2d-571d-48b1-b270-0428e3dde4de.png">
+
+    <!-- FONTES E ESTILOS -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
@@ -13,7 +21,12 @@
             --glow: rgba(157, 78, 221, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body { 
             background: var(--bg); 
@@ -25,30 +38,30 @@
             align-items: center; 
             justify-content: center; 
             text-align: center;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* Efeito de Luz no Fundo */
+        /* Efeito de Luz Profunda */
         .bg-gradient {
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.12) 0%, transparent 70%);
             z-index: -1;
         }
 
-        /* Logo Container */
+        /* Logo com Animação Fluida */
         .logo-container {
             width: 300px;
             max-width: 85%;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 0 15px var(--glow));
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 20px var(--glow));
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-20px); }
         }
 
         .logo-container img {
@@ -56,51 +69,52 @@
             height: auto;
         }
 
-        /* Botão Principal */
+        /* Botão de Alta Conversão */
         .btn-launch { 
-            padding: 18px 50px; 
+            padding: 20px 60px; 
             background: var(--p); 
             color: #000; 
             text-decoration: none; 
             font-family: 'Orbitron', sans-serif; 
             font-weight: bold; 
-            font-size: 0.8rem; 
-            letter-spacing: 4px; 
+            font-size: 0.85rem; 
+            letter-spacing: 5px; 
             border-radius: 4px; 
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 0 25px var(--glow); 
+            box-shadow: 0 0 30px var(--glow); 
             text-transform: uppercase;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
-        .btn-launch:hover { 
-            transform: scale(1.1); 
-            box-shadow: 0 0 45px var(--p); 
+        .btn-launch:active { 
+            transform: scale(0.95); 
+            box-shadow: 0 0 50px var(--p); 
         }
 
-        /* Rodapé com Link Sobre */
+        /* Footer Estruturado */
         footer {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             width: 100%;
             text-align: center;
-            font-size: 0.65rem;
-            color: #444;
+            font-size: 0.6rem;
+            color: #333;
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
 
         footer a {
             color: var(--p);
             text-decoration: none;
-            margin-left: 10px;
+            margin-left: 15px;
             transition: 0.3s;
+            border-bottom: 1px solid transparent;
         }
 
         footer a:hover {
             color: white;
-            text-shadow: 0 0 10px var(--p);
+            border-bottom: 1px solid var(--p);
         }
     </style>
 </head>
@@ -109,16 +123,28 @@
     <div class="bg-gradient"></div>
     
     <div class="logo-container">
-        <!-- Mantendo o nome do arquivo que funcionou no seu projeto -->
-        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="CORAX Official">
+        <!-- Caminho da imagem confirmado pelo seu repositório -->
+        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="CORAX OFFICIAL">
     </div>
     
-    <!-- Link corrigido para ir primeiro para o login de segurança -->
+    <!-- Início do Fluxo: Vai para o Login de Segurança -->
     <a href="login.html" class="btn-launch">LAUNCH APP</a>
 
     <footer>
         &copy; 2026 CORAX ECOSYSTEM | <a href="about.html">SAIBA MAIS</a>
     </footer>
+
+    <!-- LOGICA DE ATIVAÇÃO PWA -->
+    <script>
+        // Registra o Service Worker (necessário para ser instalável)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Corax PWA Ativo'))
+                    .catch(err => console.log('Erro PWA:', err));
+            });
+        }
+    </script>
 
 </body>
 </html>
