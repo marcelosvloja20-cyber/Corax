@@ -1,33 +1,273 @@
-export default function CoraxLanding(){return (<div className='min-h-screen bg-black text-white font-sans relative overflow-hidden'>
-<div className='absolute inset-0 bg-gradient-to-b from-purple-900/40 via-black to-black'/>
-<div className='absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-3xl rounded-full'/>
-<div className='relative max-w-md mx-auto px-6 py-10'>
-<div className='text-center'>
-<div className='mx-auto w-72 h-72 rounded-full bg-purple-500/10 blur-2xl absolute left-1/2 -translate-x-1/2 top-8'/>
-<div className='relative text-9xl pt-8'>🐦</div>
-<h1 className='mt-4 text-5xl font-light tracking-[0.35em]'>CORAX</h1>
-<p className='text-purple-400 mt-2 uppercase tracking-[0.4em] text-xs'>Pagamentos Descentralizados</p>
-<h2 className='mt-10 text-4xl leading-tight font-medium'>Pagamentos descentralizados <span className='text-purple-400'>para o mundo real</span></h2>
-<p className='mt-4 text-zinc-300/80'>Envie, receba e gerencie pagamentos globais em segundos, com taxas menores e total controle.</p>
-<div className='grid gap-3 mt-8'>
-<button className='rounded-2xl py-4 bg-purple-500/90 shadow-[0_0_40px_rgba(168,85,247,0.45)] font-semibold tracking-[0.3em] text-white'>LAUNCH APP</button>
-<button className='rounded-2xl py-4 border border-white/10 bg-white/5 backdrop-blur'>SAIBA MAIS</button>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CORAX | Pagamentos Descentralizados</title>
+<meta name="description" content="Pagamentos descentralizados para o mundo real. Rápido, seguro e global.">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#000;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px 20px;
+    position:relative;
+}
+
+.bg-glow{
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:rgba(140,0,255,.18);
+    filter:blur(140px);
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.container{
+    max-width:420px;
+    width:100%;
+    text-align:center;
+    position:relative;
+    z-index:2;
+}
+
+.logo-box{
+    margin-bottom:20px;
+}
+
+.logo-box img{
+    width:270px;
+    max-width:100%;
+    filter:drop-shadow(0 0 35px rgba(160,0,255,.45));
+}
+
+.brand{
+    font-size:52px;
+    letter-spacing:12px;
+    font-weight:300;
+    margin-top:10px;
+}
+
+.tagline{
+    color:#9d63ff;
+    font-size:12px;
+    letter-spacing:6px;
+    margin-top:8px;
+}
+
+.headline{
+    margin-top:45px;
+    font-size:38px;
+    line-height:1.2;
+    font-weight:600;
+}
+
+.headline span{
+    color:#a855f7;
+}
+
+.subtext{
+    margin-top:18px;
+    color:#c7c7c7;
+    font-size:16px;
+    line-height:1.6;
+}
+
+.btn-group{
+    margin-top:35px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.btn{
+    padding:18px;
+    border:none;
+    border-radius:14px;
+    font-size:15px;
+    letter-spacing:5px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:#a855f7;
+    color:#fff;
+    box-shadow:0 0 30px rgba(168,85,247,.45);
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:#fff;
+    backdrop-filter:blur(10px);
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:40px;
+}
+
+.stat{
+    padding:14px 10px;
+    border-radius:14px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.stat h3{
+    color:#a855f7;
+    font-size:18px;
+}
+
+.stat p{
+    font-size:12px;
+    color:#aaa;
+    margin-top:6px;
+}
+
+.features{
+    margin-top:35px;
+    display:grid;
+    gap:14px;
+}
+
+.feature{
+    padding:18px;
+    border-radius:16px;
+    text-align:left;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+}
+
+.feature h4{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.feature p{
+    color:#aaa;
+    font-size:14px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:45px;
+    color:#666;
+    font-size:13px;
+    text-align:center;
+}
+
+@media(max-width:480px){
+    .headline{
+        font-size:31px;
+    }
+
+    .brand{
+        font-size:42px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="bg-glow"></div>
+
+<div class="container">
+
+<div class="logo-box">
+<img src="assets/logo.png" alt="CORAX Logo">
+</div>
+
+<h1 class="brand">CORAX</h1>
+<p class="tagline">PAGAMENTOS DESCENTRALIZADOS</p>
+
+<h2 class="headline">
+Pagamentos descentralizados <span>para o mundo real</span>
+</h2>
+
+<p class="subtext">
+Envie, receba e gerencie pagamentos globais em segundos, com taxas menores e total controle.
+</p>
+
+<div class="btn-group">
+<button class="btn btn-primary">LAUNCH APP</button>
+<button class="btn btn-secondary">SAIBA MAIS</button>
+</div>
+
+<div class="stats">
+<div class="stat">
+<h3>10K+</h3>
+<p>Transações</p>
+</div>
+
+<div class="stat">
+<h3>99.9%</h3>
+<p>Uptime</p>
+</div>
+
+<div class="stat">
+<h3>24/7</h3>
+<p>Online</p>
 </div>
 </div>
-<div className='grid grid-cols-3 gap-3 mt-10 text-center'>
-{[['10K+','Transações'],['99.9%','Uptime'],['Seguro','Infra']].map(([n,l])=>(<div key={n} className='rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-3'><div className='text-purple-300 font-bold'>{n}</div><div className='text-xs text-zinc-400'>{l}</div></div>))}
+
+<div class="features">
+
+<div class="feature">
+<h4>⚡ Liquidação Instantânea</h4>
+<p>Transações rápidas e sem intermediários.</p>
 </div>
-<div className='grid gap-4 mt-10'>
-{[['⚡','Liquidação instantânea'],['💸','Taxas reduzidas'],['🛡️','Multi-chain seguro']].map(([i,t])=>(<div key={t} className='rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-4'><div className='text-xl'>{i}</div><div className='mt-2 font-medium'>{t}</div></div>))}
+
+<div class="feature">
+<h4>💸 Taxas Reduzidas</h4>
+<p>Economize com infraestrutura eficiente.</p>
 </div>
-<footer className='mt-12 border-t border-white/10 pt-6 text-sm text-zinc-500 text-center'>© 2026 Corax Ecosystem</footer>
-</div></div>)}
+
+<div class="feature">
+<h4>🛡️ Multi-chain Seguro</h4>
+<p>Compatível com múltiplas redes blockchain.</p>
 </div>
-<div className='grid grid-cols-3 gap-3 mt-10 text-center'>
-{[['10K+','Transações'],['99.9%','Uptime'],['24/7','Online']].map(([n,l])=>(<div key={n} className='rounded-2xl bg-zinc-950 p-3'><div className='text-purple-400 font-bold'>{n}</div><div className='text-xs text-zinc-500'>{l}</div></div>))}
+
 </div>
-<footer className='mt-12 border-t border-zinc-900 pt-6 text-sm text-zinc-500 flex flex-col gap-2 text-center'>
-<div>© 2026 Corax Ecosystem</div>
-<div className='space-x-4'><span>Docs</span><span>Whitepaper</span><span>X</span><span>Support</span></div>
+
+<footer>
+© 2026 CORAX ECOSYSTEM
 </footer>
-</div></div>)}
+
+</div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
