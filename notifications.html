@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | System Alerts</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --red: #ff4d4d; --blue: #4cc9f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+
+        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid rgba(157, 78, 221, 0.2); padding-bottom: 15px; }
+        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
+        h1 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; }
+
+        /* Lista de Notificações */
+        .notif-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        .notif-item { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            padding: 15px; border-radius: 10px; 
+            display: flex; gap: 15px; align-items: flex-start;
+            position: relative; overflow: hidden;
+        }
+
+        .notif-item::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; }
+
+        /* Estilos por Tipo */
+        .critical::before { background: var(--red); box-shadow: 0 0 10px var(--red); }
+        .info::before { background: var(--blue); box-shadow: 0 0 10px var(--blue); }
+        .success::before { background: var(--p); box-shadow: 0 0 10px var(--p); }
+
+        .icon { font-size: 1.2rem; }
+        .content h3 { font-family: 'Orbitron'; font-size: 0.65rem; letter-spacing: 1px; margin-bottom: 5px; }
+        .content p { font-size: 0.8rem; color: #aaa; line-height: 1.4; }
+        .time { font-size: 0.55rem; color: #444; margin-top: 8px; font-family: 'Orbitron'; }
+
+        .clear-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #222; color: #444; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 30px; cursor: pointer; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="app.html" class="back-link">←</a>
+            <h1>CENTRO DE ALERTAS</h1>
+        </header>
+
+        <div class="notif-list">
+            
+            <!-- Notificação Crítica -->
+            <div class="notif-item critical">
+                <div class="icon">⚠️</div>
+                <div class="content">
+                    <h3>ALERTA DE SEGURANÇA</h3>
+                    <p>Novo acesso detectado IP: 189.12.0.4 (São Paulo, BR). Se não foi você, altere seu PIN.</p>
+                    <div class="time">HÁ 2 MINUTOS</div>
+                </div>
+            </div>
+
+            <!-- Notificação Sucesso -->
+            <div class="notif-item success">
+                <div class="icon">💜</div>
+                <div class="content">
+                    <h3>TRANSAÇÃO CONCLUÍDA</h3>
+                    <p>Você recebeu +1.200 CRX da carteira 0x99...B11C. Verifique seu histórico.</p>
+                    <div class="time">HÁ 15 MINUTOS</div>
+                </div>
+            </div>
+
+            <!-- Notificação Info -->
+            <div class="notif-item info">
+                <div class="icon">ℹ️</div>
+                <div class="content">
+                    <h3>ATUALIZAÇÃO DE REDE</h3>
+                    <p>A Mainnet Corax passará por manutenção preventiva às 03:00 UTC.</p>
+                    <div class="time">HÁ 2 HORAS</div>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="clear-btn">LIMPAR TODOS OS REGISTROS</button>
+    </div>
+
+</body>
+</html>
