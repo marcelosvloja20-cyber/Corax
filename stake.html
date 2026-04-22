@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Staking Portal</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(157, 78, 221, 0.05); --green: #4ade80; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+
+        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
+        h1 { font-family: 'Orbitron'; font-size: 1rem; letter-spacing: 3px; }
+
+        /* Painel de Rendimento */
+        .yield-card { 
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, transparent 100%);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+        .apr-tag { color: var(--green); font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .staked-amount { font-size: 2.5rem; font-weight: bold; margin-bottom: 5px; }
+        .rewards-live { color: var(--p); font-family: 'Orbitron'; font-size: 0.9rem; }
+
+        /* Input de Stake */
+        .stake-box { background: var(--glass); border: 1px solid #222; padding: 25px; border-radius: 15px; margin-bottom: 20px; }
+        label { display: block; font-family: 'Orbitron'; font-size: 0.6rem; color: #888; margin-bottom: 10px; }
+        input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; padding: 15px; border-radius: 8px; color: white; outline: none; margin-bottom: 20px; }
+        
+        .btn-stake { 
+            width: 100%; padding: 18px; background: var(--p); border: none; border-radius: 8px; 
+            color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-stake:hover { box-shadow: 0 0 30px var(--p); transform: translateY(-2px); }
+
+        /* Status */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border: 1px solid #111; }
+        .info-item span { display: block; font-size: 0.6rem; color: #555; font-family: 'Orbitron'; margin-bottom: 5px; }
+        .info-item p { font-size: 0.9rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="app.html" class="back-link">←</a>
+            <h1>STAKING PROTOCOL</h1>
+        </header>
+
+        <div class="yield-card">
+            <span class="apr-tag">APY: 18.5% FIXO</span>
+            <div class="staked-amount" id="total-staked">0.00</div>
+            <div class="rewards-live">RECOMPENSAS: +<span id="live-yield">0.000000</span> CRX</div>
+        </div>
+
+        <div class="stake-box">
+            <label>QUANTIDADE PARA CONGELAR (CRX)</label>
+            <input type="number" id="stake-input" placeholder="Min: 100 CRX">
+            <button class="btn-stake" onclick="startStake()">INICIAR STAKING</button>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <span>LOCK PERIOD</span>
+                <p>7 DIAS</p>
+            </div>
+            <div class="info-item">
+                <span>REDE</span>
+                <p>CORAX MAINNET</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isStaking = false;
+        let amount = 0;
+        let yieldVal = 0;
+
+        function startStake() {
+            const input = document.getElementById('stake-input');
+            const total = document.getElementById('total-staked');
+            
+            if(input.value < 100) {
+                alert("Mínimo necessário: 100 CRX");
+                return;
+            }
+
+            amount = parseFloat(input.value);
+            total.innerText = amount.toLocaleString();
+            input.value = "";
+            isStaking = true;
+            
+            alert("Protocolo Shadow-Sync: Ativos congelados com sucesso!");
+        }
+
+        // Simulação de rendimento subindo a cada segundo
+        setInterval(() => {
+            if(isStaking) {
+                yieldVal += (amount * 0.000001);
+                document.getElementById('live-yield').innerText = yieldVal.toFixed(6);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
