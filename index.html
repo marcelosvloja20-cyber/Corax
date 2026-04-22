@@ -1,135 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CORAX |Receba e envie pagamentos globais em segundos, sem bancos. </title>
-    
-    <link href="https://googleapis.com" rel="stylesheet">
-    
-    <style>
-        :root { 
-            --p: #9d4edd; 
-            --bg: #000000; 
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body, html {
-            height: 100%; width: 100%;
-            background-color: var(--bg);
-            overflow: hidden;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-        }
-
-        /* 🌌 Brilho Atmosférico */
-        .glow {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw; height: 100vh;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.18) 0%, transparent 70%);
-            z-index: 1;
-        }
-
-        /* 🦅 O SÍMBOLO (Agora como herói da página) */
-        .brand-symbol {
-            position: relative;
-            z-index: 10;
-            width: 85vw; 
-            max-width: 500px;
-            animation: float 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(157, 78, 221, 0.4));
-        }
-
-        .brand-symbol img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* 🖋️ Identidade Visual */
-        .branding {
-            text-align: center;
-            z-index: 20;
-            margin-top: 10px;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 10vw, 4rem);
-            letter-spacing: 15px;
-            color: white;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        h1 span { color: var(--p); text-shadow: 0 0 20px var(--p); }
-
-        .tagline {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
-
-        /* 🚀 Botão Launch */
-        .action {
-            margin-top: 60px;
-            z-index: 30;
-        }
-
-        .btn-launch {
-            padding: 20px 60px;
-            background: var(--p);
-            color: #000;
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            border-radius: 4px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 30px rgba(157, 78, 221, 0.4);
-            text-transform: uppercase;
-            display: inline-block;
-        }
-
-        .btn-launch:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 60px var(--p);
-        }
-
-        /* 🎬 Animação de Flutuação */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1) rotate(-1deg); }
-            50% { transform: translateY(-30px) scale(1.05) rotate(1deg); }
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="glow"></div>
-
-    <!-- CORVO GIGANTE (Link para um Corvo PNG transparente de alta qualidade) -->
-    <div class="brand-symbol">
-        <img src="https://pngarts.com" alt="CORAX Symbol">
-    </div>
-
-    <!-- TEXTO DA MARCA -->
-    <div class="branding">
-        <h1>COR<span>A</span>X</h1>
-        <p class="tagline">Pagamentos descentralizados</p>
-    </div>
-
-    <!-- BOTÃO -->
-    <div class="action">
-        <a href="app.html" class="btn-launch">Launch App</a>
-    </div>
-
-</body>
-</html>
-
+export default function CoraxLanding(){return (<div className='min-h-screen bg-black text-white font-sans relative overflow-hidden'>
+<div className='absolute inset-0 bg-gradient-to-b from-purple-900/40 via-black to-black'/>
+<div className='absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-3xl rounded-full'/>
+<div className='relative max-w-md mx-auto px-6 py-10'>
+<div className='text-center'>
+<div className='mx-auto w-72 h-72 rounded-full bg-purple-500/10 blur-2xl absolute left-1/2 -translate-x-1/2 top-8'/>
+<div className='relative text-9xl pt-8'>🐦</div>
+<h1 className='mt-4 text-5xl font-light tracking-[0.35em]'>CORAX</h1>
+<p className='text-purple-400 mt-2 uppercase tracking-[0.4em] text-xs'>Pagamentos Descentralizados</p>
+<h2 className='mt-10 text-4xl leading-tight font-medium'>Pagamentos descentralizados <span className='text-purple-400'>para o mundo real</span></h2>
+<p className='mt-4 text-zinc-300/80'>Envie, receba e gerencie pagamentos globais em segundos, com taxas menores e total controle.</p>
+<div className='grid gap-3 mt-8'>
+<button className='rounded-2xl py-4 bg-purple-500/90 shadow-[0_0_40px_rgba(168,85,247,0.45)] font-semibold tracking-[0.3em] text-white'>LAUNCH APP</button>
+<button className='rounded-2xl py-4 border border-white/10 bg-white/5 backdrop-blur'>SAIBA MAIS</button>
+</div>
+</div>
+<div className='grid grid-cols-3 gap-3 mt-10 text-center'>
+{[['10K+','Transações'],['99.9%','Uptime'],['Seguro','Infra']].map(([n,l])=>(<div key={n} className='rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-3'><div className='text-purple-300 font-bold'>{n}</div><div className='text-xs text-zinc-400'>{l}</div></div>))}
+</div>
+<div className='grid gap-4 mt-10'>
+{[['⚡','Liquidação instantânea'],['💸','Taxas reduzidas'],['🛡️','Multi-chain seguro']].map(([i,t])=>(<div key={t} className='rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-4'><div className='text-xl'>{i}</div><div className='mt-2 font-medium'>{t}</div></div>))}
+</div>
+<footer className='mt-12 border-t border-white/10 pt-6 text-sm text-zinc-500 text-center'>© 2026 Corax Ecosystem</footer>
+</div></div>)}
+</div>
+<div className='grid grid-cols-3 gap-3 mt-10 text-center'>
+{[['10K+','Transações'],['99.9%','Uptime'],['24/7','Online']].map(([n,l])=>(<div key={n} className='rounded-2xl bg-zinc-950 p-3'><div className='text-purple-400 font-bold'>{n}</div><div className='text-xs text-zinc-500'>{l}</div></div>))}
+</div>
+<footer className='mt-12 border-t border-zinc-900 pt-6 text-sm text-zinc-500 flex flex-col gap-2 text-center'>
+<div>© 2026 Corax Ecosystem</div>
+<div className='space-x-4'><span>Docs</span><span>Whitepaper</span><span>X</span><span>Support</span></div>
+</footer>
+</div></div>)}
