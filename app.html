@@ -6,7 +6,7 @@
     <title>CORAX | Dashboard OS</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; --red: #ff4d4d; }
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; --blue: #4cc9f0; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
@@ -20,7 +20,7 @@
 
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 100px; }
 
-        /* Header Consolidado */
+        /* Header de Navegação */
         header { 
             display: flex; 
             justify-content: space-between; 
@@ -31,7 +31,8 @@
         }
         .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; text-decoration: none; }
         .nav-right { display: flex; align-items: center; gap: 18px; }
-        .nav-icon { text-decoration: none; font-size: 1.1rem; position: relative; filter: drop-shadow(0 0 5px var(--p)); }
+        .nav-icon { text-decoration: none; font-size: 1.1rem; filter: drop-shadow(0 0 5px var(--p)); transition: 0.3s; }
+        .nav-icon:active { transform: scale(0.8); }
         
         .wallet-info { 
             background: var(--glass); 
@@ -42,7 +43,7 @@
             font-family: 'Orbitron'; 
         }
 
-        /* Gráfico SVG Animado */
+        /* Gráfico SVG (Market Live) */
         .chart-box { 
             background: var(--glass); 
             border: 1px solid rgba(255,255,255,0.05); 
@@ -55,7 +56,7 @@
         .price span { color: var(--green); font-size: 0.8rem; margin-left: 10px; }
         .svg-chart { width: 100%; height: 100px; stroke: var(--p); stroke-width: 2; fill: none; filter: drop-shadow(0 0 5px var(--p)); }
 
-        /* Grid de Módulos */
+        /* Grid com os 4 Pilares */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .card { 
             background: var(--glass); 
@@ -68,7 +69,7 @@
         .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
         .balance { font-size: 1.1rem; font-weight: 700; color: white; }
 
-        /* Caixa de Transferência com Taxa (Sobrevivência) */
+        /* Transfer Box com Taxa de Sobrevivência */
         .send-box { 
             background: var(--glass); 
             border: 1px solid rgba(157, 78, 221, 0.2); 
@@ -87,15 +88,8 @@
             outline: none; 
             font-size: 0.8rem; 
         }
-        .fee-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.65rem;
-            color: #555;
-            margin: 5px 0 15px 0;
-            font-family: 'Orbitron';
-            letter-spacing: 1px;
-        }
+        .fee-label { display: flex; justify-content: space-between; font-size: 0.65rem; color: #555; margin-bottom: 15px; font-family: 'Orbitron'; }
+
         .btn-send { 
             width: 100%; 
             padding: 15px; 
@@ -110,22 +104,8 @@
         }
         .btn-send:hover { box-shadow: 0 0 20px var(--p); transform: scale(1.01); }
 
-        /* Modal do Comprovante (Passo 4) */
-        #modal-receipt {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
-        }
-        .receipt-card {
-            background: #0a0a0a; border: 1px solid var(--p); padding: 30px; width: 100%; max-width: 350px;
-            text-align: center; border-radius: 10px; box-shadow: 0 0 30px var(--p);
-        }
-        .receipt-card h2 { font-family: 'Orbitron'; font-size: 1rem; color: var(--p); margin-bottom: 20px; }
-        .receipt-data { text-align: left; font-size: 0.8rem; margin: 20px 0; border-top: 1px solid #222; padding-top: 15px; }
-        .receipt-data p { margin: 10px 0; color: #888; }
-        .receipt-data span { color: white; float: right; font-family: 'Orbitron'; }
-        
-        /* Chat e Botões de Ação */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; font-size: 1.5rem; box-shadow: 0 0 20px var(--p); }
+        /* Chat Assistant */
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; font-size: 1.5rem; box-shadow: 0 0 20px var(--p); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -141,73 +121,62 @@
             </div>
         </header>
 
-        <!-- Market Chart SVG -->
+        <!-- Market Live View -->
         <div class="chart-box">
             <div class="chart-header">
                 <div class="price">$ 42.083,12 <span>+2.4%</span></div>
-                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">BASE MAINNET STATUS</div>
+                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">BASE MAINNET L2</div>
             </div>
             <svg class="svg-chart" viewBox="0 0 400 100" preserveAspectRatio="none">
                 <path id="graph-line" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" />
             </svg>
         </div>
 
-        <!-- Dashboard Grid -->
+        <!-- Dashboard Grid (4 Cards) -->
         <div class="grid">
             <div class="card">
                 <h3>SALDO CRX</h3>
                 <div class="balance">14.250</div>
             </div>
             
-            <a href="stake.html" class="card" style="border-color: var(--p); background: rgba(157, 78, 221, 0.05);">
-                <h3 style="color: var(--p);">STAKING</h3>
-                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO →</div>
+            <a href="swap.html" class="card" style="border-color: var(--blue); background: rgba(76, 201, 240, 0.05);">
+                <h3 style="color: var(--blue);">SHADOW SWAP</h3>
+                <div class="balance" style="font-size: 0.9rem;">TROCAR ATIVOS →</div>
             </a>
 
-            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05); grid-column: span 2;">
-                <h3 style="color: var(--green);">AIRDROP DISPONÍVEL</h3>
-                <div class="balance" style="font-size: 0.9rem;">COLETAR RECOMPENSA AGORA →</div>
+            <a href="stake.html" class="card" style="border-color: var(--p); background: rgba(157, 78, 221, 0.05);">
+                <h3 style="color: var(--p);">STAKING</h3>
+                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO: 18.5% →</div>
+            </a>
+
+            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05);">
+                <h3 style="color: var(--green);">AIRDROP</h3>
+                <div class="balance" style="font-size: 0.9rem;">COLETAR →</div>
             </a>
         </div>
 
-        <!-- Seção de Transferência com Lógica de Sobrevivência -->
+        <!-- Transferência com Taxa de 0.05 -->
         <div class="send-box">
             <h4>EFETUAR TRANSFERÊNCIA</h4>
-            <input type="text" id="dest-addr" placeholder="Endereço de destino 0x...">
-            <input type="number" id="dest-val" placeholder="Quantidade CRX" oninput="calculateTotal()">
+            <input type="text" id="dest" placeholder="Carteira de destino 0x...">
+            <input type="number" id="amt" placeholder="Quantidade CRX" oninput="updateBtn()">
             
-            <div class="fee-info">
-                <span>TAXA DE SERVIÇO (SERVICE FEE):</span>
+            <div class="fee-label">
+                <span>TAXA DE SERVIÇO:</span>
                 <span style="color: var(--p);">0.05 CRX</span>
             </div>
 
-            <button class="btn-send" id="send-btn" onclick="executeSend()">CONFIRMAR E ENVIAR</button>
-        </div>
-    </div>
-
-    <!-- Modal do Comprovante de Transação -->
-    <div id="modal-receipt">
-        <div class="receipt-card" id="receipt-capture">
-            <h2>CORAX RECEIPT</h2>
-            <div class="receipt-data">
-                <p>STATUS: <span style="color:var(--green)">SUCCESS</span></p>
-                <p>VALOR: <span id="r-val">0.00 CRX</span></p>
-                <p>TAXA: <span style="color:var(--p)">0.05 CRX</span></p>
-                <p>REDE: <span>BASE (L2)</span></p>
-                <p>PARA: <span id="r-addr">0x...</span></p>
-            </div>
-            <button class="btn-send" onclick="alert('Download do PNG iniciado...')">SALVAR COMPROVANTE</button>
-            <p style="margin-top:15px; color:#444; font-size:0.6rem; cursor:pointer;" onclick="closeModal()">FECHAR JANELA</p>
+            <button class="btn-send" id="btn-send" onclick="alert('Transação enviada para rede Base. Taxa de 0.05 deduzida.')">CONFIRMAR E ENVIAR</button>
         </div>
     </div>
 
     <div id="chat-trigger">💬</div>
 
     <script>
-        // Lógica de Taxa e Atualização de Botão
-        function calculateTotal() {
-            const val = document.getElementById('dest-val').value;
-            const btn = document.getElementById('send-btn');
+        // Lógica de Atualização do Botão (Valor + Taxa)
+        function updateBtn() {
+            const val = document.getElementById('amt').value;
+            const btn = document.getElementById('btn-send');
             if(val > 0) {
                 const total = parseFloat(val) + 0.05;
                 btn.innerText = "ENVIAR " + total.toFixed(2) + " CRX";
@@ -216,22 +185,8 @@
             }
         }
 
-        // Execução da Transação
-        function executeSend() {
-            const addr = document.getElementById('dest-addr').value;
-            const val = document.getElementById('dest-val').value;
-            
-            if(!addr || val <= 0) return alert("Dados inválidos!");
-
-            document.getElementById('r-val').innerText = val + " CRX";
-            document.getElementById('r-addr').innerText = addr.substring(0,6) + "...";
-            document.getElementById('modal-receipt').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('modal-receipt').style.display = 'none'; }
-
         // Animação do Gráfico SVG
-        function updateGraph() {
+        function animateGraph() {
             const line = document.getElementById('graph-line');
             let d = "M0," + (Math.random() * 60 + 20);
             for (let i = 1; i <= 4; i++) {
@@ -239,7 +194,7 @@
             }
             line.setAttribute('d', d);
         }
-        setInterval(updateGraph, 3000);
+        setInterval(animateGraph, 3000);
     </script>
 </body>
 </html>
