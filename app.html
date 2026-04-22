@@ -3,171 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CORAX | Dashboard</title>
+    <title>CORAX | Shadow Ecosystem</title>
     
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050505">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+    <!-- Fontes -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        :root {
-            --p: #9d4edd; /* Roxo Corax */
-            --bg: #050505;
-            --card: rgba(20, 20, 20, 0.9);
+        :root { 
+            --p: #9d4edd; 
+            --bg: #050505; 
+            --glass: rgba(157, 78, 221, 0.08); 
+            --border: rgba(157, 78, 221, 0.2);
         }
 
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Orbitron', sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            height: 100vh; 
+            overflow: hidden; 
         }
 
-        body, html {
-            height: 100%; width: 100%;
-            background-color: var(--bg);
-            color: white;
-            overflow: hidden;
-        }
-
-        /* BACKGROUND FIXO */
-        .hero-background {
+        /* 🌌 Background Fixo Corax */
+        .hero-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.95)), 
+            background: linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.95)), 
                         url('9a79db2d-571d-48b1-b270-0428e3dde4de.png');
             background-size: cover; background-position: center;
-            z-index: -1; filter: brightness(0.6);
+            z-index: -1; filter: brightness(0.7);
         }
 
-        /* CONTAINER DE CONTEÚDO DINÂMICO */
-        #content-area {
-            height: calc(100vh - 70px);
-            overflow-y: auto;
-            padding: 20px;
+        /* 📱 Header Estilizado */
+        header {
+            padding: 25px 20px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
         }
 
-        /* ESTILO DO CARD DE SWAP (INJETADO) */
-        .swap-container {
-            background: var(--card);
-            border: 1px solid rgba(157, 78, 221, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
+        .logo { font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 5px; font-weight: bold; }
+        .logo span { color: var(--p); }
 
-        .brand-header {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
-
-        h1 { font-size: 2.2rem; letter-spacing: 10px; }
-        h1 span { color: var(--p); }
-
-        /* NAVEGAÇÃO INFERIOR */
-        nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(10, 10, 10, 0.95);
-            border-top: 1px solid rgba(157, 78, 221, 0.2);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .nav-item {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .nav-item.active {
+        .wallet-pill {
+            background: var(--glass);
+            border: 1px solid var(--p);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-family: 'Orbitron';
             color: var(--p);
-            text-shadow: 0 0 10px var(--p);
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
         }
 
-        .nav-icon {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+        /* 🔄 View Principal */
+        main {
+            height: calc(100vh - 160px);
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
+
+        /* Estilo do Shadow Swap (Otimizado do seu swap.html) */
+        .swap-card { 
+            background: rgba(15, 15, 15, 0.9); 
+            border: 1px solid var(--border); 
+            padding: 25px; 
+            border-radius: 24px; 
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 20px; color: #fff; text-align: center;}
+
+        .token-box {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #1a1a1a;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+        }
+
+        .token-box label { display: block; font-family: 'Orbitron'; font-size: 0.55rem; color: #555; margin-bottom: 10px; }
+
+        .input-row { display: flex; justify-content: space-between; align-items: center; }
+
+        input { 
+            background: transparent; border: none; color: white; 
+            font-size: 1.6rem; width: 60%; outline: none; font-weight: bold; 
+        }
+
+        .token-tag {
+            background: var(--p);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            font-family: 'Orbitron';
+        }
+
+        .swap-arrow {
+            width: 42px; height: 42px; background: var(--bg); border: 2px solid var(--p);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: -25px auto; position: relative; z-index: 5; cursor: pointer; color: var(--p);
+        }
+
+        .details { margin-top: 15px; font-size: 0.7rem; color: #666; font-family: 'Orbitron'; }
+        .details p { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .details span { color: #aaa; }
+
+        .btn-execute {
+            width: 100%; padding: 20px; background: var(--p); border: none; border-radius: 14px;
+            color: #000; font-family: 'Orbitron'; font-weight: bold; font-size: 0.9rem;
+            margin-top: 20px; cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+        }
+
+        /* ⚓ Navegação Inferior */
+        nav {
+            position: fixed; bottom: 0; width: 100%; height: 80px;
+            background: rgba(5, 5, 5, 0.95);
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: 15px;
+        }
+
+        .nav-item { 
+            text-decoration: none; color: #444; font-size: 0.6rem; 
+            text-transform: uppercase; font-family: 'Orbitron'; text-align: center;
+        }
+
+        .nav-item.active { color: var(--p); }
+        .nav-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
 
     </style>
 </head>
 <body>
 
-    <div class="hero-background"></div>
+    <div class="hero-bg"></div>
 
-    <!-- ÁREA ONDE O SWAP.HTML SERÁ MOSTRADO -->
-    <div id="content-area">
-        <div class="brand-header">
-            <h1>COR<span>A</span>X</h1>
-        </div>
-        
-        <!-- O conteúdo do swap.html entra aqui via JavaScript ou include -->
-        <div id="router-view">
-            <!-- Conteúdo inicial (Home) -->
-            <p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 50px;">
-                BEM-VINDO AO ECOSSISTEMA<br>
-                <span style="color: var(--p);">AGUARDANDO CONEXÃO...</span>
-            </p>
-        </div>
-    </div>
+    <header>
+        <div class="logo">COR<span>A</span>X</div>
+        <div class="wallet-pill" id="connectBtn">CONECTAR</div>
+    </header>
 
-    <!-- MENU INFERIOR MOBILE -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="loadPage('home')">
-            <span class="nav-icon">🏠</span>
-            <span>Início</span>
+    <main id="content">
+        <!-- ÁREA DO SWAP (Seu código integrado) -->
+        <div class="swap-card">
+            <h2>SHADOW SWAP</h2>
+            
+            <div class="token-box">
+                <label>VOCÊ ENVIA</label>
+                <div class="input-row">
+                    <input type="number" id="send-amt" placeholder="0.0" oninput="calcSwap()">
+                    <div class="token-tag">ETH</div>
+                </div>
+            </div>
+
+            <div class="swap-arrow">↓</div>
+
+            <div class="token-box" style="margin-top: 10px;">
+                <label>VOCÊ RECEBE</label>
+                <div class="input-row">
+                    <input type="number" id="receive-amt" placeholder="0.0" readonly>
+                    <div class="token-tag" style="background: white; color: #000;">CRX</div>
+                </div>
+            </div>
+
+            <div class="details">
+                <p>TAXA CORAX (1%): <span id="fee-val">0.00 ETH</span></p>
+                <p>REDE: <span>BASE L2</span></p>
+            </div>
+
+            <button class="btn-execute" onclick="executeSwap()">EXECUTAR SWAP</button>
+        </div>
+    </main>
+
+    <nav>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">📊</span>Dashboard
         </a>
-        <a href="#" class="nav-item" onclick="loadPage('swap')">
-            <span class="nav-icon">🔄</span>
-            <span>Swap</span>
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">🔄</span>Swap
         </a>
-        <a href="#" class="nav-item" onclick="loadPage('wallet')">
-            <span class="nav-icon">💳</span>
-            <span>Wallet</span>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">🛡️</span>Shadow
         </a>
     </nav>
 
     <script>
-        // Função simples para simular troca de telas no celular
-        function loadPage(page) {
-            const view = document.getElementById('router-view');
-            
-            // Remove 'active' de todos
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            // Adiciona no clicado
-            event.currentTarget.classList.add('active');
+        // Lógica que você criou no swap.html
+        const rate = 2450; 
+        const feePercent = 0.01; 
 
-            if(page === 'swap') {
-                view.innerHTML = `
-                    <div class="swap-container">
-                        <h2 style="font-size: 0.8rem; margin-bottom: 15px; color: var(--p);">SWAP ASSETS</h2>
-                        <input type="number" placeholder="0.0" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:10px;">
-                        <div style="text-align:center; margin: 10px 0;">⇅</div>
-                        <input type="number" placeholder="0.0" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:20px;">
-                        <button style="width:100%; padding:15px; background:var(--p); border:none; border-radius:8px; font-weight:bold; letter-spacing:2px;">EXCHANGE</button>
-                    </div>
-                `;
-            } else if (page === 'home') {
-                view.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 50px;">BEM-VINDO AO ECOSSISTEMA<br><span style="color: var(--p);">AGUARDANDO CONEXÃO...</span></p>';
+        function calcSwap() {
+            const send = document.getElementById('send-amt').value;
+            const receive = document.getElementById('receive-amt');
+            const feeDisplay = document.getElementById('fee-val');
+
+            if(send > 0) {
+                const fee = send * feePercent;
+                const netSend = send - fee;
+                const totalReceive = netSend * rate;
+                
+                receive.value = totalReceive.toFixed(2);
+                feeDisplay.innerText = fee.toFixed(4) + " ETH";
+            } else {
+                receive.value = "";
+                feeDisplay.innerText = "0.00 ETH";
+            }
+        }
+
+        function executeSwap() {
+            const amt = document.getElementById('send-amt').value;
+            if(amt > 0) {
+                const btn = document.querySelector('.btn-execute');
+                btn.innerText = "PROCESSANDO...";
+                btn.style.background = "#555";
+                
+                setTimeout(() => {
+                    alert("Protocolo Shadow-Swap finalizado com sucesso!");
+                    btn.innerText = "EXECUTAR SWAP";
+                    btn.style.background = "var(--p)";
+                }, 2500);
             }
         }
     </script>
-
 </body>
 </html>
