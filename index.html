@@ -5,146 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CORAX | Pagamentos Descentralizados</title>
     
-    <!-- INFRAESTRUTURA PWA (PASSO 1) -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#9d4edd">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="9a79db2d-571d-48b1-b270-0428e3dde4de.png">
-
-    <!-- FONTES E ESTILOS -->
     <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        :root {
-            --p: #9d4edd;
-            --bg: #050505;
-            --glow: rgba(157, 78, 221, 0.3);
+        :root { 
+            --p: #9d4edd; /* Roxo Corax */
+            --bg: #050505; 
         }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body { 
-            background: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center;
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: var(--bg);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Efeito de Luz Profunda */
-        .bg-gradient {
+        /* 🌌 Brilho Atmosférico ao fundo */
+        .ambient-glow {
             position: fixed;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.12) 0%, transparent 70%);
-            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120vw;
+            height: 120vh;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.12) 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* Logo com Animação Fluida */
-        .logo-container {
-            width: 300px;
-            max-width: 85%;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 20px var(--glow));
-            animation: float 6s ease-in-out infinite;
+        /* 🦅 Símbolo Icônico (O Corvo) */
+        .brand-symbol {
+            position: relative;
+            z-index: 10;
+            width: 90vw; /* Expansão quase total no mobile */
+            max-width: 550px; /* Limite para desktop */
+            filter: drop-shadow(0 0 40px rgba(157, 78, 221, 0.3));
+            animation: floatSymbol 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .logo-container img {
+        .brand-symbol img {
             width: 100%;
             height: auto;
+            /* Remove o fundo preto da imagem se houver, deixando o corvo "solto" */
+            mix-blend-mode: screen; 
+            display: block;
         }
 
-        /* Botão de Alta Conversão */
-        .btn-launch { 
-            padding: 20px 60px; 
-            background: var(--p); 
-            color: #000; 
-            text-decoration: none; 
-            font-family: 'Orbitron', sans-serif; 
-            font-weight: bold; 
-            font-size: 0.85rem; 
-            letter-spacing: 5px; 
-            border-radius: 4px; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 0 30px var(--glow); 
-            text-transform: uppercase;
-            margin-bottom: 80px;
-        }
-
-        .btn-launch:active { 
-            transform: scale(0.95); 
-            box-shadow: 0 0 50px var(--p); 
-        }
-
-        /* Footer Estruturado */
-        footer {
-            position: absolute;
-            bottom: 40px;
-            width: 100%;
+        /* 🖋️ Identidade Visual */
+        .branding {
             text-align: center;
-            font-size: 0.6rem;
-            color: #333;
+            z-index: 20;
+            margin-top: -30px; /* Ajuste para o texto ficar "colado" à base do corvo */
+        }
+
+        h1 {
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 3px;
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            letter-spacing: 15px;
+            color: white;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+        }
+
+        h1 span { color: var(--p); }
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* 🚀 Botão de Acesso */
+        .action-area {
+            margin-top: 60px;
+            z-index: 20;
+        }
+
+        .btn-launch {
+            padding: 20px 60px;
+            background: var(--p);
+            color: #000;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            border-radius: 4px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.4);
             text-transform: uppercase;
         }
 
-        footer a {
-            color: var(--p);
-            text-decoration: none;
-            margin-left: 15px;
-            transition: 0.3s;
-            border-bottom: 1px solid transparent;
+        .btn-launch:active {
+            transform: scale(0.94);
+            box-shadow: 0 0 60px var(--p);
         }
 
-        footer a:hover {
-            color: white;
-            border-bottom: 1px solid var(--p);
+        /* 🎬 Animação de Flutuação */
+        @keyframes floatSymbol {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(1deg); }
         }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-gradient"></div>
-    
-    <div class="logo-container">
-        <!-- Caminho da imagem confirmado pelo seu repositório -->
-        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="CORAX OFFICIAL">
+    <div class="ambient-glow"></div>
+
+    <!-- Símbolo Central -->
+    <div class="brand-symbol">
+        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="Corax Symbol">
     </div>
-    
-    <!-- Início do Fluxo: Vai para o Login de Segurança -->
-    <a href="login.html" class="btn-launch">LAUNCH APP</a>
 
-    <footer>
-        &copy; 2026 CORAX ECOSYSTEM | <a href="about.html">SAIBA MAIS</a>
-    </footer>
+    <!-- Identidade -->
+    <div class="branding">
+        <h1>COR<span>A</span>X</h1>
+        <p class="tagline">Pagamentos descentralizados</p>
+    </div>
 
-    <!-- LOGICA DE ATIVAÇÃO PWA -->
-    <script>
-        // Registra o Service Worker (necessário para ser instalável)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Corax PWA Ativo'))
-                    .catch(err => console.log('Erro PWA:', err));
-            });
-        }
-    </script>
+    <!-- Entrada do Aplicativo -->
+    <div class="action-area">
+        <a href="app.html" class="btn-launch">Launch App</a>
+    </div>
 
 </body>
 </html>
