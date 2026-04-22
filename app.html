@@ -3,198 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CORAX | Dashboard OS</title>
+    <title>CORAX | Pagamentos Descentralizados</title>
+    
+    <!-- Configurações PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="9a79db2d-571d-48b1-b270-0428e3dde4de.png">
+
+    <!-- Fontes Futuristas -->
     <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; --blue: #4cc9f0; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            background: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            min-height: 100vh; 
-            padding: 15px; 
-            overflow-x: hidden;
+        :root {
+            --p: #9d4edd; /* Roxo Corax */
+            --bg: #050505;
         }
 
-        .container { max-width: 900px; margin: 0 auto; padding-bottom: 100px; }
-
-        /* Header de Navegação */
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 15px 0; 
-            border-bottom: 1px solid rgba(157, 78, 221, 0.2); 
-            margin-bottom: 25px; 
-        }
-        .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; text-decoration: none; }
-        .nav-right { display: flex; align-items: center; gap: 18px; }
-        .nav-icon { text-decoration: none; font-size: 1.1rem; filter: drop-shadow(0 0 5px var(--p)); transition: 0.3s; }
-        .nav-icon:active { transform: scale(0.8); }
-        
-        .wallet-info { 
-            background: var(--glass); 
-            padding: 5px 12px; 
-            border-radius: 20px; 
-            border: 1px solid var(--p); 
-            font-size: 0.6rem; 
-            font-family: 'Orbitron'; 
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Gráfico SVG (Market Live) */
-        .chart-box { 
-            background: var(--glass); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 15px; 
-            padding: 20px; 
-            margin-bottom: 20px; 
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: var(--bg);
+            overflow: hidden;
         }
-        .chart-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .price { font-family: 'Orbitron'; font-size: 1.4rem; color: white; }
-        .price span { color: var(--green); font-size: 0.8rem; margin-left: 10px; }
-        .svg-chart { width: 100%; height: 100px; stroke: var(--p); stroke-width: 2; fill: none; filter: drop-shadow(0 0 5px var(--p)); }
 
-        /* Grid com os 4 Pilares */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .card { 
-            background: var(--glass); 
-            border-left: 3px solid var(--p); 
-            padding: 15px; 
-            border-radius: 8px; 
-            text-decoration: none;
-            transition: 0.3s;
+        /* 🦅 BACKGROUND IMERSIVO (O ROSTO DO CORVO) */
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* A imagem do corvo é ampliada e fica transparente no fundo */
+            background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.9)), 
+                        url('9a79db2d-571d-48b1-b270-0428e3dde4de.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: contrast(1.1) brightness(0.8);
+            transform: scale(1.1); /* Leve zoom para o rosto preencher as bordas */
         }
-        .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
-        .balance { font-size: 1.1rem; font-weight: 700; color: white; }
 
-        /* Transfer Box com Taxa de Sobrevivência */
-        .send-box { 
-            background: var(--glass); 
-            border: 1px solid rgba(157, 78, 221, 0.2); 
-            padding: 20px; 
-            border-radius: 15px; 
+        /* Camada de Brilho Roxo Central */
+        .glow-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
         }
-        h4 { font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px; margin-bottom: 12px; }
-        input { 
-            width: 100%; 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid #222; 
-            padding: 12px; 
-            border-radius: 5px; 
-            color: white; 
-            margin-bottom: 10px; 
-            outline: none; 
-            font-size: 0.8rem; 
-        }
-        .fee-label { display: flex; justify-content: space-between; font-size: 0.65rem; color: #555; margin-bottom: 15px; font-family: 'Orbitron'; }
 
-        .btn-send { 
-            width: 100%; 
-            padding: 15px; 
+        /* Conteúdo Principal */
+        main {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* Empurra os textos para baixo para dar destaque ao rosto */
+            padding-bottom: 80px;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Branding Corax Ampliado */
+        .brand-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            letter-spacing: 18px;
+            color: white;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        h1 span {
+            color: var(--p);
+        }
+
+        .slogan {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* Botão de Ação Estilizado */
+        .btn-launch { 
+            padding: 20px 60px; 
             background: var(--p); 
-            border: none; 
-            border-radius: 5px; 
-            color: black; 
-            font-family: 'Orbitron'; 
+            color: #000; 
+            text-decoration: none; 
+            font-family: 'Orbitron', sans-serif; 
             font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.3s;
+            font-size: 0.8rem; 
+            letter-spacing: 4px; 
+            border-radius: 4px; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.4); 
+            text-transform: uppercase;
         }
-        .btn-send:hover { box-shadow: 0 0 20px var(--p); transform: scale(1.01); }
 
-        /* Chat Assistant */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; font-size: 1.5rem; box-shadow: 0 0 20px var(--p); cursor: pointer; }
+        .btn-launch:active { 
+            transform: scale(0.95); 
+            box-shadow: 0 0 50px var(--p); 
+        }
+
+        /* Footer Discreto */
+        footer {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        footer a {
+            color: var(--p);
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <a href="index.html" class="logo-small">CORAX<span>•</span>OS</a>
-            <div class="nav-right">
-                <a href="notifications.html" class="nav-icon">🔔</a>
-                <a href="history.html" class="nav-icon">🕒</a>
-                <a href="settings.html" class="nav-icon">⚙️</a>
-                <div class="wallet-info">0x71...C42D</div>
-            </div>
-        </header>
+    <!-- Camadas Visuais -->
+    <div class="hero-background"></div>
+    <div class="glow-overlay"></div>
 
-        <!-- Market Live View -->
-        <div class="chart-box">
-            <div class="chart-header">
-                <div class="price">$ 42.083,12 <span>+2.4%</span></div>
-                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">BASE MAINNET L2</div>
-            </div>
-            <svg class="svg-chart" viewBox="0 0 400 100" preserveAspectRatio="none">
-                <path id="graph-line" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" />
-            </svg>
+    <main>
+        <!-- Nome da Marca e Slogan -->
+        <div class="brand-container">
+            <h1>COR<span>A</span>X</h1>
+            <p class="slogan">Pagamentos Descentralizados</p>
         </div>
 
-        <!-- Dashboard Grid (4 Cards) -->
-        <div class="grid">
-            <div class="card">
-                <h3>SALDO CRX</h3>
-                <div class="balance">14.250</div>
-            </div>
-            
-            <a href="swap.html" class="card" style="border-color: var(--blue); background: rgba(76, 201, 240, 0.05);">
-                <h3 style="color: var(--blue);">SHADOW SWAP</h3>
-                <div class="balance" style="font-size: 0.9rem;">TROCAR ATIVOS →</div>
-            </a>
+        <!-- Botão Principal -->
+        <a href="login.html" class="btn-launch">LAUNCH APP</a>
+    </main>
 
-            <a href="stake.html" class="card" style="border-color: var(--p); background: rgba(157, 78, 221, 0.05);">
-                <h3 style="color: var(--p);">STAKING</h3>
-                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO: 18.5% →</div>
-            </a>
+    <footer>
+        &copy; 2026 CORAX ECOSYSTEM | <a href="about.html">SAIBA MAIS</a>
+    </footer>
 
-            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05);">
-                <h3 style="color: var(--green);">AIRDROP</h3>
-                <div class="balance" style="font-size: 0.9rem;">COLETAR →</div>
-            </a>
-        </div>
-
-        <!-- Transferência com Taxa de 0.05 -->
-        <div class="send-box">
-            <h4>EFETUAR TRANSFERÊNCIA</h4>
-            <input type="text" id="dest" placeholder="Carteira de destino 0x...">
-            <input type="number" id="amt" placeholder="Quantidade CRX" oninput="updateBtn()">
-            
-            <div class="fee-label">
-                <span>TAXA DE SERVIÇO:</span>
-                <span style="color: var(--p);">0.05 CRX</span>
-            </div>
-
-            <button class="btn-send" id="btn-send" onclick="alert('Transação enviada para rede Base. Taxa de 0.05 deduzida.')">CONFIRMAR E ENVIAR</button>
-        </div>
-    </div>
-
-    <div id="chat-trigger">💬</div>
-
+    <!-- Service Worker para PWA -->
     <script>
-        // Lógica de Atualização do Botão (Valor + Taxa)
-        function updateBtn() {
-            const val = document.getElementById('amt').value;
-            const btn = document.getElementById('btn-send');
-            if(val > 0) {
-                const total = parseFloat(val) + 0.05;
-                btn.innerText = "ENVIAR " + total.toFixed(2) + " CRX";
-            } else {
-                btn.innerText = "CONFIRMAR E ENVIAR";
-            }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
         }
-
-        // Animação do Gráfico SVG
-        function animateGraph() {
-            const line = document.getElementById('graph-line');
-            let d = "M0," + (Math.random() * 60 + 20);
-            for (let i = 1; i <= 4; i++) {
-                d += " T" + (i * 100) + "," + (Math.random() * 60 + 20);
-            }
-            line.setAttribute('d', d);
-        }
-        setInterval(animateGraph, 3000);
     </script>
+
 </body>
 </html>
