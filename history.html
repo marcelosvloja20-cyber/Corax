@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Transaction History</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; --red: #ff4d4d; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+
+        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid rgba(157, 78, 221, 0.2); padding-bottom: 15px; }
+        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
+        h1 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; }
+
+        .search-bar { width: 100%; background: var(--glass); border: 1px solid #222; padding: 12px; border-radius: 8px; color: #888; font-size: 0.7rem; margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron'; }
+
+        /* Lista de Transações */
+        .transaction-list { display: flex; flex-direction: column; gap: 15px; }
+        .tx-item { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            padding: 20px; border-radius: 12px; 
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s;
+        }
+        .tx-item:hover { border-color: var(--p); background: rgba(157, 78, 221, 0.02); }
+
+        .tx-info h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
+        .tx-info p { font-size: 0.65rem; color: #666; font-family: 'Orbitron'; }
+        
+        .tx-amount { text-align: right; }
+        .amount-val { font-family: 'Orbitron'; font-size: 1rem; font-weight: bold; display: block; }
+        .tx-status { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block; }
+
+        /* Cores de Status */
+        .received .amount-val { color: var(--green); }
+        .sent .amount-val { color: var(--p); }
+        .received .tx-status { color: var(--green); opacity: 0.7; }
+        .sent .tx-status { color: var(--p); opacity: 0.7; }
+
+        .footer-note { text-align: center; margin-top: 40px; color: #333; font-size: 0.6rem; font-family: 'Orbitron'; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="app.html" class="back-link">←</a>
+            <h1>HISTÓRICO DE REDE</h1>
+        </header>
+
+        <div class="search-bar">Filtrar por Hash ou ID...</div>
+
+        <div class="transaction-list">
+            
+            <!-- Transação 1 -->
+            <div class="tx-item received">
+                <div class="tx-info">
+                    <h3>Recompensa de Staking</h3>
+                    <p>HASH: 0x82...F92A</p>
+                </div>
+                <div class="tx-amount">
+                    <span class="amount-val">+ 12.50 CRX</span>
+                    <span class="tx-status">Confirmado</span>
+                </div>
+            </div>
+
+            <!-- Transação 2 -->
+            <div class="tx-item sent">
+                <div class="tx-info">
+                    <h3>Envio Externo</h3>
+                    <p>HASH: 0x41...D821</p>
+                </div>
+                <div class="tx-amount">
+                    <span class="amount-val">- 450.00 CRX</span>
+                    <span class="tx-status">Concluído</span>
+                </div>
+            </div>
+
+            <!-- Transação 3 -->
+            <div class="tx-item received">
+                <div class="tx-info">
+                    <h3>Airdrop Diário</h3>
+                    <p>HASH: 0x12...E002</p>
+                </div>
+                <div class="tx-amount">
+                    <span class="amount-val">+ 85.00 CRX</span>
+                    <span class="tx-status">Validado</span>
+                </div>
+            </div>
+
+            <!-- Transação 4 -->
+            <div class="tx-item received">
+                <div class="tx-info">
+                    <h3>Transferência Recebida</h3>
+                    <p>HASH: 0x99...B11C</p>
+                </div>
+                <div class="tx-amount">
+                    <span class="amount-val">+ 1,200.00 CRX</span>
+                    <span class="tx-status">Confirmado</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">Sincronizado com o Bloco #842.109</div>
+    </div>
+
+</body>
+</html>
