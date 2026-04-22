@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAX | Security Seed</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(157, 78, 221, 0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        
+        .container { max-width: 500px; width: 100%; }
+        h1 { font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 5px; color: var(--p); margin-bottom: 10px; }
+        p { color: #888; font-size: 0.7rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+
+        .seed-box { 
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; 
+            background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); 
+            padding: 20px; border-radius: 12px; margin-bottom: 30px;
+            filter: blur(8px); transition: 0.5s;
+        }
+        .seed-box.revealed { filter: blur(0); }
+
+        .word { 
+            background: rgba(0,0,0,0.5); border: 1px solid #222; 
+            padding: 10px; border-radius: 4px; font-size: 0.75rem; 
+            font-family: 'Orbitron'; color: #aaa;
+        }
+
+        .warning-box { 
+            background: rgba(255, 77, 77, 0.05); border: 1px solid #ff4d4d; 
+            padding: 15px; border-radius: 8px; margin-bottom: 30px;
+            color: #ff4d4d; font-size: 0.65rem; font-family: 'Orbitron'; line-height: 1.5;
+        }
+
+        .btn { 
+            width: 100%; padding: 15px; background: var(--p); border: none; 
+            border-radius: 4px; color: black; font-family: 'Orbitron'; 
+            font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+        }
+        .btn:hover { box-shadow: 0 0 30px var(--p); transform: translateY(-2px); }
+
+        .btn-outline {
+            margin-top: 15px; background: transparent; border: 1px solid #333; color: #555; font-size: 0.6rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>FRASE DE RECUPERAÇÃO</h1>
+        <p>Backup de Segurança da Carteira</p>
+
+        <div class="warning-box">
+            ⚠️ AVISO: Nunca compartilhe estas 12 palavras com ninguém. A CORAX nunca solicitará sua frase de recuperação.
+        </div>
+
+        <div class="seed-box" id="seedContainer">
+            <!-- Palavras geradas via JS -->
+            <div class="word">1. shadow</div>
+            <div class="word">2. raven</div>
+            <div class="word">3. cyber</div>
+            <div class="word">4. ghost</div>
+            <div class="word">5. matrix</div>
+            <div class="word">6. orbit</div>
+            <div class="word">7. pulse</div>
+            <div class="word">8. crypto</div>
+            <div class="word">9. dark</div>
+            <div class="word">10. void</div>
+            <div class="word">11. night</div>
+            <div class="word">12. corax</div>
+        </div>
+
+        <button class="btn" id="revealBtn" onclick="reveal()">REVELAR FRASE MESTRE</button>
+        
+        <button class="btn btn-outline" id="nextBtn" style="display:none;" onclick="window.location.href='app.html'">PROSSEGUIR PARA O DASHBOARD</button>
+    </div>
+
+    <script>
+        function reveal() {
+            const box = document.getElementById('seedContainer');
+            const btn = document.getElementById('revealBtn');
+            const next = document.getElementById('nextBtn');
+            
+            box.classList.add('revealed');
+            btn.style.display = 'none';
+            next.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
