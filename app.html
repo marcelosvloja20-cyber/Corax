@@ -3,178 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CORAX | Pagamentos Descentralizados</title>
+    <title>CORAX | Dashboard</title>
     
-    <!-- Configurações PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#050505">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="9a79db2d-571d-48b1-b270-0428e3dde4de.png">
 
-    <!-- Fontes Futuristas -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    
     <style>
         :root {
             --p: #9d4edd; /* Roxo Corax */
             --bg: #050505;
+            --card: rgba(20, 20, 20, 0.9);
         }
 
         * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+            margin: 0; padding: 0; box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent;
+            font-family: 'Orbitron', sans-serif;
         }
 
         body, html {
-            height: 100%;
-            width: 100%;
+            height: 100%; width: 100%;
             background-color: var(--bg);
+            color: white;
             overflow: hidden;
         }
 
-        /* 🦅 BACKGROUND IMERSIVO (O ROSTO DO CORVO) */
+        /* BACKGROUND FIXO */
         .hero-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* A imagem do corvo é ampliada e fica transparente no fundo */
-            background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.9)), 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.95)), 
                         url('9a79db2d-571d-48b1-b270-0428e3dde4de.png');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            filter: contrast(1.1) brightness(0.8);
-            transform: scale(1.1); /* Leve zoom para o rosto preencher as bordas */
+            background-size: cover; background-position: center;
+            z-index: -1; filter: brightness(0.6);
         }
 
-        /* Camada de Brilho Roxo Central */
-        .glow-overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Conteúdo Principal */
-        main {
-            height: 100vh;
+        /* CONTAINER DE CONTEÚDO DINÂMICO */
+        #content-area {
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end; /* Empurra os textos para baixo para dar destaque ao rosto */
-            padding-bottom: 80px;
-            z-index: 10;
-            position: relative;
         }
 
-        /* Branding Corax Ampliado */
-        .brand-container {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            letter-spacing: 18px;
-            color: white;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        h1 span {
-            color: var(--p);
-        }
-
-        .slogan {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            font-weight: 400;
-        }
-
-        /* Botão de Ação Estilizado */
-        .btn-launch { 
-            padding: 20px 60px; 
-            background: var(--p); 
-            color: #000; 
-            text-decoration: none; 
-            font-family: 'Orbitron', sans-serif; 
-            font-weight: bold; 
-            font-size: 0.8rem; 
-            letter-spacing: 4px; 
-            border-radius: 4px; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 0 30px rgba(157, 78, 221, 0.4); 
-            text-transform: uppercase;
-        }
-
-        .btn-launch:active { 
-            transform: scale(0.95); 
-            box-shadow: 0 0 50px var(--p); 
-        }
-
-        /* Footer Discreto */
-        footer {
-            position: absolute;
-            bottom: 30px;
+        /* ESTILO DO CARD DE SWAP (INJETADO) */
+        .swap-container {
+            background: var(--card);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 15px;
+            padding: 20px;
             width: 100%;
-            text-align: center;
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.2);
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        footer a {
-            color: var(--p);
+        .brand-header {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 2.2rem; letter-spacing: 10px; }
+        h1 span { color: var(--p); }
+
+        /* NAVEGAÇÃO INFERIOR */
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(10, 10, 10, 0.95);
+            border-top: 1px solid rgba(157, 78, 221, 0.2);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
-            margin-left: 10px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: var(--p);
+            text-shadow: 0 0 10px var(--p);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Camadas Visuais -->
     <div class="hero-background"></div>
-    <div class="glow-overlay"></div>
 
-    <main>
-        <!-- Nome da Marca e Slogan -->
-        <div class="brand-container">
+    <!-- ÁREA ONDE O SWAP.HTML SERÁ MOSTRADO -->
+    <div id="content-area">
+        <div class="brand-header">
             <h1>COR<span>A</span>X</h1>
-            <p class="slogan">Pagamentos Descentralizados</p>
         </div>
+        
+        <!-- O conteúdo do swap.html entra aqui via JavaScript ou include -->
+        <div id="router-view">
+            <!-- Conteúdo inicial (Home) -->
+            <p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 50px;">
+                BEM-VINDO AO ECOSSISTEMA<br>
+                <span style="color: var(--p);">AGUARDANDO CONEXÃO...</span>
+            </p>
+        </div>
+    </div>
 
-        <!-- Botão Principal -->
-        <a href="login.html" class="btn-launch">LAUNCH APP</a>
-    </main>
+    <!-- MENU INFERIOR MOBILE -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="loadPage('home')">
+            <span class="nav-icon">🏠</span>
+            <span>Início</span>
+        </a>
+        <a href="#" class="nav-item" onclick="loadPage('swap')">
+            <span class="nav-icon">🔄</span>
+            <span>Swap</span>
+        </a>
+        <a href="#" class="nav-item" onclick="loadPage('wallet')">
+            <span class="nav-icon">💳</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
 
-    <footer>
-        &copy; 2026 CORAX ECOSYSTEM | <a href="about.html">SAIBA MAIS</a>
-    </footer>
-
-    <!-- Service Worker para PWA -->
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js');
-            });
+        // Função simples para simular troca de telas no celular
+        function loadPage(page) {
+            const view = document.getElementById('router-view');
+            
+            // Remove 'active' de todos
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            // Adiciona no clicado
+            event.currentTarget.classList.add('active');
+
+            if(page === 'swap') {
+                view.innerHTML = `
+                    <div class="swap-container">
+                        <h2 style="font-size: 0.8rem; margin-bottom: 15px; color: var(--p);">SWAP ASSETS</h2>
+                        <input type="number" placeholder="0.0" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:10px;">
+                        <div style="text-align:center; margin: 10px 0;">⇅</div>
+                        <input type="number" placeholder="0.0" style="width:100%; padding:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:20px;">
+                        <button style="width:100%; padding:15px; background:var(--p); border:none; border-radius:8px; font-weight:bold; letter-spacing:2px;">EXCHANGE</button>
+                    </div>
+                `;
+            } else if (page === 'home') {
+                view.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 50px;">BEM-VINDO AO ECOSSISTEMA<br><span style="color: var(--p);">AGUARDANDO CONEXÃO...</span></p>';
+            }
         }
     </script>
 
