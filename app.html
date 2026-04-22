@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CORAX | Shadow Ecosystem</title>
     
-    <!-- Fontes -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
@@ -14,135 +13,79 @@
             --bg: #050505; 
             --glass: rgba(157, 78, 221, 0.08); 
             --border: rgba(157, 78, 221, 0.2);
+            --card-bg: rgba(15, 15, 15, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            height: 100vh; 
-            overflow: hidden; 
+            background: var(--bg); color: white; font-family: 'Inter', sans-serif; 
+            height: 100vh; overflow: hidden; display: flex; flex-direction: column;
         }
 
-        /* 🌌 Background Fixo Corax */
         .hero-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.95)), 
+            background: linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.98)), 
                         url('9a79db2d-571d-48b1-b270-0428e3dde4de.png');
             background-size: cover; background-position: center;
-            z-index: -1; filter: brightness(0.7);
+            z-index: -1; filter: brightness(0.5);
         }
 
-        /* 📱 Header Estilizado */
         header {
-            padding: 25px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); z-index: 10;
         }
 
-        .logo { font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 5px; font-weight: bold; }
+        .logo { font-family: 'Orbitron'; font-size: 1.1rem; letter-spacing: 4px; font-weight: bold; }
         .logo span { color: var(--p); }
 
         .wallet-pill {
-            background: var(--glass);
-            border: 1px solid var(--p);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-family: 'Orbitron';
-            color: var(--p);
-            box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+            background: var(--glass); border: 1px solid var(--p); padding: 6px 12px;
+            border-radius: 20px; font-size: 0.6rem; font-family: 'Orbitron'; color: var(--p);
         }
 
-        /* 🔄 View Principal */
-        main {
-            height: calc(100vh - 160px);
-            overflow-y: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; z-index: 5; }
+
+        .view-container { width: 100%; max-width: 420px; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { 
+            background: var(--card-bg); border: 1px solid var(--border); padding: 25px; 
+            border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); backdrop-filter: blur(10px);
         }
 
-        /* Estilo do Shadow Swap (Otimizado do seu swap.html) */
-        .swap-card { 
-            background: rgba(15, 15, 15, 0.9); 
-            border: 1px solid var(--border); 
-            padding: 25px; 
-            border-radius: 24px; 
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-        }
+        h2 { font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 20px; text-align: center; color: var(--p); }
 
-        h2 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 20px; color: #fff; text-align: center;}
+        /* Estilos de Componentes */
+        .token-box { background: rgba(0,0,0,0.5); border: 1px solid #1a1a1a; padding: 15px; border-radius: 14px; margin-bottom: 8px; }
+        .token-box label { display: block; font-family: 'Orbitron'; font-size: 0.5rem; color: #555; margin-bottom: 5px; }
+        input { background: transparent; border: none; color: white; font-size: 1.4rem; width: 60%; outline: none; font-weight: bold; }
+        .token-tag { background: var(--p); color: #000; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.7rem; font-family: 'Orbitron'; }
 
-        .token-box {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid #1a1a1a;
-            padding: 18px;
-            border-radius: 16px;
-            margin-bottom: 8px;
-        }
-
-        .token-box label { display: block; font-family: 'Orbitron'; font-size: 0.55rem; color: #555; margin-bottom: 10px; }
-
-        .input-row { display: flex; justify-content: space-between; align-items: center; }
-
-        input { 
-            background: transparent; border: none; color: white; 
-            font-size: 1.6rem; width: 60%; outline: none; font-weight: bold; 
-        }
-
-        .token-tag {
-            background: var(--p);
-            color: #000;
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            font-family: 'Orbitron';
-        }
-
-        .swap-arrow {
-            width: 42px; height: 42px; background: var(--bg); border: 2px solid var(--p);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: -25px auto; position: relative; z-index: 5; cursor: pointer; color: var(--p);
-        }
-
-        .details { margin-top: 15px; font-size: 0.7rem; color: #666; font-family: 'Orbitron'; }
-        .details p { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .details span { color: #aaa; }
-
-        .btn-execute {
-            width: 100%; padding: 20px; background: var(--p); border: none; border-radius: 14px;
-            color: #000; font-family: 'Orbitron'; font-weight: bold; font-size: 0.9rem;
-            margin-top: 20px; cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+        .btn-action {
+            width: 100%; padding: 16px; background: var(--p); border: none; border-radius: 12px;
+            color: #000; font-family: 'Orbitron'; font-weight: bold; font-size: 0.8rem;
+            margin-top: 15px; cursor: pointer; letter-spacing: 2px;
         }
 
         /* ⚓ Navegação Inferior */
         nav {
-            position: fixed; bottom: 0; width: 100%; height: 80px;
-            background: rgba(5, 5, 5, 0.95);
-            border-top: 1px solid var(--border);
-            display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: 15px;
+            height: 75px; background: rgba(10, 10, 10, 0.98); border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center; padding-bottom: 10px;
         }
 
         .nav-item { 
-            text-decoration: none; color: #444; font-size: 0.6rem; 
-            text-transform: uppercase; font-family: 'Orbitron'; text-align: center;
+            text-decoration: none; color: #444; font-size: 0.55rem; 
+            text-transform: uppercase; font-family: 'Orbitron'; display: flex; flex-direction: column; align-items: center;
         }
 
         .nav-item.active { color: var(--p); }
-        .nav-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .nav-icon { font-size: 1.2rem; margin-bottom: 4px; }
 
+        /* Utilitários Dashboard */
+        .balance-hero { text-align: center; padding: 20px 0; }
+        .balance-hero h3 { font-size: 2.2rem; margin: 5px 0; }
+        .list-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #111; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -151,90 +94,106 @@
 
     <header>
         <div class="logo">COR<span>A</span>X</div>
-        <div class="wallet-pill" id="connectBtn">CONECTAR</div>
+        <div class="wallet-pill" onclick="alert('Conectando carteira...')">CONECTAR</div>
     </header>
 
-    <main id="content">
-        <!-- ÁREA DO SWAP (Seu código integrado) -->
-        <div class="swap-card">
-            <h2>SHADOW SWAP</h2>
-            
-            <div class="token-box">
-                <label>VOCÊ ENVIA</label>
-                <div class="input-row">
-                    <input type="number" id="send-amt" placeholder="0.0" oninput="calcSwap()">
-                    <div class="token-tag">ETH</div>
-                </div>
-            </div>
-
-            <div class="swap-arrow">↓</div>
-
-            <div class="token-box" style="margin-top: 10px;">
-                <label>VOCÊ RECEBE</label>
-                <div class="input-row">
-                    <input type="number" id="receive-amt" placeholder="0.0" readonly>
-                    <div class="token-tag" style="background: white; color: #000;">CRX</div>
-                </div>
-            </div>
-
-            <div class="details">
-                <p>TAXA CORAX (1%): <span id="fee-val">0.00 ETH</span></p>
-                <p>REDE: <span>BASE L2</span></p>
-            </div>
-
-            <button class="btn-execute" onclick="executeSwap()">EXECUTAR SWAP</button>
-        </div>
+    <main id="app-view">
+        <!-- Injetado via JS -->
     </main>
 
     <nav>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">📊</span>Dashboard
+        <a href="javascript:void(0)" class="nav-item" onclick="showView('dashboard', this)">
+            <span class="nav-icon">📊</span>Início
         </a>
-        <a href="#" class="nav-item active">
+        <a href="javascript:void(0)" class="nav-item active" onclick="showView('swap', this)">
             <span class="nav-icon">🔄</span>Swap
         </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">🛡️</span>Shadow
+        <a href="javascript:void(0)" class="nav-item" onclick="showView('stake', this)">
+            <span class="nav-icon">💰</span>Stake
+        </a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showView('airdrop', this)">
+            <span class="nav-icon">🪂</span>Airdrop
         </a>
     </nav>
 
     <script>
-        // Lógica que você criou no swap.html
-        const rate = 2450; 
-        const feePercent = 0.01; 
+        const rate = 2450.00;
 
-        function calcSwap() {
-            const send = document.getElementById('send-amt').value;
-            const receive = document.getElementById('receive-amt');
-            const feeDisplay = document.getElementById('fee-val');
+        const screens = {
+            dashboard: `
+                <div class="view-container">
+                    <div class="card">
+                        <h2>PORTFÓLIO</h2>
+                        <div class="balance-hero">
+                            <p style="font-size: 0.6rem; color: #555; font-family: 'Orbitron';">SALDO TOTAL</p>
+                            <h3>$ 0,00</h3>
+                        </div>
+                        <div class="list-item"><span>ETH</span><b>0.00</b></div>
+                        <div class="list-item"><span>CRX</span><b>0.00</b></div>
+                    </div>
+                </div>`,
+            swap: `
+                <div class="view-container">
+                    <div class="card">
+                        <h2>SHADOW SWAP</h2>
+                        <div class="token-box">
+                            <label>ENVIAR</label>
+                            <div class="input-row">
+                                <input type="number" id="in-amt" placeholder="0.0" oninput="doMath()">
+                                <div class="token-tag">ETH</div>
+                            </div>
+                        </div>
+                        <div style="text-align:center; color:var(--p); margin:-10px 0 5px 0">↓</div>
+                        <div class="token-box">
+                            <label>RECEBER</label>
+                            <div class="input-row">
+                                <input type="number" id="out-amt" placeholder="0.0" readonly>
+                                <div class="token-tag" style="background:#fff">CRX</div>
+                            </div>
+                        </div>
+                        <button class="btn-action" onclick="alert('Swap Iniciado!')">EXECUTAR</button>
+                    </div>
+                </div>`,
+            stake: `
+                <div class="view-container">
+                    <div class="card">
+                        <h2>STAKING POOL</h2>
+                        <p style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:15px;">Rendimento anual estimado:</p>
+                        <div style="font-size:1.5rem; text-align:center; color:#4ade80; font-weight:bold; margin-bottom:20px;">12.5% APY</div>
+                        <div class="token-box">
+                            <label>VALOR PARA STAKE</label>
+                            <input type="number" placeholder="0.0">
+                        </div>
+                        <button class="btn-action" style="background:#4ade80">BLOQUEAR CRX</button>
+                    </div>
+                </div>`,
+            airdrop: `
+                <div class="view-container">
+                    <div class="card" style="border-color: #4cc9f0;">
+                        <h2 style="color:#4cc9f0">AIRDROP</h2>
+                        <p style="font-size:0.75rem; color:#888; text-align:center; line-height:1.4;">Você tem recompensas pendentes para resgate na rede Base.</p>
+                        <div style="margin:20px 0; padding:15px; background:rgba(76,201,240,0.1); border-radius:12px; text-align:center;">
+                            <span style="font-size:1.2rem; font-weight:bold; color:#4cc9f0">500.00 CRX</span>
+                        </div>
+                        <button class="btn-action" style="background:#4cc9f0">CLAIM REWARDS</button>
+                    </div>
+                </div>`
+        };
 
-            if(send > 0) {
-                const fee = send * feePercent;
-                const netSend = send - fee;
-                const totalReceive = netSend * rate;
-                
-                receive.value = totalReceive.toFixed(2);
-                feeDisplay.innerText = fee.toFixed(4) + " ETH";
-            } else {
-                receive.value = "";
-                feeDisplay.innerText = "0.00 ETH";
-            }
+        function showView(id, el) {
+            document.getElementById('app-view').innerHTML = screens[id];
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            if(el) el.classList.add('active');
         }
 
-        function executeSwap() {
-            const amt = document.getElementById('send-amt').value;
-            if(amt > 0) {
-                const btn = document.querySelector('.btn-execute');
-                btn.innerText = "PROCESSANDO...";
-                btn.style.background = "#555";
-                
-                setTimeout(() => {
-                    alert("Protocolo Shadow-Swap finalizado com sucesso!");
-                    btn.innerText = "EXECUTAR SWAP";
-                    btn.style.background = "var(--p)";
-                }, 2500);
-            }
+        function doMath() {
+            const i = document.getElementById('in-amt');
+            const o = document.getElementById('out-amt');
+            if(i.value > 0) o.value = (i.value * (rate * 0.99)).toFixed(2);
+            else o.value = "";
         }
+
+        window.onload = () => showView('swap');
     </script>
 </body>
 </html>
