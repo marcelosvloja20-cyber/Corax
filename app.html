@@ -8,39 +8,114 @@
     <style>
         :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 15px; }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            min-height: 100vh; 
+            padding: 15px; 
+            overflow-x: hidden;
+        }
+
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 100px; }
 
         /* Header */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.2); margin-bottom: 25px; }
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 0; 
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2); 
+            margin-bottom: 25px; 
+        }
         .logo-small { font-family: 'Orbitron'; letter-spacing: 4px; color: var(--p); font-size: 1rem; }
         .nav-right { display: flex; align-items: center; gap: 15px; }
-        .settings-link { text-decoration: none; font-size: 1.2rem; }
-        .wallet-info { background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--p); font-size: 0.6rem; font-family: 'Orbitron'; }
+        .settings-link { text-decoration: none; font-size: 1.2rem; transition: 0.3s; }
+        .wallet-info { 
+            background: var(--glass); 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            border: 1px solid var(--p); 
+            font-size: 0.6rem; 
+            font-family: 'Orbitron'; 
+        }
 
-        /* Container do Gráfico SVG (Nativo e Instantâneo) */
-        .chart-box { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        /* Chart Section (SVG Nativo) */
+        .chart-box { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 15px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+        }
         .chart-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .price { font-family: 'Orbitron'; font-size: 1.4rem; color: white; }
         .price span { color: var(--green); font-size: 0.8rem; margin-left: 10px; }
-
-        /* Estilização da Linha do Gráfico */
-        .svg-chart { width: 100%; height: 120px; stroke: var(--p); stroke-width: 3; fill: none; filter: drop-shadow(0 0 8px var(--p)); }
         
-        /* Grid de Cards */
+        .svg-chart { width: 100%; height: 100px; stroke: var(--p); stroke-width: 2; fill: none; filter: drop-shadow(0 0 5px var(--p)); }
+
+        /* Grid Cards */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .card { background: var(--glass); border-left: 3px solid var(--p); padding: 15px; border-radius: 8px; text-decoration: none; }
+        .card { 
+            background: var(--glass); 
+            border-left: 3px solid var(--p); 
+            padding: 15px; 
+            border-radius: 8px; 
+            text-decoration: none;
+            transition: 0.3s;
+        }
         .card h3 { font-family: 'Orbitron'; font-size: 0.5rem; color: #888; letter-spacing: 2px; margin-bottom: 5px; }
-        .balance { font-size: 1.2rem; font-weight: 700; color: white; }
+        .balance { font-size: 1.1rem; font-weight: 700; color: white; }
 
-        /* Caixa de Transferência */
-        .send-box { background: var(--glass); border: 1px solid rgba(157, 78, 221, 0.2); padding: 20px; border-radius: 15px; }
-        h4 { font-family: 'Orbitron'; font-size: 0.8rem; margin-bottom: 15px; letter-spacing: 2px; }
-        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 12px; border-radius: 5px; color: white; margin: 8px 0; outline: none; font-size: 0.8rem; }
-        .btn-send { width: 100%; padding: 15px; background: var(--p); border: none; border-radius: 5px; color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        /* Send Box */
+        .send-box { 
+            background: var(--glass); 
+            border: 1px solid rgba(157, 78, 221, 0.2); 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin-top: 20px;
+        }
+        input { 
+            width: 100%; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid #222; 
+            padding: 12px; 
+            border-radius: 5px; 
+            color: white; 
+            margin: 8px 0; 
+            outline: none; 
+            font-size: 0.8rem; 
+        }
+        .btn-send { 
+            width: 100%; 
+            padding: 15px; 
+            background: var(--p); 
+            border: none; 
+            border-radius: 5px; 
+            color: black; 
+            font-family: 'Orbitron'; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
 
-        /* Chat */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--p); z-index: 100; font-size: 1.5rem; }
+        /* Chat Widget */
+        #chat-trigger { 
+            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; 
+            background: var(--p); border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; cursor: pointer; 
+            box-shadow: 0 0 20px var(--p); z-index: 100; font-size: 1.5rem; 
+        }
+        #chat-window { 
+            position: fixed; bottom: 90px; right: 20px; width: 280px; height: 380px; 
+            background: #0a0a0a; border: 1px solid var(--p); border-radius: 15px; 
+            display: none; flex-direction: column; z-index: 100; overflow: hidden; 
+        }
+        .chat-h { background: var(--p); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.6rem; font-weight: bold; text-align: center; }
+        #chat-ms { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.75rem; display: flex; flex-direction: column; gap: 8px; }
+        .m { padding: 8px 12px; border-radius: 10px; max-width: 85%; }
+        .m.b { background: #1a1a1a; align-self: flex-start; border-left: 2px solid var(--p); }
+        .m.u { background: var(--p); color: black; align-self: flex-end; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -54,52 +129,84 @@
             </div>
         </header>
 
+        <!-- Market Chart SVG -->
         <div class="chart-box">
             <div class="chart-header">
                 <div class="price">$ 42.083,12 <span>+2.4%</span></div>
-                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">LIVE SVG DATA</div>
+                <div style="font-size: 0.5rem; color: #444; font-family: 'Orbitron';">LIVE SVG MARKET</div>
             </div>
-            <!-- Gráfico SVG nativo para carregar instantaneamente -->
             <svg class="svg-chart" viewBox="0 0 400 100" preserveAspectRatio="none">
-                <path id="graph-path" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" />
+                <path id="graph-line" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" />
             </svg>
         </div>
 
+        <!-- Dashboard Grid -->
         <div class="grid">
             <div class="card">
                 <h3>SALDO CRX</h3>
                 <div class="balance">14.250</div>
             </div>
-            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05);">
-                <h3 style="color: var(--green);">AIRDROP</h3>
-                <div class="balance" style="font-size: 0.9rem;">COLETAR →</div>
+            
+            <a href="stake.html" class="card" style="border-color: var(--p); background: rgba(157, 78, 221, 0.05);">
+                <h3 style="color: var(--p);">STAKING</h3>
+                <div class="balance" style="font-size: 0.9rem;">RENDIMENTO: 18.5% →</div>
+            </a>
+
+            <a href="airdrop.html" class="card" style="border-color: var(--green); background: rgba(74, 222, 128, 0.05); grid-column: span 2;">
+                <h3 style="color: var(--green);">AIRDROP DISPONÍVEL</h3>
+                <div class="balance" style="font-size: 0.9rem;">COLETAR RECOMPENSA AGORA →</div>
             </a>
         </div>
 
+        <!-- Transaction Box -->
         <div class="send-box">
-            <h4>TRANSFERÊNCIA</h4>
-            <input type="text" placeholder="Endereço de destino">
+            <h3 style="font-family: 'Orbitron'; font-size: 0.7rem; color: #888; letter-spacing: 2px;">EFETUAR TRANSFERÊNCIA</h3>
+            <input type="text" placeholder="Endereço de destino 0x...">
             <input type="number" placeholder="Valor CRX">
-            <button class="btn-send" onclick="alert('Iniciando protocolo...')">ENVIAR AGORA</button>
+            <button class="btn-send" onclick="alert('Iniciando protocolo Shadow-Sync...')">ENVIAR AGORA</button>
         </div>
     </div>
 
-    <div id="chat-trigger">💬</div>
+    <!-- Chat Interface -->
+    <div id="chat-trigger" onclick="toggleChat()">💬</div>
+    <div id="chat-window">
+        <div class="chat-h">CORAX ASSISTANT</div>
+        <div id="chat-ms">
+            <div class="m b">Olá Agente. Alguma dúvida sobre o Staking ou Airdrop?</div>
+        </div>
+        <div style="padding: 10px; background: #111; display: flex; border-top: 1px solid #222;">
+            <input type="text" id="chat-in" placeholder="Mensagem..." style="margin:0; border:none; background:transparent;">
+            <button onclick="sendMsg()" style="background:none; border:none; color:var(--p); font-weight:bold; margin-left:10px;">➤</button>
+        </div>
+    </div>
 
     <script>
-        // Animação do gráfico SVG sem bibliotecas externas
-        function updateChart() {
-            const path = document.getElementById('graph-path');
-            let points = "M0," + (Math.random() * 80 + 10);
+        // Animação do Gráfico SVG
+        function updateGraph() {
+            const line = document.getElementById('graph-line');
+            let d = "M0," + (Math.random() * 60 + 20);
             for (let i = 1; i <= 4; i++) {
-                points += " T" + (i * 100) + "," + (Math.random() * 80 + 10);
+                d += " T" + (i * 100) + "," + (Math.random() * 60 + 20);
             }
-            path.setAttribute('d', points);
+            line.setAttribute('d', d);
         }
-        
-        // Atualiza a linha a cada 2 segundos
-        setInterval(updateChart, 2000);
-        updateChart(); // Inicia imediatamente
+        setInterval(updateGraph, 3000);
+
+        // Lógica do Chat
+        function toggleChat() {
+            const w = document.getElementById('chat-window');
+            w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMsg() {
+            const i = document.getElementById('chat-in');
+            const ms = document.getElementById('chat-ms');
+            if(!i.value) return;
+            const uM = document.createElement('div'); uM.className = 'm u'; uM.innerText = i.value;
+            ms.appendChild(uM);
+            i.value = '';
+            ms.scrollTop = ms.scrollHeight;
+        }
     </script>
 </body>
 </html>
