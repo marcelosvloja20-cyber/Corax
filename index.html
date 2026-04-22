@@ -9,70 +9,64 @@
     
     <style>
         :root { 
-            --p: #9d4edd; /* Roxo Corax */
-            --bg: #050505; 
+            --p: #9d4edd; 
+            --bg: #000000; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
-            height: 100%;
-            width: 100%;
+            height: 100%; width: 100%;
             background-color: var(--bg);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
-        /* 🌌 Brilho Atmosférico ao fundo */
-        .ambient-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
+        /* 🌌 Brilho de fundo para profundidade */
+        .glow {
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 120vw;
-            height: 120vh;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.12) 0%, transparent 60%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
             z-index: 1;
-            pointer-events: none;
         }
 
-        /* 🦅 Símbolo Icônico (O Corvo) */
+        /* 🦅 O SÍMBOLO (Ajustado para expansão total) */
         .brand-symbol {
             position: relative;
             z-index: 10;
-            width: 90vw; /* Expansão quase total no mobile */
-            max-width: 550px; /* Limite para desktop */
-            filter: drop-shadow(0 0 40px rgba(157, 78, 221, 0.3));
-            animation: floatSymbol 6s ease-in-out infinite;
+            width: 120vw; /* Faz o corvo transbordar um pouco a tela para parecer gigante */
+            max-width: 600px;
+            margin-bottom: -60px; /* Puxa o texto para cima do corvo */
+            animation: float 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 50px rgba(157, 78, 221, 0.2));
         }
 
         .brand-symbol img {
             width: 100%;
             height: auto;
-            /* Remove o fundo preto da imagem se houver, deixando o corvo "solto" */
-            mix-blend-mode: screen; 
+            /* O segredo: mix-blend remove o fundo preto da sua imagem */
+            mix-blend-mode: lighten; 
             display: block;
         }
 
-        /* 🖋️ Identidade Visual */
+        /* 🖋️ Branding */
         .branding {
             text-align: center;
             z-index: 20;
-            margin-top: -30px; /* Ajuste para o texto ficar "colado" à base do corvo */
+            position: relative;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 10vw, 4rem);
+            font-size: 3.8rem;
             letter-spacing: 15px;
             color: white;
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+            text-shadow: 0 0 30px rgba(157, 78, 221, 0.6);
         }
 
         h1 span { color: var(--p); }
@@ -80,16 +74,15 @@
         .tagline {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
             letter-spacing: 6px;
             text-transform: uppercase;
-            font-weight: 400;
         }
 
-        /* 🚀 Botão de Acesso */
-        .action-area {
+        /* 🚀 Botão */
+        .action {
             margin-top: 60px;
-            z-index: 20;
+            z-index: 30;
         }
 
         .btn-launch {
@@ -99,45 +92,39 @@
             text-decoration: none;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 4px;
             border-radius: 4px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: inline-block;
+            transition: 0.4s;
             box-shadow: 0 0 30px rgba(157, 78, 221, 0.4);
             text-transform: uppercase;
         }
 
-        .btn-launch:active {
-            transform: scale(0.94);
-            box-shadow: 0 0 60px var(--p);
-        }
-
-        /* 🎬 Animação de Flutuação */
-        @keyframes floatSymbol {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(1deg); }
+        /* 🎬 Animação */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
+    <div class="glow"></div>
 
-    <!-- Símbolo Central -->
+    <!-- CORVO GIGANTE -->
     <div class="brand-symbol">
-        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="Corax Symbol">
+        <img src="9a79db2d-571d-48b1-b270-0428e3dde4de.png" alt="Corax">
     </div>
 
-    <!-- Identidade -->
+    <!-- TEXTO -->
     <div class="branding">
         <h1>COR<span>A</span>X</h1>
         <p class="tagline">Pagamentos descentralizados</p>
     </div>
 
-    <!-- Entrada do Aplicativo -->
-    <div class="action-area">
+    <!-- BOTÃO -->
+    <div class="action">
         <a href="app.html" class="btn-launch">Launch App</a>
     </div>
 
