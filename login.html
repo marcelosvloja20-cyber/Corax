@@ -8,6 +8,7 @@
     <style>
         :root { --p: #9d4edd; --bg: #050505; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
             background: var(--bg); 
             color: white; 
@@ -17,32 +18,97 @@
             flex-direction: column; 
             align-items: center; 
             justify-content: center;
+            overflow: hidden;
         }
-        .lock-icon { font-size: 2rem; color: var(--p); margin-bottom: 20px; text-shadow: 0 0 15px var(--p); }
-        h2 { font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 30px; color: #888; }
-        
-        .pin-dots { display: flex; gap: 15px; margin-bottom: 40px; }
-        .dot { width: 12px; height: 12px; border: 2px solid var(--p); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--p); box-shadow: 0 0 15px var(--p); }
 
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .key { 
-            width: 70px; height: 70px; 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(157,78,221,0.2); 
-            border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+        /* Efeito de Brilho de Fundo */
+        .bg-glow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.08) 0%, transparent 70%);
+            z-index: -1;
         }
-        .key:active { background: var(--p); color: black; transform: scale(0.9); }
+
+        .lock-icon { 
+            font-size: 2.5rem; 
+            color: var(--p); 
+            margin-bottom: 15px; 
+            filter: drop-shadow(0 0 10px var(--p)); 
+        }
+
+        h2 { 
+            font-size: 0.75rem; 
+            letter-spacing: 4px; 
+            margin-bottom: 40px; 
+            color: #888; 
+            text-transform: uppercase;
+        }
         
-        #error-msg { margin-top: 20px; color: #ff4d4d; font-size: 0.6rem; letter-spacing: 1px; display: none; }
+        /* Indicadores de PIN */
+        .pin-dots { 
+            display: flex; 
+            gap: 20px; 
+            margin-bottom: 50px; 
+        }
+        .dot { 
+            width: 14px; 
+            height: 14px; 
+            border: 2px solid #333; 
+            border-radius: 50%; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .dot.active { 
+            background: var(--p); 
+            border-color: var(--p); 
+            box-shadow: 0 0 15px var(--p); 
+            transform: scale(1.2);
+        }
+
+        /* Teclado Numérico */
+        .keypad { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
+        }
+        .key { 
+            width: 75px; 
+            height: 75px; 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid rgba(157,78,221,0.1); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.4rem; 
+            cursor: pointer; 
+            transition: 0.2s;
+            user-select: none;
+        }
+        .key:active { 
+            background: var(--p); 
+            color: black; 
+            transform: scale(0.9); 
+            box-shadow: 0 0 20px var(--p);
+        }
+        
+        #error-msg { 
+            position: absolute;
+            bottom: 10%;
+            color: #ff4d4d; 
+            font-size: 0.6rem; 
+            letter-spacing: 2px; 
+            display: none; 
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        }
     </style>
 </head>
 <body>
 
+    <div class="bg-glow"></div>
+
     <div class="lock-icon">🔒</div>
-    <h2>VERIFICAÇÃO DE SEGURANÇA</h2>
+    <h2>Autenticação Corax</h2>
 
     <div class="pin-dots">
         <div class="dot" id="d1"></div>
@@ -61,27 +127,30 @@
         <div class="key" onclick="press(7)">7</div>
         <div class="key" onclick="press(8)">8</div>
         <div class="key" onclick="press(9)">9</div>
-        <div></div>
+        <div style="opacity: 0; pointer-events: none;"></div>
         <div class="key" onclick="press(0)">0</div>
         <div class="key" onclick="del()">←</div>
     </div>
 
-    <div id="error-msg">ACESSO NEGADO: PIN INCORRETO</div>
+    <div id="error-msg">ACESSO NEGADO: PIN INVÁLIDO</div>
 
     <script>
         let pin = "";
-        const correctPin = "1234"; // Defina o PIN aqui
+        const correctPin = "1234"; // PIN de acesso padrão
 
         function press(num) {
             if (pin.length < 4) {
                 pin += num;
                 document.getElementById(`d${pin.length}`).classList.add('active');
             }
+            
+            // Verificação automática ao atingir 4 dígitos
             if (pin.length === 4) {
                 if (pin === correctPin) {
-                    window.location.href = "app.html";
+                    // Redireciona para a geração de semente de segurança
+                    window.location.href = "seed.html";
                 } else {
-                    document.getElementById('error-msg').style.display = 'block';
+                    showError();
                     setTimeout(resetPin, 1000);
                 }
             }
@@ -94,9 +163,16 @@
             }
         }
 
+        function showError() {
+            const msg = document.getElementById('error-msg');
+            msg.style.display = 'block';
+        }
+
         function resetPin() {
             pin = "";
-            for(let i=1; i<=4; i++) document.getElementById(`d${i}`).classList.remove('active');
+            for(let i=1; i<=4; i++) {
+                document.getElementById(`d${i}`).classList.remove('active');
+            }
             document.getElementById('error-msg').style.display = 'none';
         }
     </script>
