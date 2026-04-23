@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CORAX - P2P Crypto</title>
+  <title>CORAX - Pagamentos Descentralizados</title>
   <style>
     * {
       margin: 0;
@@ -13,28 +13,122 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #1a0b2e 0%, #4c1d95 50%, #1a0b2e 100%);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #0a0613 0%, #1a0b2e 50%, #0a0613 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
+      padding: 20px;
       color: #fff;
     }
 
+    .container {
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
     .logo {
-      width: 280px;
-      max-width: 80%;
+      width: 240px;
       height: auto;
-      margin-bottom: 32px;
+      margin: 0 auto 40px;
       background: transparent;
-      filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.7));
-      animation: float 6s ease-in-out infinite;
+      filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.8));
+    }
+
+    .brand {
+      font-size: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: #a855f7;
+      text-transform: uppercase;
+      margin-bottom: 48px;
     }
 
     h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      letter-spacing: -2
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    h1 .highlight {
+      color: #c084fc;
+    }
+
+    .description {
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 18px;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 16px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #a855f7, #c084fc);
+      color: white;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(168, 85, 247, 0.7);
+    }
+
+    .btn-secondary {
+      background: #1f1629;
+      color: #fff;
+      border: 1px solid #2d1b3d;
+    }
+
+    .btn-secondary:hover {
+      background: #2d1b3d;
+    }
+
+    @media (max-width: 480px) {
+      .logo { width: 200px; }
+      .brand { font-size: 2rem; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="CORAX" class="logo">
+    
+    <div class="brand">CORAX</div>
+    <div class="tagline">Pagamentos Descentralizados</div>
+    
+    <h1>
+      Pagamentos descentralizados <span class="highlight">para o mundo real</span>
+    </h1>
+    
+    <p class="description">
+      Envie, receba e gerencie pagamentos globais em segundos, com taxas menores e total controle.
+    </p>
+    
+    <button class="btn btn-primary">LAUNCH APP</button>
+    <button class="btn btn-secondary">SAIBA MAIS</button>
+  </div>
+</body>
+</html>
