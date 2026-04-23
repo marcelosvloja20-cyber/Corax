@@ -1,113 +1,322 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | Transaction History</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --green: #4ade80; --red: #ff4d4d; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid rgba(157, 78, 221, 0.2); padding-bottom: 15px; }
-        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
-        h1 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; }
+<title>CORAX History</title>
 
-        .search-bar { width: 100%; background: var(--glass); border: 1px solid #222; padding: 12px; border-radius: 8px; color: #888; font-size: 0.7rem; margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron'; }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* Lista de Transações */
-        .transaction-list { display: flex; flex-direction: column; gap: 15px; }
-        .tx-item { 
-            background: var(--glass); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            padding: 20px; border-radius: 12px; 
-            display: flex; justify-content: space-between; align-items: center;
-            transition: 0.3s;
-        }
-        .tx-item:hover { border-color: var(--p); background: rgba(157, 78, 221, 0.02); }
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050505;
+    color:#fff;
+}
 
-        .tx-info h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
-        .tx-info p { font-size: 0.65rem; color: #666; font-family: 'Orbitron'; }
-        
-        .tx-amount { text-align: right; }
-        .amount-val { font-family: 'Orbitron'; font-size: 1rem; font-weight: bold; display: block; }
-        .tx-status { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block; }
+.wrapper{
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+    padding:20px 20px 100px;
+}
 
-        /* Cores de Status */
-        .received .amount-val { color: var(--green); }
-        .sent .amount-val { color: var(--p); }
-        .received .tx-status { color: var(--green); opacity: 0.7; }
-        .sent .tx-status { color: var(--p); opacity: 0.7; }
+/* HEADER */
 
-        .footer-note { text-align: center; margin-top: 40px; color: #333; font-size: 0.6rem; font-family: 'Orbitron'; letter-spacing: 2px; }
-    </style>
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.brand{
+    font-size:24px;
+    letter-spacing:6px;
+    font-weight:300;
+}
+
+.icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+/* SUMMARY */
+
+.card{
+    background:linear-gradient(135deg,#111,#1c1c1c);
+    border-radius:24px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 0 28px rgba(168,85,247,.08);
+}
+
+.card small{
+    color:#888;
+    letter-spacing:2px;
+}
+
+.total{
+    font-size:38px;
+    color:#a855f7;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.desc{
+    color:#999;
+    margin-top:8px;
+    font-size:14px;
+}
+
+/* FILTER */
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:22px;
+}
+
+.filter{
+    background:#111;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:14px;
+    padding:12px 8px;
+    text-align:center;
+    font-size:12px;
+    color:#aaa;
+}
+
+.active{
+    border-color:#a855f7;
+    color:#a855f7;
+}
+
+/* SECTION */
+
+.section{
+    margin-top:28px;
+}
+
+.section h2{
+    font-size:18px;
+    margin-bottom:14px;
+}
+
+/* LIST */
+
+.list{
+    display:grid;
+    gap:12px;
+}
+
+.tx{
+    background:#111;
+    border-radius:18px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.06);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.left{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.circle{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#1f1f1f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+}
+
+.name{
+    font-size:15px;
+}
+
+.sub{
+    color:#888;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.right{
+    text-align:right;
+}
+
+.green{
+    color:#22c55e;
+}
+
+.red{
+    color:#ef4444;
+}
+
+.pending{
+    color:#f59e0b;
+}
+
+/* NAV */
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:430px;
+    max-width:100%;
+    background:#0c0c0c;
+    border-top:1px solid rgba(255,255,255,.06);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:14px 0;
+}
+
+.nav div{
+    text-align:center;
+    color:#777;
+    font-size:12px;
+}
+
+.nav span{
+    display:block;
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.nav-active{
+    color:#a855f7 !important;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <header>
-            <a href="app.html" class="back-link">←</a>
-            <h1>HISTÓRICO DE REDE</h1>
-        </header>
+<div class="wrapper">
 
-        <div class="search-bar">Filtrar por Hash ou ID...</div>
+<div class="topbar">
+<div class="brand">CORAX</div>
+<div class="icon">📜</div>
+</div>
 
-        <div class="transaction-list">
-            
-            <!-- Transação 1 -->
-            <div class="tx-item received">
-                <div class="tx-info">
-                    <h3>Recompensa de Staking</h3>
-                    <p>HASH: 0x82...F92A</p>
-                </div>
-                <div class="tx-amount">
-                    <span class="amount-val">+ 12.50 CRX</span>
-                    <span class="tx-status">Confirmado</span>
-                </div>
-            </div>
+<div class="card">
+<small>TOTAL MOVIMENTADO</small>
+<div class="total">$82,540</div>
+<div class="desc">Últimos 30 dias de atividade</div>
+</div>
 
-            <!-- Transação 2 -->
-            <div class="tx-item sent">
-                <div class="tx-info">
-                    <h3>Envio Externo</h3>
-                    <p>HASH: 0x41...D821</p>
-                </div>
-                <div class="tx-amount">
-                    <span class="amount-val">- 450.00 CRX</span>
-                    <span class="tx-status">Concluído</span>
-                </div>
-            </div>
+<div class="filters">
+<div class="filter active">Tudo</div>
+<div class="filter">Send</div>
+<div class="filter">Receive</div>
+<div class="filter">Stake</div>
+</div>
 
-            <!-- Transação 3 -->
-            <div class="tx-item received">
-                <div class="tx-info">
-                    <h3>Airdrop Diário</h3>
-                    <p>HASH: 0x12...E002</p>
-                </div>
-                <div class="tx-amount">
-                    <span class="amount-val">+ 85.00 CRX</span>
-                    <span class="tx-status">Validado</span>
-                </div>
-            </div>
+<div class="section">
+<h2>Recent Activity</h2>
 
-            <!-- Transação 4 -->
-            <div class="tx-item received">
-                <div class="tx-info">
-                    <h3>Transferência Recebida</h3>
-                    <p>HASH: 0x99...B11C</p>
-                </div>
-                <div class="tx-amount">
-                    <span class="amount-val">+ 1,200.00 CRX</span>
-                    <span class="tx-status">Confirmado</span>
-                </div>
-            </div>
+<div class="list">
 
-        </div>
+<div class="tx">
+<div class="left">
+<div class="circle">⬇️</div>
+<div>
+<div class="name">Received</div>
+<div class="sub">Hoje • 14:32</div>
+</div>
+</div>
+<div class="right green">
++$520
+<div class="sub">Confirmado</div>
+</div>
+</div>
 
-        <div class="footer-note">Sincronizado com o Bloco #842.109</div>
-    </div>
+<div class="tx">
+<div class="left">
+<div class="circle">⬆️</div>
+<div>
+<div class="name">Sent</div>
+<div class="sub">Hoje • 11:08</div>
+</div>
+</div>
+<div class="right red">
+-$180
+<div class="sub">Concluído</div>
+</div>
+</div>
+
+<div class="tx">
+<div class="left">
+<div class="circle">💰</div>
+<div>
+<div class="name">Stake Reward</div>
+<div class="sub">Ontem</div>
+</div>
+</div>
+<div class="right green">
++42 CRX
+<div class="sub">Pago</div>
+</div>
+</div>
+
+<div class="tx">
+<div class="left">
+<div class="circle">🎁</div>
+<div>
+<div class="name">Airdrop</div>
+<div class="sub">2 dias atrás</div>
+</div>
+</div>
+<div class="right green">
++150 CRX
+<div class="sub">Recebido</div>
+</div>
+</div>
+
+<div class="tx">
+<div class="left">
+<div class="circle">⏳</div>
+<div>
+<div class="name">Withdraw</div>
+<div class="sub">3 dias atrás</div>
+</div>
+</div>
+<div class="right pending">
+-$300
+<div class="sub">Pendente</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="nav">
+<div><span>🏠</span>Home</div>
+<div><span>💰</span>Stake</div>
+<div class="nav-active"><span>📜</span>History</div>
+<div><span>⚙️</span>Settings</div>
+</div>
 
 </body>
 </html>
