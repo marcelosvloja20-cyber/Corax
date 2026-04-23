@@ -1,110 +1,352 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | Staking Portal</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(157, 78, 221, 0.05); --green: #4ade80; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; padding-bottom: 50px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
-        h1 { font-family: 'Orbitron'; font-size: 1rem; letter-spacing: 3px; }
+<title>CORAX Stake</title>
 
-        /* Painel de Rendimento */
-        .yield-card { 
-            background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, transparent 100%);
-            border: 1px solid rgba(157, 78, 221, 0.2);
-            padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-        }
-        .apr-tag { color: var(--green); font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 10px; display: block; }
-        .staked-amount { font-size: 2.5rem; font-weight: bold; margin-bottom: 5px; }
-        .rewards-live { color: var(--p); font-family: 'Orbitron'; font-size: 0.9rem; }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* Input de Stake */
-        .stake-box { background: var(--glass); border: 1px solid #222; padding: 25px; border-radius: 15px; margin-bottom: 20px; }
-        label { display: block; font-family: 'Orbitron'; font-size: 0.6rem; color: #888; margin-bottom: 10px; }
-        input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; padding: 15px; border-radius: 8px; color: white; outline: none; margin-bottom: 20px; }
-        
-        .btn-stake { 
-            width: 100%; padding: 18px; background: var(--p); border: none; border-radius: 8px; 
-            color: black; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .btn-stake:hover { box-shadow: 0 0 30px var(--p); transform: translateY(-2px); }
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050505;
+    color:#fff;
+}
 
-        /* Status */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .info-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border: 1px solid #111; }
-        .info-item span { display: block; font-size: 0.6rem; color: #555; font-family: 'Orbitron'; margin-bottom: 5px; }
-        .info-item p { font-size: 0.9rem; font-weight: 600; }
-    </style>
+.wrapper{
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+    padding:20px 20px 100px;
+}
+
+/* HEADER */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.brand{
+    font-size:24px;
+    letter-spacing:6px;
+    font-weight:300;
+}
+
+.back{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+/* CARD */
+
+.card{
+    background:linear-gradient(135deg,#111,#1c1c1c);
+    border-radius:24px;
+    padding:24px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 0 30px rgba(168,85,247,.08);
+}
+
+.label{
+    color:#888;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+.big{
+    font-size:42px;
+    color:#a855f7;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.sub{
+    margin-top:8px;
+    color:#999;
+    font-size:14px;
+}
+
+.progress{
+    height:12px;
+    background:#1a1a1a;
+    border-radius:20px;
+    margin-top:18px;
+    overflow:hidden;
+}
+
+.bar{
+    width:72%;
+    height:100%;
+    background:linear-gradient(90deg,#a855f7,#7e22ce);
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+    margin-top:18px;
+}
+
+.box{
+    background:#111;
+    border-radius:18px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.box h3{
+    color:#888;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.box strong{
+    font-size:22px;
+}
+
+/* INPUT */
+
+.section{
+    margin-top:28px;
+}
+
+.section h2{
+    font-size:18px;
+    margin-bottom:14px;
+}
+
+.input{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#111;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.06);
+    outline:none;
+    font-size:16px;
+}
+
+.input:focus{
+    border-color:#a855f7;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:grid;
+    gap:14px;
+    margin-top:18px;
+}
+
+.btn{
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    font-weight:700;
+    letter-spacing:3px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.primary{
+    background:#a855f7;
+    color:#fff;
+}
+
+.primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(168,85,247,.45);
+}
+
+.secondary{
+    background:#111;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+/* HISTORY */
+
+.list{
+    display:grid;
+    gap:12px;
+    margin-top:18px;
+}
+
+.item{
+    background:#111;
+    border-radius:18px;
+    padding:15px;
+    border:1px solid rgba(255,255,255,.06);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.green{
+    color:#22c55e;
+}
+
+.small{
+    color:#888;
+    font-size:12px;
+}
+
+/* NAV */
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:430px;
+    max-width:100%;
+    background:#0c0c0c;
+    border-top:1px solid rgba(255,255,255,.06);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:14px 0;
+}
+
+.nav div{
+    text-align:center;
+    color:#777;
+    font-size:12px;
+}
+
+.nav span{
+    display:block;
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.active{
+    color:#a855f7 !important;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <header>
-            <a href="app.html" class="back-link">←</a>
-            <h1>STAKING PROTOCOL</h1>
-        </header>
+<div class="wrapper">
 
-        <div class="yield-card">
-            <span class="apr-tag">APY: 18.5% FIXO</span>
-            <div class="staked-amount" id="total-staked">0.00</div>
-            <div class="rewards-live">RECOMPENSAS: +<span id="live-yield">0.000000</span> CRX</div>
-        </div>
+<div class="topbar">
+<div class="brand">CORAX</div>
+<div class="back">←</div>
+</div>
 
-        <div class="stake-box">
-            <label>QUANTIDADE PARA CONGELAR (CRX)</label>
-            <input type="number" id="stake-input" placeholder="Min: 100 CRX">
-            <button class="btn-stake" onclick="startStake()">INICIAR STAKING</button>
-        </div>
+<div class="card">
+<div class="label">TOTAL STAKED</div>
+<div class="big">8,420 CRX</div>
+<div class="sub">$16,840 bloqueados</div>
 
-        <div class="info-grid">
-            <div class="info-item">
-                <span>LOCK PERIOD</span>
-                <p>7 DIAS</p>
-            </div>
-            <div class="info-item">
-                <span>REDE</span>
-                <p>CORAX MAINNET</p>
-            </div>
-        </div>
-    </div>
+<div class="progress">
+<div class="bar"></div>
+</div>
+</div>
 
-    <script>
-        let isStaking = false;
-        let amount = 0;
-        let yieldVal = 0;
+<div class="grid">
 
-        function startStake() {
-            const input = document.getElementById('stake-input');
-            const total = document.getElementById('total-staked');
-            
-            if(input.value < 100) {
-                alert("Mínimo necessário: 100 CRX");
-                return;
-            }
+<div class="box">
+<h3>APY</h3>
+<strong>18.5%</strong>
+</div>
 
-            amount = parseFloat(input.value);
-            total.innerText = amount.toLocaleString();
-            input.value = "";
-            isStaking = true;
-            
-            alert("Protocolo Shadow-Sync: Ativos congelados com sucesso!");
-        }
+<div class="box">
+<h3>Rewards</h3>
+<strong>+420 CRX</strong>
+</div>
 
-        // Simulação de rendimento subindo a cada segundo
-        setInterval(() => {
-            if(isStaking) {
-                yieldVal += (amount * 0.000001);
-                document.getElementById('live-yield').innerText = yieldVal.toFixed(6);
-            }
-        }, 1000);
-    </script>
+<div class="box">
+<h3>Lock</h3>
+<strong>30 Dias</strong>
+</div>
+
+<div class="box">
+<h3>Status</h3>
+<strong class="green">Ativo</strong>
+</div>
+
+</div>
+
+<div class="section">
+<h2>Stake Tokens</h2>
+
+<input type="number" class="input" placeholder="Quantidade de CRX">
+
+<div class="buttons">
+<button class="btn primary" onclick="stake()">STAKE AGORA</button>
+<button class="btn secondary" onclick="unstake()">UNSTAKE</button>
+</div>
+</div>
+
+<div class="section">
+<h2>Recent Rewards</h2>
+
+<div class="list">
+
+<div class="item">
+<div>
+<strong>Reward Diário</strong>
+<div class="small">Hoje</div>
+</div>
+<div class="green">+18 CRX</div>
+</div>
+
+<div class="item">
+<div>
+<strong>Reward Semanal</strong>
+<div class="small">7 dias</div>
+</div>
+<div class="green">+124 CRX</div>
+</div>
+
+<div class="item">
+<div>
+<strong>Bonus Pool</strong>
+<div class="small">Evento</div>
+</div>
+<div class="green">+52 CRX</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="nav">
+<div><span>🏠</span>Home</div>
+<div class="active"><span>💰</span>Stake</div>
+<div><span>📜</span>History</div>
+<div><span>⚙️</span>Settings</div>
+</div>
+
+<script>
+function stake(){
+    alert('Stake realizado com sucesso.');
+}
+
+function unstake(){
+    alert('Solicitação de unstake enviada.');
+}
+</script>
+
 </body>
 </html>
