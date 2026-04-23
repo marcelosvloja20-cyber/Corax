@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CORAX | Pagamentos Descentralizados</title>
-<meta name="description" content="Pagamentos descentralizados rápidos, seguros e globais.">
+<meta name="description" content="Infraestrutura premium para pagamentos descentralizados globais.">
 
 <style>
 *{
@@ -20,54 +20,70 @@ html{
 
 body{
     font-family:Arial, Helvetica, sans-serif;
-    background:#050505;
+    background:#000;
     color:#fff;
     overflow-x:hidden;
 }
 
-/* HERO */
+/* BACKGROUND */
 
 .hero{
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:30px 20px;
+    padding:24px;
     position:relative;
 }
 
-.glow{
+.glow-one,
+.glow-two{
     position:absolute;
-    width:760px;
-    height:760px;
-    background:rgba(168,85,247,.16);
     border-radius:50%;
-    filter:blur(150px);
-    top:50%;
+    filter:blur(140px);
+}
+
+.glow-one{
+    width:600px;
+    height:600px;
+    background:rgba(168,85,247,.16);
+    top:10%;
     left:50%;
-    transform:translate(-50%,-50%);
-    animation:pulse 7s ease-in-out infinite;
+    transform:translateX(-50%);
+    animation:pulse 7s infinite ease-in-out;
+}
+
+.glow-two{
+    width:500px;
+    height:500px;
+    background:rgba(99,102,241,.12);
+    bottom:-80px;
+    left:50%;
+    transform:translateX(-50%);
+    animation:pulse 9s infinite ease-in-out;
 }
 
 @keyframes pulse{
-    0%{transform:translate(-50%,-50%) scale(1);}
-    50%{transform:translate(-50%,-50%) scale(1.12);}
-    100%{transform:translate(-50%,-50%) scale(1);}
+    0%{transform:translateX(-50%) scale(1);}
+    50%{transform:translateX(-50%) scale(1.15);}
+    100%{transform:translateX(-50%) scale(1);}
 }
 
-.container{
+/* CONTENT */
+
+.wrap{
     width:100%;
     max-width:430px;
+    text-align:center;
     position:relative;
     z-index:2;
-    text-align:center;
-    animation:fadeUp 1s ease;
+    animation:fadeUp 1.2s ease;
 }
 
 @keyframes fadeUp{
     from{
         opacity:0;
-        transform:translateY(40px);
+        transform:translateY(30px);
     }
     to{
         opacity:1;
@@ -77,25 +93,51 @@ body{
 
 /* LOGO */
 
+.logo-box{
+    position:relative;
+    display:inline-block;
+}
+
 .logo{
-    width:250px;
+    width:330px;
     max-width:100%;
     display:block;
     margin:auto;
-    filter:drop-shadow(0 0 28px rgba(168,85,247,.45));
-    animation:float 4s ease-in-out infinite;
+    filter:drop-shadow(0 0 45px rgba(168,85,247,.55));
+    animation:float 4s infinite ease-in-out;
 }
 
 @keyframes float{
     0%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
+    50%{transform:translateY(-12px);}
     100%{transform:translateY(0);}
 }
 
+.eye-glow{
+    position:absolute;
+    top:38%;
+    left:50%;
+    width:120px;
+    height:40px;
+    transform:translateX(-50%);
+    background:rgba(168,85,247,.18);
+    filter:blur(18px);
+    animation:blink 3s infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:1;}
+    48%{opacity:1;}
+    50%{opacity:.15;}
+    52%{opacity:1;}
+}
+
+/* TEXT */
+
 .brand{
-    margin-top:12px;
-    font-size:50px;
-    letter-spacing:10px;
+    margin-top:8px;
+    font-size:52px;
+    letter-spacing:12px;
     font-weight:300;
 }
 
@@ -106,12 +148,10 @@ body{
     letter-spacing:6px;
 }
 
-/* TEXT */
-
 .headline{
-    margin-top:40px;
-    font-size:38px;
-    line-height:1.2;
+    margin-top:34px;
+    font-size:36px;
+    line-height:1.18;
     font-weight:700;
 }
 
@@ -121,45 +161,45 @@ body{
 
 .sub{
     margin-top:18px;
-    color:#cfcfcf;
+    color:#bcbcbc;
     font-size:16px;
     line-height:1.6;
 }
 
 /* BUTTONS */
 
-.buttons{
-    margin-top:34px;
+.actions{
+    margin-top:32px;
     display:grid;
     gap:14px;
 }
 
 .btn{
-    padding:18px;
     border:none;
-    border-radius:14px;
+    border-radius:16px;
+    padding:18px;
+    font-size:14px;
     font-weight:700;
     letter-spacing:4px;
     cursor:pointer;
     transition:.3s;
-    font-size:14px;
 }
 
 .primary{
     background:#a855f7;
     color:#fff;
-    box-shadow:0 0 28px rgba(168,85,247,.45);
+    box-shadow:0 0 35px rgba(168,85,247,.45);
 }
 
 .primary:hover{
     transform:translateY(-4px);
-    box-shadow:0 0 40px rgba(168,85,247,.7);
+    box-shadow:0 0 50px rgba(168,85,247,.7);
 }
 
 .secondary{
-    background:#111;
-    color:#fff;
+    background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08);
+    color:#fff;
 }
 
 .secondary:hover{
@@ -169,27 +209,26 @@ body{
 /* STATS */
 
 .stats{
-    margin-top:38px;
+    margin-top:34px;
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:12px;
 }
 
-.card{
+.stat{
     padding:16px;
     border-radius:16px;
     background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
 }
 
-.card h3{
+.stat h3{
     color:#a855f7;
     font-size:18px;
 }
 
-.card p{
-    color:#aaa;
+.stat p{
+    color:#8d8d8d;
     font-size:12px;
     margin-top:6px;
 }
@@ -197,53 +236,43 @@ body{
 /* FEATURES */
 
 .features{
-    margin-top:34px;
+    margin-top:30px;
     display:grid;
     gap:14px;
 }
 
 .feature{
+    text-align:left;
     padding:18px;
     border-radius:16px;
-    text-align:left;
     background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08);
-    transition:.3s;
-}
-
-.feature:hover{
-    transform:translateY(-4px);
-    border-color:#a855f7;
 }
 
 .feature h4{
-    font-size:18px;
+    font-size:17px;
     margin-bottom:8px;
 }
 
 .feature p{
-    color:#aaa;
-    font-size:14px;
+    color:#a7a7a7;
     line-height:1.5;
+    font-size:14px;
 }
 
 /* FOOTER */
 
 footer{
-    margin-top:44px;
-    padding-bottom:20px;
+    margin-top:34px;
+    padding-bottom:16px;
     color:#666;
     font-size:13px;
 }
 
-/* RESPONSIVE */
-
 @media(max-width:480px){
 
 .logo{
-width:320px;
-max-width:100%;
-filter:drop-shadow(0 0 35px rgba(168,85,247,.55));
+    width:290px;
 }
 
 .brand{
@@ -267,62 +296,64 @@ filter:drop-shadow(0 0 35px rgba(168,85,247,.55));
 
 <section class="hero">
 
-<div class="glow"></div>
+<div class="glow-one"></div>
+<div class="glow-two"></div>
 
-<div class="container">
+<div class="wrap">
 
+<div class="logo-box">
+<div class="eye-glow"></div>
 <img src="logo.png" class="logo" alt="CORAX Logo">
+</div>
 
 <h1 class="brand">CORAX</h1>
 <p class="tag">PAGAMENTOS DESCENTRALIZADOS</p>
 
 <h2 class="headline">
-Pagamentos digitais <span>sem fronteiras</span>
+O futuro financeiro <span>começa agora</span>
 </h2>
 
 <p class="sub">
-Envie, receba e gerencie ativos globais em segundos com segurança, liberdade e baixas taxas.
+Envie, receba e mova valor globalmente com velocidade extrema, taxas reduzidas e total soberania digital.
 </p>
 
-<div class="buttons">
+<div class="actions">
 <button class="btn primary" onclick="goLogin()">LAUNCH APP</button>
 <button class="btn secondary" onclick="goInfo()">SAIBA MAIS</button>
 </div>
 
 <div class="stats">
-
-<div class="card">
+<div class="stat">
 <h3>10K+</h3>
 <p>Transações</p>
 </div>
 
-<div class="card">
+<div class="stat">
 <h3>24/7</h3>
 <p>Online</p>
 </div>
 
-<div class="card">
+<div class="stat">
 <h3>99.9%</h3>
 <p>Uptime</p>
 </div>
-
 </div>
 
 <div class="features" id="info">
 
 <div class="feature">
 <h4>⚡ Liquidação Instantânea</h4>
-<p>Transferências rápidas sem intermediários.</p>
+<p>Pagamentos rápidos e sem intermediários.</p>
 </div>
 
 <div class="feature">
-<h4>💸 Taxas Reduzidas</h4>
-<p>Infraestrutura eficiente para custos menores.</p>
+<h4>🛡️ Segurança Premium</h4>
+<p>Estrutura moderna com proteção multicamadas.</p>
 </div>
 
 <div class="feature">
-<h4>🛡️ Segurança Multi-chain</h4>
-<p>Compatível com diversas redes blockchain.</p>
+<h4>🌍 Global First</h4>
+<p>Pronto para uso em qualquer lugar do mundo.</p>
 </div>
 
 </div>
@@ -332,7 +363,6 @@ Envie, receba e gerencie ativos globais em segundos com segurança, liberdade e 
 </footer>
 
 </div>
-
 </section>
 
 <script>
