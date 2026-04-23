@@ -1,101 +1,351 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | Configurações</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-        .back-btn { color: var(--p); text-decoration: none; font-size: 1.5rem; }
-        h1 { font-family: 'Orbitron'; font-size: 1rem; letter-spacing: 3px; }
+<title>CORAX Settings</title>
 
-        /* Foto de Perfil */
-        .profile-section { text-align: center; margin-bottom: 40px; }
-        .avatar-circle { 
-            width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--p); 
-            margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.2) 0%, transparent 70%);
-            font-size: 2rem; color: var(--p); box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* Campos de Configuração */
-        .setting-group { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; margin-bottom: 15px; }
-        label { display: block; font-family: 'Orbitron'; font-size: 0.6rem; color: #888; margin-bottom: 10px; letter-spacing: 1px; }
-        input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #222; padding: 12px; border-radius: 6px; color: white; outline: none; }
-        input:focus { border-color: var(--p); }
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050505;
+    color:#fff;
+}
 
-        .info-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
-        .wallet-addr { color: var(--p); font-family: 'Orbitron'; font-size: 0.7rem; }
+.wrapper{
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+    padding:20px 20px 100px;
+}
 
-        /* Toggle Switch (Segurança) */
-        .toggle-box { display: flex; justify-content: space-between; align-items: center; }
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--p); }
-        input:checked + .slider:before { transform: translateX(20px); }
+/* HEADER */
 
-        .btn-save { width: 100%; padding: 15px; background: var(--p); border: none; border-radius: 6px; color: black; font-family: 'Orbitron'; font-weight: bold; margin-top: 20px; cursor: pointer; }
-    </style>
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.brand{
+    font-size:24px;
+    letter-spacing:6px;
+    font-weight:300;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#a855f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    box-shadow:0 0 20px rgba(168,85,247,.45);
+}
+
+/* PROFILE */
+
+.profile{
+    background:linear-gradient(135deg,#111,#1c1c1c);
+    border-radius:24px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 0 28px rgba(168,85,247,.08);
+}
+
+.profile h2{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.profile p{
+    color:#999;
+    font-size:14px;
+}
+
+.wallet{
+    margin-top:12px;
+    color:#a855f7;
+    font-size:13px;
+    word-break:break-all;
+}
+
+/* SECTION */
+
+.section{
+    margin-top:28px;
+}
+
+.section h3{
+    font-size:16px;
+    color:#ddd;
+    margin-bottom:14px;
+}
+
+/* LIST */
+
+.list{
+    display:grid;
+    gap:12px;
+}
+
+.item{
+    background:#111;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#1d1d1d;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:16px;
+}
+
+.text strong{
+    display:block;
+    font-size:14px;
+}
+
+.text span{
+    color:#888;
+    font-size:12px;
+}
+
+/* SWITCH */
+
+.switch{
+    width:46px;
+    height:26px;
+    border-radius:20px;
+    background:#2a2a2a;
+    position:relative;
+}
+
+.switch::after{
+    content:"";
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#fff;
+    position:absolute;
+    top:3px;
+    left:3px;
+}
+
+.on{
+    background:#a855f7;
+}
+
+.on::after{
+    left:23px;
+}
+
+/* BUTTON */
+
+.logout{
+    margin-top:30px;
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#ef4444;
+    color:#fff;
+    font-weight:700;
+    letter-spacing:3px;
+    cursor:pointer;
+}
+
+/* NAV */
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:430px;
+    max-width:100%;
+    background:#0c0c0c;
+    border-top:1px solid rgba(255,255,255,.06);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:14px 0;
+}
+
+.nav div{
+    text-align:center;
+    color:#777;
+    font-size:12px;
+}
+
+.nav span{
+    display:block;
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.active{
+    color:#a855f7 !important;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <header>
-            <a href="app.html" class="back-btn">←</a>
-            <h1>CONFIGURAÇÕES</h1>
-        </header>
+<div class="wrapper">
 
-        <div class="profile-section">
-            <div class="avatar-circle">👤</div>
-            <p style="font-family: 'Orbitron'; font-size: 0.8rem;">USER_ID: 4402</p>
-        </div>
+<div class="topbar">
+<div class="brand">CORAX</div>
+<div class="avatar">C</div>
+</div>
 
-        <div class="setting-group">
-            <label>NOME DE EXIBIÇÃO</label>
-            <input type="text" value="Agente Corax">
-        </div>
+<div class="profile">
+<h2>Conta Principal</h2>
+<p>coraxuser@email.com</p>
+<div class="wallet">0x7f2a9d18c24e7abf98d1</div>
+</div>
 
-        <div class="setting-group">
-            <label>ENDEREÇO DA CARTEIRA</label>
-            <div class="info-row">
-                <span class="wallet-addr">0x71A...C42D</span>
-                <button style="background:none; border:none; color:#888; font-size:0.6rem; cursor:pointer;">COPIAR</button>
-            </div>
-        </div>
+<div class="section">
+<h3>Segurança</h3>
 
-        <div class="setting-group toggle-box">
-            <div>
-                <p style="font-size: 0.8rem; font-weight: 600;">Autenticação Biométrica</p>
-                <p style="font-size: 0.6rem; color: #666;">Exigir PIN para transferências</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
+<div class="list">
 
-        <div class="setting-group toggle-box">
-            <div>
-                <p style="font-size: 0.8rem; font-weight: 600;">Modo Furtivo</p>
-                <p style="font-size: 0.6rem; color: #666;">Ocultar saldo na tela inicial</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
+<div class="item">
+<div class="left">
+<div class="icon">🔒</div>
+<div class="text">
+<strong>Face ID</strong>
+<span>Login biométrico</span>
+</div>
+</div>
+<div class="switch on"></div>
+</div>
 
-        <button class="btn-save" onclick="alert('Configurações salvas na rede!')">SALVAR ALTERAÇÕES</button>
-    </div>
+<div class="item">
+<div class="left">
+<div class="icon">🛡️</div>
+<div class="text">
+<strong>2FA</strong>
+<span>Autenticação dupla</span>
+</div>
+</div>
+<div class="switch"></div>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h3>Preferências</h3>
+
+<div class="list">
+
+<div class="item">
+<div class="left">
+<div class="icon">🌙</div>
+<div class="text">
+<strong>Dark Mode</strong>
+<span>Tema escuro ativo</span>
+</div>
+</div>
+<div class="switch on"></div>
+</div>
+
+<div class="item">
+<div class="left">
+<div class="icon">💵</div>
+<div class="text">
+<strong>Moeda</strong>
+<span>USD</span>
+</div>
+</div>
+<div>›</div>
+</div>
+
+<div class="item">
+<div class="left">
+<div class="icon">🌐</div>
+<div class="text">
+<strong>Idioma</strong>
+<span>Português</span>
+</div>
+</div>
+<div>›</div>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h3>Sistema</h3>
+
+<div class="list">
+
+<div class="item">
+<div class="left">
+<div class="icon">📩</div>
+<div class="text">
+<strong>Suporte</strong>
+<span>Fale conosco</span>
+</div>
+</div>
+<div>›</div>
+</div>
+
+<div class="item">
+<div class="left">
+<div class="icon">📄</div>
+<div class="text">
+<strong>Termos</strong>
+<span>Política e privacidade</span>
+</div>
+</div>
+<div>›</div>
+</div>
+
+</div>
+</div>
+
+<button class="logout" onclick="logout()">LOGOUT</button>
+
+</div>
+
+<div class="nav">
+<div><span>🏠</span>Home</div>
+<div><span>💰</span>Stake</div>
+<div><span>📜</span>History</div>
+<div class="active"><span>⚙️</span>Settings</div>
+</div>
+
+<script>
+function logout(){
+    window.location.href='login.html';
+}
+</script>
 
 </body>
 </html>
-
