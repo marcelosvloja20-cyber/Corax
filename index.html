@@ -9,283 +9,274 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 html{
-    scroll-behavior:smooth;
+scroll-behavior:smooth;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#000;
-    color:#fff;
-    overflow-x:hidden;
+font-family:Arial, Helvetica, sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* HERO */
 
 .hero{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:24px;
-    position:relative;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:24px;
+position:relative;
 }
+
+/* BG */
 
 .glow-one,
 .glow-two{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(140px);
+position:absolute;
+border-radius:50%;
+filter:blur(140px);
 }
 
 .glow-one{
-    width:600px;
-    height:600px;
-    background:rgba(168,85,247,.16);
-    top:10%;
-    left:50%;
-    transform:translateX(-50%);
-    animation:pulse 7s infinite ease-in-out;
+width:650px;
+height:650px;
+background:rgba(168,85,247,.14);
+top:0;
+left:50%;
+transform:translateX(-50%);
+animation:pulse 8s infinite ease-in-out;
 }
 
 .glow-two{
-    width:500px;
-    height:500px;
-    background:rgba(99,102,241,.12);
-    bottom:-80px;
-    left:50%;
-    transform:translateX(-50%);
-    animation:pulse 9s infinite ease-in-out;
+width:500px;
+height:500px;
+background:rgba(99,102,241,.10);
+bottom:-120px;
+left:50%;
+transform:translateX(-50%);
+animation:pulse 10s infinite ease-in-out;
 }
 
 @keyframes pulse{
-    0%{transform:translateX(-50%) scale(1);}
-    50%{transform:translateX(-50%) scale(1.15);}
-    100%{transform:translateX(-50%) scale(1);}
+0%{transform:translateX(-50%) scale(1);}
+50%{transform:translateX(-50%) scale(1.15);}
+100%{transform:translateX(-50%) scale(1);}
 }
 
 /* CONTENT */
 
 .wrap{
-    width:100%;
-    max-width:430px;
-    text-align:center;
-    position:relative;
-    z-index:2;
-    animation:fadeUp 1.2s ease;
+width:100%;
+max-width:430px;
+text-align:center;
+z-index:2;
+position:relative;
+animation:fadeUp 1s ease;
 }
 
 @keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+from{
+opacity:0;
+transform:translateY(35px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 /* LOGO */
 
 .logo-box{
-    position:relative;
-    display:inline-block;
+text-align:center;
 }
 
-.logo{
-    width:330px;
-    max-width:100%;
-    display:block;
-    margin:auto;
-    filter:drop-shadow(0 0 45px rgba(168,85,247,.55));
-    animation:float 4s infinite ease-in-out;
+.crow-svg{
+width:280px;
+max-width:100%;
+filter:drop-shadow(0 0 40px rgba(168,85,247,.35));
+animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-12px);}
-    100%{transform:translateY(0);}
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
 }
 
-.eye-glow{
-    position:absolute;
-    top:38%;
-    left:50%;
-    width:120px;
-    height:40px;
-    transform:translateX(-50%);
-    background:rgba(168,85,247,.18);
-    filter:blur(18px);
-    animation:blink 3s infinite;
+.eye{
+animation:blink 3s infinite;
 }
 
 @keyframes blink{
-    0%,100%{opacity:1;}
-    48%{opacity:1;}
-    50%{opacity:.15;}
-    52%{opacity:1;}
+0%,100%{opacity:1;}
+49%{opacity:1;}
+50%{opacity:.15;}
+51%{opacity:1;}
+}
+
+.brand{
+margin-top:10px;
+font-size:52px;
+font-weight:300;
+letter-spacing:12px;
+}
+
+.tag{
+margin-top:8px;
+font-size:12px;
+letter-spacing:6px;
+color:#a855f7;
 }
 
 /* TEXT */
 
-.brand{
-    margin-top:8px;
-    font-size:52px;
-    letter-spacing:12px;
-    font-weight:300;
-}
-
-.tag{
-    margin-top:8px;
-    color:#a855f7;
-    font-size:12px;
-    letter-spacing:6px;
-}
-
 .headline{
-    margin-top:34px;
-    font-size:36px;
-    line-height:1.18;
-    font-weight:700;
+margin-top:34px;
+font-size:36px;
+line-height:1.18;
+font-weight:700;
 }
 
 .headline span{
-    color:#a855f7;
+color:#a855f7;
 }
 
 .sub{
-    margin-top:18px;
-    color:#bcbcbc;
-    font-size:16px;
-    line-height:1.6;
+margin-top:18px;
+font-size:16px;
+line-height:1.6;
+color:#c2c2c2;
 }
 
 /* BUTTONS */
 
 .actions{
-    margin-top:32px;
-    display:grid;
-    gap:14px;
+margin-top:32px;
+display:grid;
+gap:14px;
 }
 
 .btn{
-    border:none;
-    border-radius:16px;
-    padding:18px;
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:4px;
-    cursor:pointer;
-    transition:.3s;
+padding:18px;
+border:none;
+border-radius:16px;
+font-size:14px;
+font-weight:700;
+letter-spacing:4px;
+cursor:pointer;
+transition:.3s;
 }
 
 .primary{
-    background:#a855f7;
-    color:#fff;
-    box-shadow:0 0 35px rgba(168,85,247,.45);
+background:#a855f7;
+color:#fff;
+box-shadow:0 0 35px rgba(168,85,247,.45);
 }
 
 .primary:hover{
-    transform:translateY(-4px);
-    box-shadow:0 0 50px rgba(168,85,247,.7);
+transform:translateY(-4px);
+box-shadow:0 0 50px rgba(168,85,247,.7);
 }
 
 .secondary{
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    color:#fff;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
 }
 
 .secondary:hover{
-    border-color:#a855f7;
+border-color:#a855f7;
 }
 
 /* STATS */
 
 .stats{
-    margin-top:34px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+margin-top:34px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
 }
 
 .stat{
-    padding:16px;
-    border-radius:16px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
+padding:16px;
+border-radius:16px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 }
 
 .stat h3{
-    color:#a855f7;
-    font-size:18px;
+font-size:18px;
+color:#a855f7;
 }
 
 .stat p{
-    color:#8d8d8d;
-    font-size:12px;
-    margin-top:6px;
+font-size:12px;
+margin-top:6px;
+color:#888;
 }
 
 /* FEATURES */
 
 .features{
-    margin-top:30px;
-    display:grid;
-    gap:14px;
+margin-top:30px;
+display:grid;
+gap:14px;
 }
 
 .feature{
-    text-align:left;
-    padding:18px;
-    border-radius:16px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
+text-align:left;
+padding:18px;
+border-radius:16px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 }
 
 .feature h4{
-    font-size:17px;
-    margin-bottom:8px;
+font-size:17px;
+margin-bottom:8px;
 }
 
 .feature p{
-    color:#a7a7a7;
-    line-height:1.5;
-    font-size:14px;
+font-size:14px;
+line-height:1.5;
+color:#aaa;
 }
 
 /* FOOTER */
 
 footer{
-    margin-top:34px;
-    padding-bottom:16px;
-    color:#666;
-    font-size:13px;
+margin-top:34px;
+padding-bottom:14px;
+font-size:13px;
+color:#666;
 }
 
 @media(max-width:480px){
 
-.logo{
-    width:290px;
+.crow-svg{
+width:235px;
 }
 
 .brand{
-    font-size:42px;
-    letter-spacing:8px;
+font-size:42px;
+letter-spacing:8px;
 }
 
 .headline{
-    font-size:30px;
+font-size:30px;
 }
 
 .stats{
-    grid-template-columns:1fr;
+grid-template-columns:1fr;
 }
 
 }
@@ -302,8 +293,58 @@ footer{
 <div class="wrap">
 
 <div class="logo-box">
-<div class="eye-glow"></div>
-<img src="logo.png?v=2"> class="logo" alt="CORAX Logo">
+
+<svg viewBox="0 0 500 500" class="crow-svg">
+
+<defs>
+<filter id="glow">
+<feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+<feMerge>
+<feMergeNode in="coloredBlur"/>
+<feMergeNode in="SourceGraphic"/>
+</feMerge>
+</filter>
+
+<linearGradient id="feather" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#1f1f2d"/>
+<stop offset="100%" stop-color="#080808"/>
+</linearGradient>
+
+<linearGradient id="beak" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#9ca3af"/>
+<stop offset="100%" stop-color="#4b5563"/>
+</linearGradient>
+</defs>
+
+<path d="M130 250 L210 170 L220 340 Z" fill="url(#feather)"/>
+<path d="M95 285 L190 210 L200 390 Z" fill="url(#feather)"/>
+<path d="M155 170 L230 130 L245 260 Z" fill="url(#feather)"/>
+
+<path d="M370 250 L290 170 L280 340 Z" fill="url(#feather)"/>
+<path d="M405 285 L310 210 L300 390 Z" fill="url(#feather)"/>
+<path d="M345 170 L270 130 L255 260 Z" fill="url(#feather)"/>
+
+<path d="M160 180 Q250 70 340 180 Q325 330 250 410 Q175 330 160 180 Z"
+fill="url(#feather)"/>
+
+<ellipse cx="205" cy="220" rx="34" ry="20"
+fill="#a855f7"
+filter="url(#glow)"
+class="eye"/>
+
+<ellipse cx="295" cy="220" rx="34" ry="20"
+fill="#a855f7"
+filter="url(#glow)"
+class="eye"/>
+
+<circle cx="205" cy="220" r="8" fill="#fff"/>
+<circle cx="295" cy="220" r="8" fill="#fff"/>
+
+<path d="M250 220 L215 320 L250 390 L285 320 Z"
+fill="url(#beak)"/>
+
+</svg>
+
 </div>
 
 <h1 class="brand">CORAX</h1>
@@ -314,7 +355,7 @@ O futuro financeiro <span>começa agora</span>
 </h2>
 
 <p class="sub">
-Envie, receba e mova valor globalmente com velocidade extrema, taxas reduzidas e total soberania digital.
+Envie, receba e mova valor globalmente com velocidade extrema, taxas baixas e total soberania digital.
 </p>
 
 <div class="actions">
@@ -323,6 +364,7 @@ Envie, receba e mova valor globalmente com velocidade extrema, taxas reduzidas e
 </div>
 
 <div class="stats">
+
 <div class="stat">
 <h3>10K+</h3>
 <p>Transações</p>
@@ -337,23 +379,24 @@ Envie, receba e mova valor globalmente com velocidade extrema, taxas reduzidas e
 <h3>99.9%</h3>
 <p>Uptime</p>
 </div>
+
 </div>
 
 <div class="features" id="info">
 
 <div class="feature">
 <h4>⚡ Liquidação Instantânea</h4>
-<p>Pagamentos rápidos e sem intermediários.</p>
+<p>Pagamentos rápidos sem intermediários.</p>
 </div>
 
 <div class="feature">
 <h4>🛡️ Segurança Premium</h4>
-<p>Estrutura moderna com proteção multicamadas.</p>
+<p>Infraestrutura robusta multicamadas.</p>
 </div>
 
 <div class="feature">
 <h4>🌍 Global First</h4>
-<p>Pronto para uso em qualquer lugar do mundo.</p>
+<p>Pronto para operar em qualquer lugar.</p>
 </div>
 
 </div>
@@ -367,15 +410,16 @@ Envie, receba e mova valor globalmente com velocidade extrema, taxas reduzidas e
 
 <script>
 function goLogin(){
-    window.location.href='login.html';
+window.location.href='login.html';
 }
 
 function goInfo(){
-    document.getElementById('info').scrollIntoView({
-        behavior:'smooth'
-    });
+document.getElementById('info').scrollIntoView({
+behavior:'smooth'
+});
 }
 </script>
 
 </body>
 </html>
+
