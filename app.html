@@ -4,246 +4,242 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORAX APP v2</title>
+<title>CORAX App</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#050505;
-    color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
 }
 
 .wrapper{
-    max-width:430px;
-    margin:auto;
-    min-height:100vh;
-    padding:20px 20px 100px;
+max-width:430px;
+margin:auto;
+min-height:100vh;
+padding:20px 20px 100px;
 }
 
-/* TOPBAR */
+/* HEADER */
 
 .topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
 }
 
 .brand{
-    font-size:24px;
-    letter-spacing:6px;
-    font-weight:300;
+font-size:24px;
+letter-spacing:6px;
+font-weight:300;
 }
 
 .profile{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#a855f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(168,85,247,.45);
+width:42px;
+height:42px;
+border-radius:50%;
+background:#a855f7;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px rgba(168,85,247,.45);
 }
 
 /* BALANCE */
 
 .balance{
-    background:linear-gradient(135deg,#111,#1d1d1d);
-    border-radius:24px;
-    padding:24px;
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 0 30px rgba(168,85,247,.08);
+background:linear-gradient(135deg,#111,#1d1d1d);
+border-radius:26px;
+padding:24px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(168,85,247,.08);
+position:relative;
+overflow:hidden;
+}
+
+.balance::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(168,85,247,.12);
+border-radius:50%;
+top:-70px;
+right:-70px;
+filter:blur(50px);
 }
 
 .balance small{
-    color:#888;
-    letter-spacing:2px;
+color:#999;
+letter-spacing:2px;
 }
 
 .amount{
-    font-size:44px;
-    margin-top:10px;
-    color:#a855f7;
-    font-weight:700;
+font-size:42px;
+font-weight:700;
+margin-top:10px;
+color:#fff;
 }
 
-.wallet{
-    color:#888;
-    margin-top:8px;
-    font-size:14px;
-}
-
-/* CHART */
-
-.chart{
-    height:90px;
-    margin-top:18px;
-    border-radius:16px;
-    background:
-    linear-gradient(180deg,rgba(168,85,247,.28),transparent),
-    linear-gradient(90deg,#a855f7,#6d28d9);
-    clip-path:polygon(0 80%,10% 72%,20% 75%,30% 48%,40% 58%,50% 30%,60% 38%,70% 20%,80% 32%,90% 12%,100% 0,100% 100%,0 100%);
-    opacity:.9;
+.change{
+margin-top:8px;
+color:#22c55e;
+font-size:14px;
 }
 
 /* ACTIONS */
 
 .actions{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-top:22px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:20px;
 }
 
 .action{
-    background:#111;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:18px;
-    padding:16px 8px;
-    text-align:center;
-    transition:.3s;
-}
-
-.action:hover{
-    transform:translateY(-4px);
-    border-color:#a855f7;
+background:#111;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:16px 10px;
+text-align:center;
+font-size:12px;
+color:#ddd;
 }
 
 .action span{
-    display:block;
-    font-size:22px;
-    margin-bottom:8px;
-}
-
-.action p{
-    font-size:12px;
-    color:#aaa;
-}
-
-/* SECTION */
-
-.section{
-    margin-top:32px;
-}
-
-.section h2{
-    font-size:18px;
-    color:#ddd;
-    margin-bottom:14px;
+display:block;
+font-size:22px;
+margin-bottom:8px;
 }
 
 /* TOKENS */
 
-.list{
-    display:grid;
-    gap:12px;
+.section{
+margin-top:28px;
 }
 
-.item{
-    background:#111;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:18px;
-    padding:16px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.section h2{
+font-size:18px;
+margin-bottom:14px;
+}
+
+.list{
+display:grid;
+gap:12px;
+}
+
+.token{
+background:#111;
+border-radius:18px;
+padding:16px;
+border:1px solid rgba(255,255,255,.06);
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .left{
-    display:flex;
-    gap:12px;
-    align-items:center;
+display:flex;
+gap:12px;
+align-items:center;
 }
 
-.coin{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#a855f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
+.icon{
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:18px;
+background:#1c1c1c;
 }
 
 .name{
-    font-size:15px;
+font-size:15px;
 }
 
 .sub{
-    color:#888;
-    font-size:12px;
-    margin-top:4px;
+font-size:12px;
+color:#888;
+margin-top:4px;
 }
 
 .right{
-    text-align:right;
+text-align:right;
 }
 
-.right strong{
-    display:block;
+.value{
+font-size:15px;
 }
 
 .green{
-    color:#22c55e;
-    font-size:12px;
+color:#22c55e;
+font-size:12px;
+margin-top:4px;
 }
 
-.red{
-    color:#ef4444;
-    font-size:12px;
+/* NEWS */
+
+.news{
+margin-top:18px;
+background:linear-gradient(135deg,#111,#1b1b1b);
+border-radius:22px;
+padding:18px;
+border:1px solid rgba(255,255,255,.06);
 }
 
-/* ACTIVITY */
+.news strong{
+display:block;
+font-size:16px;
+margin-bottom:8px;
+color:#a855f7;
+}
 
-.tx{
-    background:#111;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:18px;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.news p{
+color:#bbb;
+font-size:14px;
+line-height:1.5;
 }
 
 /* NAV */
 
 .nav{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:430px;
-    max-width:100%;
-    background:#0c0c0c;
-    border-top:1px solid rgba(255,255,255,.06);
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    padding:14px 0;
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:430px;
+max-width:100%;
+background:#0c0c0c;
+border-top:1px solid rgba(255,255,255,.06);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:14px 0;
 }
 
 .nav div{
-    text-align:center;
-    color:#777;
-    font-size:12px;
+text-align:center;
+font-size:12px;
+color:#777;
 }
 
 .nav span{
-    display:block;
-    font-size:20px;
-    margin-bottom:6px;
+display:block;
+font-size:20px;
+margin-bottom:6px;
 }
 
 .active{
-    color:#a855f7 !important;
+color:#a855f7 !important;
 }
 </style>
 </head>
@@ -259,16 +255,32 @@ body{
 
 <div class="balance">
 <small>TOTAL BALANCE</small>
-<div class="amount">$18,420.76</div>
-<div class="wallet">0x7f2...a9d1</div>
-<div class="chart"></div>
+<div class="amount">$24,580</div>
+<div class="change">▲ +8.42% este mês</div>
 </div>
 
 <div class="actions">
-<div class="action"><span>⬇️</span><p>Receive</p></div>
-<div class="action"><span>⬆️</span><p>Send</p></div>
-<div class="action"><span>💰</span><p>Stake</p></div>
-<div class="action"><span>🎁</span><p>Airdrop</p></div>
+
+<div class="action">
+<span>⬆️</span>
+Send
+</div>
+
+<div class="action">
+<span>⬇️</span>
+Receive
+</div>
+
+<div class="action">
+<span>💰</span>
+Stake
+</div>
+
+<div class="action">
+<span>🔁</span>
+Swap
+</div>
+
 </div>
 
 <div class="section">
@@ -276,45 +288,45 @@ body{
 
 <div class="list">
 
-<div class="item">
+<div class="token">
 <div class="left">
-<div class="coin">C</div>
+<div class="icon">🟣</div>
 <div>
-<div class="name">CORAX</div>
-<div class="sub">5,800 CRX</div>
+<div class="name">CRX Token</div>
+<div class="sub">8,420 CRX</div>
 </div>
 </div>
 <div class="right">
-<strong>$11,400</strong>
-<div class="green">+14.2%</div>
+<div class="value">$16,840</div>
+<div class="green">+12%</div>
 </div>
 </div>
 
-<div class="item">
+<div class="token">
 <div class="left">
-<div class="coin">E</div>
+<div class="icon">₿</div>
+<div>
+<div class="name">Bitcoin</div>
+<div class="sub">0.18 BTC</div>
+</div>
+</div>
+<div class="right">
+<div class="value">$7,020</div>
+<div class="green">+4%</div>
+</div>
+</div>
+
+<div class="token">
+<div class="left">
+<div class="icon">Ξ</div>
 <div>
 <div class="name">Ethereum</div>
-<div class="sub">1.54 ETH</div>
+<div class="sub">0.25 ETH</div>
 </div>
 </div>
 <div class="right">
-<strong>$4,220</strong>
-<div class="green">+2.8%</div>
-</div>
-</div>
-
-<div class="item">
-<div class="left">
-<div class="coin">U</div>
-<div>
-<div class="name">USDT</div>
-<div class="sub">2,800 USDT</div>
-</div>
-</div>
-<div class="right">
-<strong>$2,800</strong>
-<div class="sub">Stable</div>
+<div class="value">$720</div>
+<div class="green">+2%</div>
 </div>
 </div>
 
@@ -322,43 +334,21 @@ body{
 </div>
 
 <div class="section">
-<h2>Recent Activity</h2>
+<h2>Insights</h2>
 
-<div class="list">
-
-<div class="tx">
-<div>
-<strong>Received</strong>
-<div class="sub">3 min ago</div>
-</div>
-<div class="green">+$420</div>
+<div class="news">
+<strong>Staking Pool Aberto</strong>
+<p>Deposite CRX hoje e receba recompensas de até 18.5% APY automaticamente.</p>
 </div>
 
-<div class="tx">
-<div>
-<strong>Stake Reward</strong>
-<div class="sub">Today</div>
-</div>
-<div class="green">+$68</div>
-</div>
-
-<div class="tx">
-<div>
-<strong>Sent</strong>
-<div class="sub">Yesterday</div>
-</div>
-<div class="red">-$150</div>
-</div>
-
-</div>
 </div>
 
 </div>
 
 <div class="nav">
 <div class="active"><span>🏠</span>Home</div>
-<div><span>📈</span>Market</div>
-<div><span>🔔</span>Alerts</div>
+<div><span>💰</span>Stake</div>
+<div><span>📜</span>History</div>
 <div><span>⚙️</span>Settings</div>
 </div>
 
