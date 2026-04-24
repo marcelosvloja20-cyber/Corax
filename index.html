@@ -36,7 +36,7 @@ padding:24px;
 position:relative;
 }
 
-/* BG */
+/* BACKGROUND */
 
 .glow-one,
 .glow-two{
@@ -56,8 +56,8 @@ animation:pulse 8s infinite ease-in-out;
 }
 
 .glow-two{
-width:500px;
-height:500px;
+width:520px;
+height:520px;
 background:rgba(99,102,241,.10);
 bottom:-120px;
 left:50%;
@@ -71,14 +71,12 @@ animation:pulse 10s infinite ease-in-out;
 100%{transform:translateX(-50%) scale(1);}
 }
 
-/* CONTENT */
-
 .wrap{
 width:100%;
 max-width:430px;
 text-align:center;
-z-index:2;
 position:relative;
+z-index:2;
 animation:fadeUp 1s ease;
 }
 
@@ -95,14 +93,9 @@ transform:translateY(0);
 
 /* LOGO */
 
-.logo-box{
-text-align:center;
-}
-
-.crow-svg{
-width:280px;
-max-width:100%;
-filter:drop-shadow(0 0 40px rgba(168,85,247,.35));
+.logo{
+font-size:110px;
+filter:drop-shadow(0 0 28px rgba(168,85,247,.55));
 animation:float 4s ease-in-out infinite;
 }
 
@@ -112,19 +105,8 @@ animation:float 4s ease-in-out infinite;
 100%{transform:translateY(0);}
 }
 
-.eye{
-animation:blink 3s infinite;
-}
-
-@keyframes blink{
-0%,100%{opacity:1;}
-49%{opacity:1;}
-50%{opacity:.15;}
-51%{opacity:1;}
-}
-
 .brand{
-margin-top:10px;
+margin-top:6px;
 font-size:52px;
 font-weight:300;
 letter-spacing:12px;
@@ -154,7 +136,7 @@ color:#a855f7;
 margin-top:18px;
 font-size:16px;
 line-height:1.6;
-color:#c2c2c2;
+color:#c5c5c5;
 }
 
 /* BUTTONS */
@@ -262,8 +244,8 @@ color:#666;
 
 @media(max-width:480px){
 
-.crow-svg{
-width:235px;
+.logo{
+font-size:90px;
 }
 
 .brand{
@@ -292,60 +274,7 @@ grid-template-columns:1fr;
 
 <div class="wrap">
 
-<div class="logo-box">
-
-<svg viewBox="0 0 500 500" class="crow-svg">
-
-<defs>
-<filter id="glow">
-<feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-<feMerge>
-<feMergeNode in="coloredBlur"/>
-<feMergeNode in="SourceGraphic"/>
-</feMerge>
-</filter>
-
-<linearGradient id="feather" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#1f1f2d"/>
-<stop offset="100%" stop-color="#080808"/>
-</linearGradient>
-
-<linearGradient id="beak" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#9ca3af"/>
-<stop offset="100%" stop-color="#4b5563"/>
-</linearGradient>
-</defs>
-
-<path d="M130 250 L210 170 L220 340 Z" fill="url(#feather)"/>
-<path d="M95 285 L190 210 L200 390 Z" fill="url(#feather)"/>
-<path d="M155 170 L230 130 L245 260 Z" fill="url(#feather)"/>
-
-<path d="M370 250 L290 170 L280 340 Z" fill="url(#feather)"/>
-<path d="M405 285 L310 210 L300 390 Z" fill="url(#feather)"/>
-<path d="M345 170 L270 130 L255 260 Z" fill="url(#feather)"/>
-
-<path d="M160 180 Q250 70 340 180 Q325 330 250 410 Q175 330 160 180 Z"
-fill="url(#feather)"/>
-
-<ellipse cx="205" cy="220" rx="34" ry="20"
-fill="#a855f7"
-filter="url(#glow)"
-class="eye"/>
-
-<ellipse cx="295" cy="220" rx="34" ry="20"
-fill="#a855f7"
-filter="url(#glow)"
-class="eye"/>
-
-<circle cx="205" cy="220" r="8" fill="#fff"/>
-<circle cx="295" cy="220" r="8" fill="#fff"/>
-
-<path d="M250 220 L215 320 L250 390 L285 320 Z"
-fill="url(#beak)"/>
-
-</svg>
-
-</div>
+<div class="logo">🐦‍⬛</div>
 
 <h1 class="brand">CORAX</h1>
 <p class="tag">PAGAMENTOS DESCENTRALIZADOS</p>
@@ -406,6 +335,7 @@ Envie, receba e mova valor globalmente com velocidade extrema, taxas baixas e to
 </footer>
 
 </div>
+
 </section>
 
 <script>
@@ -422,4 +352,3 @@ behavior:'smooth'
 
 </body>
 </html>
-
