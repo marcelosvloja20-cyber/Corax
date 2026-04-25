@@ -8,178 +8,169 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#050505;
-    color:#fff;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    overflow:hidden;
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+overflow:hidden;
+position:relative;
 }
 
-/* BACKGROUND GLOW */
+/* BG */
 
 .glow{
-    position:absolute;
-    width:420px;
-    height:420px;
-    background:rgba(168,85,247,.18);
-    border-radius:50%;
-    filter:blur(120px);
-    animation:pulse 6s ease-in-out infinite;
+position:absolute;
+width:420px;
+height:420px;
+background:rgba(168,85,247,.16);
+border-radius:50%;
+filter:blur(120px);
+animation:pulse 7s infinite ease-in-out;
 }
 
 @keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.15);}
-    100%{transform:scale(1);}
+0%{transform:scale(1);}
+50%{transform:scale(1.12);}
+100%{transform:scale(1);}
 }
 
 /* CARD */
 
 .card{
-    position:relative;
-    z-index:2;
-    width:100%;
-    max-width:420px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(14px);
-    border-radius:28px;
-    padding:32px 24px;
-    box-shadow:0 0 40px rgba(168,85,247,.08);
-    animation:fadeUp 1s ease;
+position:relative;
+z-index:2;
+width:100%;
+max-width:420px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(14px);
+border-radius:28px;
+padding:32px 24px;
+box-shadow:0 0 40px rgba(168,85,247,.08);
+animation:fadeUp 1s ease;
 }
 
 @keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+from{
+opacity:0;
+transform:translateY(35px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 /* HEADER */
 
 .logo{
-    width:90px;
-    height:90px;
-    margin:auto;
-    border-radius:50%;
-    background:#a855f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:38px;
-    box-shadow:0 0 30px rgba(168,85,247,.45);
+font-size:72px;
+text-align:center;
+filter:drop-shadow(0 0 22px rgba(168,85,247,.55));
 }
 
 .brand{
-    text-align:center;
-    margin-top:18px;
-    font-size:34px;
-    letter-spacing:10px;
-    font-weight:300;
+text-align:center;
+margin-top:10px;
+font-size:34px;
+letter-spacing:10px;
+font-weight:300;
 }
 
 .sub{
-    text-align:center;
-    margin-top:8px;
-    color:#aaa;
-    font-size:14px;
+text-align:center;
+margin-top:8px;
+font-size:14px;
+color:#aaa;
 }
 
 /* FORM */
 
 .form{
-    margin-top:28px;
-    display:grid;
-    gap:16px;
+margin-top:26px;
+display:grid;
+gap:14px;
 }
 
 .input{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:#111;
-    color:#fff;
-    outline:none;
-    border:1px solid rgba(255,255,255,.06);
-    font-size:15px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#111;
+color:#fff;
+outline:none;
+border:1px solid rgba(255,255,255,.06);
+font-size:15px;
 }
 
 .input:focus{
-    border-color:#a855f7;
+border-color:#a855f7;
 }
 
 .row{
-    display:flex;
-    justify-content:space-between;
-    font-size:13px;
-    color:#888;
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:#888;
+padding:2px 2px 0;
 }
 
 .btn{
-    margin-top:6px;
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:#a855f7;
-    color:#fff;
-    font-weight:700;
-    letter-spacing:4px;
-    cursor:pointer;
-    transition:.3s;
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+font-weight:700;
+letter-spacing:4px;
+cursor:pointer;
+transition:.3s;
+font-size:14px;
 }
 
-.btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 28px rgba(168,85,247,.55);
+.primary{
+background:#a855f7;
+color:#fff;
+box-shadow:0 0 24px rgba(168,85,247,.35);
 }
 
-/* WALLET */
-
-.wallet-btn{
-    margin-top:14px;
-    width:100%;
-    padding:16px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.08);
-    background:#111;
-    color:#fff;
-    cursor:pointer;
-    transition:.3s;
+.primary:hover{
+transform:translateY(-3px);
+box-shadow:0 0 35px rgba(168,85,247,.55);
 }
 
-.wallet-btn:hover{
-    border-color:#a855f7;
+.secondary{
+background:#111;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+}
+
+.secondary:hover{
+border-color:#a855f7;
 }
 
 /* FOOT */
 
 .foot{
-    margin-top:22px;
-    text-align:center;
-    font-size:13px;
-    color:#888;
+margin-top:20px;
+text-align:center;
+font-size:13px;
+color:#888;
 }
 
 .foot a{
-    color:#a855f7;
-    text-decoration:none;
+color:#a855f7;
+text-decoration:none;
 }
 </style>
 </head>
@@ -190,15 +181,13 @@ body{
 
 <div class="card">
 
-<div class="logo">🐦</div>
-
+<div class="logo">🐦‍⬛</div>
 <h1 class="brand">CORAX</h1>
 <p class="sub">Acesse sua conta segura</p>
 
 <div class="form">
 
 <input type="email" class="input" placeholder="Email">
-
 <input type="password" class="input" placeholder="Senha">
 
 <div class="row">
@@ -206,10 +195,10 @@ body{
 <span>Esqueceu?</span>
 </div>
 
-<button class="btn" onclick="login()">ENTRAR</button>
+<button class="btn primary" onclick="login()">ENTRAR</button>
 
-<button class="wallet-btn" onclick="wallet()">
-Conectar Wallet
+<button class="btn secondary" onclick="wallet()">
+CONECTAR WALLET
 </button>
 
 </div>
@@ -222,11 +211,11 @@ Não possui conta? <a href="#">Criar agora</a>
 
 <script>
 function login(){
-    window.location.href='app.html';
+window.location.href='app.html';
 }
 
 function wallet(){
-    alert('Wallet Connect em breve.');
+alert('Wallet Connect em breve.');
 }
 </script>
 
