@@ -4,212 +4,212 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORAX Settings</title>
+<title>CORΛX Settings</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#050505;
-    color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
 }
 
 .wrapper{
-    max-width:430px;
-    margin:auto;
-    min-height:100vh;
-    padding:20px 20px 100px;
+max-width:430px;
+margin:auto;
+min-height:100vh;
+padding:20px 20px 110px;
 }
 
-/* HEADER */
+/* TOP */
 
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:24px;
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
 }
 
 .brand{
-    font-size:24px;
-    letter-spacing:6px;
-    font-weight:300;
+font-size:24px;
+letter-spacing:6px;
+font-weight:300;
 }
 
-.avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#a855f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(168,85,247,.45);
+.user{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#a855f7;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px rgba(168,85,247,.45);
 }
 
-/* PROFILE */
+/* HERO */
 
-.profile{
-    background:linear-gradient(135deg,#111,#1c1c1c);
-    border-radius:24px;
-    padding:22px;
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 0 28px rgba(168,85,247,.08);
+.hero{
+background:linear-gradient(135deg,#111,#1a1a1a);
+border-radius:26px;
+padding:24px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(168,85,247,.08);
+position:relative;
+overflow:hidden;
+margin-bottom:22px;
 }
 
-.profile h2{
-    font-size:20px;
-    margin-bottom:8px;
+.hero::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(168,85,247,.12);
+border-radius:50%;
+top:-70px;
+right:-70px;
+filter:blur(50px);
 }
 
-.profile p{
-    color:#999;
-    font-size:14px;
+.hero small{
+color:#888;
+letter-spacing:2px;
 }
 
-.wallet{
-    margin-top:12px;
-    color:#a855f7;
-    font-size:13px;
-    word-break:break-all;
+.hero h1{
+font-size:32px;
+margin-top:10px;
+}
+
+.hero p{
+margin-top:8px;
+font-size:14px;
+color:#bbb;
+line-height:1.6;
 }
 
 /* SECTION */
 
 .section{
-    margin-top:28px;
+background:#111;
+border-radius:22px;
+padding:18px;
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:16px;
 }
 
-.section h3{
-    font-size:16px;
-    color:#ddd;
-    margin-bottom:14px;
+.section h2{
+font-size:16px;
+color:#a855f7;
+margin-bottom:14px;
 }
 
-/* LIST */
-
-.list{
-    display:grid;
-    gap:12px;
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+font-size:14px;
 }
 
-.item{
-    background:#111;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:18px;
-    padding:16px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.row:last-child{
+border-bottom:none;
 }
 
-.left{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.value{
+color:#888;
+font-size:13px;
 }
 
-.icon{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:#1d1d1d;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:16px;
+.toggle{
+width:46px;
+height:24px;
+background:#222;
+border-radius:30px;
+position:relative;
+cursor:pointer;
 }
 
-.text strong{
-    display:block;
-    font-size:14px;
+.toggle::after{
+content:"";
+position:absolute;
+top:3px;
+left:3px;
+width:18px;
+height:18px;
+background:#fff;
+border-radius:50%;
+transition:.3s;
 }
 
-.text span{
-    color:#888;
-    font-size:12px;
+.toggle.active{
+background:#a855f7;
 }
 
-/* SWITCH */
-
-.switch{
-    width:46px;
-    height:26px;
-    border-radius:20px;
-    background:#2a2a2a;
-    position:relative;
+.toggle.active::after{
+left:25px;
 }
 
-.switch::after{
-    content:"";
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background:#fff;
-    position:absolute;
-    top:3px;
-    left:3px;
+/* LOGOUT */
+
+.btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#a855f7;
+color:#fff;
+font-weight:700;
+letter-spacing:3px;
+cursor:pointer;
+transition:.3s;
+margin-top:10px;
 }
 
-.on{
-    background:#a855f7;
-}
-
-.on::after{
-    left:23px;
-}
-
-/* BUTTON */
-
-.logout{
-    margin-top:30px;
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:#ef4444;
-    color:#fff;
-    font-weight:700;
-    letter-spacing:3px;
-    cursor:pointer;
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 0 24px rgba(168,85,247,.45);
 }
 
 /* NAV */
 
 .nav{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:430px;
-    max-width:100%;
-    background:#0c0c0c;
-    border-top:1px solid rgba(255,255,255,.06);
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    padding:14px 0;
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:430px;
+max-width:100%;
+background:#0c0c0c;
+border-top:1px solid rgba(255,255,255,.06);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:14px 0;
 }
 
 .nav div{
-    text-align:center;
-    color:#777;
-    font-size:12px;
+text-align:center;
+font-size:12px;
+color:#777;
+cursor:pointer;
 }
 
 .nav span{
-    display:block;
-    font-size:20px;
-    margin-bottom:6px;
+display:block;
+font-size:20px;
+margin-bottom:6px;
 }
 
-.active{
-    color:#a855f7 !important;
+.active-nav{
+color:#a855f7 !important;
 }
 </style>
 </head>
@@ -218,132 +218,122 @@ body{
 
 <div class="wrapper">
 
-<div class="topbar">
-<div class="brand">CORAX</div>
-<div class="avatar">C</div>
+<div class="top">
+<div class="brand">CORΛX</div>
+<div class="user">C</div>
 </div>
 
-<div class="profile">
-<h2>Conta Principal</h2>
-<p>coraxuser@email.com</p>
-<div class="wallet">0x7f2a9d18c24e7abf98d1</div>
+<div class="hero">
+<small>CONTROL CENTER</small>
+<h1>Settings</h1>
+<p>
+Gerencie segurança, preferências e controle total da sua conta CORΛX.
+</p>
 </div>
 
 <div class="section">
-<h3>Segurança</h3>
+<h2>Account</h2>
 
-<div class="list">
-
-<div class="item">
-<div class="left">
-<div class="icon">🔒</div>
-<div class="text">
-<strong>Face ID</strong>
-<span>Login biométrico</span>
-</div>
-</div>
-<div class="switch on"></div>
+<div class="row">
+<span>Wallet</span>
+<span class="value">0x8d3f...9217</span>
 </div>
 
-<div class="item">
-<div class="left">
-<div class="icon">🛡️</div>
-<div class="text">
-<strong>2FA</strong>
-<span>Autenticação dupla</span>
-</div>
-</div>
-<div class="switch"></div>
+<div class="row">
+<span>Email</span>
+<span class="value">user@email.com</span>
 </div>
 
+<div class="row">
+<span>Devices</span>
+<span class="value">2 Connected</span>
 </div>
 </div>
 
 <div class="section">
-<h3>Preferências</h3>
+<h2>Security</h2>
 
-<div class="list">
-
-<div class="item">
-<div class="left">
-<div class="icon">🌙</div>
-<div class="text">
-<strong>Dark Mode</strong>
-<span>Tema escuro ativo</span>
-</div>
-</div>
-<div class="switch on"></div>
+<div class="row">
+<span>Face ID</span>
+<div class="toggle active"></div>
 </div>
 
-<div class="item">
-<div class="left">
-<div class="icon">💵</div>
-<div class="text">
-<strong>Moeda</strong>
-<span>USD</span>
-</div>
-</div>
-<div>›</div>
+<div class="row">
+<span>2FA</span>
+<div class="toggle"></div>
 </div>
 
-<div class="item">
-<div class="left">
-<div class="icon">🌐</div>
-<div class="text">
-<strong>Idioma</strong>
-<span>Português</span>
-</div>
-</div>
-<div>›</div>
-</div>
-
+<div class="row">
+<span>Auto Lock</span>
+<div class="toggle active"></div>
 </div>
 </div>
 
 <div class="section">
-<h3>Sistema</h3>
+<h2>Preferences</h2>
 
-<div class="list">
-
-<div class="item">
-<div class="left">
-<div class="icon">📩</div>
-<div class="text">
-<strong>Suporte</strong>
-<span>Fale conosco</span>
-</div>
-</div>
-<div>›</div>
+<div class="row">
+<span>Language</span>
+<span class="value">English</span>
 </div>
 
-<div class="item">
-<div class="left">
-<div class="icon">📄</div>
-<div class="text">
-<strong>Termos</strong>
-<span>Política e privacidade</span>
-</div>
-</div>
-<div>›</div>
+<div class="row">
+<span>Currency</span>
+<span class="value">USD</span>
 </div>
 
+<div class="row">
+<span>Theme</span>
+<span class="value">Dark</span>
 </div>
 </div>
 
-<button class="logout" onclick="logout()">LOGOUT</button>
+<div class="section">
+<h2>System</h2>
+
+<div class="row">
+<span>Support</span>
+<span class="value">Open</span>
+</div>
+
+<div class="row">
+<span>Terms</span>
+<span class="value">View</span>
+</div>
+</div>
+
+<button class="btn" onclick="logout()">
+LOGOUT
+</button>
 
 </div>
 
 <div class="nav">
-<div><span>🏠</span>Home</div>
-<div><span>💰</span>Stake</div>
-<div><span>📜</span>History</div>
-<div class="active"><span>⚙️</span>Settings</div>
+<div onclick="goHome()"><span>🏠</span>Home</div>
+<div onclick="goHistory()"><span>📜</span>History</div>
+<div onclick="goMerchant()"><span>🏪</span>Merchant</div>
+<div class="active-nav" onclick="goSettings()"><span>⚙️</span>Settings</div>
 </div>
 
 <script>
 function logout(){
-    window.location.href='login.html';
+window.location.href='login.html';
+}
+
+function goHome(){
+window.location.href='app.html';
+}
+
+function goHistory(){
+window.location.href='history.html';
+}
+
+function goMerchant(){
+window.location.href='merchant.html';
+}
+
+function goSettings(){
+window.location.href='setting.html';
 }
 </script>
 
