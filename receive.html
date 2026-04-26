@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CORΛX Receive</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
+}
+
+.wrapper{
+max-width:430px;
+margin:auto;
+min-height:100vh;
+padding:20px 20px 110px;
+}
+
+/* TOP */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
+}
+
+.brand{
+font-size:24px;
+letter-spacing:6px;
+font-weight:300;
+}
+
+.user{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#a855f7;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px rgba(168,85,247,.45);
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#111,#1a1a1a);
+border-radius:26px;
+padding:24px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(168,85,247,.08);
+position:relative;
+overflow:hidden;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(168,85,247,.12);
+border-radius:50%;
+top:-70px;
+right:-70px;
+filter:blur(50px);
+}
+
+.hero small{
+color:#888;
+letter-spacing:2px;
+}
+
+.hero h1{
+font-size:34px;
+margin-top:10px;
+}
+
+.hero p{
+margin-top:8px;
+font-size:14px;
+color:#bbb;
+line-height:1.6;
+}
+
+/* BOX */
+
+.box{
+margin-top:24px;
+background:#111;
+border-radius:22px;
+padding:20px;
+border:1px solid rgba(255,255,255,.06);
+text-align:center;
+}
+
+.qr{
+width:220px;
+height:220px;
+margin:0 auto 18px;
+border-radius:18px;
+background:
+linear-gradient(45deg,#fff 25%,#000 25%,#000 50%,#fff 50%,#fff 75%,#000 75%,#000);
+background-size:26px 26px;
+border:10px solid #fff;
+}
+
+.label{
+font-size:13px;
+color:#888;
+margin-bottom:10px;
+text-align:left;
+}
+
+.select,
+.input{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:14px;
+background:#0a0a0a;
+color:#fff;
+font-size:15px;
+margin-bottom:14px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.address{
+padding:14px;
+border-radius:14px;
+background:#0a0a0a;
+font-size:13px;
+word-break:break-all;
+margin-top:10px;
+color:#bbb;
+}
+
+.btn{
+margin-top:14px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#a855f7;
+color:#fff;
+font-weight:700;
+letter-spacing:3px;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 0 24px rgba(168,85,247,.45);
+}
+
+/* NAV */
+
+.nav{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:430px;
+max-width:100%;
+background:#0c0c0c;
+border-top:1px solid rgba(255,255,255,.06);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:14px 0;
+}
+
+.nav div{
+text-align:center;
+font-size:12px;
+color:#777;
+cursor:pointer;
+}
+
+.nav span{
+display:block;
+font-size:20px;
+margin-bottom:6px;
+}
+
+.active{
+color:#a855f7 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="top">
+<div class="brand">CORΛX</div>
+<div class="user">C</div>
+</div>
+
+<div class="hero">
+<small>GLOBAL PAYMENTS</small>
+<h1>Receive Crypto</h1>
+<p>
+Receba pagamentos instantaneamente em qualquer lugar do mundo com QR Code e multi-chain.
+</p>
+</div>
+
+<div class="box">
+
+<div class="qr"></div>
+
+<div class="label">Network</div>
+<select class="select">
+<option>Ethereum</option>
+<option>BNB Chain</option>
+<option>Polygon</option>
+<option>Base</option>
+<option>Tron</option>
+</select>
+
+<div class="label">Asset</div>
+<select class="select">
+<option>USDT</option>
+<option>USDC</option>
+<option>ETH</option>
+<option>BNB</option>
+</select>
+
+<div class="label">Request Amount (optional)</div>
+<input type="number" class="input" placeholder="0.00">
+
+<div class="address" id="walletAddress">
+0x8d3f91a2b5e67c4d8fa1b34ce9d7a221fbc09217
+</div>
+
+<button class="btn" onclick="copyWallet()">
+COPY ADDRESS
+</button>
+
+<button class="btn" onclick="shareRequest()" style="background:#111;border:1px solid rgba(255,255,255,.08);margin-top:10px;">
+SHARE REQUEST
+</button>
+
+</div>
+
+</div>
+
+<div class="nav">
+<div onclick="goHome()"><span>🏠</span>Home</div>
+<div onclick="goSend()"><span>📤</span>Send</div>
+<div class="active" onclick="goReceive()"><span>📥</span>Receive</div>
+<div onclick="goSettings()"><span>⚙️</span>Settings</div>
+</div>
+
+<script>
+function copyWallet(){
+const text = document.getElementById('walletAddress').innerText;
+navigator.clipboard.writeText(text);
+alert('Endereço copiado.');
+}
+
+function shareRequest(){
+alert('Link de pagamento CORΛX compartilhado.');
+}
+
+function goHome(){
+window.location.href='app.html';
+}
+
+function goSend(){
+window.location.href='send.html';
+}
+
+function goReceive(){
+window.location.href='receive.html';
+}
+
+function goSettings(){
+window.location.href='settings.html';
+}
+</script>
+
+</body>
+</html>
