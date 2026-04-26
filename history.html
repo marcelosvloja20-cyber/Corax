@@ -4,207 +4,204 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORAX History</title>
+<title>CORΛX History</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#050505;
-    color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
 }
 
 .wrapper{
-    max-width:430px;
-    margin:auto;
-    min-height:100vh;
-    padding:20px 20px 100px;
+max-width:430px;
+margin:auto;
+min-height:100vh;
+padding:20px 20px 110px;
 }
 
-/* HEADER */
+/* TOP */
 
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:24px;
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
 }
 
 .brand{
-    font-size:24px;
-    letter-spacing:6px;
-    font-weight:300;
+font-size:24px;
+letter-spacing:6px;
+font-weight:300;
 }
 
-.icon{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#111;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border:1px solid rgba(255,255,255,.06);
+.user{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#a855f7;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px rgba(168,85,247,.45);
 }
 
-/* SUMMARY */
+/* HERO */
 
-.card{
-    background:linear-gradient(135deg,#111,#1c1c1c);
-    border-radius:24px;
-    padding:22px;
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 0 28px rgba(168,85,247,.08);
+.hero{
+background:linear-gradient(135deg,#111,#1a1a1a);
+border-radius:26px;
+padding:24px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(168,85,247,.08);
+margin-bottom:22px;
+position:relative;
+overflow:hidden;
 }
 
-.card small{
-    color:#888;
-    letter-spacing:2px;
+.hero::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(168,85,247,.12);
+border-radius:50%;
+top:-70px;
+right:-70px;
+filter:blur(50px);
 }
 
-.total{
-    font-size:38px;
-    color:#a855f7;
-    font-weight:700;
-    margin-top:10px;
+.hero small{
+color:#888;
+letter-spacing:2px;
 }
 
-.desc{
-    color:#999;
-    margin-top:8px;
-    font-size:14px;
+.hero h1{
+font-size:32px;
+margin-top:10px;
 }
 
-/* FILTER */
+.hero p{
+margin-top:8px;
+font-size:14px;
+color:#bbb;
+line-height:1.6;
+}
+
+/* FILTERS */
 
 .filters{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    margin-top:22px;
+display:flex;
+gap:10px;
+overflow:auto;
+padding-bottom:8px;
+margin-bottom:18px;
 }
 
 .filter{
-    background:#111;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:14px;
-    padding:12px 8px;
-    text-align:center;
-    font-size:12px;
-    color:#aaa;
+padding:10px 14px;
+border-radius:14px;
+background:#111;
+border:1px solid rgba(255,255,255,.06);
+font-size:13px;
+white-space:nowrap;
+cursor:pointer;
+color:#aaa;
 }
 
-.active{
-    border-color:#a855f7;
-    color:#a855f7;
-}
-
-/* SECTION */
-
-.section{
-    margin-top:28px;
-}
-
-.section h2{
-    font-size:18px;
-    margin-bottom:14px;
+.filter.active{
+background:#a855f7;
+color:#fff;
+border-color:#a855f7;
 }
 
 /* LIST */
 
 .list{
-    display:grid;
-    gap:12px;
+display:grid;
+gap:14px;
 }
 
-.tx{
-    background:#111;
-    border-radius:18px;
-    padding:16px;
-    border:1px solid rgba(255,255,255,.06);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.item{
+background:#111;
+border-radius:20px;
+padding:18px;
+border:1px solid rgba(255,255,255,.06);
 }
 
-.left{
-    display:flex;
-    gap:12px;
-    align-items:center;
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.circle{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#1f1f1f;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:18px;
+.title{
+font-size:15px;
+font-weight:700;
 }
 
-.name{
-    font-size:15px;
-}
-
-.sub{
-    color:#888;
-    font-size:12px;
-    margin-top:4px;
-}
-
-.right{
-    text-align:right;
+.amount{
+font-size:15px;
+font-weight:700;
 }
 
 .green{
-    color:#22c55e;
+color:#22c55e;
 }
 
 .red{
-    color:#ef4444;
+color:#ef4444;
 }
 
-.pending{
-    color:#f59e0b;
+.purple{
+color:#a855f7;
+}
+
+.meta{
+margin-top:8px;
+font-size:13px;
+color:#888;
+line-height:1.5;
 }
 
 /* NAV */
 
 .nav{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:430px;
-    max-width:100%;
-    background:#0c0c0c;
-    border-top:1px solid rgba(255,255,255,.06);
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    padding:14px 0;
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:430px;
+max-width:100%;
+background:#0c0c0c;
+border-top:1px solid rgba(255,255,255,.06);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:14px 0;
 }
 
 .nav div{
-    text-align:center;
-    color:#777;
-    font-size:12px;
+text-align:center;
+font-size:12px;
+color:#777;
+cursor:pointer;
 }
 
 .nav span{
-    display:block;
-    font-size:20px;
-    margin-bottom:6px;
+display:block;
+font-size:20px;
+margin-bottom:6px;
 }
 
-.nav-active{
-    color:#a855f7 !important;
+.active-nav{
+color:#a855f7 !important;
 }
 </style>
 </head>
@@ -213,110 +210,112 @@ body{
 
 <div class="wrapper">
 
-<div class="topbar">
-<div class="brand">CORAX</div>
-<div class="icon">📜</div>
+<div class="top">
+<div class="brand">CORΛX</div>
+<div class="user">C</div>
 </div>
 
-<div class="card">
-<small>TOTAL MOVIMENTADO</small>
-<div class="total">$82,540</div>
-<div class="desc">Últimos 30 dias de atividade</div>
+<div class="hero">
+<small>ACTIVITY CENTER</small>
+<h1>History</h1>
+<p>
+Acompanhe pagamentos, swaps, staking rewards e movimentações da sua conta.
+</p>
 </div>
 
 <div class="filters">
-<div class="filter active">Tudo</div>
-<div class="filter">Send</div>
-<div class="filter">Receive</div>
-<div class="filter">Stake</div>
+<div class="filter active">All</div>
+<div class="filter">Payments</div>
+<div class="filter">Swaps</div>
+<div class="filter">Rewards</div>
+<div class="filter">Merchant</div>
 </div>
-
-<div class="section">
-<h2>Recent Activity</h2>
 
 <div class="list">
 
-<div class="tx">
-<div class="left">
-<div class="circle">⬇️</div>
-<div>
-<div class="name">Received</div>
-<div class="sub">Hoje • 14:32</div>
+<div class="item">
+<div class="row">
+<div class="title">Received USDT</div>
+<div class="amount green">+$250.00</div>
 </div>
-</div>
-<div class="right green">
-+$520
-<div class="sub">Confirmado</div>
+<div class="meta">
+From: 0x4e3a...8c91<br>
+Today • Completed
 </div>
 </div>
 
-<div class="tx">
-<div class="left">
-<div class="circle">⬆️</div>
-<div>
-<div class="name">Sent</div>
-<div class="sub">Hoje • 11:08</div>
+<div class="item">
+<div class="row">
+<div class="title">Sent ETH</div>
+<div class="amount red">-0.145 ETH</div>
 </div>
-</div>
-<div class="right red">
--$180
-<div class="sub">Concluído</div>
+<div class="meta">
+To: 0x9f71...2ab3<br>
+Today • Completed
 </div>
 </div>
 
-<div class="tx">
-<div class="left">
-<div class="circle">💰</div>
-<div>
-<div class="name">Stake Reward</div>
-<div class="sub">Ontem</div>
+<div class="item">
+<div class="row">
+<div class="title">Swap USDT → ETH</div>
+<div class="amount purple">$500</div>
 </div>
-</div>
-<div class="right green">
-+42 CRX
-<div class="sub">Pago</div>
+<div class="meta">
+Fee: 0.15%<br>
+Yesterday • Completed
 </div>
 </div>
 
-<div class="tx">
-<div class="left">
-<div class="circle">🎁</div>
-<div>
-<div class="name">Airdrop</div>
-<div class="sub">2 dias atrás</div>
+<div class="item">
+<div class="row">
+<div class="title">Staking Reward</div>
+<div class="amount green">+$18.42</div>
 </div>
-</div>
-<div class="right green">
-+150 CRX
-<div class="sub">Recebido</div>
+<div class="meta">
+USDC Pool<br>
+2 days ago • Claimed
 </div>
 </div>
 
-<div class="tx">
-<div class="left">
-<div class="circle">⏳</div>
-<div>
-<div class="name">Withdraw</div>
-<div class="sub">3 dias atrás</div>
+<div class="item">
+<div class="row">
+<div class="title">Merchant Sale</div>
+<div class="amount green">+$1,280</div>
 </div>
-</div>
-<div class="right pending">
--$300
-<div class="sub">Pendente</div>
+<div class="meta">
+Order #CX1294<br>
+3 days ago • Settled
 </div>
 </div>
 
-</div>
 </div>
 
 </div>
 
 <div class="nav">
-<div><span>🏠</span>Home</div>
-<div><span>💰</span>Stake</div>
-<div class="nav-active"><span>📜</span>History</div>
-<div><span>⚙️</span>Settings</div>
+<div onclick="goHome()"><span>🏠</span>Home</div>
+<div class="active-nav" onclick="goHistory()"><span>📜</span>History</div>
+<div onclick="goMerchant()"><span>🏪</span>Merchant</div>
+<div onclick="goSettings()"><span>⚙️</span>Settings</div>
 </div>
+
+<script>
+function goHome(){
+window.location.href='app.html';
+}
+
+function goHistory(){
+window.location.href='history.html';
+}
+
+function goMerchant(){
+window.location.href='merchant.html';
+}
+
+function goSettings(){
+window.location.href='settings.html';
+}
+</script>
 
 </body>
 </html>
