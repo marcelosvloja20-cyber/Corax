@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORAX App</title>
+<title>CORΛX Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
 <style>
 *{
@@ -23,16 +25,16 @@ color:#fff;
 max-width:430px;
 margin:auto;
 min-height:100vh;
-padding:20px 20px 100px;
+padding:20px 20px 110px;
 }
 
-/* HEADER */
+/* TOP */
 
-.topbar{
+.top{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:22px;
+margin-bottom:20px;
 }
 
 .brand{
@@ -41,57 +43,65 @@ letter-spacing:6px;
 font-weight:300;
 }
 
-.profile{
+.user{
 width:42px;
 height:42px;
 border-radius:50%;
 background:#a855f7;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 font-weight:bold;
 box-shadow:0 0 20px rgba(168,85,247,.45);
 }
 
-/* BALANCE */
+/* WALLET CARD */
 
-.balance{
-background:linear-gradient(135deg,#111,#1d1d1d);
+.card{
+background:linear-gradient(135deg,#111,#1b1b1b);
 border-radius:26px;
 padding:24px;
 border:1px solid rgba(255,255,255,.08);
-box-shadow:0 0 30px rgba(168,85,247,.08);
 position:relative;
 overflow:hidden;
+box-shadow:0 0 30px rgba(168,85,247,.08);
 }
 
-.balance::after{
+.card::after{
 content:"";
 position:absolute;
 width:180px;
 height:180px;
-background:rgba(168,85,247,.12);
+background:rgba(168,85,247,.14);
 border-radius:50%;
 top:-70px;
 right:-70px;
 filter:blur(50px);
 }
 
-.balance small{
-color:#999;
+.label{
+font-size:12px;
 letter-spacing:2px;
+color:#888;
 }
 
-.amount{
+.balance{
 font-size:42px;
 font-weight:700;
 margin-top:10px;
 }
 
-.change{
+.address{
+margin-top:10px;
+font-size:13px;
+color:#bbb;
+word-break:break-all;
+}
+
+.network{
 margin-top:8px;
-color:#22c55e;
-font-size:14px;
+font-size:13px;
+color:#a855f7;
 }
 
 /* ACTIONS */
@@ -110,7 +120,6 @@ border-radius:18px;
 padding:16px 10px;
 text-align:center;
 font-size:12px;
-color:#ddd;
 cursor:pointer;
 }
 
@@ -120,94 +129,26 @@ font-size:22px;
 margin-bottom:8px;
 }
 
-/* TOKENS */
+/* INFO */
 
-.section{
-margin-top:28px;
-}
-
-.section h2{
-font-size:18px;
-margin-bottom:14px;
-}
-
-.list{
-display:grid;
-gap:12px;
-}
-
-.token{
+.box{
+margin-top:22px;
 background:#111;
-border-radius:18px;
-padding:16px;
-border:1px solid rgba(255,255,255,.06);
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.left{
-display:flex;
-gap:12px;
-align-items:center;
-}
-
-.icon{
-width:42px;
-height:42px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:18px;
-background:#1c1c1c;
-}
-
-.name{
-font-size:15px;
-}
-
-.sub{
-font-size:12px;
-color:#888;
-margin-top:4px;
-}
-
-.right{
-text-align:right;
-}
-
-.value{
-font-size:15px;
-}
-
-.green{
-color:#22c55e;
-font-size:12px;
-margin-top:4px;
-}
-
-/* INSIGHT */
-
-.news{
-margin-top:18px;
-background:linear-gradient(135deg,#111,#1b1b1b);
-border-radius:22px;
+border-radius:20px;
 padding:18px;
 border:1px solid rgba(255,255,255,.06);
 }
 
-.news strong{
-display:block;
+.box h3{
 font-size:16px;
-margin-bottom:8px;
+margin-bottom:10px;
 color:#a855f7;
 }
 
-.news p{
-color:#bbb;
+.box p{
 font-size:14px;
-line-height:1.5;
+line-height:1.6;
+color:#bbb;
 }
 
 /* NAV */
@@ -249,84 +190,30 @@ color:#a855f7 !important;
 
 <div class="wrapper">
 
-<div class="topbar">
-<div class="brand">CORAX</div>
-<div class="profile">C</div>
+<div class="top">
+<div class="brand">CORΛX</div>
+<div class="user">C</div>
 </div>
 
-<div class="balance">
-<small>TOTAL BALANCE</small>
-<div class="amount">$24,580</div>
-<div class="change">▲ +8.42% este mês</div>
+<div class="card">
+<div class="label">TOTAL BALANCE</div>
+<div class="balance" id="balance">0 ETH</div>
+<div class="address" id="wallet">Conectando...</div>
+<div class="network" id="network">Rede...</div>
 </div>
 
 <div class="actions">
-
 <div class="action"><span>⬆️</span>Send</div>
 <div class="action"><span>⬇️</span>Receive</div>
 <div class="action" onclick="goStake()"><span>💰</span>Stake</div>
-<div class="action"><span>🔁</span>Swap</div>
-
+<div class="action" onclick="disconnectWallet()"><span>🚪</span>Exit</div>
 </div>
 
-<div class="section">
-<h2>Assets</h2>
-
-<div class="list">
-
-<div class="token">
-<div class="left">
-<div class="icon">🟣</div>
-<div>
-<div class="name">CRX Token</div>
-<div class="sub">8,420 CRX</div>
-</div>
-</div>
-<div class="right">
-<div class="value">$16,840</div>
-<div class="green">+12%</div>
-</div>
-</div>
-
-<div class="token">
-<div class="left">
-<div class="icon">₿</div>
-<div>
-<div class="name">Bitcoin</div>
-<div class="sub">0.18 BTC</div>
-</div>
-</div>
-<div class="right">
-<div class="value">$7,020</div>
-<div class="green">+4%</div>
-</div>
-</div>
-
-<div class="token">
-<div class="left">
-<div class="icon">Ξ</div>
-<div>
-<div class="name">Ethereum</div>
-<div class="sub">0.25 ETH</div>
-</div>
-</div>
-<div class="right">
-<div class="value">$720</div>
-<div class="green">+2%</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="section">
-<h2>Insights</h2>
-
-<div class="news">
-<strong>Staking Pool Aberto</strong>
-<p>Deposite CRX hoje e receba recompensas de até 18.5% APY automaticamente.</p>
-</div>
-
+<div class="box">
+<h3>Money Without Borders</h3>
+<p>
+Sua carteira conectada ao ecossistema CORΛX. Transfira valor globalmente com liberdade financeira e infraestrutura multi-chain.
+</p>
 </div>
 
 </div>
@@ -339,18 +226,67 @@ color:#a855f7 !important;
 </div>
 
 <script>
+async function loadWallet(){
+
+if(typeof window.ethereum === 'undefined'){
+document.getElementById('wallet').innerText='Wallet não detectada';
+return;
+}
+
+try{
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+const accounts = await provider.listAccounts();
+
+if(accounts.length === 0){
+window.location.href='login.html';
+return;
+}
+
+const signer = provider.getSigner();
+const address = await signer.getAddress();
+
+document.getElementById('wallet').innerText =
+address.substring(0,6)+'...'+address.substring(address.length-4);
+
+const balanceWei = await provider.getBalance(address);
+const balanceEth = ethers.utils.formatEther(balanceWei);
+
+document.getElementById('balance').innerText =
+parseFloat(balanceEth).toFixed(4)+' ETH';
+
+const network = await provider.getNetwork();
+
+document.getElementById('network').innerText =
+'Rede: ' + network.name;
+
+}catch(error){
+document.getElementById('wallet').innerText='Erro ao conectar';
+}
+}
+
+function disconnectWallet(){
+window.location.href='login.html';
+}
+
 function goHome(){
 window.location.href='app.html';
 }
+
 function goStake(){
 window.location.href='stake.html';
 }
+
 function goHistory(){
 window.location.href='history.html';
 }
+
 function goSettings(){
 window.location.href='settings.html';
 }
+
+loadWallet();
 </script>
 
 </body>
