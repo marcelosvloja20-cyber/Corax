@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORAX Login</title>
+<title>CORΛX Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
 <style>
 *{
@@ -26,8 +28,6 @@ overflow:hidden;
 position:relative;
 }
 
-/* BG */
-
 .glow{
 position:absolute;
 width:420px;
@@ -44,8 +44,6 @@ animation:pulse 7s infinite ease-in-out;
 100%{transform:scale(1);}
 }
 
-/* CARD */
-
 .card{
 position:relative;
 z-index:2;
@@ -57,21 +55,7 @@ backdrop-filter:blur(14px);
 border-radius:28px;
 padding:32px 24px;
 box-shadow:0 0 40px rgba(168,85,247,.08);
-animation:fadeUp 1s ease;
 }
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(35px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* HEADER */
 
 .logo{
 font-size:72px;
@@ -93,8 +77,6 @@ margin-top:8px;
 font-size:14px;
 color:#aaa;
 }
-
-/* FORM */
 
 .form{
 margin-top:26px;
@@ -118,14 +100,6 @@ font-size:15px;
 border-color:#a855f7;
 }
 
-.row{
-display:flex;
-justify-content:space-between;
-font-size:13px;
-color:#888;
-padding:2px 2px 0;
-}
-
 .btn{
 width:100%;
 padding:16px;
@@ -146,7 +120,6 @@ box-shadow:0 0 24px rgba(168,85,247,.35);
 
 .primary:hover{
 transform:translateY(-3px);
-box-shadow:0 0 35px rgba(168,85,247,.55);
 }
 
 .secondary{
@@ -159,18 +132,19 @@ color:#fff;
 border-color:#a855f7;
 }
 
-/* FOOT */
+.wallet-box{
+margin-top:12px;
+font-size:13px;
+color:#999;
+text-align:center;
+word-break:break-all;
+}
 
 .foot{
 margin-top:20px;
 text-align:center;
 font-size:13px;
 color:#888;
-}
-
-.foot a{
-color:#a855f7;
-text-decoration:none;
 }
 </style>
 </head>
@@ -182,40 +156,68 @@ text-decoration:none;
 <div class="card">
 
 <div class="logo">🐦‍⬛</div>
-<h1 class="brand">CORAX</h1>
-<p class="sub">Acesse sua conta segura</p>
+<h1 class="brand">CORΛX</h1>
+<p class="sub">Money Without Borders</p>
 
 <div class="form">
 
 <input type="email" class="input" placeholder="Email">
 <input type="password" class="input" placeholder="Senha">
 
-<div class="row">
-<span>Lembrar login</span>
-<span>Esqueceu?</span>
-</div>
-
-<button class="btn primary" onclick="login()">ENTRAR</button>
-
-<button class="btn secondary" onclick="wallet()">
-CONECTAR WALLET
+<button class="btn primary" onclick="login()">
+ENTRAR
 </button>
+
+<button class="btn secondary" onclick="connectWallet()">
+CONNECT WALLET
+</button>
+
+<div class="wallet-box" id="walletStatus">
+Nenhuma wallet conectada
+</div>
 
 </div>
 
 <div class="foot">
-Não possui conta? <a href="#">Criar agora</a>
+Acesso seguro multi-chain
 </div>
 
 </div>
 
 <script>
-function login(){
-window.location.href='app.html';
+async function connectWallet(){
+
+if(typeof window.ethereum === 'undefined'){
+alert('MetaMask não encontrada.');
+return;
 }
 
-function wallet(){
-alert('Wallet Connect em breve.');
+try{
+await ethereum.request({
+method:'eth_requestAccounts'
+});
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+const address = await signer.getAddress();
+
+document.getElementById('walletStatus').innerText =
+'Wallet: ' +
+address.substring(0,6) +
+'...' +
+address.substring(address.length-4);
+
+setTimeout(()=>{
+window.location.href='app.html';
+},1200);
+
+}catch(error){
+alert('Conexão cancelada.');
+}
+}
+
+function login(){
+window.location.href='app.html';
 }
 </script>
 
