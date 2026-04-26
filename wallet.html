@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CORΛX Wallet</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#050505;
+color:#fff;
+}
+
+.wrapper{
+max-width:430px;
+margin:auto;
+min-height:100vh;
+padding:20px 20px 110px;
+}
+
+/* TOP */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
+}
+
+.brand{
+font-size:24px;
+letter-spacing:6px;
+font-weight:300;
+}
+
+.user{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#a855f7;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+box-shadow:0 0 20px rgba(168,85,247,.45);
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#111,#1a1a1a);
+border-radius:26px;
+padding:24px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 30px rgba(168,85,247,.08);
+position:relative;
+overflow:hidden;
+margin-bottom:22px;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(168,85,247,.12);
+border-radius:50%;
+top:-70px;
+right:-70px;
+filter:blur(50px);
+}
+
+.hero small{
+color:#888;
+letter-spacing:2px;
+}
+
+.hero h1{
+font-size:32px;
+margin-top:10px;
+}
+
+.hero p{
+margin-top:8px;
+font-size:14px;
+color:#bbb;
+line-height:1.6;
+}
+
+/* CARD */
+
+.card{
+background:#111;
+border-radius:22px;
+padding:20px;
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:16px;
+}
+
+.card h2{
+font-size:16px;
+color:#a855f7;
+margin-bottom:14px;
+}
+
+.wallet{
+padding:16px;
+border-radius:16px;
+background:#0a0a0a;
+margin-bottom:12px;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.05);
+transition:.3s;
+}
+
+.wallet:hover{
+border-color:#a855f7;
+transform:translateY(-2px);
+}
+
+.wallet strong{
+display:block;
+font-size:15px;
+}
+
+.wallet span{
+font-size:13px;
+color:#888;
+}
+
+.status{
+padding:16px;
+border-radius:16px;
+background:#0a0a0a;
+line-height:1.8;
+font-size:14px;
+color:#bbb;
+}
+
+.badge{
+display:inline-block;
+padding:6px 10px;
+border-radius:20px;
+background:#a855f7;
+font-size:12px;
+margin-top:8px;
+}
+
+.btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#a855f7;
+color:#fff;
+font-weight:700;
+letter-spacing:3px;
+cursor:pointer;
+transition:.3s;
+margin-top:14px;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 0 24px rgba(168,85,247,.45);
+}
+
+/* NAV */
+
+.nav{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:430px;
+max-width:100%;
+background:#0c0c0c;
+border-top:1px solid rgba(255,255,255,.06);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:14px 0;
+}
+
+.nav div{
+text-align:center;
+font-size:12px;
+color:#777;
+cursor:pointer;
+}
+
+.nav span{
+display:block;
+font-size:20px;
+margin-bottom:6px;
+}
+
+.active-nav{
+color:#a855f7 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="top">
+<div class="brand">CORΛX</div>
+<div class="user">W</div>
+</div>
+
+<div class="hero">
+<small>WEB3 ACCESS</small>
+<h1>Wallet Hub</h1>
+<p>
+Conecte sua carteira e utilize todo o ecossistema CORΛX com total controle.
+</p>
+</div>
+
+<div class="card">
+<h2>Connect Wallet</h2>
+
+<div class="wallet" onclick="connectWallet('MetaMask')">
+<strong>🦊 MetaMask</strong>
+<span>Ethereum / Multi-chain</span>
+</div>
+
+<div class="wallet" onclick="connectWallet('Trust Wallet')">
+<strong>🛡 Trust Wallet</strong>
+<span>Mobile / WalletConnect</span>
+</div>
+
+<div class="wallet" onclick="connectWallet('Coinbase Wallet')">
+<strong>💼 Coinbase Wallet</strong>
+<span>Secure self-custody</span>
+</div>
+
+<div class="wallet" onclick="connectWallet('Rabby')">
+<strong>🐰 Rabby</strong>
+<span>Advanced DeFi wallet</span>
+</div>
+</div>
+
+<div class="card">
+<h2>Connection Status</h2>
+
+<div class="status" id="statusBox">
+Wallet: Not Connected<br>
+Address: --<br>
+Network: --<br>
+Balance: --
+</div>
+
+<div class="badge" id="badge">
+Offline
+</div>
+
+<button class="btn" onclick="disconnectWallet()">
+DISCONNECT
+</button>
+
+</div>
+
+</div>
+
+<div class="nav">
+<div onclick="goHome()"><span>🏠</span>Home</div>
+<div onclick="goSwap()"><span>🔄</span>Swap</div>
+<div class="active-nav" onclick="goWallet()"><span>👛</span>Wallet</div>
+<div onclick="goSettings()"><span>⚙️</span>Settings</div>
+</div>
+
+<script>
+function connectWallet(name){
+
+document.getElementById('statusBox').innerHTML =
+'Wallet: ' + name + '<br>' +
+'Address: 0x8d3f...9217<br>' +
+'Network: Ethereum<br>' +
+'Balance: $12,480';
+
+document.getElementById('badge').innerHTML = 'Connected';
+}
+
+function disconnectWallet(){
+
+document.getElementById('statusBox').innerHTML =
+'Wallet: Not Connected<br>Address: --<br>Network: --<br>Balance: --';
+
+document.getElementById('badge').innerHTML = 'Offline';
+}
+
+function goHome(){
+window.location.href='app.html';
+}
+
+function goSwap(){
+window.location.href='swap.html';
+}
+
+function goWallet(){
+window.location.href='wallet.html';
+}
+
+function goSettings(){
+window.location.href='setting.html';
+}
+</script>
+
+</body>
+</html>
