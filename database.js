@@ -1,222 +1,108 @@
 /* ===================================
    CORΛX MASTER DATABASE.JS v1
-   PostgreSQL Data Layer
+   MongoDB Persistence Layer
 =================================== */
 
-const { Pool } = require("pg");
+const { MongoClient, ObjectId } = require("mongodb");
 
 /* ===================================
    CONFIG
 =================================== */
 
-const DB = new Pool({
-host:
-process.env.DB_HOST ||
-"localhost",
+const URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017";
+const DB_NAME = "corax";
 
-port:
-process.env.DB_PORT || 5432,
-
-user:
-process.env.DB_USER ||
-"postgres",
-
-password:
-process.env.DB_PASSWORD ||
-"postgres",
-
-database:
-process.env.DB_NAME ||
-"corax",
-
-ssl:
-process.env.DB_SSL === "true"
-? { rejectUnauthorized:false }
-: false
-});
+let client;
+let db;
 
 /* ===================================
    CONNECT
 =================================== */
 
-DB.connect()
-.then(()=>{
-console.log(
-"CORΛX PostgreSQL Connected"
-);
-})
-.catch(err=>{
-console.error(
-"DB Error:",
-err.message
-);
+async function connectDB(){
+
+if(db) return db;
+
+client = new MongoClient(URI);
+
+await client.connect();
+
+db = client.db(DB_NAME);
+
+console.log("CORΛX Database Connected");
+
+return db;
+
+}
+
+/* ===================================
+   COLLECTIONS
+=================================== */
+
+async function users(){
+
+return (await connectDB()).collection("users");
+
+}
+
+async function transactions(){
+
+return (await connectDB()).collection("transactions");
+
+}
+
+async function referrals(){
+
+return (await connectDB()).collection("referrals");
+
+}
+
+async function logs(){
+
+return (await connectDB()).collection("logs");
+
+}
+
+async function analytics(){
+
+return (await connectDB()).collection("analytics");
+
+}
+
+/* ===================================
+   USER METHODS
+=================================== */
+
+async function createUser(user){
+
+const col = await users();
+
+const res = await col.insertOne({
+...user,
+createdAt: new Date()
 });
 
-/* ===================================
-   CORE QUERY
-=================================== */
-
-async function query(
-text,
-params=[]
-){
-
-try{
-
-const res =
-await DB.query(
-text,
-params
-);
-
-return res;
-
-}catch(err){
-
-console.error(
-"SQL ERROR:",
-err.message
-);
-
-throw err;
-}
+return res.insertedId;
 
 }
 
-/* ===================================
-   INIT TABLES
-=================================== */
+async function getUser(userId){
 
-async function initDatabase(){
+const col = await users();
 
-await query(`
-CREATE TABLE IF NOT EXISTS users (
-id VARCHAR(40) PRIMARY KEY,
-name VARCHAR(120),
-email VARCHAR(180) UNIQUE NOT NULL,
-password TEXT,
-wallet VARCHAR(80),
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS sessions (
-id VARCHAR(40) PRIMARY KEY,
-user_id VARCHAR(40),
-token TEXT,
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS transactions (
-id VARCHAR(40) PRIMARY KEY,
-user_id VARCHAR(40),
-type VARCHAR(40),
-token VARCHAR(40),
-amount NUMERIC(20,8),
-status VARCHAR(40),
-meta JSONB,
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS checkouts (
-id VARCHAR(40) PRIMARY KEY,
-user_id VARCHAR(40),
-amount NUMERIC(20,8),
-currency VARCHAR(20),
-status VARCHAR(40),
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS notifications (
-id SERIAL PRIMARY KEY,
-user_id VARCHAR(40),
-title VARCHAR(180),
-message TEXT,
-read BOOLEAN DEFAULT FALSE,
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS staking (
-id VARCHAR(40) PRIMARY KEY,
-user_id VARCHAR(40),
-token VARCHAR(20),
-amount NUMERIC(20,8),
-apy NUMERIC(10,2),
-status VARCHAR(20),
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-await query(`
-CREATE TABLE IF NOT EXISTS analytics (
-id SERIAL PRIMARY KEY,
-user_id VARCHAR(40),
-event VARCHAR(80),
-meta JSONB,
-created_at TIMESTAMP DEFAULT NOW()
-);
-`);
-
-console.log(
-"CORΛX Tables Ready"
-);
-}
-
-/* ===================================
-   USERS
-=================================== */
-
-async function createUser(data){
-
-return await query(
-`
-INSERT INTO users
-(id,name,email,password,wallet)
-VALUES($1,$2,$3,$4,$5)
-RETURNING *
-`,
-[
-data.id,
-data.name,
-data.email,
-data.password,
-data.wallet || null
-]
-);
+return col.findOne({
+_id: new ObjectId(userId)
+});
 
 }
 
-async function getUserByEmail(email){
+async function updateUser(userId,data){
 
-return await query(
-`
-SELECT * FROM users
-WHERE email=$1
-LIMIT 1
-`,
-[email]
-);
+const col = await users();
 
-}
-
-async function getUserById(id){
-
-return await query(
-`
-SELECT * FROM users
-WHERE id=$1
-LIMIT 1
-`,
-[id]
+return col.updateOne(
+{ _id: new ObjectId(userId) },
+{ $set: data }
 );
 
 }
@@ -225,78 +111,85 @@ LIMIT 1
    TRANSACTIONS
 =================================== */
 
-async function createTransaction(data){
+async function saveTransaction(tx){
 
-return await query(
-`
-INSERT INTO transactions
-(id,user_id,type,token,amount,status,meta)
-VALUES($1,$2,$3,$4,$5,$6,$7)
-RETURNING *
-`,
-[
-data.id,
-data.user_id,
-data.type,
-data.token,
-data.amount,
-data.status,
-data.meta || {}
-]
-);
+const col = await transactions();
+
+return col.insertOne({
+...tx,
+createdAt: new Date()
+});
 
 }
 
 async function getTransactions(userId){
 
-return await query(
-`
-SELECT *
-FROM transactions
-WHERE user_id=$1
-ORDER BY created_at DESC
-LIMIT 100
-`,
-[userId]
-);
+const col = await transactions();
+
+return col.find({
+userId
+}).toArray();
 
 }
 
 /* ===================================
-   CHECKOUTS
+   REFERRALS
 =================================== */
 
-async function createCheckout(data){
+async function saveReferral(ref){
 
-return await query(
-`
-INSERT INTO checkouts
-(id,user_id,amount,currency,status)
-VALUES($1,$2,$3,$4,$5)
-RETURNING *
-`,
-[
-data.id,
-data.user_id,
-data.amount,
-data.currency,
-data.status
-]
-);
+const col = await referrals();
+
+return col.insertOne({
+...ref,
+createdAt: new Date()
+});
 
 }
 
-async function getSales(userId){
+/* ===================================
+   LOGS
+=================================== */
 
-return await query(
-`
-SELECT *
-FROM checkouts
-WHERE user_id=$1
-ORDER BY created_at DESC
-`,
-[userId]
-);
+async function saveLog(log){
+
+const col = await logs();
+
+return col.insertOne({
+...log,
+createdAt: new Date()
+});
+
+}
+
+/* ===================================
+   ANALYTICS
+=================================== */
+
+async function saveEvent(event){
+
+const col = await analytics();
+
+return col.insertOne({
+...event,
+createdAt: new Date()
+});
+
+}
+
+/* ===================================
+   CLOSE CONNECTION
+=================================== */
+
+async function closeDB(){
+
+if(client){
+
+await client.close();
+
+console.log("CORΛX Database Closed");
+
+}
 
 }
 
@@ -305,14 +198,14 @@ ORDER BY created_at DESC
 =================================== */
 
 module.exports = {
-DB,
-query,
-initDatabase,
+connectDB,
 createUser,
-getUserByEmail,
-getUserById,
-createTransaction,
+getUser,
+updateUser,
+saveTransaction,
 getTransactions,
-createCheckout,
-getSales
+saveReferral,
+saveLog,
+saveEvent,
+closeDB
 };
