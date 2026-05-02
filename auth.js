@@ -1,298 +1,190 @@
 /* ===================================
    CORΛX MASTER AUTH.JS v1
+   JWT Authentication System
 =================================== */
 
-const AUTH = {
-user: null,
-logged: false,
-sessionKey: null,
-expiresAt: null,
-remember: true
-};
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-/* INIT */
+const DB = require("./database");
 
-document.addEventListener("DOMContentLoaded", ()=>{
+/* ===================================
+   CONFIG
+=================================== */
 
-loadSession();
-bindAuth();
-protectPages();
+const SECRET =
+process.env.JWT_SECRET ||
+"corax_secret_key";
 
-});
+/* ===================================
+   REGISTER
+=================================== */
 
-/* LOAD */
-
-function loadSession(){
-
-const saved =
-JSON.parse(localStorage.getItem("corax_auth"));
-
-if(saved){
-
-Object.assign(AUTH, saved);
-
-if(AUTH.expiresAt &&
-Date.now() > AUTH.expiresAt){
-
-logout(false);
-
-}
-
-}
-
-}
-
-/* SAVE */
-
-function saveSession(){
-
-localStorage.setItem(
-"corax_auth",
-JSON.stringify(AUTH)
-);
-
-}
-
-/* EVENTS */
-
-function bindAuth(){
-
-const loginBtn =
-document.getElementById("loginBtn");
-
-const walletBtn =
-document.getElementById("walletLoginBtn");
-
-const logoutBtn =
-document.getElementById("logoutBtn");
-
-if(loginBtn){
-loginBtn.addEventListener("click", loginEmail);
-}
-
-if(walletBtn){
-walletBtn.addEventListener("click", loginWallet);
-}
-
-if(logoutBtn){
-logoutBtn.addEventListener("click", ()=>logout(true));
-}
-
-}
-
-/* EMAIL LOGIN */
-
-function loginEmail(){
-
-const email =
-getField("email");
-
-const pass =
-getField("password");
-
-if(!email || !pass){
-
-toast("Fill all fields");
-return;
-}
-
-AUTH.user = {
-type:"email",
-email: email
-};
-
-AUTH.logged = true;
-
-createSession();
-
-toast("Welcome");
-
-redirectApp();
-
-trackSafe("login_email");
-}
-
-/* WALLET LOGIN */
-
-async function loginWallet(){
-
-const wallet =
-"0x" +
-Math.random()
-.toString(16)
-substring(2,42);
-
-AUTH.user = {
-type:"wallet",
-address: wallet
-};
-
-AUTH.logged = true;
-
-createSession();
-
-localStorage.setItem(
-"corax_wallet",
-wallet
-);
-
-toast("Wallet connected");
-
-redirectApp();
-
-trackSafe("login_wallet");
-}
-
-/* SESSION */
-
-function createSession(){
-
-AUTH.sessionKey =
-"CRX-" +
-Math.random()
-.toString(36)
-substring(2,12)
-.toUpperCase();
-
-AUTH.expiresAt =
-Date.now() + (1000*60*60*24);
-
-saveSession();
-}
-
-/* LOGOUT */
-
-function logout(show=true){
-
-AUTH.user = null;
-AUTH.logged = false;
-AUTH.sessionKey = null;
-AUTH.expiresAt = null;
-
-localStorage.removeItem("corax_auth");
-
-if(show){
-toast("Logged out");
-}
-
-window.location.href =
-"login.html";
-}
-
-/* PROTECT */
-
-function protectPages(){
-
-const page =
-location.pathname.split("/").pop();
-
-const publicPages = [
-"",
-"index.html",
-"login.html"
-];
-
-if(
-!AUTH.logged &&
-!publicPages.includes(page)
+async function register(
+email,
+password
 ){
 
-window.location.href =
-"login.html";
+const hashed =
+await bcrypt.hash(password, 10);
 
+const user = {
+email,
+password: hashed
+};
+
+const userId =
+await DB.createUser(user);
+
+return {
+success: true,
+userId
+};
+
+}
+
+/* ===================================
+   LOGIN
+=================================== */
+
+async function login(
+email,
+password
+){
+
+const user =
+await findUserByEmail(email);
+
+if(!user){
+
+return fail("User not found");
+}
+
+const match =
+await bcrypt.compare(
+password,
+user.password
+);
+
+if(!match){
+
+return fail("Invalid credentials");
+}
+
+const token =
+generateToken(user);
+
+return {
+success: true,
+token,
+userId: user._id
+};
+
+}
+
+/* ===================================
+   TOKEN
+=================================== */
+
+function generateToken(user){
+
+return jwt.sign(
+{
+id: user._id,
+email: user.email
+},
+SECRET,
+{
+expiresIn: "7d"
+}
+);
+
+}
+
+function verifyToken(token){
+
+try{
+
+return jwt.verify(
+token,
+SECRET
+);
+
+}catch(e){
+
+return null;
 }
 
 }
 
-/* HELPERS */
+/* ===================================
+   MIDDLEWARE
+=================================== */
 
-function isLogged(){
+function authMiddleware(
+req,
+res,
+next
+){
 
-return AUTH.logged;
+const header =
+req.headers["authorization"];
+
+if(!header){
+
+return res.status(401).json({
+error: "No token"
+});
 }
 
-function currentUser(){
+const token =
+header.split(" ")[1];
 
-return AUTH.user;
+const decoded =
+verifyToken(token);
+
+if(!decoded){
+
+return res.status(403).json({
+error: "Invalid token"
+});
 }
 
-function getField(id){
+req.user = decoded;
 
-const el =
-document.getElementById(id);
-
-return el ? el.value.trim() : "";
-}
-
-function redirectApp(){
-
-window.location.href =
-"app.html";
-}
-
-/* AUTO LOCK */
-
-function lockSession(){
-
-toast("Session locked");
-
-window.location.href =
-"login.html";
-}
-
-/* RENEW */
-
-function renewSession(){
-
-if(!AUTH.logged) return;
-
-AUTH.expiresAt =
-Date.now() + (1000*60*60*24);
-
-saveSession();
-}
-
-/* MAGIC LINK MOCK */
-
-function sendMagicLink(){
-
-const email =
-getField("email");
-
-if(!email){
-
-toast("Enter email");
-return;
-}
-
-toast("Magic link sent");
-
-trackSafe("magic_link");
-}
-
-/* OTP MOCK */
-
-function verifyOTP(code){
-
-if(code === "123456"){
-
-toast("OTP success");
-
-}else{
-
-toast("Invalid OTP");
-
-}
-}
-
-/* TRACK SAFE */
-
-function trackSafe(event){
-
-if(typeof track === "function"){
-
-track(event);
+next();
 
 }
 
+/* ===================================
+   HELPERS
+=================================== */
+
+async function findUserByEmail(email){
+
+const db = await DB.connectDB();
+
+return db.collection("users")
+.findOne({ email });
+
 }
+
+function fail(message){
+
+return {
+success:false,
+message
+};
+
+}
+
+/* ===================================
+   EXPORT
+=================================== */
+
+module.exports = {
+register,
+login,
+authMiddleware,
+verifyToken
+};
