@@ -1,68 +1,193 @@
-body {
-margin: 0;
-background: #050505;
-font-family: 'Inter', Arial;
-color: #F5F5F5;
-overflow: hidden;
+/* ===================================
+   CORΛX — APPLE x WEB3 UI
+=================================== */
+
+:root{
+  --bg:#050505;
+  --purple:#A855F7;
+  --purple-2:#7C3AED;
+  --white:#F5F5F5;
+  --glass:rgba(255,255,255,0.06);
 }
 
-/* CANVAS */
-#particles {
-position: fixed;
-width: 100%;
-height: 100%;
-z-index: 0;
+/* BASE */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Inter, Arial, sans-serif;
+  overflow:hidden;
+}
+
+/* CANVAS BG */
+#bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* VIGNETTE (Apple-like depth) */
+.vignette{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7));
+  z-index:1;
 }
 
 /* SPLASH */
-#splash {
-position: fixed;
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 10;
-background: transparent;
+#splash{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
 }
-
-.splash-logo {
-width: 200px;
-animation: pulseGlow 2s infinite;
+.splash-logo{
+  width:220px;
+  filter: drop-shadow(0 0 25px rgba(168,85,247,.8));
+  animation: splash 1.6s ease;
 }
+.fade-out{ animation: fadeOut .6s forwards; }
 
 /* APP */
-.app {
-position: relative;
-z-index: 1;
-max-width: 400px;
-margin: auto;
-padding: 20px;
+.app{
+  position:relative;
+  z-index:2;
+  max-width:420px;
+  margin:0 auto;
+  padding:20px;
+  animation: fadeIn 1s ease;
 }
 
-/* LOGO */
-.logo {
-width: 200px;
-filter: drop-shadow(0 0 20px #A855F7);
+/* HERO */
+.hero{
+  text-align:center;
+  margin:10px 0 28px;
+  transform-style:preserve-3d;
+}
+.logo-wrap{
+  position:relative;
+  display:inline-block;
+}
+.logo{
+  width:220px;
+  transition: transform .25s ease, filter .25s ease;
+  filter: drop-shadow(0 0 18px rgba(168,85,247,.6));
+}
+.logo-glow{
+  position:absolute;
+  inset:-20px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(168,85,247,.25), transparent 60%);
+  filter: blur(20px);
+  animation: glowPulse 2.6s ease-in-out infinite;
+  z-index:-1;
+}
+.tagline{
+  opacity:.6;
+  letter-spacing:1px;
+  margin-top:8px;
 }
 
-/* CARDS */
-.card {
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(12px);
-padding: 20px;
-border-radius: 20px;
-margin-bottom: 20px;
+/* GLASS CARDS */
+.card{
+  padding:18px;
+  border-radius:20px;
+  margin-bottom:16px;
+}
+.glass{
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 20px rgba(168,85,247,.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.glass:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5), 0 0 30px rgba(168,85,247,.18);
 }
 
-/* BUTTON */
-.primary {
-background: linear-gradient(135deg,#A855F7,#7C3AED);
+/* INPUTS */
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#111;
+  color:#fff;
+  transition:.2s;
 }
+input:focus{
+  outline:none;
+  box-shadow: 0 0 12px rgba(168,85,247,.6);
+  border-color: transparent;
+}
+
+/* BUTTONS */
+.btn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.primary{
+  color:#fff;
+  background: linear-gradient(135deg,var(--purple),var(--purple-2));
+}
+.primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(168,85,247,.35);
+}
+.ghost{
+  background: transparent;
+  color: var(--purple);
+  border:1px solid var(--purple);
+}
+.ghost:hover{
+  background: var(--purple);
+  color:#fff;
+}
+.danger{
+  background:#EF4444;
+  color:#fff;
+}
+.danger:hover{
+  box-shadow: 0 10px 20px rgba(239,68,68,.4);
+}
+
+/* BALANCE */
+.balance{ text-align:center; }
+.balance p{
+  font-size:30px;
+  font-weight:700;
+  color:#22C55E;
+  text-shadow: 0 0 10px rgba(34,197,94,.4);
+}
+
+/* UTIL */
+.hidden{ display:none; }
 
 /* ANIMATIONS */
-@keyframes pulseGlow {
-0% { transform: scale(1); filter: drop-shadow(0 0 10px #A855F7); }
-50% { transform: scale(1.05); filter: drop-shadow(0 0 25px #A855F7); }
-100% { transform: scale(1); filter: drop-shadow(0 0 10px #A855F7); }
+@keyframes splash{
+  0%{opacity:0; transform:scale(.85)}
+  60%{opacity:1; transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+@keyframes fadeOut{
+  to{opacity:0; transform:scale(1.1)}
+}
+@keyframes fadeIn{
+  from{opacity:0} to{opacity:1}
+}
+@keyframes glowPulse{
+  0%,100%{opacity:.6; transform:scale(1)}
+  50%{opacity:1; transform:scale(1.08)}
 }
