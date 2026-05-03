@@ -1,96 +1,108 @@
-/* ===================================
-   CORΛX FX — particles + links + parallax
-=================================== */
-
 const CORAX_FX = (() => {
 
-  let canvas, ctx, W, H, particles = [], mouse = {x:0,y:0};
+let canvas, ctx, W, H;
+let particles = [];
+let mouse = {x:0,y:0};
 
-  class P {
-    constructor(){
-      this.x = Math.random()*W;
-      this.y = Math.random()*H;
-      this.vx = (Math.random()-.5)*0.4;
-      this.vy = (Math.random()-.5)*0.4;
-      this.r = Math.random()*1.8 + .3;
-    }
-    step(){
-      this.x += this.vx;
-      this.y += this.vy;
+class Particle{
+constructor(){
+this.x = Math.random()*W;
+this.y = Math.random()*H;
+this.vx = (Math.random()-0.5)*0.4;
+this.vy = (Math.random()-0.5)*0.4;
+this.size = Math.random()*1.5 + 0.3;
+}
 
-      if(this.x<0||this.x>W) this.vx*=-1;
-      if(this.y<0||this.y>H) this.vy*=-1;
-    }
-    draw(){
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-      ctx.fillStyle = "rgba(168,85,247,.8)";
-      ctx.fill();
-    }
-  }
+update(){
+this.x += this.vx;
+this.y += this.vy;
 
-  function connect(){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d = Math.sqrt(dx*dx+dy*dy);
-        if(d < 120){
-          ctx.strokeStyle = "rgba(168,85,247,"+(1-d/120)*.25+")";
-          ctx.lineWidth = .6;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
+if(this.x < 0 || this.x > W) this.vx *= -1;
+if(this.y < 0 || this.y > H) this.vy *= -1;
+}
 
-  function tick(){
-    ctx.clearRect(0,0,W,H);
+draw(){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fillStyle = "rgba(168,85,247,0.7)";
+ctx.fill();
+}
+}
 
-    particles.forEach(p=>{
-      p.step();
-      p.draw();
-    });
+function connect(){
+for(let a=0;a<particles.length;a++){
+for(let b=a+1;b<particles.length;b++){
 
-    connect();
-    requestAnimationFrame(tick);
-  }
+let dx = particles[a].x - particles[b].x;
+let dy = particles[a].y - particles[b].y;
+let dist = Math.sqrt(dx*dx + dy*dy);
 
-  function init(){
-    canvas = document.getElementById("bg");
-    ctx = canvas.getContext("2d");
-    resize();
+if(dist < 120){
+ctx.strokeStyle = "rgba(168,85,247,"+(1 - dist/120)*0.25+")";
+ctx.lineWidth = 0.6;
 
-    particles = [];
-    for(let i=0;i<90;i++) particles.push(new P());
+ctx.beginPath();
+ctx.moveTo(particles[a].x,particles[a].y);
+ctx.lineTo(particles[b].x,particles[b].y);
+ctx.stroke();
+}
+}
+}
+}
 
-    // PARALLAX (logo segue mouse levemente)
-    const logo = document.getElementById("logo");
-    document.addEventListener("mousemove",(e)=>{
-      mouse.x = (e.clientX/W - .5);
-      mouse.y = (e.clientY/H - .5);
-      if(logo){
-        logo.style.transform = `rotateX(${mouse.y*6}deg) rotateY(${mouse.x*6}deg)`;
-      }
-    });
+function animate(){
+ctx.clearRect(0,0,W,H);
 
-    window.addEventListener("resize", resize);
-  }
+particles.forEach(p=>{
+p.update();
+p.draw();
+});
 
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
+connect();
 
-  function start(){
-    init();
-    tick();
-  }
+requestAnimationFrame(animate);
+}
 
-  return { start };
+function init(){
+canvas = document.getElementById("bg");
+ctx = canvas.getContext("2d");
+
+resize();
+
+particles = [];
+for(let i=0;i<60;i++){ // otimizado
+particles.push(new Particle());
+}
+
+/* PARALLAX */
+document.addEventListener("mousemove", e => {
+
+mouse.x = (e.clientX/W - 0.5);
+mouse.y = (e.clientY/H - 0.5);
+
+const logo = document.getElementById("logo");
+
+if(logo){
+logo.style.transform =
+`rotateX(${mouse.y*6}deg) rotateY(${mouse.x*6}deg)`;
+}
+
+});
+
+window.addEventListener("resize", resize);
+}
+
+function resize(){
+W = canvas.width = window.innerWidth;
+H = canvas.height = window.innerHeight;
+}
+
+return {
+start(){
+init();
+animate();
+}
+};
 
 })();
 
