@@ -10,15 +10,22 @@
 
 <body>
 
-<div class="app">
+<!-- PARTICLES BACKGROUND -->
+<canvas id="particles"></canvas>
 
-<!-- HERO / LOGO -->
+<!-- SPLASH -->
+<div id="splash">
+<img src="logo.png" class="splash-logo"/>
+</div>
+
+<!-- APP -->
+<div class="app hidden" id="app">
+
 <header class="hero">
-<img src="logo.png" alt="CORΛX" class="logo"/>
+<img src="logo.png" class="logo"/>
 <p class="tagline">Money Without Borders</p>
 </header>
 
-<!-- AUTH -->
 <div id="auth" class="card">
 
 <h2>Welcome</h2>
@@ -31,7 +38,6 @@
 
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
 
 <div class="card">
@@ -62,6 +68,24 @@
 </div>
 
 <script src="app.js"></script>
+<script src="particles.js"></script>
+
+<script>
+window.onload = () => {
+
+setTimeout(() => {
+
+document.getElementById("splash").classList.add("fade-out");
+
+setTimeout(() => {
+document.getElementById("splash").style.display = "none";
+document.getElementById("app").classList.remove("hidden");
+}, 600);
+
+}, 2000);
+
+};
+</script>
 
 </body>
 </html>
