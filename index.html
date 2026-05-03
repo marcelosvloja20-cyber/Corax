@@ -5,23 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CORΛX</title>
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#A855F7">
 
-<!-- STYLE -->
 <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- CANVAS BACKGROUND -->
 <canvas id="bg"></canvas>
 <div class="vignette"></div>
 
 <!-- SPLASH -->
 <div id="splash">
-  <img src="logo.png" class="splash-logo"/>
+  <img src="/logo.png" class="splash-logo"/>
 </div>
 
 <!-- APP -->
@@ -29,7 +26,7 @@
 
   <header class="hero">
     <div class="logo-wrap">
-      <img src="logo.png" class="logo" id="logo"/>
+      <img src="/logo.png" class="logo" id="logo"/>
       <div class="logo-glow"></div>
     </div>
     <p class="tagline">Money Without Borders</p>
@@ -37,15 +34,27 @@
 
   <!-- AUTH -->
   <div id="auth" class="card glass">
+
     <h2>Welcome</h2>
+
     <input type="email" id="email" placeholder="Email" />
     <input type="password" id="password" placeholder="Password" />
-    <button class="btn primary" onclick="login()">Login</button>
-    <button class="btn ghost" onclick="register()">Create Account</button>
+
+    <button class="btn primary" onclick="login()" id="loginBtn">
+      Login
+    </button>
+
+    <button class="btn ghost" onclick="register()">
+      Create Account
+    </button>
+
+    <p id="errorMsg" class="error hidden"></p>
+
   </div>
 
   <!-- DASHBOARD -->
   <div id="dashboard" class="hidden">
+
     <div class="card glass">
       <h2>Dashboard</h2>
       <p id="userId"></p>
@@ -58,24 +67,25 @@
 
     <div class="card glass">
       <h3>Send Payment</h3>
+
       <input type="text" id="to" placeholder="Recipient ID" />
       <input type="number" id="amount" placeholder="Amount" />
+
       <button class="btn primary" onclick="sendPayment()">Send</button>
     </div>
 
     <button class="btn danger" onclick="logout()">Logout</button>
+
   </div>
 
 </div>
 
-<!-- SCRIPTS -->
 <script src="app.js"></script>
 <script src="fx.js"></script>
 
 <script>
-/* SPLASH CONTROL */
+/* SPLASH */
 window.addEventListener("load", () => {
-
   setTimeout(() => {
     document.getElementById("splash").classList.add("fade-out");
 
@@ -89,15 +99,12 @@ window.addEventListener("load", () => {
 
     }, 600);
 
-  }, 1800);
-
+  }, 1600);
 });
 
 /* SERVICE WORKER */
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("CORΛX PWA Ready"))
-    .catch(err => console.error("SW error", err));
+  navigator.serviceWorker.register("service-worker.js");
 }
 </script>
 
