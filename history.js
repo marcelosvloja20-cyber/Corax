@@ -1,300 +1,63 @@
 /* ===================================
-   CORΛX MASTER HISTORY.JS v1
+   CORΛX TRANSACTION HISTORY
 =================================== */
 
-const HISTORY = {
-items: [],
-filter: "All"
+function getHistory(){
+return JSON.parse(localStorage.getItem("corax_history") || "[]");
+}
+
+function saveHistory(list){
+localStorage.setItem("corax_history", JSON.stringify(list));
+}
+
+/* ADD TRANSACTION */
+function addTransaction(type, amount, to){
+
+const history = getHistory();
+
+const tx = {
+id: Date.now(),
+type,
+amount,
+to,
+date: new Date().toLocaleString()
 };
 
-/* INIT */
+history.unshift(tx);
 
-document.addEventListener("DOMContentLoaded", ()=>{
-
-loadHistory();
-bindHistoryActions();
+saveHistory(history);
 renderHistory();
-
-});
-
-/* LOAD */
-
-function loadHistory(){
-
-HISTORY.items =
-JSON.parse(
-localStorage.getItem("corax_history")
-) || [];
-
-/* Seed demo if empty */
-
-if(HISTORY.items.length === 0){
-
-HISTORY.items = [
-
-{
-type:"Receive",
-amount:"250",
-token:"USDT",
-network:"Polygon",
-from:"0x92ae...45fd",
-date:new Date().toISOString()
-},
-
-{
-type:"Send",
-amount:"120",
-token:"USDC",
-network:"Ethereum",
-to:"0x6fe1...12ac",
-fee:"0.30",
-date:new Date(Date.now()-86400000).toISOString()
-},
-
-{
-type:"Swap",
-amount:"500",
-fromToken:"USDT",
-toToken:"ETH",
-received:"0.155",
-date:new Date(Date.now()-172800000).toISOString()
-}
-
-];
-
-saveHistory();
-}
-
-}
-
-/* SAVE */
-
-function saveHistory(){
-
-localStorage.setItem(
-"corax_history",
-JSON.stringify(HISTORY.items)
-);
-
-}
-
-/* EVENTS */
-
-function bindHistoryActions(){
-
-const filter = document.getElementById("historyFilter");
-const clear = document.getElementById("clearHistory");
-const exportBtn = document.getElementById("exportHistory");
-
-if(filter){
-
-filter.addEventListener("change",(e)=>{
-
-HISTORY.filter = e.target.value;
-renderHistory();
-
-});
-
-}
-
-if(clear){
-
-clear.addEventListener("click", ()=>{
-
-if(confirm("Clear history?")){
-
-HISTORY.items = [];
-saveHistory();
-renderHistory();
-toast("History cleared");
-
-}
-
-});
-
-}
-
-if(exportBtn){
-
-exportBtn.addEventListener("click", exportCSV);
-
-}
-
-}
-
-/* FILTER */
-
-function getFilteredItems(){
-
-if(HISTORY.filter === "All"){
-return HISTORY.items;
-}
-
-return HISTORY.items.filter(item =>
-item.type === HISTORY.filter
-);
-
 }
 
 /* RENDER */
-
 function renderHistory(){
 
-const list = document.getElementById("historyList");
-const stats = document.getElementById("historyStats");
+const container = document.getElementById("historyList");
+if(!container) return;
 
-if(!list) return;
+const history = getHistory();
 
-const data = getFilteredItems();
+container.innerHTML = "";
 
-list.innerHTML = "";
+history.forEach(tx => {
 
-if(data.length === 0){
+const el = document.createElement("div");
+el.className = "tx-item";
 
-list.innerHTML =
-"<div class='card'>No transactions found.</div>";
+el.innerHTML = `
+<div>
+<strong>${tx.type}</strong><br/>
+<span>${tx.to || "-"}</span>
+</div>
 
-updateStats([]);
-return;
-}
+<div class="tx-right">
+<span>${tx.amount}</span><br/>
+<small>${tx.date}</small>
+</div>
+`;
 
-data.forEach(item=>{
-
-const div = document.createElement("div");
-div.className = "item";
-
-div.innerHTML = buildCard(item);
-
-list.appendChild(div);
+container.appendChild(el);
 
 });
 
-updateStats(data);
 }
-
-/* CARD */
-
-function buildCard(item){
-
-const date = formatDate(item.date);
-
-if(item.type === "Send"){
-
-return `
-<div class="row">
-<b>Send</b>
-<span class="danger">-${item.amount} ${item.token}</span>
-</div>
-<div class="subtitle mt-10">
-To: ${item.to || "--"}<br>
-${item.network}<br>
-Fee: $${item.fee || "0"}<br>
-${date}
-</div>
-`;
-}
-
-if(item.type === "Receive"){
-
-return `
-<div class="row">
-<b>Receive</b>
-<span class="success">+${item.amount} ${item.token}</span>
-</div>
-<div class="subtitle mt-10">
-From: ${item.from || "--"}<br>
-${item.network}<br>
-${date}
-</div>
-`;
-}
-
-if(item.type === "Swap"){
-
-return `
-<div class="row">
-<b>Swap</b>
-<span>${item.amount} ${item.fromToken}</span>
-</div>
-<div class="subtitle mt-10">
-Received: ${item.received} ${item.toToken}<br>
-${date}
-</div>
-`;
-}
-
-return "";
-}
-
-/* STATS */
-
-function updateStats(data){
-
-const stats = document.getElementById("historyStats");
-
-if(!stats) return;
-
-let total = data.length;
-
-let sends =
-data.filter(x=>x.type==="Send").length;
-
-let receives =
-data.filter(x=>x.type==="Receive").length;
-
-let swaps =
-data.filter(x=>x.type==="Swap").length;
-
-stats.innerHTML =
-"Total: " + total +
-" | Send: " + sends +
-" | Receive: " + receives +
-" | Swap: " + swaps;
-}
-
-/* EXPORT */
-
-function exportCSV(){
-
-let rows = [
-["Type","Amount","Token","Network","Date"]
-];
-
-HISTORY.items.forEach(item=>{
-
-rows.push([
-item.type,
-item.amount || "",
-item.token || item.fromToken || "",
-item.network || "",
-item.date
-]);
-
-});
-
-let csv = rows.map(r =>
-r.join(",")
-).join("\n");
-
-const blob =
-new Blob([csv], {type:"text/csv"});
-
-const url =
-URL.createObjectURL(blob);
-
-const a =
-document.createElement("a");
-
-a.href = url;
-a.download = "corax-history.csv";
-a.click();
-
-toast("CSV exported");
-}
-
-/* HELPERS */
-
-function formatDate(date){
-
-return new Date(date).toLocaleString();
-  }
