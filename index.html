@@ -4,87 +4,80 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CORΛX</title>
-
 <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- PARTICLES BACKGROUND -->
-<canvas id="particles"></canvas>
+<!-- LAYERS -->
+<canvas id="bg"></canvas>
+<div class="vignette"></div>
 
 <!-- SPLASH -->
 <div id="splash">
-<img src="logo.png" class="splash-logo"/>
+  <img src="logo.png" class="splash-logo"/>
 </div>
 
 <!-- APP -->
-<div class="app hidden" id="app">
+<div id="app" class="app hidden">
 
-<header class="hero">
-<img src="logo.png" class="logo"/>
-<p class="tagline">Money Without Borders</p>
-</header>
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="logo-wrap">
+      <img src="logo.png" class="logo" id="logo"/>
+      <div class="logo-glow"></div>
+    </div>
+    <p class="tagline">Money Without Borders</p>
+  </header>
 
-<div id="auth" class="card">
+  <!-- AUTH -->
+  <div id="auth" class="card glass">
+    <h2>Welcome</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button class="btn primary" onclick="login()">Login</button>
+    <button class="btn ghost" onclick="register()">Create Account</button>
+  </div>
 
-<h2>Welcome</h2>
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden">
+    <div class="card glass">
+      <h2>Dashboard</h2>
+      <p id="userId"></p>
+    </div>
 
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Password" />
+    <div class="card glass balance">
+      <h3>Balance</h3>
+      <p id="balance">$0.00</p>
+    </div>
 
-<button class="primary" onclick="login()">Login</button>
-<button class="secondary" onclick="register()">Create Account</button>
+    <div class="card glass">
+      <h3>Send Payment</h3>
+      <input type="text" id="to" placeholder="Recipient ID" />
+      <input type="number" id="amount" placeholder="Amount" />
+      <button class="btn primary" onclick="sendPayment()">Send</button>
+    </div>
 
-</div>
-
-<div id="dashboard" class="hidden">
-
-<div class="card">
-<h2>Dashboard</h2>
-<p id="userId"></p>
-</div>
-
-<div class="card balance">
-<h3>Balance</h3>
-<p id="balance">$0.00</p>
-</div>
-
-<div class="card">
-
-<h3>Send Payment</h3>
-
-<input type="text" id="to" placeholder="Recipient ID" />
-<input type="number" id="amount" placeholder="Amount" />
-
-<button class="primary" onclick="sendPayment()">Send</button>
-
-</div>
-
-<button class="logout" onclick="logout()">Logout</button>
-
-</div>
+    <button class="btn danger" onclick="logout()">Logout</button>
+  </div>
 
 </div>
 
 <script src="app.js"></script>
-<script src="particles.js"></script>
+<script src="fx.js"></script>
 
 <script>
-window.onload = () => {
-
-setTimeout(() => {
-
-document.getElementById("splash").classList.add("fade-out");
-
-setTimeout(() => {
-document.getElementById("splash").style.display = "none";
-document.getElementById("app").classList.remove("hidden");
-}, 600);
-
-}, 2000);
-
-};
+/* SPLASH -> APP */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("splash").classList.add("fade-out");
+    setTimeout(() => {
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("app").classList.remove("hidden");
+      window.CORAX_FX && window.CORAX_FX.start(); // inicia efeitos
+    }, 600);
+  }, 1800);
+});
 </script>
 
 </body>
