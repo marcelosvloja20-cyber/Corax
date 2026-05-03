@@ -1,0 +1,171 @@
+/* ===================================
+   CORΛX UI + ANIMATIONS
+=================================== */
+
+body {
+margin: 0;
+background: #050505;
+font-family: 'Inter', Arial;
+color: #F5F5F5;
+overflow-x: hidden;
+}
+
+/* APP */
+.app {
+max-width: 400px;
+margin: auto;
+padding: 20px;
+animation: fadeIn 1s ease;
+}
+
+/* HEADER */
+header {
+text-align: center;
+margin-bottom: 30px;
+animation: slideDown 0.8s ease;
+}
+
+header h1 {
+letter-spacing: 6px;
+color: #A855F7;
+}
+
+header p {
+opacity: 0.6;
+}
+
+/* CARDS */
+.card {
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(12px);
+padding: 20px;
+border-radius: 20px;
+margin-bottom: 20px;
+box-shadow: 0 0 20px rgba(168,85,247,0.1);
+
+animation: fadeUp 0.6s ease;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 0 30px rgba(168,85,247,0.2);
+}
+
+/* INPUTS */
+input {
+width: 100%;
+padding: 12px;
+margin: 10px 0;
+border-radius: 12px;
+border: none;
+background: #111;
+color: white;
+transition: 0.3s;
+}
+
+input:focus {
+outline: none;
+box-shadow: 0 0 10px #A855F7;
+}
+
+/* BUTTONS */
+button {
+width: 100%;
+padding: 12px;
+margin-top: 10px;
+border-radius: 12px;
+border: none;
+cursor: pointer;
+font-weight: bold;
+transition: all 0.25s ease;
+}
+
+/* PRIMARY */
+.primary {
+background: linear-gradient(135deg,#A855F7,#7C3AED);
+color: white;
+}
+
+.primary:hover {
+transform: scale(1.03);
+box-shadow: 0 0 15px rgba(168,85,247,0.5);
+}
+
+/* SECONDARY */
+.secondary {
+background: transparent;
+border: 1px solid #A855F7;
+color: #A855F7;
+}
+
+.secondary:hover {
+background: #A855F7;
+color: white;
+}
+
+/* LOGOUT */
+.logout {
+background: #EF4444;
+color: white;
+margin-top: 20px;
+}
+
+.logout:hover {
+transform: scale(1.03);
+box-shadow: 0 0 10px rgba(239,68,68,0.6);
+}
+
+/* BALANCE */
+.balance {
+text-align: center;
+animation: pulse 2s infinite;
+}
+
+.balance p {
+font-size: 28px;
+font-weight: bold;
+color: #22C55E;
+}
+
+/* HIDDEN */
+.hidden {
+display: none;
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes slideDown {
+from {
+opacity: 0;
+transform: translateY(-20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes fadeUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.03); }
+100% { transform: scale(1); }
+}
