@@ -1,186 +1,90 @@
 /* ===================================
-   CORΛX FRONTEND APP.JS v1
+   CORΛX AUTH SYSTEM (MVP FUNCIONAL)
 =================================== */
 
-const API = "http://localhost:3000/api";
+function showError(message){
+const el = document.getElementById("errorMsg");
+if(!el) return;
 
-let token = null;
-let userId = null;
-
-/* ===================================
-   INIT
-=================================== */
-
-function init(){
-
-const savedToken = localStorage.getItem("token");
-const savedUser = localStorage.getItem("userId");
-
-if(savedToken && savedUser){
-
-token = savedToken;
-userId = savedUser;
-
-showDashboard();
-loadBalance();
-
+el.innerText = message;
+el.classList.remove("hidden");
 }
 
-}
-
-window.onload = init;
-
-/* ===================================
-   AUTH
-=================================== */
-
-async function register(){
+/* LOGIN */
+function login(){
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-const res = await fetch(API + "/auth/register", {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ email, password })
-});
-
-const data = await res.json();
-
-if(data.userId){
-alert("User created!");
-}else{
-alert("Error creating user");
+if(!email || !password){
+return showError("Fill all fields");
 }
+
+/* simulação de login */
+localStorage.setItem("corax_user", email);
+
+enterApp(email);
 
 }
 
-async function login(){
+/* REGISTER */
+function register(){
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-const res = await fetch(API + "/auth/login", {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ email, password })
-});
-
-const data = await res.json();
-
-if(data.token){
-
-token = data.token;
-userId = data.userId;
-
-localStorage.setItem("token", token);
-localStorage.setItem("userId", userId);
-
-showDashboard();
-loadBalance();
-
-}else{
-alert("Login failed");
+if(!email || !password){
+return showError("Fill all fields");
 }
+
+/* simulação */
+localStorage.setItem("corax_user", email);
+
+enterApp(email);
 
 }
 
-/* ===================================
-   DASHBOARD UI
-=================================== */
+/* ENTRAR NO APP */
+function enterApp(email){
 
-function showDashboard(){
-
-document.getElementById("auth").classList.add("hidden");
+document.getElementById("auth").style.display = "none";
 document.getElementById("dashboard").classList.remove("hidden");
 
-document.getElementById("userId").innerText = "User: " + userId;
+document.getElementById("userId").innerText = email;
+
+/* saldo fake */
+document.getElementById("balance").innerText = "$100.00";
 
 }
 
-/* ===================================
-   BALANCE
-=================================== */
-
-async function loadBalance(){
-
-try{
-
-const res = await fetch(API + "/wallet/" + userId + "/USD", {
-headers: {
-"Authorization": "Bearer " + token
+/* LOGOUT */
+function logout(){
+localStorage.removeItem("corax_user");
+location.reload();
 }
+
+/* AUTO LOGIN */
+window.addEventListener("load", () => {
+
+const user = localStorage.getItem("corax_user");
+
+if(user){
+enterApp(user);
+}
+
 });
 
-const data = await res.json();
-
-if(data.balance !== undefined){
-
-document.getElementById("balance").innerText =
-"$" + Number(data.balance).toFixed(2);
-
-}else{
-
-document.getElementById("balance").innerText = "$0.00";
-
-}
-
-}catch(e){
-
-console.error(e);
-document.getElementById("balance").innerText = "$0.00";
-
-}
-
-}
-
-/* ===================================
-   PAYMENT
-=================================== */
-
-async function sendPayment(){
+/* SEND PAYMENT */
+function sendPayment(){
 
 const amount = document.getElementById("amount").value;
-const to = document.getElementById("to").value;
 
-const res = await fetch(API + "/payments/send", {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-"Authorization": "Bearer " + token
-},
-body: JSON.stringify({
-userId,
-to,
-amount,
-currency: "USD"
-})
-});
-
-const data = await res.json();
-
-if(data.success){
-alert("Payment sent!");
-loadBalance();
-}else{
-alert(data.message || "Error");
+if(!amount){
+alert("Enter amount");
+return;
 }
 
-}
-
-/* ===================================
-   LOGOUT
-=================================== */
-
-function logout(){
-
-token = null;
-userId = null;
-
-localStorage.removeItem("token");
-localStorage.removeItem("userId");
-
-document.getElementById("auth").classList.remove("hidden");
-document.getElementById("dashboard").classList.add("hidden");
+/* feedback */
+alert("Payment sent 🚀");
 
 }
