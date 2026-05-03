@@ -1,354 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CORΛX</title>
 
-<title>CORAX | Pagamentos Descentralizados</title>
-<meta name="description" content="Infraestrutura premium para pagamentos descentralizados globais.">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-font-family:Arial, Helvetica, sans-serif;
-background:#000;
-color:#fff;
-overflow-x:hidden;
-}
-
-/* HERO */
-
-.hero{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:24px;
-position:relative;
-}
-
-/* BACKGROUND */
-
-.glow-one,
-.glow-two{
-position:absolute;
-border-radius:50%;
-filter:blur(140px);
-}
-
-.glow-one{
-width:650px;
-height:650px;
-background:rgba(168,85,247,.14);
-top:0;
-left:50%;
-transform:translateX(-50%);
-animation:pulse 8s infinite ease-in-out;
-}
-
-.glow-two{
-width:520px;
-height:520px;
-background:rgba(99,102,241,.10);
-bottom:-120px;
-left:50%;
-transform:translateX(-50%);
-animation:pulse 10s infinite ease-in-out;
-}
-
-@keyframes pulse{
-0%{transform:translateX(-50%) scale(1);}
-50%{transform:translateX(-50%) scale(1.15);}
-100%{transform:translateX(-50%) scale(1);}
-}
-
-.wrap{
-width:100%;
-max-width:430px;
-text-align:center;
-position:relative;
-z-index:2;
-animation:fadeUp 1s ease;
-}
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(35px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* LOGO */
-
-.logo{
-font-size:110px;
-filter:drop-shadow(0 0 28px rgba(168,85,247,.55));
-animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
-}
-
-.brand{
-margin-top:6px;
-font-size:52px;
-font-weight:300;
-letter-spacing:12px;
-}
-
-.tag{
-margin-top:8px;
-font-size:12px;
-letter-spacing:6px;
-color:#a855f7;
-}
-
-/* TEXT */
-
-.headline{
-margin-top:34px;
-font-size:36px;
-line-height:1.18;
-font-weight:700;
-}
-
-.headline span{
-color:#a855f7;
-}
-
-.sub{
-margin-top:18px;
-font-size:16px;
-line-height:1.6;
-color:#c5c5c5;
-}
-
-/* BUTTONS */
-
-.actions{
-margin-top:32px;
-display:grid;
-gap:14px;
-}
-
-.btn{
-padding:18px;
-border:none;
-border-radius:16px;
-font-size:14px;
-font-weight:700;
-letter-spacing:4px;
-cursor:pointer;
-transition:.3s;
-}
-
-.primary{
-background:#a855f7;
-color:#fff;
-box-shadow:0 0 35px rgba(168,85,247,.45);
-}
-
-.primary:hover{
-transform:translateY(-4px);
-box-shadow:0 0 50px rgba(168,85,247,.7);
-}
-
-.secondary{
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-}
-
-.secondary:hover{
-border-color:#a855f7;
-}
-
-/* STATS */
-
-.stats{
-margin-top:34px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-}
-
-.stat{
-padding:16px;
-border-radius:16px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.stat h3{
-font-size:18px;
-color:#a855f7;
-}
-
-.stat p{
-font-size:12px;
-margin-top:6px;
-color:#888;
-}
-
-/* FEATURES */
-
-.features{
-margin-top:30px;
-display:grid;
-gap:14px;
-}
-
-.feature{
-text-align:left;
-padding:18px;
-border-radius:16px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.feature h4{
-font-size:17px;
-margin-bottom:8px;
-}
-
-.feature p{
-font-size:14px;
-line-height:1.5;
-color:#aaa;
-}
-
-/* FOOTER */
-
-footer{
-margin-top:34px;
-padding-bottom:14px;
-font-size:13px;
-color:#666;
-}
-
-@media(max-width:480px){
-
-.logo{
-font-size:90px;
-}
-
-.brand{
-font-size:42px;
-letter-spacing:8px;
-}
-
-.headline{
-font-size:30px;
-}
-
-.stats{
-grid-template-columns:1fr;
-}
-
-}
-</style>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<section class="hero">
+<div class="app">
 
-<div class="glow-one"></div>
-<div class="glow-two"></div>
+<header>
+<h1>CORΛX</h1>
+<p>Money Without Borders</p>
+</header>
 
-<div class="wrap">
+<!-- AUTH -->
+<div id="auth" class="card">
 
-<div class="logo">🐦‍⬛</div>
+<h2>Welcome</h2>
 
-<h1 class="brand">CORAX</h1>
-<p class="tag">PAGAMENTOS DESCENTRALIZADOS</p>
+<input type="email" id="email" placeholder="Email" />
+<input type="password" id="password" placeholder="Password" />
 
-<h2 class="headline">
-O futuro financeiro <span>começa agora</span>
-</h2>
-
-<p class="sub">
-Envie, receba e mova valor globalmente com velocidade extrema, taxas baixas e total soberania digital.
-</p>
-
-<div class="actions">
-<button class="btn primary" onclick="goLogin()">LAUNCH APP</button>
-<button class="btn secondary" onclick="goInfo()">SAIBA MAIS</button>
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<h3>10K+</h3>
-<p>Transações</p>
-</div>
-
-<div class="stat">
-<h3>24/7</h3>
-<p>Online</p>
-</div>
-
-<div class="stat">
-<h3>99.9%</h3>
-<p>Uptime</p>
-</div>
+<button class="primary" onclick="login()">Login</button>
+<button class="secondary" onclick="register()">Create Account</button>
 
 </div>
 
-<div class="features" id="info">
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
 
-<div class="feature">
-<h4>⚡ Liquidação Instantânea</h4>
-<p>Pagamentos rápidos sem intermediários.</p>
+<div class="card">
+<h2>Dashboard</h2>
+<p id="userId"></p>
 </div>
 
-<div class="feature">
-<h4>🛡️ Segurança Premium</h4>
-<p>Infraestrutura robusta multicamadas.</p>
+<div class="card balance">
+<h3>Balance</h3>
+<p id="balance">$0.00</p>
 </div>
 
-<div class="feature">
-<h4>🌍 Global First</h4>
-<p>Pronto para operar em qualquer lugar.</p>
+<div class="card">
+
+<h3>Send Payment</h3>
+
+<input type="text" id="to" placeholder="Recipient ID" />
+<input type="number" id="amount" placeholder="Amount" />
+
+<button class="primary" onclick="sendPayment()">Send</button>
+
+</div>
+
+<button class="logout" onclick="logout()">Logout</button>
+
 </div>
 
 </div>
 
-<footer>
-© 2026 CORAX ECOSYSTEM
-</footer>
-
-</div>
-
-</section>
-
-<script>
-function goLogin(){
-window.location.href='login.html';
-}
-
-function goInfo(){
-document.getElementById('info').scrollIntoView({
-behavior:'smooth'
-});
-}
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
