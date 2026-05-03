@@ -1,142 +1,156 @@
+/* ===================================
+   CORΛX FX — PARTICLES + CROW ENERGY
+=================================== */
+
 const CORAX_FX = (() => {
 
 let canvas, ctx, W, H;
 let particles = [];
-let crowPos = { x: 300, y: 100 };
+let wingParticles = [];
+let mouse = {x:0,y:0};
 
-class Particle {
-constructor(){
-this.x = Math.random() * W;
-this.y = Math.random() * H;
-this.vx = (Math.random() - 0.5) * 0.5;
-this.vy = (Math.random() - 0.5) * 0.5;
-this.size = Math.random() * 1.8 + 0.5;
+class Particle{
+constructor(x,y){
+this.x = x ?? Math.random()*W;
+this.y = y ?? Math.random()*H;
+this.vx = (Math.random()-0.5)*0.4;
+this.vy = (Math.random()-0.5)*0.4;
+this.size = Math.random()*1.5 + 0.3;
 }
 
 update(){
-
-// movimento normal
 this.x += this.vx;
 this.y += this.vy;
 
-// atração suave ao corvo
-let dx = crowPos.x - this.x;
-let dy = crowPos.y - this.y;
-let dist = Math.sqrt(dx*dx + dy*dy);
-
-if(dist < 180){
-this.x += dx * 0.002;
-this.y += dy * 0.002;
-}
-
-// bounce
 if(this.x < 0 || this.x > W) this.vx *= -1;
 if(this.y < 0 || this.y > H) this.vy *= -1;
-
 }
 
 draw(){
 ctx.beginPath();
-ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-ctx.fillStyle = "rgba(168,85,247,0.7)";
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fillStyle = "rgba(168,85,247,0.6)";
 ctx.fill();
 }
 }
 
-function connect(){
-for(let i=0;i<particles.length;i++){
-for(let j=i+1;j<particles.length;j++){
+/* PARTICLES DAS ASAS */
+class WingParticle{
+constructor(x,y){
+this.x = x;
+this.y = y;
+this.vx = (Math.random()-0.5)*1.2;
+this.vy = (Math.random()-1.5);
+this.life = 60;
+this.size = Math.random()*2;
+}
 
-let dx = particles[i].x - particles[j].x;
-let dy = particles[i].y - particles[j].y;
+update(){
+this.x += this.vx;
+this.y += this.vy;
+this.life--;
+}
+
+draw(){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fillStyle = "rgba(168,85,247," + (this.life/60) + ")";
+ctx.fill();
+}
+}
+
+/* CONEXÕES */
+function connect(){
+for(let a=0;a<particles.length;a++){
+for(let b=a+1;b<particles.length;b++){
+
+let dx = particles[a].x - particles[b].x;
+let dy = particles[a].y - particles[b].y;
 let dist = Math.sqrt(dx*dx + dy*dy);
 
 if(dist < 120){
-ctx.strokeStyle = "rgba(168,85,247,"+(1 - dist/120)*0.25+")";
+ctx.strokeStyle = "rgba(168,85,247,"+(1 - dist/120)*0.2+")";
 ctx.lineWidth = 0.5;
 
 ctx.beginPath();
-ctx.moveTo(particles[i].x, particles[i].y);
-ctx.lineTo(particles[j].x, particles[j].y);
+ctx.moveTo(particles[a].x,particles[a].y);
+ctx.lineTo(particles[b].x,particles[b].y);
 ctx.stroke();
 }
-
 }
 }
 }
 
-function drawAura(){
-let gradient = ctx.createRadialGradient(
-crowPos.x, crowPos.y, 0,
-crowPos.x, crowPos.y, 120
-);
+/* EMITIR DAS ASAS */
+function emitFromCrow(){
 
-gradient.addColorStop(0, "rgba(168,85,247,0.25)");
-gradient.addColorStop(1, "transparent");
+const crow = document.getElementById("crow");
+if(!crow) return;
 
-ctx.fillStyle = gradient;
-ctx.beginPath();
-ctx.arc(crowPos.x, crowPos.y, 120, 0, Math.PI*2);
-ctx.fill();
+const rect = crow.getBoundingClientRect();
+
+/* ponto aproximado da asa */
+const x = rect.left + rect.width * 0.6;
+const y = rect.top + rect.height * 0.3;
+
+for(let i=0;i<2;i++){
+wingParticles.push(new WingParticle(x,y));
 }
 
+}
+
+/* ANIMAÇÃO */
 function animate(){
 ctx.clearRect(0,0,W,H);
 
-drawAura();
-
+/* base */
 particles.forEach(p=>{
 p.update();
 p.draw();
 });
 
+/* conexões */
 connect();
+
+/* emitir energia */
+emitFromCrow();
+
+/* partículas das asas */
+wingParticles.forEach((p,i)=>{
+p.update();
+p.draw();
+
+if(p.life <= 0){
+wingParticles.splice(i,1);
+}
+});
 
 requestAnimationFrame(animate);
 }
 
-function updateCrowPosition(){
-const crow = document.getElementById("crow");
-
-if(crow){
-const rect = crow.getBoundingClientRect();
-
-crowPos.x = rect.left + rect.width/2;
-crowPos.y = rect.top + rect.height/2;
-}
-}
-
+/* INIT */
 function init(){
-
 canvas = document.getElementById("bg");
 ctx = canvas.getContext("2d");
 
 resize();
 
+/* partículas base */
 particles = [];
 for(let i=0;i<60;i++){
 particles.push(new Particle());
 }
 
-setInterval(updateCrowPosition, 100);
-
-/* PARALLAX */
+/* mouse */
 document.addEventListener("mousemove", e => {
-
-const logo = document.querySelector(".logo-corax svg");
-
-if(logo){
-let x = (e.clientX / W - 0.5) * 6;
-let y = (e.clientY / H - 0.5) * 6;
-
-logo.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
-}
-
+mouse.x = e.clientX;
+mouse.y = e.clientY;
 });
 
 window.addEventListener("resize", resize);
 }
 
+/* RESIZE */
 function resize(){
 W = canvas.width = window.innerWidth;
 H = canvas.height = window.innerHeight;
