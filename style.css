@@ -58,19 +58,23 @@ text-align:center;
 margin:20px 0;
 }
 
-/* SVG LOGO */
-.logo-svg svg{
-width:240px;
+/* LOGO CORVO */
+.logo-corax svg{
+width:260px;
 filter: drop-shadow(0 0 15px rgba(168,85,247,0.6));
-transition:0.3s;
+animation: glow 3s ease-in-out infinite;
 }
 
-.logo-svg svg:hover{
-transform:scale(1.05);
-filter: drop-shadow(0 0 25px rgba(168,85,247,0.9));
+.wing{
+transform-origin:center;
+animation: flap 3s ease-in-out infinite;
 }
 
-/* TAGLINE */
+.crow{
+animation: float 4s ease-in-out infinite;
+}
+
+/* TAG */
 .tagline{
 opacity:0.6;
 }
@@ -83,7 +87,7 @@ margin-bottom:20px;
 background:var(--glass);
 backdrop-filter:blur(12px);
 border:1px solid rgba(255,255,255,0.08);
-animation:float 4s ease-in-out infinite;
+animation: floatCard 4s ease-in-out infinite;
 }
 
 /* INPUT */
@@ -115,7 +119,8 @@ transition:0.2s;
 }
 
 .btn:active{
-transform:scale(0.97);
+transform:scale(0.96);
+box-shadow:0 0 20px rgba(168,85,247,0.8);
 }
 
 .primary{
@@ -129,13 +134,36 @@ border:1px solid var(--purple);
 color:var(--purple);
 }
 
+.danger{
+background:#EF4444;
+color:white;
+}
+
 /* UTIL */
 .hidden{
 display:none;
 }
 
-/* ANIMATIONS */
+/* ANIMAÇÕES */
+@keyframes glow{
+0%{filter: drop-shadow(0 0 10px rgba(168,85,247,0.5));}
+50%{filter: drop-shadow(0 0 25px rgba(168,85,247,0.9));}
+100%{filter: drop-shadow(0 0 10px rgba(168,85,247,0.5));}
+}
+
+@keyframes flap{
+0%{transform:rotate(0deg);}
+50%{transform:rotate(-8deg);}
+100%{transform:rotate(0deg);}
+}
+
 @keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0);}
+}
+
+@keyframes floatCard{
 0%{transform:translateY(0);}
 50%{transform:translateY(-4px);}
 100%{transform:translateY(0);}
