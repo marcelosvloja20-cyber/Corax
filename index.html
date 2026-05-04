@@ -10,14 +10,9 @@
 
 <body>
 
-<canvas id="bg"></canvas>
-<div class="vignette"></div>
-
 <!-- SPLASH -->
 <div id="splash">
-  <div class="logo-corax">
-    <h1>CORΛX</h1>
-  </div>
+  <h1 class="logo">CORΛX</h1>
 </div>
 
 <!-- APP -->
@@ -25,73 +20,69 @@
 
 <header class="hero">
   <h1>CORΛX</h1>
-  <p class="tagline">Money Without Borders</p>
+  <p>Money Without Borders</p>
 </header>
 
 <!-- AUTH -->
-<div id="auth" class="card glass">
+<div id="auth" class="card">
+  <h2>Welcome</h2>
 
-<h2>Welcome</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
 
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <button onclick="register()">Create Account</button>
 
-<button class="btn primary" onclick="login()">Login</button>
-<button class="btn ghost" onclick="register()">Create Account</button>
-
-<p id="errorMsg" class="error hidden"></p>
-
+  <p id="errorMsg" class="error hidden"></p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
 
-<div class="card glass">
+<div class="card">
 <h3>User</h3>
 <p id="userId"></p>
 </div>
 
-<div class="card glass balance">
+<div class="card">
 <h3>Balance</h3>
-<p id="balance">$100.00</p>
+<p id="balance">$0.00</p>
 </div>
 
-<div class="card glass">
+<div class="card">
 <h3>Send Payment</h3>
+<input id="to" placeholder="Recipient">
+<input id="amount" type="number" placeholder="Amount">
+<button onclick="sendPayment()">Send</button>
+</div>
 
-<input type="text" id="to" placeholder="Recipient">
-<input type="number" id="amount" placeholder="Amount">
-
-<button class="btn primary" onclick="sendPayment()">Send</button>
+<!-- CHART -->
+<div class="card">
+<h3>Spending Overview</h3>
+<canvas id="chart"></canvas>
 </div>
 
 <!-- HISTORY -->
-<div class="card glass">
+<div class="card">
 <h3>Transaction History</h3>
-<div id="historyList"></div>
+<div id="history"></div>
 </div>
 
-<button class="btn danger" onclick="logout()">Logout</button>
+<button onclick="logout()">Logout</button>
 
 </div>
 
 </div>
 
-<script src="fx.js"></script>
 <script src="app.js"></script>
 
 <script>
-/* SPLASH */
 window.onload = () => {
-setTimeout(() => {
-document.getElementById("splash").style.display = "none";
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
 document.getElementById("app").classList.remove("hidden");
-
-if(window.CORAX_FX){
-CORAX_FX.start();
+},1000);
 }
-}, 1200);
-};
 </script>
 
 </body>
