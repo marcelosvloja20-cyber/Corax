@@ -1,169 +1,150 @@
-/* ===================================
-   CORΛX APP CORE
-=================================== */
+/* ===============================
+   CORΛX CORE APP
+================================ */
 
 /* STORAGE */
-function getUser(){
-return localStorage.getItem("corax_user");
-}
+const getUser = () => localStorage.getItem("user");
+const setUser = u => localStorage.setItem("user", u);
+const clearUser = () => localStorage.removeItem("user");
 
-function setUser(user){
-localStorage.setItem("corax_user", user);
-}
+const getBalance = () => parseFloat(localStorage.getItem("balance") || "100");
+const setBalance = b => localStorage.setItem("balance", b);
 
-function clearUser(){
-localStorage.removeItem("corax_user");
-}
-
-/* BALANCE */
-function getBalance(){
-return parseFloat(localStorage.getItem("corax_balance") || "100");
-}
-
-function setBalance(value){
-localStorage.setItem("corax_balance", value);
-}
-
-/* HISTORY */
-function getHistory(){
-return JSON.parse(localStorage.getItem("corax_history") || "[]");
-}
-
-function saveHistory(list){
-localStorage.setItem("corax_history", JSON.stringify(list));
-}
-
-/* ADD TRANSACTION */
-function addTransaction(type, amount, to){
-
-const history = getHistory();
-
-history.unshift({
-id: Date.now(),
-type,
-amount,
-to,
-date: new Date().toLocaleString()
-});
-
-saveHistory(history);
-renderHistory();
-}
-
-/* RENDER HISTORY */
-function renderHistory(){
-
-const container = document.getElementById("historyList");
-if(!container) return;
-
-const history = getHistory();
-container.innerHTML = "";
-
-history.forEach(tx => {
-
-const div = document.createElement("div");
-div.className = "tx-item";
-
-div.innerHTML = `
-<div>
-<strong>${tx.type}</strong><br/>
-<span>${tx.to}</span>
-</div>
-<div class="tx-right">
-<span>${tx.amount}</span><br/>
-<small>${tx.date}</small>
-</div>
-`;
-
-container.appendChild(div);
-
-});
-}
+const getHistory = () => JSON.parse(localStorage.getItem("history") || "[]");
+const setHistory = h => localStorage.setItem("history", JSON.stringify(h));
 
 /* AUTH */
 function login(){
 const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+const pass = document.getElementById("password").value;
 
-if(!email || !password){
-return showError("Fill all fields");
+if(!email || !pass){
+return showError("Fill fields");
 }
 
 setUser(email);
 enterApp(email);
 }
 
-function register(){
-login();
+function register(){ login(); }
+
+function logout(){
+clearUser();
+location.reload();
 }
 
 function showError(msg){
-const el = document.getElementById("errorMsg");
-el.innerText = msg;
-el.classList.remove("hidden");
+const e = document.getElementById("errorMsg");
+e.innerText = msg;
+e.classList.remove("hidden");
 }
 
 /* ENTER */
 function enterApp(email){
 
-document.getElementById("auth").style.display = "none";
+document.getElementById("auth").style.display="none";
 document.getElementById("dashboard").classList.remove("hidden");
 
-document.getElementById("userId").innerText = email;
+document.getElementById("userId").innerText=email;
 
 updateBalance();
 renderHistory();
+renderChart();
 }
 
-/* BALANCE UI */
+/* BALANCE */
 function updateBalance(){
-document.getElementById("balance").innerText = "$" + getBalance().toFixed(2);
+document.getElementById("balance").innerText="$"+getBalance().toFixed(2);
 }
 
-/* SEND PAYMENT */
+/* SEND */
 function sendPayment(){
 
 const to = document.getElementById("to").value;
 const amount = parseFloat(document.getElementById("amount").value);
 
 if(!to || !amount){
-alert("Fill all fields");
-return;
+return alert("Fill fields");
 }
 
-let balance = getBalance();
+let bal = getBalance();
 
-if(amount > balance){
-alert("Insufficient balance");
-return;
+if(amount > bal){
+return alert("Insufficient balance");
 }
 
-balance -= amount;
-setBalance(balance);
+bal -= amount;
+setBalance(bal);
 
-/* salvar */
-addTransaction("Sent", "$"+amount.toFixed(2), to);
+/* HISTORY */
+const history = getHistory();
+
+history.unshift({
+type:"Sent",
+to,
+amount,
+date:new Date().toLocaleString()
+});
+
+setHistory(history);
 
 updateBalance();
+renderHistory();
+renderChart();
 
-document.getElementById("to").value = "";
-document.getElementById("amount").value = "";
-
+document.getElementById("to").value="";
+document.getElementById("amount").value="";
 }
 
-/* LOGOUT */
-function logout(){
-clearUser();
-location.reload();
+/* HISTORY */
+function renderHistory(){
+
+const el = document.getElementById("history");
+el.innerHTML="";
+
+getHistory().forEach(tx=>{
+
+const div=document.createElement("div");
+div.className="tx";
+
+div.innerHTML=`
+<span>${tx.type} → ${tx.to}</span>
+<span>$${tx.amount}</span>
+`;
+
+el.appendChild(div);
+
+});
+}
+
+/* CHART */
+function renderChart(){
+
+const c = document.getElementById("chart");
+const ctx = c.getContext("2d");
+
+const data = getHistory().slice(0,5).map(tx=>tx.amount).reverse();
+
+const W = c.width = c.offsetWidth;
+const H = c.height = 200;
+
+ctx.clearRect(0,0,W,H);
+
+const max = Math.max(...data,1);
+const bw = W / data.length;
+
+data.forEach((v,i)=>{
+
+const h = (v/max)*150;
+
+ctx.fillStyle="#A855F7";
+ctx.fillRect(i*bw+10,H-h-10,bw-20,h);
+
+});
 }
 
 /* AUTO LOGIN */
 window.onload = () => {
-
-const user = getUser();
-
-if(user){
-enterApp(user);
-}
-
+const u = getUser();
+if(u){ enterApp(u); }
 };
