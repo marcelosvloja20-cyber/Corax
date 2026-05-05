@@ -5,7 +5,9 @@ background:#050505;
 color:#fff;
 }
 
-.hidden{display:none}
+.hidden{
+display:none;
+}
 
 #splash{
 height:100vh;
