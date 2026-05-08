@@ -1,189 +1,282 @@
+
 /* ===================================
-   CORΛX BACKEND (MVP REAL)
+   CORΛX VERCEL SERVERLESS API
+   File: /api/server.js
 =================================== */
 
-const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+const SECRET = "corax-vercel-secret";
 
-const SECRET = "corax-secret";
+/* ===================================
+   TEMP MEMORY DATABASE
+=================================== */
 
-/* DB */
-const db = new sqlite3.Database("./corax.db");
+let users = [];
+let transactions = [];
 
-/* CREATE TABLES */
-db.serialize(() => {
+/* ===================================
+   HELPERS
+=================================== */
 
-db.run(`
-CREATE TABLE IF NOT EXISTS users (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-email TEXT UNIQUE,
-password TEXT,
-balance REAL DEFAULT 100
-)
-`);
-
-db.run(`
-CREATE TABLE IF NOT EXISTS transactions (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-user_id INTEGER,
-type TEXT,
-amount REAL,
-to_user TEXT,
-date TEXT
-)
-`);
-
-});
-
-/* REGISTER */
-app.post("/register", async (req, res) => {
-
-const { email, password } = req.body;
-
-if(!email || !password){
-return res.status(400).json({error:"Missing fields"});
+function send(res, status, data) {
+  res.status(status).json(data);
 }
 
-const hash = await bcrypt.hash(password, 10);
+function auth(req) {
+  try {
+    const token = req.headers.authorization;
 
-db.run(
-"INSERT INTO users (email,password) VALUES (?,?)",
-[email, hash],
-function(err){
+    if (!token) return null;
 
-if(err){
-return res.status(400).json({error:"User exists"});
+    return jwt.verify(token, SECRET);
+
+  } catch {
+    return null;
+  }
 }
 
-res.json({message:"User created"});
-}
+/* ===================================
+   MAIN HANDLER
+=================================== */
 
-);
+module.exports = async (req, res) => {
 
-});
+  const { url, method } = req;
 
-/* LOGIN */
-app.post("/login", (req,res)=>{
+  /* =========================
+     ROOT
+  ========================= */
 
-const { email, password } = req.body;
+  if (url === "/api/server") {
 
-db.get(
-"SELECT * FROM users WHERE email=?",
-[email],
-async (err,user)=>{
+    return send(res, 200, {
+      status: "online",
+      project: "CORΛX",
+      message: "CORΛX API running on Vercel 🚀"
+    });
 
-if(!user){
-return res.status(401).json({error:"Invalid"});
-}
+  }
 
-const valid = await bcrypt.compare(password, user.password);
+  /* =========================
+     REGISTER
+  ========================= */
 
-if(!valid){
-return res.status(401).json({error:"Invalid"});
-}
+  if (url === "/api/register" && method === "POST") {
 
-const token = jwt.sign({id:user.id}, SECRET);
+    const { email, password } = req.body;
 
-res.json({token});
+    if (!email || !password) {
 
-});
+      return send(res, 400, {
+        error: "Missing fields"
+      });
 
-});
+    }
 
-/* AUTH MIDDLEWARE */
-function auth(req,res,next){
+    const exists = users.find(
+      user => user.email === email
+    );
 
-const token = req.headers.authorization;
+    if (exists) {
 
-if(!token) return res.sendStatus(403);
+      return send(res, 400, {
+        error: "User already exists"
+      });
 
-try{
-const data = jwt.verify(token, SECRET);
-req.user = data;
-next();
-}catch{
-return res.sendStatus(403);
-}
+    }
 
-}
+    const hash = await bcrypt.hash(password, 10);
 
-/* GET BALANCE */
-app.get("/balance", auth, (req,res)=>{
+    const newUser = {
+      id: Date.now(),
+      email,
+      password: hash,
+      balance: 100
+    };
 
-db.get(
-"SELECT balance FROM users WHERE id=?",
-[req.user.id],
-(err,row)=>{
-res.json({balance: row.balance});
-}
-);
+    users.push(newUser);
 
-});
+    return send(res, 200, {
+      success: true,
+      message: "User created"
+    });
 
-/* SEND PAYMENT */
-app.post("/send", auth, (req,res)=>{
+  }
 
-const { to, amount } = req.body;
+  /* =========================
+     LOGIN
+  ========================= */
 
-db.get(
-"SELECT balance FROM users WHERE id=?",
-[req.user.id],
-(err,user)=>{
+  if (url === "/api/login" && method === "POST") {
 
-if(user.balance < amount){
-return res.status(400).json({error:"Insufficient"});
-}
+    const { email, password } = req.body;
 
-const newBalance = user.balance - amount;
+    const user = users.find(
+      u => u.email === email
+    );
 
-/* update balance */
-db.run(
-"UPDATE users SET balance=? WHERE id=?",
-[newBalance, req.user.id]
-);
+    if (!user) {
 
-/* save tx */
-db.run(
-"INSERT INTO transactions (user_id,type,amount,to_user,date) VALUES (?,?,?,?,?)",
-[
-req.user.id,
-"Sent",
-amount,
-to,
-new Date().toLocaleString()
-]
-);
+      return send(res, 401, {
+        error: "Invalid credentials"
+      });
 
-res.json({message:"Sent", balance:newBalance});
+    }
 
-});
+    const valid = await bcrypt.compare(
+      password,
+      user.password
+    );
 
-});
+    if (!valid) {
 
-/* HISTORY */
-app.get("/history", auth, (req,res)=>{
+      return send(res, 401, {
+        error: "Invalid credentials"
+      });
 
-db.all(
-"SELECT * FROM transactions WHERE user_id=? ORDER BY id DESC",
-[req.user.id],
-(err,rows)=>{
-res.json(rows);
-}
-);
+    }
 
-});
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email
+      },
+      SECRET,
+      {
+        expiresIn: "7d"
+      }
+    );
 
-/* START */
-const PORT = process.env.PORT || 3000;
+    return send(res, 200, {
+      token,
+      email: user.email,
+      balance: user.balance
+    });
 
-app.listen(PORT, ()=>{
-console.log("CORΛX backend running on port " + PORT);
-});
-});
+  }
+
+  /* =========================
+     BALANCE
+  ========================= */
+
+  if (url === "/api/balance" && method === "GET") {
+
+    const verified = auth(req);
+
+    if (!verified) {
+
+      return send(res, 403, {
+        error: "Unauthorized"
+      });
+
+    }
+
+    const user = users.find(
+      u => u.id === verified.id
+    );
+
+    if (!user) {
+
+      return send(res, 404, {
+        error: "User not found"
+      });
+
+    }
+
+    return send(res, 200, {
+      balance: user.balance
+    });
+
+  }
+
+  /* =========================
+     SEND PAYMENT
+  ========================= */
+
+  if (url === "/api/send" && method === "POST") {
+
+    const verified = auth(req);
+
+    if (!verified) {
+
+      return send(res, 403, {
+        error: "Unauthorized"
+      });
+
+    }
+
+    const { to, amount } = req.body;
+
+    const user = users.find(
+      u => u.id === verified.id
+    );
+
+    if (!user) {
+
+      return send(res, 404, {
+        error: "User not found"
+      });
+
+    }
+
+    if (user.balance < amount) {
+
+      return send(res, 400, {
+        error: "Insufficient balance"
+      });
+
+    }
+
+    user.balance -= amount;
+
+    transactions.push({
+      id: Date.now(),
+      user_id: user.id,
+      type: "Sent",
+      amount,
+      to,
+      date: new Date().toLocaleString()
+    });
+
+    return send(res, 200, {
+      success: true,
+      balance: user.balance
+    });
+
+  }
+
+  /* =========================
+     HISTORY
+  ========================= */
+
+  if (url === "/api/history" && method === "GET") {
+
+    const verified = auth(req);
+
+    if (!verified) {
+
+      return send(res, 403, {
+        error: "Unauthorized"
+      });
+
+    }
+
+    const history = transactions.filter(
+      tx => tx.user_id === verified.id
+    );
+
+    return send(res, 200, history);
+
+  }
+
+  /* =========================
+     NOT FOUND
+  ========================= */
+
+  return send(res, 404, {
+    error: "Route not found"
+  });
+
+};
