@@ -1,97 +1,382 @@
-<!-- =========================================
-     CORΛX PREMIUM CHART SECTION
-     PLACE INSIDE DASHBOARD
-========================================= -->
+<!DOCTYPE html>
+<html lang="en">
 
-<section class="chart-section">
+<head>
 
-    <!-- GRID -->
-    <div class="chart-grid"></div>
+    <meta charset="UTF-8" />
 
-    <!-- GLOW ORBS -->
-    <div class="chart-orb one"></div>
-    <div class="chart-orb two"></div>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
-    <!-- HEADER -->
-    <div class="chart-top">
+    <title>CORΛX — Money Without Borders</title>
 
-        <div>
+    <!-- PWA -->
+    <meta name="theme-color" content="#050505" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-            <div class="chart-title">
-                CRX Market Performance
+    <!-- FONT -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="charts.css" />
+
+</head>
+
+<body>
+
+    <!-- =========================================
+         BACKGROUND FX
+    ========================================== -->
+
+    <div class="bg-gradient"></div>
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- PARTICLES -->
+    <div id="particles"></div>
+
+    <!-- =========================================
+         APP
+    ========================================== -->
+
+    <div class="app">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header class="hero">
+
+            <!-- LOGO -->
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+                    COR<span>Λ</span>X
+                </h1>
+
             </div>
 
-        </div>
+            <p class="tagline">
+                Money Without Borders
+            </p>
 
-        <div class="chart-price">
+        </header>
 
-            <div class="chart-value">
-                $2,847.22
+        <!-- =====================================
+             AUTH SCREEN
+        ====================================== -->
+
+        <section
+            id="authScreen"
+            class="glass-card auth-card"
+        >
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+                Welcome Back
+            </h2>
+
+            <p class="subtitle">
+                Enter the future of decentralized payments.
+            </p>
+
+            <!-- INPUTS -->
+
+            <div class="input-group">
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                />
+
             </div>
 
-            <div class="chart-growth">
-                +12.8% Today
+            <div class="input-group">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                />
+
             </div>
 
-        </div>
+            <!-- BUTTONS -->
+
+            <button
+                id="loginBtn"
+                class="primary-btn"
+            >
+                Login
+            </button>
+
+            <button
+                id="registerBtn"
+                class="secondary-btn"
+            >
+                Create Account
+            </button>
+
+        </section>
+
+        <!-- =====================================
+             DASHBOARD
+        ====================================== -->
+
+        <section
+            id="dashboard"
+            class="dashboard"
+            style="display:none;"
+        >
+
+            <!-- BALANCE -->
+
+            <div
+                class="glass-card balance-card"
+                id="balanceCard"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="balance-top">
+
+                    <span>
+                        Total Balance
+                    </span>
+
+                    <div class="live-badge">
+
+                        <div class="live-dot"></div>
+
+                        LIVE
+
+                    </div>
+
+                </div>
+
+                <h2 id="balanceValue">
+                    $0.00
+                </h2>
+
+                <p id="userEmail">
+                    CORΛX Wallet
+                </p>
+
+            </div>
+
+            <!-- SEND -->
+
+            <div class="glass-card send-card">
+
+                <div class="card-glow"></div>
+
+                <h3>
+                    Send Payment
+                </h3>
+
+                <input
+                    type="text"
+                    id="sendTo"
+                    placeholder="Recipient"
+                />
+
+                <input
+                    type="number"
+                    id="sendAmount"
+                    placeholder="Amount"
+                />
+
+                <button
+                    id="sendBtn"
+                    class="primary-btn"
+                >
+                    Send Now
+                </button>
+
+            </div>
+
+            <!-- CHART -->
+
+            <section class="chart-section">
+
+                <div class="chart-grid"></div>
+
+                <div class="chart-orb one"></div>
+                <div class="chart-orb two"></div>
+
+                <div class="chart-top">
+
+                    <div>
+
+                        <div class="chart-title">
+                            CRX Performance
+                        </div>
+
+                    </div>
+
+                    <div class="chart-price">
+
+                        <div class="chart-value">
+                            +28.4%
+                        </div>
+
+                        <div class="chart-growth">
+                            This Month
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <canvas id="coraxChart"></canvas>
+
+                <div class="chart-filters">
+
+                    <button class="chart-filter active">
+                        1H
+                    </button>
+
+                    <button class="chart-filter">
+                        24H
+                    </button>
+
+                    <button class="chart-filter">
+                        7D
+                    </button>
+
+                    <button class="chart-filter">
+                        1M
+                    </button>
+
+                    <button class="chart-filter">
+                        ALL
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- HISTORY -->
+
+            <div class="glass-card history-card">
+
+                <div class="card-glow"></div>
+
+                <div class="history-header">
+
+                    <h3>
+                        Transaction History
+                    </h3>
+
+                </div>
+
+                <div id="historyList">
+
+                    <div class="history-item">
+
+                        <div class="tx-type">
+                            CRX Staking
+                        </div>
+
+                        <div class="tx-amount positive">
+                            +$420
+                        </div>
+
+                    </div>
+
+                    <div class="history-item">
+
+                        <div class="tx-type">
+                            Payment Sent
+                        </div>
+
+                        <div class="tx-amount negative">
+                            -$120
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LOGOUT -->
+
+            <button
+                id="logoutBtn"
+                class="logout-btn"
+            >
+                Logout
+            </button>
+
+        </section>
 
     </div>
 
-    <!-- LIVE STATUS -->
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        margin-bottom:18px;
-        color:#cfcfcf;
-        font-size:13px;
-        font-weight:600;
-    ">
+    <!-- =========================================
+         SCRIPTS
+    ========================================== -->
 
-        <div class="live-dot"></div>
+    <script src="app.js"></script>
 
-        Live Market Simulation
+    <script src="charts.js"></script>
 
-    </div>
+    <!-- =========================================
+         PARTICLE SYSTEM
+    ========================================== -->
 
-    <!-- CANVAS -->
-    <canvas id="coraxChart"></canvas>
+    <script>
 
-    <!-- FILTERS -->
-    <div class="chart-filters">
+        const particles =
+            document.getElementById("particles");
 
-        <button class="chart-filter active">
-            1H
-        </button>
+        for (let i = 0; i < 45; i++) {
 
-        <button class="chart-filter">
-            24H
-        </button>
+            const p =
+                document.createElement("span");
 
-        <button class="chart-filter">
-            7D
-        </button>
+            p.classList.add("particle-bg");
 
-        <button class="chart-filter">
-            1M
-        </button>
+            p.style.left =
+                Math.random() * 100 + "%";
 
-        <button class="chart-filter">
-            1Y
-        </button>
+            p.style.top =
+                Math.random() * 100 + "%";
 
-        <button class="chart-filter">
-            ALL
-        </button>
+            p.style.animationDelay =
+                Math.random() * 8 + "s";
 
-    </div>
+            p.style.animationDuration =
+                5 + Math.random() * 10 + "s";
 
-</section>
+            particles.appendChild(p);
 
-<!-- =========================================
-     IMPORTS
-========================================= -->
+        }
 
-<link rel="stylesheet" href="charts.css">
+    </script>
 
-<script src="charts.js"></script>
+</body>
+</html>
