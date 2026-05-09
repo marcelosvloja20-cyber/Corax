@@ -1,41 +1,54 @@
 /* =========================================
    CORΛX APP.JS
-   FULL FRONTEND SYSTEM
-   Connected to Render Backend
+   FIXED VERSION
+   FULL AUTH SYSTEM
 ========================================= */
 
 const API = "https://corax-backend-92zg.onrender.com";
 
 /* =========================================
-   ELEMENTS
+   WAIT DOM LOAD
 ========================================= */
 
-const loginBtn = document.getElementById("loginBtn");
-const registerBtn = document.getElementById("registerBtn");
+document.addEventListener("DOMContentLoaded", () => {
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
+    /* =====================================
+       ELEMENTS
+    ===================================== */
 
-const authScreen = document.getElementById("authScreen");
-const dashboard = document.getElementById("dashboard");
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
 
-const userEmail = document.getElementById("userEmail");
-const balanceValue = document.getElementById("balanceValue");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-const historyList = document.getElementById("historyList");
+    const authScreen = document.getElementById("authScreen");
+    const dashboard = document.getElementById("dashboard");
 
-const logoutBtn = document.getElementById("logoutBtn");
+    const userEmail = document.getElementById("userEmail");
+    const balanceValue = document.getElementById("balanceValue");
 
-const sendBtn = document.getElementById("sendBtn");
+    const historyList = document.getElementById("historyList");
 
-const sendTo = document.getElementById("sendTo");
-const sendAmount = document.getElementById("sendAmount");
+    const logoutBtn = document.getElementById("logoutBtn");
 
-/* =========================================
-   INIT
-========================================= */
+    const sendBtn = document.getElementById("sendBtn");
 
-window.onload = () => {
+    const sendTo = document.getElementById("sendTo");
+    const sendAmount = document.getElementById("sendAmount");
+
+    /* =====================================
+       CHECK ELEMENTS
+    ===================================== */
+
+    console.log("CORΛX APP STARTED");
+
+    console.log(loginBtn);
+    console.log(registerBtn);
+
+    /* =====================================
+       AUTO LOGIN
+    ===================================== */
 
     const token = localStorage.getItem("corax_token");
 
@@ -45,414 +58,413 @@ window.onload = () => {
 
     }
 
-};
+    /* =====================================
+       REGISTER
+    ===================================== */
 
-/* =========================================
-   REGISTER
-========================================= */
+    if (registerBtn) {
 
-registerBtn.addEventListener("click", async () => {
+        registerBtn.onclick = async () => {
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
 
-    if (!email || !password) {
+            if (!email || !password) {
 
-        alert("Fill all fields");
-        return;
+                alert("Fill all fields");
+                return;
+
+            }
+
+            try {
+
+                registerBtn.innerText = "Creating...";
+
+                const response = await fetch(`${API}/register`, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+
+                });
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (data.success) {
+
+                    createExplosion(registerBtn);
+
+                    alert("Account created 🚀");
+
+                    registerBtn.innerText = "Create Account";
+
+                } else {
+
+                    alert(data.error || "Register failed");
+
+                    registerBtn.innerText = "Create Account";
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+                alert("Server error");
+
+                registerBtn.innerText = "Create Account";
+
+            }
+
+        };
 
     }
 
-    try {
+    /* =====================================
+       LOGIN
+    ===================================== */
 
-        const response = await fetch(`${API}/register`, {
+    if (loginBtn) {
 
-            method: "POST",
+        loginBtn.onclick = async () => {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
 
-            body: JSON.stringify({
-                email,
-                password
-            })
+            if (!email || !password) {
 
-        });
+                alert("Fill all fields");
+                return;
 
-        const data = await response.json();
+            }
 
-        if (data.success) {
+            try {
 
-            createExplosion(registerBtn);
+                loginBtn.innerText = "Loading...";
 
-            alert("Account created successfully 🚀");
+                const response = await fetch(`${API}/login`, {
 
-        } else {
+                    method: "POST",
 
-            alert(data.error || "Register failed");
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+
+                });
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (data.token) {
+
+                    localStorage.setItem(
+                        "corax_token",
+                        data.token
+                    );
+
+                    createExplosion(loginBtn);
+
+                    loadDashboard();
+
+                } else {
+
+                    alert(data.error || "Login failed");
+
+                }
+
+                loginBtn.innerText = "Login";
+
+            } catch (err) {
+
+                console.error(err);
+
+                alert("Server error");
+
+                loginBtn.innerText = "Login";
+
+            }
+
+        };
+
+    }
+
+    /* =====================================
+       LOAD DASHBOARD
+    ===================================== */
+
+    async function loadDashboard() {
+
+        const token = localStorage.getItem("corax_token");
+
+        if (!token) return;
+
+        authScreen.style.display = "none";
+        dashboard.style.display = "flex";
+
+        try {
+
+            const response = await fetch(`${API}/balance`, {
+
+                method: "GET",
+
+                headers: {
+                    Authorization: token
+                }
+
+            });
+
+            const data = await response.json();
+
+            balanceValue.innerText =
+                `$${Number(data.balance).toFixed(2)}`;
+
+            loadHistory();
+
+        } catch (err) {
+
+            console.error(err);
 
         }
 
-    } catch (err) {
+    }
 
-        console.error(err);
+    /* =====================================
+       HISTORY
+    ===================================== */
 
-        alert("Server error");
+    async function loadHistory() {
+
+        const token = localStorage.getItem("corax_token");
+
+        try {
+
+            const response = await fetch(`${API}/history`, {
+
+                method: "GET",
+
+                headers: {
+                    Authorization: token
+                }
+
+            });
+
+            const history = await response.json();
+
+            historyList.innerHTML = "";
+
+            if (!history.length) {
+
+                historyList.innerHTML = `
+                    <div class="empty-history">
+                        No transactions yet
+                    </div>
+                `;
+
+                return;
+
+            }
+
+            history.reverse().forEach(tx => {
+
+                const item = document.createElement("div");
+
+                item.className = "history-item";
+
+                item.innerHTML = `
+                    <div class="tx-type">${tx.type}</div>
+                    <div class="tx-amount">-$${tx.amount}</div>
+                    <div class="tx-date">${tx.date}</div>
+                `;
+
+                historyList.appendChild(item);
+
+            });
+
+        } catch (err) {
+
+            console.error(err);
+
+        }
 
     }
 
-});
+    /* =====================================
+       SEND PAYMENT
+    ===================================== */
 
-/* =========================================
-   LOGIN
-========================================= */
+    if (sendBtn) {
 
-loginBtn.addEventListener("click", async () => {
+        sendBtn.onclick = async () => {
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+            const to = sendTo.value.trim();
+            const amount = Number(sendAmount.value);
 
-    if (!email || !password) {
+            if (!to || !amount) {
 
-        alert("Fill all fields");
-        return;
+                alert("Fill all fields");
+                return;
+
+            }
+
+            const token = localStorage.getItem("corax_token");
+
+            try {
+
+                const response = await fetch(`${API}/send`, {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type": "application/json",
+                        Authorization: token
+
+                    },
+
+                    body: JSON.stringify({
+                        to,
+                        amount
+                    })
+
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    createExplosion(sendBtn);
+
+                    sendTo.value = "";
+                    sendAmount.value = "";
+
+                    loadDashboard();
+
+                } else {
+
+                    alert(data.error || "Payment failed");
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+        };
 
     }
 
-    try {
+    /* =====================================
+       LOGOUT
+    ===================================== */
 
-        const response = await fetch(`${API}/login`, {
+    if (logoutBtn) {
 
-            method: "POST",
+        logoutBtn.onclick = () => {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            localStorage.removeItem("corax_token");
 
-            body: JSON.stringify({
-                email,
-                password
-            })
+            dashboard.style.display = "none";
+            authScreen.style.display = "flex";
 
-        });
+        };
 
-        const data = await response.json();
+    }
 
-        if (data.token) {
+    /* =====================================
+       PARTICLE FX
+    ===================================== */
 
-            localStorage.setItem(
-                "corax_token",
-                data.token
+    function createExplosion(button) {
+
+        const rect = button.getBoundingClientRect();
+
+        for (let i = 0; i < 20; i++) {
+
+            const particle = document.createElement("span");
+
+            particle.className = "particle";
+
+            document.body.appendChild(particle);
+
+            particle.style.left =
+                rect.left + rect.width / 2 + "px";
+
+            particle.style.top =
+                rect.top + rect.height / 2 + "px";
+
+            const x =
+                (Math.random() - 0.5) * 250;
+
+            const y =
+                (Math.random() - 0.5) * 250;
+
+            particle.animate(
+
+                [
+                    {
+                        transform: "translate(0,0) scale(1)",
+                        opacity: 1
+                    },
+
+                    {
+                        transform:
+                            `translate(${x}px, ${y}px) scale(0)`,
+                        opacity: 0
+                    }
+
+                ],
+
+                {
+                    duration: 800
+                }
+
             );
 
-            createExplosion(loginBtn);
+            setTimeout(() => {
 
-            loadDashboard();
+                particle.remove();
 
-        } else {
-
-            alert(data.error || "Login failed");
+            }, 800);
 
         }
 
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Server error");
-
     }
 
-});
+    /* =====================================
+       MOBILE VIBRATION
+    ===================================== */
 
-/* =========================================
-   LOAD DASHBOARD
-========================================= */
+    document.querySelectorAll("button").forEach(btn => {
 
-async function loadDashboard() {
+        btn.addEventListener("click", () => {
 
-    const token = localStorage.getItem("corax_token");
+            if (navigator.vibrate) {
 
-    if (!token) return;
+                navigator.vibrate(25);
 
-    authScreen.style.display = "none";
-    dashboard.style.display = "flex";
-
-    try {
-
-        /* =========================
-           BALANCE
-        ========================= */
-
-        const balanceResponse = await fetch(`${API}/balance`, {
-
-            method: "GET",
-
-            headers: {
-                Authorization: token
             }
 
         });
-
-        const balanceData = await balanceResponse.json();
-
-        balanceValue.innerText =
-            `$${balanceData.balance.toFixed(2)}`;
-
-        /* =========================
-           HISTORY
-        ========================= */
-
-        const historyResponse = await fetch(`${API}/history`, {
-
-            method: "GET",
-
-            headers: {
-                Authorization: token
-            }
-
-        });
-
-        const historyData = await historyResponse.json();
-
-        historyList.innerHTML = "";
-
-        if (!historyData.length) {
-
-            historyList.innerHTML = `
-                <div class="empty-history">
-                    No transactions yet
-                </div>
-            `;
-
-        }
-
-        historyData.reverse().forEach(tx => {
-
-            const item = document.createElement("div");
-
-            item.className = "history-item";
-
-            item.innerHTML = `
-                <div class="tx-type">${tx.type}</div>
-                <div class="tx-amount">-$${tx.amount}</div>
-                <div class="tx-date">${tx.date}</div>
-            `;
-
-            historyList.appendChild(item);
-
-        });
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Failed loading dashboard");
-
-    }
-
-}
-
-/* =========================================
-   SEND PAYMENT
-========================================= */
-
-sendBtn.addEventListener("click", async () => {
-
-    const to = sendTo.value.trim();
-    const amount = Number(sendAmount.value);
-
-    if (!to || !amount) {
-
-        alert("Fill all fields");
-        return;
-
-    }
-
-    const token = localStorage.getItem("corax_token");
-
-    try {
-
-        const response = await fetch(`${API}/send`, {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type": "application/json",
-                Authorization: token
-
-            },
-
-            body: JSON.stringify({
-                to,
-                amount
-            })
-
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-
-            createExplosion(sendBtn);
-
-            sendTo.value = "";
-            sendAmount.value = "";
-
-            loadDashboard();
-
-        } else {
-
-            alert(data.error || "Payment failed");
-
-        }
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Server error");
-
-    }
-
-});
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-logoutBtn.addEventListener("click", () => {
-
-    localStorage.removeItem("corax_token");
-
-    dashboard.style.display = "none";
-    authScreen.style.display = "flex";
-
-});
-
-/* =========================================
-   PARTICLE EXPLOSION FX
-========================================= */
-
-function createExplosion(button) {
-
-    const rect = button.getBoundingClientRect();
-
-    for (let i = 0; i < 25; i++) {
-
-        const particle = document.createElement("span");
-
-        particle.className = "particle";
-
-        document.body.appendChild(particle);
-
-        particle.style.left =
-            rect.left + rect.width / 2 + "px";
-
-        particle.style.top =
-            rect.top + rect.height / 2 + "px";
-
-        const x =
-            (Math.random() - 0.5) * 300;
-
-        const y =
-            (Math.random() - 0.5) * 300;
-
-        particle.animate(
-
-            [
-                {
-                    transform: "translate(0,0) scale(1)",
-                    opacity: 1
-                },
-
-                {
-                    transform:
-                        `translate(${x}px, ${y}px) scale(0)`,
-                    opacity: 0
-                }
-
-            ],
-
-            {
-                duration: 900,
-                easing: "cubic-bezier(.17,.67,.83,.67)"
-            }
-
-        );
-
-        setTimeout(() => {
-
-            particle.remove();
-
-        }, 900);
-
-    }
-
-}
-
-/* =========================================
-   LIVE BALANCE FX
-========================================= */
-
-setInterval(() => {
-
-    const balance = document.getElementById("balanceCard");
-
-    if (balance) {
-
-        balance.animate(
-
-            [
-                {
-                    boxShadow:
-                        "0 0 20px rgba(168,85,247,.15)"
-                },
-
-                {
-                    boxShadow:
-                        "0 0 40px rgba(168,85,247,.45)"
-                },
-
-                {
-                    boxShadow:
-                        "0 0 20px rgba(168,85,247,.15)"
-                }
-
-            ],
-
-            {
-                duration: 3000
-            }
-
-        );
-
-    }
-
-}, 3200);
-
-/* =========================================
-   MOBILE HAPTIC FEEDBACK
-========================================= */
-
-document.querySelectorAll("button").forEach(btn => {
-
-    btn.addEventListener("click", () => {
-
-        if (navigator.vibrate) {
-
-            navigator.vibrate(25);
-
-        }
 
     });
 
+    console.log("CORΛX READY 🚀");
+
 });
-
-/* =========================================
-   CORΛX SYSTEM READY
-========================================= */
-
-console.log("CORΛX APP INITIALIZED 🚀");
