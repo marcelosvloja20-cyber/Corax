@@ -1,89 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CORΛX</title>
+<!-- =========================================
+     CORΛX PREMIUM CHART SECTION
+     PLACE INSIDE DASHBOARD
+========================================= -->
 
-<link rel="stylesheet" href="style.css">
-</head>
+<section class="chart-section">
 
-<body>
+    <!-- GRID -->
+    <div class="chart-grid"></div>
 
-<!-- SPLASH -->
-<div id="splash">
-  <h1 class="logo">CORΛX</h1>
-</div>
+    <!-- GLOW ORBS -->
+    <div class="chart-orb one"></div>
+    <div class="chart-orb two"></div>
 
-<!-- APP -->
-<div id="app" class="hidden">
+    <!-- HEADER -->
+    <div class="chart-top">
 
-<header class="hero">
-  <h1>CORΛX</h1>
-  <p>Money Without Borders</p>
-</header>
+        <div>
 
-<!-- AUTH -->
-<div id="auth" class="card">
-  <h2>Welcome</h2>
+            <div class="chart-title">
+                CRX Market Performance
+            </div>
 
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
+        </div>
 
-  <button onclick="login()">Login</button>
-  <button onclick="register()">Create Account</button>
+        <div class="chart-price">
 
-  <p id="errorMsg" class="error hidden"></p>
-</div>
+            <div class="chart-value">
+                $2,847.22
+            </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+            <div class="chart-growth">
+                +12.8% Today
+            </div>
 
-<div class="card">
-<h3>User</h3>
-<p id="userId"></p>
-</div>
+        </div>
 
-<div class="card">
-<h3>Balance</h3>
-<p id="balance">$0.00</p>
-</div>
+    </div>
 
-<div class="card">
-<h3>Send Payment</h3>
-<input id="to" placeholder="Recipient">
-<input id="amount" type="number" placeholder="Amount">
-<button onclick="sendPayment()">Send</button>
-</div>
+    <!-- LIVE STATUS -->
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:18px;
+        color:#cfcfcf;
+        font-size:13px;
+        font-weight:600;
+    ">
 
-<!-- CHART -->
-<div class="card">
-<h3>Spending Overview</h3>
-<canvas id="chart"></canvas>
-</div>
+        <div class="live-dot"></div>
 
-<!-- HISTORY -->
-<div class="card">
-<h3>Transaction History</h3>
-<div id="history"></div>
-</div>
+        Live Market Simulation
 
-<button onclick="logout()">Logout</button>
+    </div>
 
-</div>
+    <!-- CANVAS -->
+    <canvas id="coraxChart"></canvas>
 
-</div>
+    <!-- FILTERS -->
+    <div class="chart-filters">
 
-<script src="app.js"></script>
+        <button class="chart-filter active">
+            1H
+        </button>
 
-<script>
-window.onload = () => {
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("app").classList.remove("hidden");
-},1000);
-}
-</script>
+        <button class="chart-filter">
+            24H
+        </button>
 
-</body>
-</html>
+        <button class="chart-filter">
+            7D
+        </button>
+
+        <button class="chart-filter">
+            1M
+        </button>
+
+        <button class="chart-filter">
+            1Y
+        </button>
+
+        <button class="chart-filter">
+            ALL
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     IMPORTS
+========================================= -->
+
+<link rel="stylesheet" href="charts.css">
+
+<script src="charts.js"></script>
