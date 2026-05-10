@@ -1,0 +1,155 @@
+<!-- =========================================
+     CORΛX OFFLINE.HTML
+     PWA Offline Screen
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>CORΛX Offline</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main
+        class="app"
+        style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        "
+    >
+
+        <!-- CARD -->
+        <section
+            class="glass-card"
+            style="
+                text-align:center;
+                width:100%;
+            "
+        >
+
+            <div class="card-glow"></div>
+
+            <!-- CROW -->
+            <div
+                class="crow-container"
+                style="
+                    margin:auto auto 24px;
+                "
+            >
+
+                <div class="crow-wing left"></div>
+
+                <div class="crow-body"></div>
+
+                <div class="crow-wing right"></div>
+
+            </div>
+
+            <!-- TITLE -->
+            <h1
+                class="logo-text"
+                style="
+                    font-size:42px;
+                "
+            >
+
+                COR<span>Λ</span>X
+
+            </h1>
+
+            <!-- OFFLINE -->
+            <h2
+                style="
+                    margin-top:24px;
+                    font-size:28px;
+                    font-weight:800;
+                "
+            >
+
+                You're Offline
+
+            </h2>
+
+            <!-- TEXT -->
+            <p
+                class="subtitle"
+                style="
+                    margin-top:14px;
+                    line-height:1.8;
+                "
+            >
+
+                CORΛX is temporarily disconnected from the network.
+
+                Some features may still work thanks to offline caching.
+
+            </p>
+
+            <!-- BUTTON -->
+            <button
+                class="primary-btn"
+                style="
+                    margin-top:30px;
+                "
+                onclick="window.location.reload()"
+            >
+
+                Retry Connection
+
+            </button>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
