@@ -1,341 +1,484 @@
+<!-- =========================================
+     CORΛX SETTINGS.HTML
+     Premium Web3 Settings Screen
+========================================= -->
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORΛX Settings</title>
+    <meta charset="UTF-8" />
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
-body{
-font-family:Arial, Helvetica, sans-serif;
-background:#050505;
-color:#fff;
-}
+    <title>CORΛX Settings</title>
 
-.wrapper{
-max-width:430px;
-margin:auto;
-min-height:100vh;
-padding:20px 20px 110px;
-}
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
 
-/* TOP */
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
 
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:22px;
-}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
 
-.brand{
-font-size:24px;
-letter-spacing:6px;
-font-weight:300;
-}
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
 
-.user{
-width:42px;
-height:42px;
-border-radius:50%;
-background:#a855f7;
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:bold;
-box-shadow:0 0 20px rgba(168,85,247,.45);
-}
+    <link rel="stylesheet" href="pwa.css" />
 
-/* HERO */
-
-.hero{
-background:linear-gradient(135deg,#111,#1a1a1a);
-border-radius:26px;
-padding:24px;
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 0 30px rgba(168,85,247,.08);
-position:relative;
-overflow:hidden;
-margin-bottom:22px;
-}
-
-.hero::after{
-content:"";
-position:absolute;
-width:180px;
-height:180px;
-background:rgba(168,85,247,.12);
-border-radius:50%;
-top:-70px;
-right:-70px;
-filter:blur(50px);
-}
-
-.hero small{
-color:#888;
-letter-spacing:2px;
-}
-
-.hero h1{
-font-size:32px;
-margin-top:10px;
-}
-
-.hero p{
-margin-top:8px;
-font-size:14px;
-color:#bbb;
-line-height:1.6;
-}
-
-/* SECTION */
-
-.section{
-background:#111;
-border-radius:22px;
-padding:18px;
-border:1px solid rgba(255,255,255,.06);
-margin-bottom:16px;
-}
-
-.section h2{
-font-size:16px;
-color:#a855f7;
-margin-bottom:14px;
-}
-
-.row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-font-size:14px;
-}
-
-.row:last-child{
-border-bottom:none;
-}
-
-.value{
-color:#888;
-font-size:13px;
-}
-
-.toggle{
-width:46px;
-height:24px;
-background:#222;
-border-radius:30px;
-position:relative;
-cursor:pointer;
-}
-
-.toggle::after{
-content:"";
-position:absolute;
-top:3px;
-left:3px;
-width:18px;
-height:18px;
-background:#fff;
-border-radius:50%;
-transition:.3s;
-}
-
-.toggle.active{
-background:#a855f7;
-}
-
-.toggle.active::after{
-left:25px;
-}
-
-/* LOGOUT */
-
-.btn{
-width:100%;
-padding:16px;
-border:none;
-border-radius:14px;
-background:#a855f7;
-color:#fff;
-font-weight:700;
-letter-spacing:3px;
-cursor:pointer;
-transition:.3s;
-margin-top:10px;
-}
-
-.btn:hover{
-transform:translateY(-3px);
-box-shadow:0 0 24px rgba(168,85,247,.45);
-}
-
-/* NAV */
-
-.nav{
-position:fixed;
-bottom:0;
-left:50%;
-transform:translateX(-50%);
-width:430px;
-max-width:100%;
-background:#0c0c0c;
-border-top:1px solid rgba(255,255,255,.06);
-display:grid;
-grid-template-columns:repeat(4,1fr);
-padding:14px 0;
-}
-
-.nav div{
-text-align:center;
-font-size:12px;
-color:#777;
-cursor:pointer;
-}
-
-.nav span{
-display:block;
-font-size:20px;
-margin-bottom:6px;
-}
-
-.active-nav{
-color:#a855f7 !important;
-}
-</style>
 </head>
 
 <body>
 
-<div class="wrapper">
+    <!-- =========================================
+         BACKGROUND
+    ========================================= -->
 
-<div class="top">
-<div class="brand">CORΛX</div>
-<div class="user">C</div>
-</div>
+    <div class="grid-overlay"></div>
 
-<div class="hero">
-<small>CONTROL CENTER</small>
-<h1>Settings</h1>
-<p>
-Gerencie segurança, preferências e controle total da sua conta CORΛX.
-</p>
-</div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-<div class="section">
-<h2>Account</h2>
+    <div id="particles"></div>
 
-<div class="row">
-<span>Wallet</span>
-<span class="value">0x8d3f...9217</span>
-</div>
+    <!-- =========================================
+         APP
+    ========================================= -->
 
-<div class="row">
-<span>Email</span>
-<span class="value">user@email.com</span>
-</div>
+    <main class="app">
 
-<div class="row">
-<span>Devices</span>
-<span class="value">2 Connected</span>
-</div>
-</div>
+        <!-- =====================================
+             HERO
+        ====================================== -->
 
-<div class="section">
-<h2>Security</h2>
+        <section class="hero">
 
-<div class="row">
-<span>Face ID</span>
-<div class="toggle active"></div>
-</div>
+            <div class="logo-wrapper">
 
-<div class="row">
-<span>2FA</span>
-<div class="toggle"></div>
-</div>
+                <div class="crow-container">
 
-<div class="row">
-<span>Auto Lock</span>
-<div class="toggle active"></div>
-</div>
-</div>
+                    <div class="crow-wing left"></div>
 
-<div class="section">
-<h2>Preferences</h2>
+                    <div class="crow-body"></div>
 
-<div class="row">
-<span>Language</span>
-<span class="value">English</span>
-</div>
+                    <div class="crow-wing right"></div>
 
-<div class="row">
-<span>Currency</span>
-<span class="value">USD</span>
-</div>
+                </div>
 
-<div class="row">
-<span>Theme</span>
-<span class="value">Dark</span>
-</div>
-</div>
+                <h1 class="logo-text">
 
-<div class="section">
-<h2>System</h2>
+                    COR<span>Λ</span>X
 
-<div class="row">
-<span>Support</span>
-<span class="value">Open</span>
-</div>
+                </h1>
 
-<div class="row">
-<span>Terms</span>
-<span class="value">View</span>
-</div>
-</div>
+            </div>
 
-<button class="btn" onclick="logout()">
-LOGOUT
-</button>
+            <p class="tagline">
 
-</div>
+                Security & Preferences
 
-<div class="nav">
-<div onclick="goHome()"><span>🏠</span>Home</div>
-<div onclick="goHistory()"><span>📜</span>History</div>
-<div onclick="goMerchant()"><span>🏪</span>Merchant</div>
-<div class="active-nav" onclick="goSettings()"><span>⚙️</span>Settings</div>
-</div>
+            </p>
 
-<script>
-function logout(){
-window.location.href='login.html';
-}
+        </section>
 
-function goHome(){
-window.location.href='app.html';
-}
+        <!-- =====================================
+             PROFILE
+        ====================================== -->
 
-function goHistory(){
-window.location.href='history.html';
-}
+        <section class="glass-card">
 
-function goMerchant(){
-window.location.href='merchant.html';
-}
+            <div class="card-glow"></div>
 
-function goSettings(){
-window.location.href='setting.html';
-}
-</script>
+            <h2 class="title">
+
+                Profile
+
+            </h2>
+
+            <p class="subtitle">
+
+                Manage your decentralized identity.
+
+            </p>
+
+            <!-- USER -->
+            <div
+                style="
+                    margin-top:26px;
+                    display:flex;
+                    align-items:center;
+                    gap:18px;
+                "
+            >
+
+                <!-- AVATAR -->
+                <div
+                    style="
+                        width:70px;
+                        height:70px;
+                        border-radius:50%;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #A855F7,
+                            #7C3AED
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:26px;
+                        font-weight:800;
+                        box-shadow:
+                        0 0 30px rgba(168,85,247,.45);
+                    "
+                >
+
+                    C
+
+                </div>
+
+                <!-- INFO -->
+                <div>
+
+                    <div
+                        style="
+                            font-size:20px;
+                            font-weight:700;
+                        "
+                    >
+
+                        CORΛX User
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:6px;
+                            opacity:.6;
+                        "
+                    >
+
+                        connected@corax.io
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             SECURITY
+        ====================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Security
+
+            </h2>
+
+            <p class="subtitle">
+
+                Advanced protection systems.
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Face ID
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Biometric authentication
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    Enabled
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Multi-Signature
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Wallet confirmation system
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    Active
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Encrypted Backup
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Cloud-secured recovery
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    Synced
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             PREFERENCES
+        ====================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Preferences
+
+            </h2>
+
+            <p class="subtitle">
+
+                Customize your CORΛX experience.
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Notifications
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Market alerts enabled
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ON
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Dark Mode
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Premium OLED interface
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ACTIVE
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Live Market Sync
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Real-time updates
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ENABLED
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             ABOUT
+        ====================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                About CORΛX
+
+            </h2>
+
+            <p class="subtitle">
+
+                Premium decentralized multi-chain finance.
+
+            </p>
+
+            <div
+                style="
+                    margin-top:24px;
+                    line-height:1.8;
+                    opacity:.7;
+                "
+            >
+
+                CORΛX is designed to redefine global payments through decentralized technology, real-world utility and borderless finance.
+
+            </div>
+
+            <!-- VERSION -->
+            <div
+                style="
+                    margin-top:22px;
+                    opacity:.45;
+                    font-size:14px;
+                "
+            >
+
+                CORΛX Ecosystem v1.0
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             ACTIONS
+        ====================================== -->
+
+        <section
+            style="
+                margin-top:24px;
+                display:grid;
+                gap:14px;
+            "
+        >
+
+            <button class="primary-btn">
+
+                Save Changes
+
+            </button>
+
+            <button class="secondary-btn">
+
+                Export Wallet
+
+            </button>
+
+            <button class="logout-btn">
+
+                Disconnect Wallet
+
+            </button>
+
+        </section>
+
+        <!-- FOOTER SPACE -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =========================================
+         SCRIPTS
+    ========================================= -->
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
 
 </body>
-</html>
+          </html>
