@@ -1,343 +1,228 @@
-/* ===================================
-   CORΛX MASTER API.JS v1
-=================================== */
+// =========================================
+// CORΛX API.JS
+// Frontend API Engine
+// =========================================
 
-const API = {
-baseURL: "https://api.corax.finance/v1",
-token: localStorage.getItem("corax_token") || null,
-timeout: 15000
-};
+// =========================================
+// API URL
+// =========================================
 
-/* ===================================
-   CORE REQUEST
-=================================== */
+const API_URL =
+    "https://corax-backend-92zg.onrender.com";
 
-async function apiRequest(
-endpoint,
-method = "GET",
-data = null
-){
+// =========================================
+// REGISTER
+// =========================================
 
-const controller =
-new AbortController();
+async function registerUser(email,password){
 
-const timer =
-setTimeout(
-()=>controller.abort(),
-API.timeout
+    try{
+
+        const response =
+            await fetch(
+
+                `${API_URL}/register`,
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                        "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        email,
+                        password
+
+                    })
+
+                }
+
+            );
+
+        const data =
+            await response.json();
+
+        return data;
+
+    } catch(error){
+
+        console.error(error);
+
+        return {
+
+            error:true,
+            message:"Connection error"
+
+        };
+
+    }
+
+}
+
+// =========================================
+// LOGIN
+// =========================================
+
+async function loginUser(email,password){
+
+    try{
+
+        const response =
+            await fetch(
+
+                `${API_URL}/login`,
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                        "application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        email,
+                        password
+
+                    })
+
+                }
+
+            );
+
+        const data =
+            await response.json();
+
+        return data;
+
+    } catch(error){
+
+        console.error(error);
+
+        return {
+
+            error:true,
+            message:"Connection error"
+
+        };
+
+    }
+
+}
+
+// =========================================
+// SAVE TOKEN
+// =========================================
+
+function saveToken(token){
+
+    localStorage.setItem(
+
+        "corax_token",
+
+        token
+
+    );
+
+}
+
+// =========================================
+// GET TOKEN
+// =========================================
+
+function getToken(){
+
+    return localStorage.getItem(
+
+        "corax_token"
+
+    );
+
+}
+
+// =========================================
+// LOGOUT
+// =========================================
+
+function logout(){
+
+    localStorage.removeItem(
+
+        "corax_token"
+
+    );
+
+    localStorage.removeItem(
+
+        "corax_user"
+
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+// =========================================
+// AUTH CHECK
+// =========================================
+
+function isAuthenticated(){
+
+    return !!getToken();
+
+}
+
+// =========================================
+// PROTECTED FETCH
+// =========================================
+
+async function protectedRequest(endpoint){
+
+    try{
+
+        const response =
+            await fetch(
+
+                `${API_URL}${endpoint}`,
+
+                {
+
+                    headers:{
+
+                        Authorization:
+                        `Bearer ${getToken()}`
+
+                    }
+
+                }
+
+            );
+
+        return await response.json();
+
+    } catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+// =========================================
+// READY
+// =========================================
+
+console.log(
+    "CORΛX API Engine Connected 🌐"
 );
-
-const options = {
-method: method,
-headers: {
-"Content-Type":"application/json"
-},
-signal: controller.signal
-};
-
-if(API.token){
-
-options.headers.Authorization =
-"Bearer " + API.token;
-
-}
-
-if(data){
-
-options.body =
-JSON.stringify(data);
-
-}
-
-try{
-
-const res =
-await fetch(
-API.baseURL + endpoint,
-options
-);
-
-clearTimeout(timer);
-
-const json =
-await res.json();
-
-if(!res.ok){
-
-throw new Error(
-json.message || "API Error"
-);
-
-}
-
-return json;
-
-}catch(err){
-
-console.error(err);
-
-toastSafe(
-err.message ||
-"Connection failed"
-);
-
-return null;
-}
-
-}
-
-/* ===================================
-   AUTH
-=================================== */
-
-async function apiLogin(
-email,
-password
-){
-
-const result =
-await apiRequest(
-"/auth/login",
-"POST",
-{
-email,
-password
-}
-);
-
-if(result?.token){
-
-API.token = result.token;
-
-localStorage.setItem(
-"corax_token",
-result.token
-);
-
-}
-
-return result;
-}
-
-async function apiRegister(
-name,
-email,
-password
-){
-
-return await apiRequest(
-"/auth/register",
-"POST",
-{
-name,
-email,
-password
-}
-);
-}
-
-async function apiWalletLogin(
-address,
-signature
-){
-
-return await apiRequest(
-"/auth/wallet",
-"POST",
-{
-address,
-signature
-}
-);
-}
-
-async function apiLogout(){
-
-API.token = null;
-
-localStorage.removeItem(
-"corax_token"
-);
-
-return true;
-}
-
-/* ===================================
-   USER
-=================================== */
-
-async function apiProfile(){
-
-return await apiRequest(
-"/user/profile"
-);
-}
-
-async function apiUpdateProfile(data){
-
-return await apiRequest(
-"/user/profile",
-"PUT",
-data
-);
-}
-
-/* ===================================
-   WALLET
-=================================== */
-
-async function apiBalance(){
-
-return await apiRequest(
-"/wallet/balance"
-);
-}
-
-async function apiTransactions(){
-
-return await apiRequest(
-"/wallet/history"
-);
-}
-
-async function apiSend(
-to,
-amount,
-token
-){
-
-return await apiRequest(
-"/wallet/send",
-"POST",
-{
-to,
-amount,
-token
-}
-);
-}
-
-/* ===================================
-   SWAP
-=================================== */
-
-async function apiSwapQuote(
-from,
-to,
-amount
-){
-
-return await apiRequest(
-"/swap/quote",
-"POST",
-{
-from,
-to,
-amount
-}
-);
-}
-
-async function apiSwap(
-from,
-to,
-amount
-){
-
-return await apiRequest(
-"/swap/execute",
-"POST",
-{
-from,
-to,
-amount
-}
-);
-}
-
-/* ===================================
-   STAKE
-=================================== */
-
-async function apiStake(
-amount,
-token
-){
-
-return await apiRequest(
-"/stake/deposit",
-"POST",
-{
-amount,
-token
-}
-);
-}
-
-async function apiRewards(){
-
-return await apiRequest(
-"/stake/rewards"
-);
-}
-
-/* ===================================
-   MERCHANT
-=================================== */
-
-async function apiCreateCheckout(
-amount,
-currency
-){
-
-return await apiRequest(
-"/merchant/checkout",
-"POST",
-{
-amount,
-currency
-}
-);
-}
-
-async function apiMerchantSales(){
-
-return await apiRequest(
-"/merchant/sales"
-);
-}
-
-/* ===================================
-   NOTIFICATIONS
-=================================== */
-
-async function apiNotifications(){
-
-return await apiRequest(
-"/notifications"
-);
-}
-
-/* ===================================
-   HELPERS
-=================================== */
-
-function toastSafe(msg){
-
-if(typeof toast === "function"){
-
-toast(msg);
-
-}else{
-
-console.log(msg);
-
-}
-}
-
-function apiConnected(){
-
-return !!API.token;
-}
-
-console.log("CORΛX API Ready");
