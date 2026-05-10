@@ -1,6 +1,6 @@
 // =========================================
 // CORΛX WALLET.JS
-// Premium Wallet System
+// Wallet Engine + UI Logic
 // =========================================
 
 // =========================================
@@ -11,39 +11,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializeWallet();
 
-    initializeBalance();
-
-    initializeAssets();
+    initializeBalanceAnimation();
 
     initializeButtons();
-
-    initializeNetwork();
-
-    initializeAnimations();
 
 });
 
 // =========================================
-// WALLET INIT
+// INIT WALLET
 // =========================================
 
 function initializeWallet(){
 
-    const email =
-        localStorage.getItem("corax_user");
-
-    if(!email){
-
-        localStorage.setItem(
-            "corax_user",
-            "connected@corax.io"
+    const user =
+        localStorage.getItem(
+            "corax_user"
         );
+
+    if(!user){
+
+        console.log(
+            "No user detected"
+        );
+
+        return;
 
     }
 
     console.log(
-        "CORΛX Wallet Connected 🚀"
+        `Wallet loaded for ${user}`
     );
+
+    updateWalletBalance();
 
 }
 
@@ -51,7 +50,67 @@ function initializeWallet(){
 // BALANCE
 // =========================================
 
-function initializeBalance(){
+function updateWalletBalance(){
+
+    const balanceElement =
+        document.getElementById(
+            "balanceValue"
+        );
+
+    if(!balanceElement) return;
+
+    let current = 0;
+
+    const target = 24842.82;
+
+    const interval =
+        setInterval(() => {
+
+            current += 284;
+
+            balanceElement.innerText =
+                "$ " +
+                current
+                .toLocaleString(
+                    "en-US",
+                    {
+
+                        minimumFractionDigits:2
+
+                    }
+
+                );
+
+            if(current >= target){
+
+                current = target;
+
+                balanceElement.innerText =
+                    "$ " +
+                    target
+                    .toLocaleString(
+                        "en-US",
+                        {
+
+                            minimumFractionDigits:2
+
+                        }
+
+                    );
+
+                clearInterval(interval);
+
+            }
+
+        },22);
+
+}
+
+// =========================================
+// BALANCE FX
+// =========================================
+
+function initializeBalanceAnimation(){
 
     const balance =
         document.getElementById(
@@ -60,76 +119,35 @@ function initializeBalance(){
 
     if(!balance) return;
 
-    let current = 0;
+    setInterval(() => {
 
-    const target = 24892.42;
+        balance.animate([
 
-    const interval = setInterval(() => {
+            {
 
-        current += target / 80;
+                transform:"scale(1)"
 
-        if(current >= target){
+            },
 
-            current = target;
+            {
 
-            clearInterval(interval);
+                transform:"scale(1.03)"
 
-        }
+            },
 
-        balance.innerText =
-            "$ " +
-            current.toLocaleString(
-                "en-US",
-                {
+            {
 
-                    minimumFractionDigits:2,
-                    maximumFractionDigits:2
+                transform:"scale(1)"
 
-                }
-            );
+            }
 
-    },20);
+        ],{
 
-}
+            duration:1200
 
-// =========================================
-// ASSETS
-// =========================================
+        });
 
-function initializeAssets(){
-
-    const assets = [
-
-        {
-
-            symbol:"BTC",
-            value:"12,420",
-            amount:"0.24 BTC"
-
-        },
-
-        {
-
-            symbol:"ETH",
-            value:"5,820",
-            amount:"2.44 ETH"
-
-        },
-
-        {
-
-            symbol:"CRX",
-            value:"6,652",
-            amount:"12,000 CRX"
-
-        }
-
-    ];
-
-    console.log(
-        "Assets Loaded",
-        assets
-    );
+    },5000);
 
 }
 
@@ -144,63 +162,61 @@ function initializeButtons(){
 
     buttons.forEach(button => {
 
-        button.addEventListener("click", e => {
+        button.addEventListener(
 
-            createExplosion(
-                e.clientX,
-                e.clientY
-            );
+            "click",
 
-            animateButton(button);
+            e => {
 
-        });
+                createExplosion(
 
-    });
+                    e.clientX,
 
-}
+                    e.clientY
 
-// =========================================
-// BUTTON ANIMATION
-// =========================================
+                );
 
-function animateButton(button){
+                button.animate([
 
-    button.animate([
+                    {
 
-        {
+                        transform:"scale(1)"
 
-            transform:"scale(1)"
+                    },
 
-        },
+                    {
 
-        {
+                        transform:"scale(.92)"
 
-            transform:"scale(.92)"
+                    },
 
-        },
+                    {
 
-        {
+                        transform:"scale(1)"
 
-            transform:"scale(1)"
+                    }
 
-        }
+                ],{
 
-    ],{
+                    duration:300
 
-        duration:280,
-        easing:"ease"
+                });
+
+            }
+
+        );
 
     });
 
 }
 
 // =========================================
-// EXPLOSION
+// PARTICLE EXPLOSION
 // =========================================
 
 function createExplosion(x,y){
 
-    for(let i = 0; i < 20; i++){
+    for(let i = 0; i < 18; i++){
 
         const particle =
             document.createElement("div");
@@ -208,7 +224,9 @@ function createExplosion(x,y){
         particle.className =
             "click-particle";
 
-        document.body.appendChild(particle);
+        document.body.appendChild(
+            particle
+        );
 
         particle.style.left =
             x + "px";
@@ -216,17 +234,11 @@ function createExplosion(x,y){
         particle.style.top =
             y + "px";
 
-        const angle =
-            Math.random() * Math.PI * 2;
+        const randomX =
+            (Math.random() - .5) * 240;
 
-        const distance =
-            30 + Math.random() * 80;
-
-        const moveX =
-            Math.cos(angle) * distance;
-
-        const moveY =
-            Math.sin(angle) * distance;
+        const randomY =
+            (Math.random() - .5) * 240;
 
         particle.animate([
 
@@ -242,7 +254,7 @@ function createExplosion(x,y){
             {
 
                 transform:
-                `translate(${moveX}px,${moveY}px) scale(0)`,
+                `translate(${randomX}px,${randomY}px) scale(0)`,
 
                 opacity:0
 
@@ -250,8 +262,8 @@ function createExplosion(x,y){
 
         ],{
 
-            duration:700,
-            easing:"cubic-bezier(.2,.8,.2,1)"
+            duration:900,
+            easing:"ease-out"
 
         });
 
@@ -259,53 +271,45 @@ function createExplosion(x,y){
 
             particle.remove();
 
-        },700);
+        },900);
 
     }
 
 }
 
 // =========================================
-// NETWORK
+// SEND
 // =========================================
 
-function initializeNetwork(){
+function sendCrypto(){
 
-    const pulse =
-        document.createElement("div");
+    createToast(
+        "Transfer initiated 🚀"
+    );
 
-    pulse.className =
-        "network-pulse";
+}
 
-    document.body.appendChild(pulse);
+// =========================================
+// RECEIVE
+// =========================================
 
-    window.addEventListener("offline", () => {
+function receiveCrypto(){
 
-        pulse.style.background =
-            "#EF4444";
+    createToast(
+        "Wallet address copied 💎"
+    );
 
-        pulse.style.boxShadow =
-            "0 0 20px #EF4444";
+}
 
-        createToast(
-            "Offline Mode Enabled"
-        );
+// =========================================
+// STAKING
+// =========================================
 
-    });
+function startStaking(){
 
-    window.addEventListener("online", () => {
-
-        pulse.style.background =
-            "#22C55E";
-
-        pulse.style.boxShadow =
-            "0 0 20px #22C55E";
-
-        createToast(
-            "Connection Restored"
-        );
-
-    });
+    createToast(
+        "CRX staking enabled 🔥"
+    );
 
 }
 
@@ -324,72 +328,15 @@ function createToast(message){
     toast.innerText =
         message;
 
-    document.body.appendChild(toast);
+    document.body.appendChild(
+        toast
+    );
 
     setTimeout(() => {
 
         toast.remove();
 
     },3000);
-
-}
-
-// =========================================
-// LIVE ANIMATIONS
-// =========================================
-
-function initializeAnimations(){
-
-    setInterval(() => {
-
-        animateOrbs();
-
-    },4000);
-
-}
-
-// =========================================
-// ORBS
-// =========================================
-
-function animateOrbs(){
-
-    const orbs =
-        document.querySelectorAll(".orb");
-
-    orbs.forEach(orb => {
-
-        orb.animate([
-
-            {
-
-                opacity:.18,
-                transform:"scale(1)"
-
-            },
-
-            {
-
-                opacity:.28,
-                transform:"scale(1.12)"
-
-            },
-
-            {
-
-                opacity:.18,
-                transform:"scale(1)"
-
-            }
-
-        ],{
-
-            duration:4000,
-            easing:"ease-in-out"
-
-        });
-
-    });
 
 }
 
@@ -403,6 +350,10 @@ function logout(){
         "corax_user"
     );
 
+    localStorage.removeItem(
+        "corax_token"
+    );
+
     window.location.href =
         "index.html";
 
@@ -413,5 +364,5 @@ function logout(){
 // =========================================
 
 console.log(
-    "CORΛX Wallet Engine Active 💎"
+    "CORΛX Wallet Engine Active 💰"
 );
