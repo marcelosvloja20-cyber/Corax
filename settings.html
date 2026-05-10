@@ -1,6 +1,6 @@
 <!-- =========================================
      CORΛX SETTINGS.HTML
-     Premium Web3 Settings Screen
+     Premium User Settings
 ========================================= -->
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
         content="width=device-width, initial-scale=1.0"
     />
 
-    <title>CORΛX Settings</title>
+    <title>Settings | CORΛX</title>
 
     <!-- FONT -->
     <link
@@ -43,27 +43,29 @@
 
 <body>
 
-    <!-- =========================================
+    <!-- =====================================
          BACKGROUND
-    ========================================= -->
+    ====================================== -->
 
     <div class="grid-overlay"></div>
 
     <div class="orb orb1"></div>
+
     <div class="orb orb2"></div>
+
     <div class="orb orb3"></div>
 
     <div id="particles"></div>
 
-    <!-- =========================================
+    <!-- =====================================
          APP
-    ========================================= -->
+    ====================================== -->
 
     <main class="app">
 
-        <!-- =====================================
+        <!-- =================================
              HERO
-        ====================================== -->
+        ================================== -->
 
         <section class="hero">
 
@@ -89,15 +91,15 @@
 
             <p class="tagline">
 
-                Security & Preferences
+                User Settings
 
             </p>
 
         </section>
 
-        <!-- =====================================
+        <!-- =================================
              PROFILE
-        ====================================== -->
+        ================================== -->
 
         <section class="glass-card">
 
@@ -111,80 +113,51 @@
 
             <p class="subtitle">
 
-                Manage your decentralized identity.
+                Manage your account information.
 
             </p>
 
             <!-- USER -->
             <div
                 style="
-                    margin-top:26px;
-                    display:flex;
-                    align-items:center;
-                    gap:18px;
+                    margin-top:24px;
                 "
             >
 
-                <!-- AVATAR -->
-                <div
+                <label
                     style="
-                        width:70px;
-                        height:70px;
-                        border-radius:50%;
-                        background:
-                        linear-gradient(
-                            135deg,
-                            #A855F7,
-                            #7C3AED
-                        );
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-size:26px;
-                        font-weight:800;
-                        box-shadow:
-                        0 0 30px rgba(168,85,247,.45);
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
                     "
                 >
 
-                    C
+                    Email
 
-                </div>
+                </label>
 
-                <!-- INFO -->
-                <div>
-
-                    <div
-                        style="
-                            font-size:20px;
-                            font-weight:700;
-                        "
-                    >
-
-                        CORΛX User
-
-                    </div>
-
-                    <div
-                        style="
-                            margin-top:6px;
-                            opacity:.6;
-                        "
-                    >
-
-                        connected@corax.io
-
-                    </div>
-
-                </div>
+                <input
+                    id="profileEmail"
+                    type="email"
+                    value="user@corax.io"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                    "
+                />
 
             </div>
 
         </section>
 
-        <!-- =====================================
+        <!-- =================================
              SECURITY
-        ====================================== -->
+        ================================== -->
 
         <section class="glass-card">
 
@@ -198,7 +171,7 @@
 
             <p class="subtitle">
 
-                Advanced protection systems.
+                Protect your wallet and assets.
 
             </p>
 
@@ -209,13 +182,13 @@
 
                     <div class="tx-type">
 
-                        Face ID
+                        Two-Factor Authentication
 
                     </div>
 
                     <div class="tx-date">
 
-                        Biometric authentication
+                        Extra login protection
 
                     </div>
 
@@ -223,7 +196,7 @@
 
                 <div class="positive">
 
-                    Enabled
+                    ENABLED
 
                 </div>
 
@@ -236,13 +209,13 @@
 
                     <div class="tx-type">
 
-                        Multi-Signature
+                        Wallet Encryption
 
                     </div>
 
                     <div class="tx-date">
 
-                        Wallet confirmation system
+                        Secure local storage
 
                     </div>
 
@@ -250,34 +223,7 @@
 
                 <div class="positive">
 
-                    Active
-
-                </div>
-
-            </div>
-
-            <!-- ITEM -->
-            <div class="history-item">
-
-                <div>
-
-                    <div class="tx-type">
-
-                        Encrypted Backup
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        Cloud-secured recovery
-
-                    </div>
-
-                </div>
-
-                <div class="positive">
-
-                    Synced
+                    ACTIVE
 
                 </div>
 
@@ -285,9 +231,9 @@
 
         </section>
 
-        <!-- =====================================
-             PREFERENCES
-        ====================================== -->
+        <!-- =================================
+             APP SETTINGS
+        ================================== -->
 
         <section class="glass-card">
 
@@ -295,13 +241,13 @@
 
             <h2 class="title">
 
-                Preferences
+                App Preferences
 
             </h2>
 
             <p class="subtitle">
 
-                Customize your CORΛX experience.
+                Customize your experience.
 
             </p>
 
@@ -318,7 +264,7 @@
 
                     <div class="tx-date">
 
-                        Market alerts enabled
+                        Market & wallet alerts
 
                     </div>
 
@@ -339,40 +285,13 @@
 
                     <div class="tx-type">
 
-                        Dark Mode
+                        Auto Updates
 
                     </div>
 
                     <div class="tx-date">
 
-                        Premium OLED interface
-
-                    </div>
-
-                </div>
-
-                <div class="positive">
-
-                    ACTIVE
-
-                </div>
-
-            </div>
-
-            <!-- ITEM -->
-            <div class="history-item">
-
-                <div>
-
-                    <div class="tx-type">
-
-                        Live Market Sync
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        Real-time updates
+                        Keep CORΛX updated
 
                     </div>
 
@@ -386,99 +305,145 @@
 
             </div>
 
-        </section>
+            <!-- ITEM -->
+            <div class="history-item">
 
-        <!-- =====================================
-             ABOUT
-        ====================================== -->
+                <div>
 
-        <section class="glass-card">
+                    <div class="tx-type">
 
-            <div class="card-glow"></div>
+                        Dark Mode
 
-            <h2 class="title">
+                    </div>
 
-                About CORΛX
+                    <div class="tx-date">
 
-            </h2>
+                        Premium UI theme
 
-            <p class="subtitle">
+                    </div>
 
-                Premium decentralized multi-chain finance.
+                </div>
 
-            </p>
+                <div class="positive">
 
-            <div
-                style="
-                    margin-top:24px;
-                    line-height:1.8;
-                    opacity:.7;
-                "
-            >
+                    ACTIVE
 
-                CORΛX is designed to redefine global payments through decentralized technology, real-world utility and borderless finance.
-
-            </div>
-
-            <!-- VERSION -->
-            <div
-                style="
-                    margin-top:22px;
-                    opacity:.45;
-                    font-size:14px;
-                "
-            >
-
-                CORΛX Ecosystem v1.0
+                </div>
 
             </div>
 
         </section>
 
-        <!-- =====================================
+        <!-- =================================
              ACTIONS
-        ====================================== -->
+        ================================== -->
 
         <section
             style="
-                margin-top:24px;
                 display:grid;
                 gap:14px;
+                margin-top:18px;
             "
         >
 
-            <button class="primary-btn">
+            <button
+                class="primary-btn"
+                onclick="
+                    saveSettings()
+                "
+            >
 
-                Save Changes
+                Save Settings
 
             </button>
 
-            <button class="secondary-btn">
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
 
-                Export Wallet
+                Back To Dashboard
 
             </button>
 
-            <button class="logout-btn">
+            <button
+                class="logout-btn"
+                onclick="
+                    logout()
+                "
+            >
 
-                Disconnect Wallet
+                Logout
 
             </button>
 
         </section>
 
-        <!-- FOOTER SPACE -->
+        <!-- SPACER -->
         <div style="height:120px;"></div>
 
     </main>
 
-    <!-- =========================================
-         SCRIPTS
-    ========================================= -->
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        function saveSettings(){
+
+            const email =
+                document.getElementById(
+                    "profileEmail"
+                ).value;
+
+            localStorage.setItem(
+
+                "corax_user",
+
+                email
+
+            );
+
+            createToast(
+                "Settings saved ⚡"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
 
     <script src="fx.js"></script>
 
     <script src="register-sw.js"></script>
 
 </body>
-          </html>
+</html>
