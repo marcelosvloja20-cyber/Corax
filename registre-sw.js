@@ -1,180 +1,166 @@
 // =========================================
 // CORΛX REGISTER-SW.JS
-// Service Worker Loader
+// Service Worker Registration
 // =========================================
 
 // =========================================
-// REGISTER
+// START
 // =========================================
-
-if("serviceWorker" in navigator){
-
-    window.addEventListener("load", () => {
-
-        navigator.serviceWorker
-
-        .register("/service-worker.js")
-
-        .then(registration => {
-
-            console.log(
-
-                "CORΛX Service Worker Registered 🚀",
-                registration.scope
-
-            );
-
-        })
-
-        .catch(error => {
-
-            console.log(
-
-                "CORΛX SW Error ❌",
-                error
-
-            );
-
-        });
-
-    });
-
-}
-
-// =========================================
-// INSTALL PROMPT
-// =========================================
-
-let deferredPrompt;
 
 window.addEventListener(
 
-    "beforeinstallprompt",
+    "load",
 
-    e => {
+    () => {
 
-        e.preventDefault();
-
-        deferredPrompt = e;
-
-        showInstallButton();
+        registerServiceWorker();
 
     }
 
 );
 
 // =========================================
-// INSTALL BUTTON
+// REGISTER
 // =========================================
 
-function showInstallButton(){
+async function registerServiceWorker(){
 
-    const button =
-        document.createElement("button");
+    // =====================================
+    // SUPPORT CHECK
+    // =====================================
 
-    button.innerText =
-        "Install CORΛX";
+    if(
 
-    button.className =
-        "install-btn";
+        !("serviceWorker" in navigator)
 
-    document.body.appendChild(button);
+    ){
 
-    button.addEventListener("click", async () => {
+        console.log(
+            "Service Worker not supported"
+        );
 
-        if(!deferredPrompt) return;
+        return;
 
-        deferredPrompt.prompt();
+    }
 
-        const choice =
-            await deferredPrompt.userChoice;
+    try{
 
-        if(choice.outcome === "accepted"){
+        // =================================
+        // REGISTER
+        // =================================
 
-            console.log(
-                "CORΛX Installed ✅"
+        const registration =
+
+            await navigator
+            .serviceWorker
+            .register(
+
+                "/service-worker.js"
+
             );
 
-        } else {
+        console.log(
 
-            console.log(
-                "CORΛX Install Cancelled"
-            );
+            "CORΛX Service Worker Registered 🚀",
 
-        }
+            registration
 
-        deferredPrompt = null;
+        );
 
-        button.remove();
+        // =================================
+        // UPDATE FOUND
+        // =================================
 
-    });
+        registration.addEventListener(
+
+            "updatefound",
+
+            () => {
+
+                console.log(
+                    "New update detected ⚡"
+                );
+
+            }
+
+        );
+
+    } catch(error){
+
+        console.error(
+
+            "Service Worker Error:",
+
+            error
+
+        );
+
+    }
 
 }
 
 // =========================================
-// APP INSTALLED
+// ONLINE
 // =========================================
 
-window.addEventListener("appinstalled", () => {
+window.addEventListener(
 
-    console.log(
-        "CORΛX App Installed 🚀"
-    );
+    "online",
 
-});
+    () => {
+
+        createConnectionToast(
+
+            "Connection Restored 🌐"
+
+        );
+
+    }
+
+);
 
 // =========================================
-// NETWORK STATUS
+// OFFLINE
 // =========================================
 
-window.addEventListener("offline", () => {
+window.addEventListener(
 
-    createToast(
-        "Offline Mode Enabled"
-    );
+    "offline",
 
-});
+    () => {
 
-window.addEventListener("online", () => {
+        createConnectionToast(
 
-    createToast(
-        "Connection Restored"
-    );
+            "Offline Mode Enabled ⚡"
 
-});
+        );
+
+    }
+
+);
 
 // =========================================
 // TOAST
 // =========================================
 
-function createToast(message){
+function createConnectionToast(message){
 
     const toast =
         document.createElement("div");
 
     toast.className =
-        "corax-toast";
+        "corax-toast show";
 
     toast.innerText =
         message;
 
-    document.body.appendChild(toast);
+    document.body.appendChild(
+        toast
+    );
 
     setTimeout(() => {
 
-        toast.classList.add("show");
-
-    },100);
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-        setTimeout(() => {
-
-            toast.remove();
-
-        },400);
+        toast.remove();
 
     },3000);
 
@@ -184,4 +170,6 @@ function createToast(message){
 // READY
 // =========================================
 
-console.log("CORΛX PWA SYSTEM READY 📱");
+console.log(
+    "CORΛX PWA Engine Active 📲"
+);
