@@ -1,215 +1,294 @@
-/* =========================================
-   CORΛX CHARTS.JS
-   Premium Web3 Animated Chart System
-========================================= */
+// =========================================
+// CORΛX CHARTS.JS
+// Live Web3 Market Charts
+// =========================================
 
-const canvas = document.getElementById("coraxChart");
-const ctx = canvas.getContext("2d");
+// =========================================
+// START
+// =========================================
 
-/* =========================================
-   RESPONSIVE SIZE
-========================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-function resizeChart() {
+    initializeMainChart();
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = 260;
+    initializeMiniCharts();
+
+    initializeLiveTicker();
+
+});
+
+// =========================================
+// MAIN CHART
+// =========================================
+
+function initializeMainChart(){
+
+    const canvas =
+        document.getElementById(
+            "marketChart"
+        );
+
+    if(!canvas) return;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    // =====================================
+    // DATA
+    // =====================================
+
+    const labels = [
+
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+
+    ];
+
+    const values = [
+
+        1.20,
+        1.42,
+        1.60,
+        1.54,
+        1.88,
+        2.10,
+        2.48
+
+    ];
+
+    // =====================================
+    // CHART
+    // =====================================
+
+    const chart =
+        new Chart(ctx, {
+
+            type:"line",
+
+            data:{
+
+                labels,
+
+                datasets:[{
+
+                    label:"CRX",
+
+                    data:values,
+
+                    borderColor:"#A855F7",
+
+                    backgroundColor:
+                        "rgba(168,85,247,.12)",
+
+                    borderWidth:4,
+
+                    tension:.45,
+
+                    fill:true,
+
+                    pointRadius:5,
+
+                    pointHoverRadius:7,
+
+                    pointBackgroundColor:"#fff",
+
+                    pointBorderColor:"#A855F7",
+
+                    pointBorderWidth:3
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+                plugins:{
+
+                    legend:{
+
+                        display:false
+
+                    }
+
+                },
+
+                scales:{
+
+                    x:{
+
+                        ticks:{
+
+                            color:"rgba(255,255,255,.55)"
+
+                        },
+
+                        grid:{
+
+                            color:
+                            "rgba(255,255,255,.03)"
+
+                        }
+
+                    },
+
+                    y:{
+
+                        ticks:{
+
+                            color:"rgba(255,255,255,.55)"
+
+                        },
+
+                        grid:{
+
+                            color:
+                            "rgba(255,255,255,.03)"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    // =====================================
+    // LIVE UPDATE
+    // =====================================
+
+    setInterval(() => {
+
+        const next =
+            (
+                values[values.length - 1]
+                +
+                ((Math.random() - .4) * .18)
+            ).toFixed(2);
+
+        values.push(next);
+
+        values.shift();
+
+        chart.update();
+
+        updatePrice(next);
+
+    },3500);
 
 }
 
-resizeChart();
+// =========================================
+// LIVE PRICE
+// =========================================
 
-window.addEventListener("resize", resizeChart);
+function updatePrice(price){
 
-/* =========================================
-   DEMO DATA
-========================================= */
+    const live =
+        document.getElementById(
+            "livePrice"
+        );
 
-let points = [
-    40,
-    55,
-    48,
-    72,
-    90,
-    78,
-    120,
-    135,
-    150,
-    170,
-    165,
-    190
-];
+    if(!live) return;
 
-/* =========================================
-   SMOOTH LINE
-========================================= */
+    const percent =
+        (
+            (Math.random() * 4)
+        ).toFixed(2);
 
-function drawSmoothLine(data) {
+    live.innerText =
+        `+${percent}%`;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    live.animate([
 
-    /* ================================
-       BACKGROUND GLOW
-    ================================= */
+        {
 
-    const gradient = ctx.createLinearGradient(
-        0,
-        0,
-        0,
-        canvas.height
-    );
+            transform:"scale(1)"
 
-    gradient.addColorStop(0, "rgba(168,85,247,0.35)");
-    gradient.addColorStop(1, "rgba(168,85,247,0)");
+        },
 
-    /* ================================
-       LINE
-    ================================= */
+        {
 
-    ctx.beginPath();
+            transform:"scale(1.15)"
 
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = "#A855F7";
+        },
 
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = "#A855F7";
+        {
 
-    const stepX =
-        canvas.width / (data.length - 1);
-
-    data.forEach((value, index) => {
-
-        const x = index * stepX;
-
-        const y =
-            canvas.height -
-            (value / 200) * canvas.height;
-
-        if (index === 0) {
-
-            ctx.moveTo(x, y);
-
-        } else {
-
-            ctx.lineTo(x, y);
+            transform:"scale(1)"
 
         }
 
-    });
+    ],{
 
-    ctx.stroke();
-
-    /* ================================
-       AREA FILL
-    ================================= */
-
-    ctx.lineTo(canvas.width, canvas.height);
-    ctx.lineTo(0, canvas.height);
-
-    ctx.closePath();
-
-    ctx.fillStyle = gradient;
-
-    ctx.fill();
-
-    /* ================================
-       POINTS
-    ================================= */
-
-    data.forEach((value, index) => {
-
-        const x = index * stepX;
-
-        const y =
-            canvas.height -
-            (value / 200) * canvas.height;
-
-        ctx.beginPath();
-
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-
-        ctx.fillStyle = "#ffffff";
-
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = "#A855F7";
-
-        ctx.fill();
+        duration:500
 
     });
 
 }
 
-/* =========================================
-   ANIMATION LOOP
-========================================= */
+// =========================================
+// MINI CHARTS
+// =========================================
 
-function animateChart() {
+function initializeMiniCharts(){
 
-    drawSmoothLine(points);
-
-    requestAnimationFrame(animateChart);
+    console.log(
+        "Mini charts loaded 🚀"
+    );
 
 }
 
-animateChart();
+// =========================================
+// LIVE TICKER
+// =========================================
 
-/* =========================================
-   LIVE MARKET SIMULATION
-========================================= */
+function initializeLiveTicker(){
 
-setInterval(() => {
+    const prices = [
 
-    points.shift();
+        "BTC $68,420",
+        "ETH $3,180",
+        "SOL $188",
+        "CRX $2.48"
 
-    const last =
-        points[points.length - 1];
+    ];
 
-    const variation =
-        Math.random() * 40 - 20;
+    let index = 0;
 
-    let next = last + variation;
+    setInterval(() => {
 
-    if (next < 20) next = 20;
-    if (next > 200) next = 200;
+        console.log(
+            "Ticker:",
+            prices[index]
+        );
 
-    points.push(next);
+        index++;
 
-}, 2200);
+        if(index >= prices.length){
 
-/* =========================================
-   HOVER FX
-========================================= */
+            index = 0;
 
-canvas.addEventListener("mousemove", e => {
+        }
 
-    const rect = canvas.getBoundingClientRect();
+    },2500);
 
-    const x = e.clientX - rect.left;
+}
 
-    const glow =
-        x / canvas.width;
+// =========================================
+// READY
+// =========================================
 
-    canvas.style.boxShadow =
-        `0 0 ${20 + glow * 40}px rgba(168,85,247,.45)`;
-
-});
-
-/* =========================================
-   MOBILE TOUCH GLOW
-========================================= */
-
-canvas.addEventListener("touchstart", () => {
-
-    if (navigator.vibrate) {
-
-        navigator.vibrate(20);
-
-    }
-
-});
-
-/* =========================================
-   SYSTEM READY
-========================================= */
-
-console.log("CORΛX CHART SYSTEM READY 🚀");
+console.log(
+    "CORΛX Charts Engine Active 📈"
+);
