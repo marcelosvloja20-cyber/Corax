@@ -1,203 +1,413 @@
-/* ===================================
-   CORΛX FX — FULL SYSTEM
-   particles + crow + explosions
-=================================== */
+// =========================================
+// CORΛX FX.JS
+// Cinematic Motion Engine
+// Apple/Web3 Premium Effects
+// =========================================
 
-const CORAX_FX = (() => {
+// =========================================
+// INIT
+// =========================================
 
-let canvas, ctx, W, H;
-let particles = [];
-let wingParticles = [];
+document.addEventListener("DOMContentLoaded", () => {
 
-/* BASE PARTICLES */
-class Particle{
-constructor(){
-this.x = Math.random()*W;
-this.y = Math.random()*H;
-this.vx = (Math.random()-0.5)*0.4;
-this.vy = (Math.random()-0.5)*0.4;
-this.size = Math.random()*1.5 + 0.3;
-}
+    initializeTilt();
 
-update(){
-this.x += this.vx;
-this.y += this.vy;
+    initializeGlow();
 
-if(this.x < 0 || this.x > W) this.vx *= -1;
-if(this.y < 0 || this.y > H) this.vy *= -1;
-}
+    initializeParallax();
 
-draw(){
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-ctx.fillStyle = "rgba(168,85,247,0.6)";
-ctx.fill();
-}
-}
+    initializeButtons();
 
-/* PARTICLES DAS ASAS */
-class WingParticle{
-constructor(x,y){
-this.x = x;
-this.y = y;
-this.vx = (Math.random()-0.5)*1.5;
-this.vy = (Math.random()-1.5);
-this.life = 60;
-this.size = Math.random()*2;
-}
+    initializeCrowParticles();
 
-update(){
-this.x += this.vx;
-this.y += this.vy;
-this.life--;
-}
-
-draw(){
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-ctx.fillStyle = "rgba(168,85,247,"+(this.life/60)+")";
-ctx.fill();
-}
-}
-
-/* CONEXÕES */
-function connect(){
-for(let a=0;a<particles.length;a++){
-for(let b=a+1;b<particles.length;b++){
-
-let dx = particles[a].x - particles[b].x;
-let dy = particles[a].y - particles[b].y;
-let dist = Math.sqrt(dx*dx + dy*dy);
-
-if(dist < 120){
-ctx.strokeStyle = "rgba(168,85,247,"+(1-dist/120)*0.2+")";
-ctx.lineWidth = 0.5;
-
-ctx.beginPath();
-ctx.moveTo(particles[a].x,particles[a].y);
-ctx.lineTo(particles[b].x,particles[b].y);
-ctx.stroke();
-}
-}
-}
-}
-
-/* EMISSÃO DO CORVO */
-function emitFromCrow(){
-
-const crow = document.getElementById("crow");
-if(!crow) return;
-
-const rect = crow.getBoundingClientRect();
-
-const x = rect.left + rect.width * 0.6;
-const y = rect.top + rect.height * 0.3;
-
-for(let i=0;i<2;i++){
-wingParticles.push(new WingParticle(x,y));
-}
-
-}
-
-/* EXPLOSÃO */
-function explode(x,y){
-
-for(let i=0;i<25;i++){
-wingParticles.push({
-x:x,
-y:y,
-vx:(Math.random()-0.5)*3,
-vy:(Math.random()-0.5)*3,
-life:40,
-size:Math.random()*3
-});
-}
-
-}
-
-/* CLICK EVENT */
-document.addEventListener("click",(e)=>{
-
-const btn = e.target.closest("button");
-if(!btn) return;
-
-const rect = btn.getBoundingClientRect();
-
-const x = rect.left + rect.width/2;
-const y = rect.top + rect.height/2;
-
-explode(x,y);
+    initializeBackgroundPulse();
 
 });
 
-/* ANIMATION */
-function animate(){
+// =========================================
+// 3D CARD TILT
+// =========================================
 
-ctx.clearRect(0,0,W,H);
+function initializeTilt(){
 
-/* base */
-particles.forEach(p=>{
-p.update();
-p.draw();
-});
+    const cards =
+        document.querySelectorAll(".glass-card");
 
-/* connections */
-connect();
+    cards.forEach(card => {
 
-/* crow energy */
-emitFromCrow();
+        card.addEventListener("mousemove", e => {
 
-/* particles render */
-wingParticles.forEach((p,i)=>{
+            const rect =
+                card.getBoundingClientRect();
 
-p.x += p.vx;
-p.y += p.vy;
-p.life--;
+            const x =
+                e.clientX - rect.left;
 
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fillStyle = "rgba(168,85,247,"+(p.life/40)+")";
-ctx.fill();
+            const y =
+                e.clientY - rect.top;
 
-if(p.life <= 0){
-wingParticles.splice(i,1);
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+            const rotateX =
+                ((y - centerY) / centerY) * -6;
+
+            const rotateY =
+                ((x - centerX) / centerX) * 6;
+
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                translateY(-4px)
+            `;
+
+        });
+
+        card.addEventListener("mouseleave", () => {
+
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(0deg)
+                rotateY(0deg)
+                translateY(0px)
+            `;
+
+        });
+
+    });
+
 }
 
-});
+// =========================================
+// DYNAMIC GLOW
+// =========================================
 
-requestAnimationFrame(animate);
+function initializeGlow(){
+
+    document.addEventListener("mousemove", e => {
+
+        const glow =
+            document.querySelector(".orb3");
+
+        if(!glow) return;
+
+        const x =
+            e.clientX / window.innerWidth;
+
+        const y =
+            e.clientY / window.innerHeight;
+
+        glow.style.transform = `
+            translate(
+                ${x * 40 - 20}px,
+                ${y * 40 - 20}px
+            )
+        `;
+
+    });
+
 }
 
-/* INIT */
-function init(){
+// =========================================
+// PARALLAX
+// =========================================
 
-canvas = document.getElementById("bg");
-ctx = canvas.getContext("2d");
+function initializeParallax(){
 
-resize();
+    window.addEventListener("scroll", () => {
 
-/* base particles */
-particles = [];
-for(let i=0;i<60;i++){
-particles.push(new Particle());
+        const scroll =
+            window.scrollY;
+
+        const orbs =
+            document.querySelectorAll(".orb");
+
+        orbs.forEach((orb,index) => {
+
+            const speed =
+                (index + 1) * 0.08;
+
+            orb.style.transform =
+                `translateY(${scroll * speed}px)`;
+
+        });
+
+    });
+
 }
 
-window.addEventListener("resize", resize);
+// =========================================
+// PREMIUM BUTTONS
+// =========================================
+
+function initializeButtons(){
+
+    const buttons =
+        document.querySelectorAll("button");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", e => {
+
+            createExplosion(
+                e.clientX,
+                e.clientY
+            );
+
+            button.animate([
+
+                {
+
+                    transform:
+                        "scale(1)"
+
+                },
+
+                {
+
+                    transform:
+                        "scale(.92)"
+
+                },
+
+                {
+
+                    transform:
+                        "scale(1)"
+
+                }
+
+            ],{
+
+                duration:300
+
+            });
+
+            if(navigator.vibrate){
+
+                navigator.vibrate(25);
+
+            }
+
+        });
+
+    });
+
 }
 
-/* RESIZE */
-function resize(){
-W = canvas.width = window.innerWidth;
-H = canvas.height = window.innerHeight;
+// =========================================
+// PARTICLE EXPLOSION
+// =========================================
+
+function createExplosion(x,y){
+
+    for(let i = 0; i < 22; i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "click-particle";
+
+        document.body.appendChild(particle);
+
+        particle.style.left =
+            x + "px";
+
+        particle.style.top =
+            y + "px";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            40 + Math.random() * 80;
+
+        const moveX =
+            Math.cos(angle) * distance;
+
+        const moveY =
+            Math.sin(angle) * distance;
+
+        particle.animate([
+
+            {
+
+                transform:
+                    "translate(0,0) scale(1)",
+
+                opacity:1
+
+            },
+
+            {
+
+                transform:
+                    `translate(${moveX}px,${moveY}px) scale(0)`,
+
+                opacity:0
+
+            }
+
+        ],{
+
+            duration:700,
+            easing:"cubic-bezier(.2,.8,.2,1)"
+
+        });
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        },700);
+
+    }
+
 }
 
-return {
-start(){
-init();
-animate();
+// =========================================
+// CROW PARTICLES
+// =========================================
+
+function initializeCrowParticles(){
+
+    const crow =
+        document.querySelector(".crow-container");
+
+    if(!crow) return;
+
+    setInterval(() => {
+
+        const rect =
+            crow.getBoundingClientRect();
+
+        createWingParticle(
+            rect.left + 20,
+            rect.top + 30
+        );
+
+        createWingParticle(
+            rect.right - 20,
+            rect.top + 30
+        );
+
+    },120);
+
 }
-};
 
-})();
+// =========================================
+// WING PARTICLE
+// =========================================
 
-window.CORAX_FX = CORAX_FX;
+function createWingParticle(x,y){
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle-bg";
+
+    document.body.appendChild(particle);
+
+    particle.style.left =
+        x + "px";
+
+    particle.style.top =
+        y + "px";
+
+    const moveX =
+        (Math.random() - .5) * 80;
+
+    const moveY =
+        -40 - Math.random() * 60;
+
+    particle.animate([
+
+        {
+
+            transform:
+                "translate(0,0) scale(1)",
+
+            opacity:1
+
+        },
+
+        {
+
+            transform:
+                `translate(${moveX}px,${moveY}px) scale(0)`,
+
+            opacity:0
+
+        }
+
+    ],{
+
+        duration:1800,
+        easing:"ease-out"
+
+    });
+
+    setTimeout(() => {
+
+        particle.remove();
+
+    },1800);
+
+}
+
+// =========================================
+// BACKGROUND PULSE
+// =========================================
+
+function initializeBackgroundPulse(){
+
+    setInterval(() => {
+
+        const orbs =
+            document.querySelectorAll(".orb");
+
+        orbs.forEach(orb => {
+
+            orb.animate([
+
+                {
+
+                    opacity:.18
+
+                },
+
+                {
+
+                    opacity:.28
+
+                },
+
+                {
+
+                    opacity:.18
+
+                }
+
+            ],{
+
+                duration:4000
+
+            });
+
+        });
+
+    },4000);
+
+}
+
+// =========================================
+// APP READY
+// =========================================
+
+console.log("CORΛX FX ENGINE ACTIVE 🚀");
