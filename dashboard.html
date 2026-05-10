@@ -1,6 +1,6 @@
 <!-- =========================================
      CORΛX DASHBOARD.HTML
-     Premium Web3 Wallet UI
+     Premium Web3 Dashboard
 ========================================= -->
 
 <!DOCTYPE html>
@@ -17,7 +17,10 @@
 
     <title>CORΛX Dashboard</title>
 
-    <!-- FONT -->
+    <!-- =====================================
+         FONTS
+    ====================================== -->
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -34,37 +37,56 @@
         rel="stylesheet"
     />
 
-    <!-- STYLE -->
+    <!-- =====================================
+         CSS
+    ====================================== -->
+
     <link rel="stylesheet" href="style.css" />
 
-    <!-- CHART -->
+    <link rel="stylesheet" href="pwa.css" />
+
+    <!-- =====================================
+         MANIFEST
+    ====================================== -->
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    />
+
+    <!-- =====================================
+         CHART.JS
+    ====================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
 <body>
 
-    <!-- =========================================
+    <!-- =====================================
          BACKGROUND
-    ========================================= -->
+    ====================================== -->
 
     <div class="grid-overlay"></div>
 
     <div class="orb orb1"></div>
+
     <div class="orb orb2"></div>
+
     <div class="orb orb3"></div>
 
     <div id="particles"></div>
 
-    <!-- =========================================
+    <!-- =====================================
          APP
-    ========================================= -->
+    ====================================== -->
 
     <main class="app">
 
-        <!-- =========================================
+        <!-- =================================
              HERO
-        ========================================= -->
+        ================================== -->
 
         <section class="hero">
 
@@ -90,6 +112,7 @@
 
             </div>
 
+            <!-- TAG -->
             <p class="tagline">
 
                 Money Without Borders
@@ -98,9 +121,9 @@
 
         </section>
 
-        <!-- =========================================
+        <!-- =================================
              WALLET CARD
-        ========================================= -->
+        ================================== -->
 
         <section class="glass-card">
 
@@ -110,156 +133,26 @@
 
                 <div>
 
-                    <p style="opacity:.6;">
+                    <p class="subtitle">
+
                         Total Balance
+
                     </p>
 
-                    <h1 id="balanceValue">
-                        $0.00
-                    </h1>
+                    <h2 id="balanceValue">
+
+                        $ 0.00
+
+                    </h2>
 
                 </div>
 
+                <!-- LIVE -->
                 <div class="live-badge">
 
                     <div class="live-dot"></div>
 
                     LIVE
-
-                </div>
-
-            </div>
-
-            <!-- LIVE MARKET -->
-            <div
-                style="
-                    margin-top:22px;
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                "
-            >
-
-                <div>
-
-                    <div style="opacity:.6;">
-                        CRX Market
-                    </div>
-
-                    <div
-                        style="
-                            margin-top:6px;
-                            font-size:28px;
-                            font-weight:800;
-                        "
-                    >
-                        $2.48
-                    </div>
-
-                </div>
-
-                <div
-                    id="livePrice"
-                    style="
-                        color:#22C55E;
-                        font-weight:700;
-                        font-size:18px;
-                    "
-                >
-                    +2.44%
-                </div>
-
-            </div>
-
-            <!-- CHART -->
-            <div style="margin-top:24px;">
-
-                <canvas id="marketChart"></canvas>
-
-            </div>
-
-        </section>
-
-        <!-- =========================================
-             USER CARD
-        ========================================= -->
-
-        <section
-            class="glass-card"
-            style="margin-top:22px;"
-        >
-
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Wallet
-
-            </h2>
-
-            <p class="subtitle">
-
-                Multi-chain decentralized finance.
-
-            </p>
-
-            <!-- USER -->
-            <div
-                style="
-                    margin-top:22px;
-                    display:flex;
-                    align-items:center;
-                    gap:16px;
-                "
-            >
-
-                <!-- AVATAR -->
-                <div
-                    style="
-                        width:60px;
-                        height:60px;
-                        border-radius:50%;
-                        background:
-                        linear-gradient(
-                            135deg,
-                            #A855F7,
-                            #7C3AED
-                        );
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-weight:800;
-                        font-size:22px;
-                        box-shadow:
-                        0 0 25px rgba(168,85,247,.4);
-                    "
-                >
-
-                    C
-
-                </div>
-
-                <!-- USER INFO -->
-                <div>
-
-                    <div
-                        style="
-                            font-size:18px;
-                            font-weight:700;
-                        "
-                    >
-                        Connected Account
-                    </div>
-
-                    <div
-                        id="userEmail"
-                        style="
-                            margin-top:4px;
-                            opacity:.6;
-                        "
-                    >
-                        loading...
-                    </div>
 
                 </div>
 
@@ -271,7 +164,7 @@
                     display:grid;
                     grid-template-columns:1fr 1fr;
                     gap:14px;
-                    margin-top:28px;
+                    margin-top:26px;
                 "
             >
 
@@ -287,30 +180,77 @@
 
                 </button>
 
-                <button class="secondary-btn">
+            </div>
 
-                    Swap
+        </section>
 
-                </button>
+        <!-- =================================
+             MARKET CARD
+        ================================== -->
 
-                <button class="secondary-btn">
+        <section class="glass-card">
 
-                    Stake
+            <div class="card-glow"></div>
 
-                </button>
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:20px;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        CRX Market
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Real-time token analytics
+
+                    </p>
+
+                </div>
+
+                <div
+                    id="livePrice"
+                    class="positive"
+                    style="
+                        font-size:18px;
+                        font-weight:800;
+                    "
+                >
+
+                    +2.48%
+
+                </div>
+
+            </div>
+
+            <!-- CHART -->
+            <div
+                style="
+                    width:100%;
+                    height:260px;
+                "
+            >
+
+                <canvas id="marketChart"></canvas>
 
             </div>
 
         </section>
 
-        <!-- =========================================
-             TOKENS
-        ========================================= -->
+        <!-- =================================
+             ASSETS
+        ================================== -->
 
-        <section
-            class="glass-card"
-            style="margin-top:22px;"
-        >
+        <section class="glass-card">
 
             <div class="card-glow"></div>
 
@@ -322,11 +262,11 @@
 
             <p class="subtitle">
 
-                Your decentralized portfolio.
+                Multi-chain holdings
 
             </p>
 
-            <!-- TOKEN 1 -->
+            <!-- BTC -->
             <div class="history-item">
 
                 <div>
@@ -337,43 +277,23 @@
 
                     </div>
 
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
-                        BTC
+                    <div class="tx-date">
+
+                        0.24 BTC
+
                     </div>
 
                 </div>
 
-                <div
-                    style="
-                        text-align:right;
-                    "
-                >
+                <div class="positive">
 
-                    <div class="positive">
-
-                        $12,420
-
-                    </div>
-
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
-                        0.24 BTC
-                    </div>
+                    $12,420
 
                 </div>
 
             </div>
 
-            <!-- TOKEN 2 -->
+            <!-- ETH -->
             <div class="history-item">
 
                 <div>
@@ -384,84 +304,44 @@
 
                     </div>
 
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
-                        ETH
+                    <div class="tx-date">
+
+                        2.44 ETH
+
                     </div>
 
                 </div>
 
-                <div
-                    style="
-                        text-align:right;
-                    "
-                >
+                <div class="positive">
 
-                    <div class="positive">
-
-                        $5,820
-
-                    </div>
-
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
-                        2.44 ETH
-                    </div>
+                    $5,820
 
                 </div>
 
             </div>
 
-            <!-- TOKEN 3 -->
+            <!-- CRX -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        CORΛX
+                        CORΛX Token
 
                     </div>
 
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
-                        CRX
-                    </div>
+                    <div class="tx-date">
 
-                </div>
-
-                <div
-                    style="
-                        text-align:right;
-                    "
-                >
-
-                    <div class="positive">
-
-                        $6,652
-
-                    </div>
-
-                    <div
-                        style="
-                            opacity:.5;
-                            margin-top:4px;
-                        "
-                    >
                         12,000 CRX
+
                     </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $6,652
 
                 </div>
 
@@ -469,153 +349,158 @@
 
         </section>
 
-        <!-- =========================================
-             HISTORY
-        ========================================= -->
+        <!-- =================================
+             TRANSACTIONS
+        ================================== -->
 
-        <section
-            class="glass-card"
-            style="margin-top:22px;"
-        >
+        <section class="glass-card">
 
             <div class="card-glow"></div>
 
             <h2 class="title">
 
-                Activity
+                Recent Activity
 
             </h2>
 
             <p class="subtitle">
 
-                Real-time transaction history.
+                Latest blockchain movements
 
             </p>
 
-            <div id="historyList">
+            <!-- TX -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Received BTC
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Today • 09:42 AM
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +0.02 BTC
+
+                </div>
+
+            </div>
+
+            <!-- TX -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Sent ETH
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Yesterday • 11:28 PM
+
+                    </div>
+
+                </div>
+
+                <div class="negative">
+
+                    -0.30 ETH
+
+                </div>
+
+            </div>
+
+            <!-- TX -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Staking Rewards
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        2 days ago
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +248 CRX
+
+                </div>
 
             </div>
 
         </section>
 
-        <!-- =========================================
-             SECURITY
-        ========================================= -->
+        <!-- =================================
+             QUICK MENU
+        ================================== -->
 
         <section
-            class="glass-card"
-            style="margin-top:22px;"
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:20px;
+            "
         >
 
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Security
-
-            </h2>
-
-            <p class="subtitle">
-
-                Protected by decentralized architecture.
-
-            </p>
-
-            <!-- SECURITY ITEMS -->
-            <div
-                style="
-                    margin-top:24px;
-                    display:flex;
-                    flex-direction:column;
-                    gap:16px;
-                "
+            <button
+                class="primary-btn"
+                onclick="window.location.href='settings.html'"
             >
 
-                <div class="history-item">
+                Settings
 
-                    <div>
+            </button>
 
-                        <div class="tx-type">
-
-                            Face ID
-
-                        </div>
-
-                        <div
-                            style="
-                                opacity:.5;
-                                margin-top:4px;
-                            "
-                        >
-                            Enabled
-                        </div>
-
-                    </div>
-
-                    <div class="positive">
-
-                        Active
-
-                    </div>
-
-                </div>
-
-                <div class="history-item">
-
-                    <div>
-
-                        <div class="tx-type">
-
-                            Multi-chain Encryption
-
-                        </div>
-
-                        <div
-                            style="
-                                opacity:.5;
-                                margin-top:4px;
-                            "
-                        >
-                            Protected
-                        </div>
-
-                    </div>
-
-                    <div class="positive">
-
-                        Secure
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- LOGOUT -->
             <button
-                class="logout-btn"
+                class="secondary-btn"
                 onclick="logout()"
             >
 
-                Disconnect Wallet
+                Logout
 
             </button>
 
         </section>
 
-        <!-- =========================================
-             FOOTER SPACE
-        ========================================= -->
-
-        <div style="height:100px;"></div>
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
 
     </main>
 
-    <!-- =========================================
-         SCRIPT
-    ========================================= -->
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
 
-    <script src="dashboard.js"></script>
+    <script src="fx.js"></script>
+
+    <script src="wallet.js"></script>
+
+    <script src="charts.js"></script>
+
+    <script src="register-sw.js"></script>
 
 </body>
-  </html>
+                     </html>
