@@ -1,32 +1,26 @@
 {
-  "name": "CORΛX",
-  "short_name": "CORΛX",
-  "description": "Money Without Borders",
-  "start_url": "/splash.html",
-  "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#A855F7",
-  "orientation": "portrait",
-  "scope": "/",
-  "lang": "en",
-  "categories": [
-    "finance",
-    "cryptocurrency",
+  "name": "corax-backend",
+  "version": "1.0.0",
+  "description": "CORΛX Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "corax",
     "web3",
-    "payments"
+    "crypto",
+    "payments",
+    "backend"
   ],
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "author": "CORΛX",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
 }
