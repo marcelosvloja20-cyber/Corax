@@ -1,0 +1,500 @@
+<!-- =========================================
+     CORΛX MARKET.HTML
+     Premium CRX Market Page
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>CRX Market | CORΛX</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+    <!-- CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    CR<span>Λ</span>X
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Live Token Analytics
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             TOKEN CARD
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        CORΛX Token
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Multi-chain utility asset
+
+                    </p>
+
+                </div>
+
+                <div class="positive">
+
+                    +12.48%
+
+                </div>
+
+            </div>
+
+            <!-- PRICE -->
+            <div
+                style="
+                    margin-top:26px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:48px;
+                        font-weight:900;
+                    "
+                >
+
+                    $2.48
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        color:rgba(255,255,255,.5);
+                    "
+                >
+
+                    Updated live
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             CHART
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:18px;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Market Chart
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        7-day movement
+
+                    </p>
+
+                </div>
+
+                <div
+                    id="livePrice"
+                    class="positive"
+                >
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <div
+                style="
+                    width:100%;
+                    height:260px;
+                "
+            >
+
+                <canvas id="marketChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             MARKET STATS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Market Stats
+
+            </h2>
+
+            <p class="subtitle">
+
+                Real-time ecosystem metrics
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Market Cap
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Total valuation
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $248M
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        24H Volume
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Trading activity
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $12.8M
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Holders
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Active wallets
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    82,441
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Staking APY
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Current rewards
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    14%
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             TOKENOMICS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Tokenomics
+
+            </h2>
+
+            <p class="subtitle">
+
+                Supply architecture
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Total Supply
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    500M CRX
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Burned
+
+                    </div>
+
+                </div>
+
+                <div class="negative">
+
+                    24M CRX
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Circulating
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    338M CRX
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="primary-btn"
+            >
+
+                Buy CRX
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+
+    <script src="fx.js"></script>
+
+    <script src="charts.js"></script>
+
+    <script src="wallet.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
