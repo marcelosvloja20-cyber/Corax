@@ -1,0 +1,153 @@
+<!-- =========================================
+     CORΛX SPLASH.HTML
+     Cinematic Web3 Intro Screen
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>CORΛX Loading</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- STYLE -->
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+    <!-- =========================================
+         SPLASH
+    ========================================= -->
+
+    <main class="splash-screen">
+
+        <!-- BG -->
+        <div class="grid-overlay"></div>
+
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+
+        <!-- PARTICLES -->
+        <div id="particles"></div>
+
+        <!-- CENTER -->
+        <div class="splash-center">
+
+            <!-- CROW -->
+            <div class="splash-crow">
+
+                <div class="crow-wing left"></div>
+
+                <div class="crow-body"></div>
+
+                <div class="crow-wing right"></div>
+
+            </div>
+
+            <!-- LOGO -->
+            <h1 class="splash-logo">
+
+                COR<span>Λ</span>X
+
+            </h1>
+
+            <!-- TAGLINE -->
+            <p class="splash-tagline">
+
+                Money Without Borders
+
+            </p>
+
+            <!-- LOADER -->
+            <div class="loader-wrapper">
+
+                <div class="loader-line"></div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- =========================================
+         SPLASH FX
+    ========================================= -->
+
+    <script>
+
+        // =====================================
+        // PARTICLES
+        // =====================================
+
+        const particles =
+            document.getElementById("particles");
+
+        setInterval(() => {
+
+            const particle =
+                document.createElement("div");
+
+            particle.className =
+                "particle-bg";
+
+            particle.style.left =
+                Math.random() * window.innerWidth + "px";
+
+            particle.style.top =
+                window.innerHeight + "px";
+
+            particle.style.animationDuration =
+                (Math.random() * 3 + 3) + "s";
+
+            particles.appendChild(particle);
+
+            setTimeout(() => {
+
+                particle.remove();
+
+            },6000);
+
+        },100);
+
+        // =====================================
+        // AUTO REDIRECT
+        // =====================================
+
+        setTimeout(() => {
+
+            window.location.href =
+                "dashboard.html";
+
+        },4200);
+
+    </script>
+
+</body>
+</html>
