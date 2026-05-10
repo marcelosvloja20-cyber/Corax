@@ -1,6 +1,6 @@
 // =========================================
 // CORΛX CHARTS.JS
-// Live Web3 Market Charts
+// Premium Market Charts
 // =========================================
 
 // =========================================
@@ -9,19 +9,15 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeMainChart();
-
-    initializeMiniCharts();
-
-    initializeLiveTicker();
+    initializeMarketChart();
 
 });
 
 // =========================================
-// MAIN CHART
+// MARKET CHART
 // =========================================
 
-function initializeMainChart(){
+function initializeMarketChart(){
 
     const canvas =
         document.getElementById(
@@ -39,119 +35,187 @@ function initializeMainChart(){
 
     const labels = [
 
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+        "SUN"
 
     ];
 
-    const values = [
+    const prices = [
 
-        1.20,
-        1.42,
-        1.60,
-        1.54,
-        1.88,
-        2.10,
+        0.42,
+        0.58,
+        0.82,
+        1.14,
+        1.48,
+        1.92,
         2.48
 
     ];
 
     // =====================================
+    // GRADIENT
+    // =====================================
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            260
+        );
+
+    gradient.addColorStop(
+
+        0,
+
+        "rgba(168,85,247,.45)"
+
+    );
+
+    gradient.addColorStop(
+
+        1,
+
+        "rgba(168,85,247,0)"
+
+    );
+
+    // =====================================
     // CHART
     // =====================================
 
-    const chart =
-        new Chart(ctx, {
+    new Chart(ctx, {
 
-            type:"line",
+        type:"line",
 
-            data:{
+        data:{
 
-                labels,
+            labels,
 
-                datasets:[{
+            datasets:[{
 
-                    label:"CRX",
+                label:"CRX",
 
-                    data:values,
+                data:prices,
 
-                    borderColor:"#A855F7",
+                borderColor:"#A855F7",
 
-                    backgroundColor:
-                        "rgba(168,85,247,.12)",
+                backgroundColor:
+                gradient,
 
-                    borderWidth:4,
+                fill:true,
 
-                    tension:.45,
+                tension:.45,
 
-                    fill:true,
+                borderWidth:4,
 
-                    pointRadius:5,
+                pointRadius:0,
 
-                    pointHoverRadius:7,
+                pointHoverRadius:8,
 
-                    pointBackgroundColor:"#fff",
+                pointHoverBorderWidth:3,
 
-                    pointBorderColor:"#A855F7",
+                pointHoverBackgroundColor:
+                "#ffffff",
 
-                    pointBorderWidth:3
+                pointHoverBorderColor:
+                "#A855F7"
 
-                }]
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            interaction:{
+
+                intersect:false,
+                mode:"index"
 
             },
 
-            options:{
+            plugins:{
 
-                responsive:true,
+                legend:{
 
-                maintainAspectRatio:false,
+                    display:false
 
-                plugins:{
+                },
 
-                    legend:{
+                tooltip:{
+
+                    backgroundColor:
+                    "#111111",
+
+                    borderColor:
+                    "#A855F7",
+
+                    borderWidth:1,
+
+                    padding:14,
+
+                    titleColor:"#fff",
+
+                    bodyColor:"#fff",
+
+                    displayColors:false
+
+                }
+
+            },
+
+            scales:{
+
+                x:{
+
+                    grid:{
 
                         display:false
+
+                    },
+
+                    ticks:{
+
+                        color:
+                        "rgba(255,255,255,.45)",
+
+                        font:{
+
+                            size:12,
+                            weight:"600"
+
+                        }
 
                     }
 
                 },
 
-                scales:{
+                y:{
 
-                    x:{
+                    grid:{
 
-                        ticks:{
-
-                            color:"rgba(255,255,255,.55)"
-
-                        },
-
-                        grid:{
-
-                            color:
-                            "rgba(255,255,255,.03)"
-
-                        }
+                        color:
+                        "rgba(255,255,255,.04)"
 
                     },
 
-                    y:{
+                    ticks:{
 
-                        ticks:{
+                        color:
+                        "rgba(255,255,255,.45)",
 
-                            color:"rgba(255,255,255,.55)"
+                        callback:value => {
 
-                        },
-
-                        grid:{
-
-                            color:
-                            "rgba(255,255,255,.03)"
+                            return "$" + value;
 
                         }
 
@@ -161,125 +225,68 @@ function initializeMainChart(){
 
             }
 
-        });
+        }
+
+    });
 
     // =====================================
-    // LIVE UPDATE
+    // LIVE PRICE
     // =====================================
 
-    setInterval(() => {
-
-        const next =
-            (
-                values[values.length - 1]
-                +
-                ((Math.random() - .4) * .18)
-            ).toFixed(2);
-
-        values.push(next);
-
-        values.shift();
-
-        chart.update();
-
-        updatePrice(next);
-
-    },3500);
+    startLivePrice();
 
 }
 
 // =========================================
-// LIVE PRICE
+// LIVE PRICE FX
 // =========================================
 
-function updatePrice(price){
+function startLivePrice(){
 
-    const live =
+    const livePrice =
         document.getElementById(
             "livePrice"
         );
 
-    if(!live) return;
+    if(!livePrice) return;
 
-    const percent =
-        (
-            (Math.random() * 4)
-        ).toFixed(2);
-
-    live.innerText =
-        `+${percent}%`;
-
-    live.animate([
-
-        {
-
-            transform:"scale(1)"
-
-        },
-
-        {
-
-            transform:"scale(1.15)"
-
-        },
-
-        {
-
-            transform:"scale(1)"
-
-        }
-
-    ],{
-
-        duration:500
-
-    });
-
-}
-
-// =========================================
-// MINI CHARTS
-// =========================================
-
-function initializeMiniCharts(){
-
-    console.log(
-        "Mini charts loaded 🚀"
-    );
-
-}
-
-// =========================================
-// LIVE TICKER
-// =========================================
-
-function initializeLiveTicker(){
-
-    const prices = [
-
-        "BTC $68,420",
-        "ETH $3,180",
-        "SOL $188",
-        "CRX $2.48"
-
-    ];
-
-    let index = 0;
+    let value = 2.48;
 
     setInterval(() => {
 
-        console.log(
-            "Ticker:",
-            prices[index]
-        );
+        const movement =
+            (Math.random() * .12) - .06;
 
-        index++;
+        value += movement;
 
-        if(index >= prices.length){
+        if(value < 0){
 
-            index = 0;
+            value = 0.12;
 
         }
+
+        const formatted =
+            value.toFixed(2);
+
+        const positive =
+            movement >= 0;
+
+        livePrice.innerText =
+
+            (positive ? "+" : "-")
+            +
+            Math.abs(movement * 100)
+            .toFixed(2)
+            +
+            "%";
+
+        livePrice.className =
+
+            positive
+            ?
+            "positive"
+            :
+            "negative";
 
     },2500);
 
