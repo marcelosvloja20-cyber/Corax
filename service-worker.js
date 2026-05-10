@@ -1,34 +1,48 @@
 // =========================================
 // CORΛX SERVICE-WORKER.JS
-// Premium PWA Engine
-// Offline + Cache + Speed
+// PWA Offline Cache System
 // =========================================
 
 // =========================================
 // CACHE
 // =========================================
 
-const CACHE_NAME = "corax-v1";
+const CACHE_NAME =
+    "corax-cache-v1";
 
 // =========================================
 // FILES
 // =========================================
 
-const FILES_TO_CACHE = [
+const urlsToCache = [
 
     "/",
+
     "/index.html",
+
     "/dashboard.html",
-    "/splash.html",
+
+    "/market.html",
+
+    "/offline.html",
+
+    "/settings.html",
 
     "/style.css",
-    "/charts.css",
+
+    "/pwa.css",
 
     "/app.js",
-    "/dashboard.js",
+
+    "/wallet.js",
+
     "/charts.js",
+
     "/fx.js",
-    "/splash.js",
+
+    "/api.js",
+
+    "/notifications.js",
 
     "/manifest.json"
 
@@ -38,119 +52,154 @@ const FILES_TO_CACHE = [
 // INSTALL
 // =========================================
 
-self.addEventListener("install", event => {
+self.addEventListener(
 
-    console.log("CORΛX SW Installed");
+    "install",
 
-    event.waitUntil(
+    event => {
 
-        caches.open(CACHE_NAME)
+        event.waitUntil(
 
-        .then(cache => {
+            caches.open(
 
-            return cache.addAll(FILES_TO_CACHE);
+                CACHE_NAME
 
-        })
+            ).then(cache => {
 
-    );
+                console.log(
+                    "CORΛX Cache Installed 🚀"
+                );
 
-});
+                return cache.addAll(
+                    urlsToCache
+                );
 
-// =========================================
-// ACTIVATE
-// =========================================
+            })
 
-self.addEventListener("activate", event => {
+        );
 
-    console.log("CORΛX SW Activated");
+    }
 
-    event.waitUntil(
-
-        caches.keys().then(keys => {
-
-            return Promise.all(
-
-                keys.map(key => {
-
-                    if(key !== CACHE_NAME){
-
-                        return caches.delete(key);
-
-                    }
-
-                })
-
-            );
-
-        })
-
-    );
-
-});
+);
 
 // =========================================
 // FETCH
 // =========================================
 
-self.addEventListener("fetch", event => {
+self.addEventListener(
 
-    event.respondWith(
+    "fetch",
 
-        caches.match(event.request)
+    event => {
 
-        .then(response => {
+        event.respondWith(
 
-            return response || fetch(event.request);
+            caches.match(
 
-        })
+                event.request
 
-    );
+            ).then(response => {
 
-});
+                // =====================
+                // CACHE
+                // =====================
+
+                if(response){
+
+                    return response;
+
+                }
+
+                // =====================
+                // NETWORK
+                // =====================
+
+                return fetch(
+
+                    event.request
+
+                ).catch(() => {
+
+                    // =================
+                    // OFFLINE PAGE
+                    // =================
+
+                    if(
+
+                        event.request.mode
+                        ===
+                        "navigate"
+
+                    ){
+
+                        return caches.match(
+
+                            "/offline.html"
+
+                        );
+
+                    }
+
+                });
+
+            })
+
+        );
+
+    }
+
+);
 
 // =========================================
-// BACKGROUND SYNC
+// ACTIVATE
 // =========================================
 
-self.addEventListener("sync", event => {
+self.addEventListener(
 
-    console.log("CORΛX Background Sync");
+    "activate",
 
-});
+    event => {
 
-// =========================================
-// PUSH
-// =========================================
+        event.waitUntil(
 
-self.addEventListener("push", event => {
+            caches.keys().then(keys => {
 
-    const data =
-        event.data
-        ? event.data.text()
-        : "CORΛX Notification";
+                return Promise.all(
 
-    event.waitUntil(
+                    keys.map(key => {
 
-        self.registration.showNotification(
+                        if(
 
-            "CORΛX",
+                            key !== CACHE_NAME
 
-            {
+                        ){
 
-                body: data,
+                            console.log(
+                                "Old cache removed"
+                            );
 
-                icon: "/icon-192.png"
+                            return caches.delete(
+                                key
+                            );
 
-            }
+                        }
 
-        )
+                    })
 
-    );
+                );
 
-});
+            })
+
+        );
+
+    }
+
+);
 
 // =========================================
 // READY
 // =========================================
 
-console.log("CORΛX PWA ACTIVE 🚀");
+console.log(
+    "CORΛX Service Worker Active ⚡"
+);
