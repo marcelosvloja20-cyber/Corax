@@ -1,25 +1,42 @@
 /* =========================================
    CORΛX STYLE.CSS
-   Apple-Level Web3 UI
+   Premium Web3 UI System
+========================================= */
+
+/* =========================================
+   RESET
 ========================================= */
 
 *{
+
     margin:0;
     padding:0;
+
     box-sizing:border-box;
+
+    -webkit-tap-highlight-color:
+    transparent;
+
 }
 
-html{
-    scroll-behavior:smooth;
-}
+/* =========================================
+   BODY
+========================================= */
 
 body{
-    font-family:'Inter',sans-serif;
+
+    font-family:"Inter",sans-serif;
+
     background:#050505;
+
     color:#fff;
+
     overflow-x:hidden;
+
     min-height:100vh;
+
     position:relative;
+
 }
 
 /* =========================================
@@ -27,34 +44,57 @@ body{
 ========================================= */
 
 .app{
+
     width:100%;
+
     max-width:520px;
+
     margin:auto;
-    padding:28px 18px 40px;
+
+    padding:26px 18px 120px;
+
     position:relative;
-    z-index:5;
+
+    z-index:2;
+
 }
 
 /* =========================================
-   GRID BACKGROUND
+   GRID
 ========================================= */
 
 .grid-overlay{
+
     position:fixed;
+
     inset:0;
-    background:
+
+    background-image:
+
     linear-gradient(
-        rgba(168,85,247,.05) 1px,
+        rgba(255,255,255,.02) 1px,
         transparent 1px
     ),
+
     linear-gradient(
         90deg,
-        rgba(168,85,247,.05) 1px,
+        rgba(255,255,255,.02) 1px,
         transparent 1px
     );
-    background-size:60px 60px;
-    z-index:0;
+
+    background-size:40px 40px;
+
+    mask-image:
+    radial-gradient(
+        circle at center,
+        black 20%,
+        transparent 90%
+    );
+
     pointer-events:none;
+
+    z-index:0;
+
 }
 
 /* =========================================
@@ -62,90 +102,52 @@ body{
 ========================================= */
 
 .orb{
+
     position:fixed;
+
     border-radius:50%;
-    filter:blur(120px);
+
+    filter:blur(90px);
+
+    opacity:.18;
+
     z-index:0;
-    opacity:.25;
-    pointer-events:none;
+
 }
 
 .orb1{
-    width:300px;
-    height:300px;
+
+    width:260px;
+    height:260px;
+
     background:#A855F7;
-    top:-100px;
-    left:-120px;
-    animation:float1 8s ease-in-out infinite;
+
+    top:-80px;
+    left:-80px;
+
 }
 
 .orb2{
-    width:260px;
-    height:260px;
+
+    width:240px;
+    height:240px;
+
     background:#7C3AED;
+
     bottom:-100px;
-    right:-120px;
-    animation:float2 10s ease-in-out infinite;
+    right:-100px;
+
 }
 
 .orb3{
+
     width:180px;
     height:180px;
+
     background:#9333EA;
+
     top:40%;
     left:50%;
-    transform:translateX(-50%);
-    animation:pulse 6s ease infinite;
-}
-
-@keyframes float1{
-
-    0%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(30px);
-    }
-
-    100%{
-        transform:translateY(0);
-    }
-
-}
-
-@keyframes float2{
-
-    0%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-30px);
-    }
-
-    100%{
-        transform:translateY(0);
-    }
-
-}
-
-@keyframes pulse{
-
-    0%{
-        opacity:.15;
-        transform:translateX(-50%) scale(1);
-    }
-
-    50%{
-        opacity:.35;
-        transform:translateX(-50%) scale(1.15);
-    }
-
-    100%{
-        opacity:.15;
-        transform:translateX(-50%) scale(1);
-    }
 
 }
 
@@ -154,17 +156,33 @@ body{
 ========================================= */
 
 .hero{
-    text-align:center;
-    margin-bottom:30px;
-    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:34px;
+
 }
 
+/* =========================================
+   LOGO WRAPPER
+========================================= */
+
 .logo-wrapper{
-    position:relative;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     justify-content:center;
+
 }
 
 /* =========================================
@@ -172,91 +190,148 @@ body{
 ========================================= */
 
 .crow-container{
-    width:120px;
-    height:80px;
+
     position:relative;
-    margin-bottom:12px;
-    animation:crowFloat 4s ease-in-out infinite;
+
+    width:120px;
+
+    height:80px;
+
+    margin-bottom:14px;
+
+    animation:
+    crowFloat 4s ease-in-out infinite;
+
 }
 
 @keyframes crowFloat{
 
     0%{
-        transform:translateY(0px);
+
+        transform:
+        translateY(0);
+
     }
 
     50%{
-        transform:translateY(-8px);
+
+        transform:
+        translateY(-8px);
+
     }
 
     100%{
-        transform:translateY(0px);
+
+        transform:
+        translateY(0);
+
     }
 
 }
 
+/* =========================================
+   BODY
+========================================= */
+
 .crow-body{
+
+    position:absolute;
+
     width:54px;
+
     height:28px;
+
+    border-radius:50px;
+
     background:
     linear-gradient(
         135deg,
         #A855F7,
         #7C3AED
     );
-    border-radius:40px;
-    position:absolute;
+
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+
+    transform:
+    translate(-50%,-50%);
+
     box-shadow:
-    0 0 40px rgba(168,85,247,.8);
+    0 0 40px rgba(168,85,247,.6);
+
 }
 
+/* =========================================
+   WINGS
+========================================= */
+
 .crow-wing{
+
     position:absolute;
-    width:50px;
+
+    width:52px;
+
     height:18px;
+
+    border-radius:50px;
+
+    top:50%;
+
     background:
     linear-gradient(
         135deg,
         #C084FC,
         #7C3AED
     );
-    border-radius:20px;
-    top:50%;
+
 }
 
 .crow-wing.left{
-    left:12px;
+
+    left:8px;
+
     transform-origin:right center;
-    animation:wingLeft 2s ease-in-out infinite;
+
+    animation:
+    wingLeft 1.8s ease-in-out infinite;
+
 }
 
 .crow-wing.right{
-    right:12px;
+
+    right:8px;
+
     transform-origin:left center;
-    animation:wingRight 2s ease-in-out infinite;
+
+    animation:
+    wingRight 1.8s ease-in-out infinite;
+
 }
 
 @keyframes wingLeft{
 
     0%{
+
         transform:
         translateY(-50%)
-        rotate(18deg);
+        rotate(20deg);
+
     }
 
     50%{
+
         transform:
         translateY(-50%)
         rotate(-14deg);
+
     }
 
     100%{
+
         transform:
         translateY(-50%)
-        rotate(18deg);
+        rotate(20deg);
+
     }
 
 }
@@ -264,21 +339,27 @@ body{
 @keyframes wingRight{
 
     0%{
+
         transform:
         translateY(-50%)
-        rotate(-18deg);
+        rotate(-20deg);
+
     }
 
     50%{
+
         transform:
         translateY(-50%)
         rotate(14deg);
+
     }
 
     100%{
+
         transform:
         translateY(-50%)
-        rotate(-18deg);
+        rotate(-20deg);
+
     }
 
 }
@@ -288,30 +369,50 @@ body{
 ========================================= */
 
 .logo-text{
-    font-size:68px;
+
+    font-size:52px;
+
     font-weight:900;
+
     letter-spacing:10px;
+
     background:
     linear-gradient(
         135deg,
-        #FFFFFF,
+        #ffffff,
         #A855F7
     );
+
     -webkit-background-clip:text;
+
     -webkit-text-fill-color:transparent;
+
     text-shadow:
-    0 0 50px rgba(168,85,247,.35);
+    0 0 30px rgba(168,85,247,.3);
+
 }
 
 .logo-text span{
+
     color:#A855F7;
+
 }
 
+/* =========================================
+   TAGLINE
+========================================= */
+
 .tagline{
+
     margin-top:12px;
-    font-size:18px;
-    opacity:.7;
-    letter-spacing:2px;
+
+    color:
+    rgba(255,255,255,.65);
+
+    font-size:15px;
+
+    letter-spacing:1.5px;
+
 }
 
 /* =========================================
@@ -319,112 +420,88 @@ body{
 ========================================= */
 
 .glass-card{
+
     position:relative;
+
     overflow:hidden;
-    padding:28px;
-    border-radius:32px;
+
     background:
-    rgba(255,255,255,.04);
+    rgba(17,17,17,.72);
 
     backdrop-filter:blur(20px);
 
     border:
-    1px solid rgba(255,255,255,.08);
+    1px solid rgba(255,255,255,.06);
 
-    box-shadow:
-    0 10px 40px rgba(0,0,0,.45);
+    border-radius:28px;
+
+    padding:24px;
 
     margin-bottom:18px;
+
+    box-shadow:
+    0 12px 50px rgba(0,0,0,.35);
+
+    transition:.35s ease;
+
 }
 
-.card-glow{
-    position:absolute;
-    width:220px;
-    height:220px;
-    background:#A855F7;
-    opacity:.12;
-    filter:blur(100px);
-    right:-80px;
-    top:-80px;
-    pointer-events:none;
+.glass-card:hover{
+
+    transform:
+    translateY(-4px);
+
+    border:
+    1px solid rgba(168,85,247,.18);
+
 }
 
 /* =========================================
-   TEXT
+   CARD GLOW
+========================================= */
+
+.card-glow{
+
+    position:absolute;
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    background:
+    rgba(168,85,247,.14);
+
+    filter:blur(70px);
+
+    top:-60px;
+    right:-60px;
+
+}
+
+/* =========================================
+   TITLES
 ========================================= */
 
 .title{
-    font-size:32px;
+
+    font-size:24px;
+
     font-weight:800;
+
 }
 
 .subtitle{
-    margin-top:10px;
-    opacity:.6;
-    line-height:1.6;
-}
 
-/* =========================================
-   BALANCE
-========================================= */
-
-.balance-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-#balanceValue{
     margin-top:8px;
-    font-size:48px;
-    font-weight:900;
-}
 
-/* =========================================
-   LIVE BADGE
-========================================= */
+    color:
+    rgba(255,255,255,.58);
 
-.live-badge{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:
-    rgba(34,197,94,.12);
-    border:
-    1px solid rgba(34,197,94,.3);
-    color:#22C55E;
-    padding:10px 16px;
-    border-radius:999px;
     font-size:14px;
-    font-weight:700;
-}
 
-.live-dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#22C55E;
-    box-shadow:
-    0 0 14px #22C55E;
-    animation:livePulse 1.2s infinite;
-}
-
-@keyframes livePulse{
-
-    0%{
-        transform:scale(1);
-        opacity:1;
-    }
-
-    50%{
-        transform:scale(1.4);
-        opacity:.6;
-    }
-
-    100%{
-        transform:scale(1);
-        opacity:1;
-    }
+    line-height:1.6;
 
 }
 
@@ -432,52 +509,82 @@ body{
    BUTTONS
 ========================================= */
 
-button{
+.primary-btn,
+.secondary-btn,
+.logout-btn{
+
+    width:100%;
+
     border:none;
+
     outline:none;
+
     cursor:pointer;
-    transition:.25s;
-    font-family:'Inter',sans-serif;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.25s ease;
+
 }
 
 .primary-btn{
-    padding:18px;
-    border-radius:22px;
+
     background:
     linear-gradient(
         135deg,
         #A855F7,
         #7C3AED
     );
+
     color:#fff;
-    font-size:16px;
-    font-weight:700;
+
     box-shadow:
-    0 10px 30px rgba(168,85,247,.35);
+    0 10px 40px rgba(168,85,247,.35);
+
 }
 
 .primary-btn:hover{
-    transform:translateY(-3px);
-    box-shadow:
-    0 16px 40px rgba(168,85,247,.5);
+
+    transform:
+    translateY(-3px);
+
 }
 
 .secondary-btn{
-    padding:18px;
-    border-radius:22px;
+
     background:
-    rgba(255,255,255,.04);
+    rgba(255,255,255,.05);
+
     border:
-    1px solid rgba(168,85,247,.2);
-    color:#C084FC;
-    font-size:16px;
-    font-weight:700;
+    1px solid rgba(255,255,255,.06);
+
+    color:#fff;
+
 }
 
 .secondary-btn:hover{
-    transform:translateY(-3px);
+
     background:
-    rgba(168,85,247,.08);
+    rgba(255,255,255,.08);
+
+}
+
+.logout-btn{
+
+    background:
+    rgba(239,68,68,.12);
+
+    color:#EF4444;
+
+    border:
+    1px solid rgba(239,68,68,.2);
+
 }
 
 /* =========================================
@@ -485,100 +592,123 @@ button{
 ========================================= */
 
 .history-item{
-    margin-top:18px;
-    padding:18px;
-    border-radius:22px;
-    background:
-    rgba(255,255,255,.03);
-    border:
-    1px solid rgba(255,255,255,.04);
 
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
+
+    justify-content:space-between;
+
+    padding:18px 0;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.04);
+
 }
 
 .tx-type{
-    font-size:17px;
+
+    font-size:15px;
+
     font-weight:700;
+
 }
 
 .tx-date{
-    opacity:.45;
-    margin-top:6px;
-    font-size:14px;
-}
 
-.tx-amount{
-    font-weight:700;
-    font-size:16px;
+    margin-top:6px;
+
+    color:
+    rgba(255,255,255,.45);
+
+    font-size:13px;
+
 }
 
 .positive{
+
     color:#22C55E;
+
+    font-weight:700;
+
 }
 
 .negative{
+
     color:#EF4444;
+
+    font-weight:700;
+
 }
 
 /* =========================================
-   LOGOUT
+   LIVE
 ========================================= */
 
-.logout-btn{
-    width:100%;
-    margin-top:26px;
-    padding:18px;
-    border-radius:24px;
+.live-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 14px;
+
+    border-radius:999px;
 
     background:
-    rgba(239,68,68,.1);
+    rgba(34,197,94,.08);
 
-    border:
-    1px solid rgba(239,68,68,.2);
+    color:#22C55E;
 
-    color:#EF4444;
+    font-size:12px;
 
-    font-size:16px;
     font-weight:700;
+
 }
 
-/* =========================================
-   PARTICLES
-========================================= */
+.live-dot{
 
-#particles{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    z-index:1;
-    pointer-events:none;
-}
+    width:8px;
+    height:8px;
 
-.particle-bg{
-    position:absolute;
-    width:6px;
-    height:6px;
     border-radius:50%;
-    background:#A855F7;
+
+    background:#22C55E;
+
     box-shadow:
-    0 0 20px #A855F7;
-    animation:particleMove linear forwards;
+    0 0 14px #22C55E;
+
+    animation:
+    pulse 1.5s infinite;
+
 }
 
-@keyframes particleMove{
+@keyframes pulse{
 
-    from{
-        transform:
-        translateY(0);
+    0%{
+
+        transform:scale(1);
+
         opacity:1;
+
     }
 
-    to{
-        transform:
-        translateY(-120vh);
-        opacity:0;
+    50%{
+
+        transform:scale(1.5);
+
+        opacity:.4;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
     }
 
 }
@@ -588,43 +718,108 @@ button{
 ========================================= */
 
 .click-particle{
+
     position:fixed;
+
     width:10px;
+
     height:10px;
+
     border-radius:50%;
+
     background:#A855F7;
+
     pointer-events:none;
+
     z-index:9999;
+
     box-shadow:
-    0 0 16px #A855F7;
+    0 0 20px #A855F7;
+
 }
 
 /* =========================================
-   CHART
+   PARTICLES
 ========================================= */
 
-canvas{
-    width:100% !important;
-    height:240px !important;
+#particles{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+.particle-bg{
+
+    position:absolute;
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#A855F7;
+
+    box-shadow:
+    0 0 20px #A855F7;
+
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+input::placeholder{
+
+    color:
+    rgba(255,255,255,.35);
+
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#A855F7;
+
+    border-radius:999px;
+
 }
 
 /* =========================================
    MOBILE
 ========================================= */
 
-@media(max-width:480px){
+@media(max-width:768px){
 
     .logo-text{
-        font-size:52px;
+
+        font-size:42px;
+
         letter-spacing:6px;
+
     }
 
-    #balanceValue{
-        font-size:40px;
+    .glass-card{
+
+        padding:20px;
+
+        border-radius:24px;
+
     }
 
-    .title{
-        font-size:28px;
-    }
-
-}
+   }
