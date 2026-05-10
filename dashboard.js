@@ -1,316 +1,473 @@
-/* ===================================
-   CORΛX MASTER DASHBOARD.JS v1
-   Premium Product Intelligence Layer
-=================================== */
+// =========================================
+// CORΛX DASHBOARD.JS
+// Premium Web3 App Logic
+// Apple-Level Motion + UI
+// =========================================
 
-const DASHBOARD = {
-wallet: localStorage.getItem("corax_wallet") || null,
-currency: "USD",
-refreshMs: 15000,
-data: {
-usdBalance: 0,
-cryptoBalance: 0,
-change24h: 0,
-stakingRewards: 0,
-txCount: 0,
-lastTransactions: [],
-market: []
-}
-};
+// =========================================
+// USER SESSION
+// =========================================
 
-/* ===================================
-   INIT
-=================================== */
+const userEmail = localStorage.getItem("corax_user") || "guest@corax.io";
 
 document.addEventListener("DOMContentLoaded", () => {
-initDashboard();
-});
 
-async function initDashboard(){
-
-showSkeleton();
-
-await loadDashboard();
-
-bindDashboard();
-
-autoRefresh();
-}
-
-/* ===================================
-   LOAD
-=================================== */
-
-async function loadDashboard(){
-
-try{
-
-DASHBOARD.data = await getDashboardData();
-
-renderDashboard();
-
-}catch(err){
-
-console.error(err);
-renderFallback();
-
-}
-}
-
-/* ===================================
-   MOCK / API READY
-=================================== */
-
-async function getDashboardData(){
-
-if(typeof apiRequest === "function"){
-
-const live =
-await apiRequest("/dashboard");
-
-if(live) return live;
-}
-
-return {
-usdBalance: 18452.62,
-cryptoBalance: 0.5421,
-change24h: 4.82,
-stakingRewards: 128.40,
-txCount: 42,
-lastTransactions: [
-{
-type:"Received USDT",
-amount:"+250.00",
-time:"2 min ago"
-},
-{
-type:"Swap USDT → ETH",
-amount:"500.00",
-time:"1 hour ago"
-},
-{
-type:"Sent ETH",
-amount:"-0.145",
-time:"Today"
-}
-],
-market: [
-{ symbol:"BTC", price:"$68,420", move:"+2.8%" },
-{ symbol:"ETH", price:"$3,420", move:"+4.1%" },
-{ symbol:"SOL", price:"$182", move:"+6.7%" }
-]
-};
-
-}
-
-/* ===================================
-   RENDER
-=================================== */
-
-function renderDashboard(){
-
-setText("dbUsd", money(DASHBOARD.data.usdBalance));
-setText("dbCrypto", DASHBOARD.data.cryptoBalance + " ETH");
-setText("dbChange", signed(DASHBOARD.data.change24h) + "%");
-setText("dbRewards", money(DASHBOARD.data.stakingRewards));
-setText("dbTxCount", DASHBOARD.data.txCount);
-
-renderTransactions();
-renderMarket();
-hideSkeleton();
-
-trackSafe("dashboard_loaded");
-}
-
-function renderTransactions(){
-
-const box =
-document.getElementById("dbTransactions");
-
-if(!box) return;
-
-box.innerHTML = "";
-
-DASHBOARD.data.lastTransactions.forEach(tx => {
-
-box.innerHTML += `
-<div class="corax-tx-row">
-<div>
-<div class="corax-tx-title">${tx.type}</div>
-<div class="corax-tx-time">${tx.time}</div>
-</div>
-<div class="corax-tx-amount">${tx.amount}</div>
-</div>
-`;
+    initializeDashboard();
 
 });
 
-}
+// =========================================
+// INITIALIZE
+// =========================================
 
-function renderMarket(){
+function initializeDashboard() {
 
-const box =
-document.getElementById("dbMarket");
+    updateUser();
 
-if(!box) return;
+    animateBalance();
 
-box.innerHTML = "";
+    generateParticles();
 
-DASHBOARD.data.market.forEach(item => {
+    generateTransactions();
 
-box.innerHTML += `
-<div class="corax-market-card">
-<div class="corax-market-symbol">${item.symbol}</div>
-<div class="corax-market-price">${item.price}</div>
-<div class="corax-market-move">${item.move}</div>
-</div>
-`;
+    initializeButtons();
 
-});
+    initializeCharts();
+
+    startLiveUpdates();
 
 }
 
-/* ===================================
-   AUTO REFRESH
-=================================== */
+// =========================================
+// UPDATE USER
+// =========================================
 
-function autoRefresh(){
+function updateUser() {
 
-setInterval(async ()=>{
+    const userElement = document.getElementById("userEmail");
 
-await loadDashboard();
+    if(userElement){
 
-}, DASHBOARD.refreshMs);
+        userElement.innerText = userEmail;
 
-}
-
-/* ===================================
-   EVENTS
-=================================== */
-
-function bindDashboard(){
-
-const refresh =
-document.getElementById("refreshDashboard");
-
-if(refresh){
-
-refresh.addEventListener("click", async ()=>{
-
-pulse(refresh);
-
-await loadDashboard();
-
-toastSafe("Dashboard updated");
-
-});
+    }
 
 }
 
-}
+// =========================================
+// ANIMATED BALANCE
+// =========================================
 
-/* ===================================
-   UI STATES
-=================================== */
+function animateBalance() {
 
-function showSkeleton(){
+    const balanceElement = document.getElementById("balanceValue");
 
-document.body.classList.add(
-"corax-loading"
-);
+    if(!balanceElement) return;
 
-}
+    let current = 0;
 
-function hideSkeleton(){
+    const target = 24892.44;
 
-document.body.classList.remove(
-"corax-loading"
-);
+    const interval = setInterval(() => {
 
-}
+        current += target / 60;
 
-function renderFallback(){
+        if(current >= target){
 
-setText("dbUsd", "$0.00");
-setText("dbCrypto", "0 ETH");
-setText("dbChange", "0%");
-setText("dbRewards", "$0");
-setText("dbTxCount", "0");
+            current = target;
 
-}
+            clearInterval(interval);
 
-/* ===================================
-   HELPERS
-=================================== */
+        }
 
-function setText(id,value){
+        balanceElement.innerText =
+            "$ " + current.toLocaleString("en-US", {
 
-const el =
-document.getElementById(id);
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
 
-if(el) el.innerText = value;
+            });
+
+    }, 25);
 
 }
 
-function money(v){
+// =========================================
+// PARTICLES SYSTEM
+// =========================================
 
-return "$" +
-Number(v).toLocaleString(
-undefined,
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
+function generateParticles() {
 
-}
+    const container = document.getElementById("particles");
 
-function signed(v){
+    if(!container) return;
 
-return Number(v) > 0
-? "+" + v
-: v;
+    setInterval(() => {
 
-}
+        const particle = document.createElement("div");
 
-function pulse(el){
+        particle.classList.add("particle-bg");
 
-el.style.transform =
-"scale(.96)";
+        particle.style.left = Math.random() * window.innerWidth + "px";
 
-setTimeout(()=>{
+        particle.style.top = window.innerHeight + "px";
 
-el.style.transform =
-"scale(1)";
+        particle.style.animationDuration =
+            (Math.random() * 4 + 3) + "s";
 
-},150);
+        particle.style.opacity =
+            Math.random();
 
-}
+        particle.style.transform =
+            `scale(${Math.random() * 2})`;
 
-function toastSafe(msg){
+        container.appendChild(particle);
 
-if(typeof toast === "function"){
+        setTimeout(() => {
 
-toast(msg);
+            particle.remove();
 
-}else{
+        }, 7000);
 
-console.log(msg);
+    }, 120);
 
 }
 
+// =========================================
+// TRANSACTION HISTORY
+// =========================================
+
+function generateTransactions() {
+
+    const history = document.getElementById("historyList");
+
+    if(!history) return;
+
+    const transactions = [
+
+        {
+            name: "BTC Swap",
+            amount: "+1,240.00",
+            type: "positive"
+        },
+
+        {
+            name: "USDT Transfer",
+            amount: "-220.00",
+            type: "negative"
+        },
+
+        {
+            name: "ETH Stake Reward",
+            amount: "+482.00",
+            type: "positive"
+        },
+
+        {
+            name: "CRX Purchase",
+            amount: "+12,000 CRX",
+            type: "positive"
+        },
+
+        {
+            name: "Polygon Bridge",
+            amount: "-95.00",
+            type: "negative"
+        }
+
+    ];
+
+    history.innerHTML = "";
+
+    transactions.forEach(tx => {
+
+        const item = document.createElement("div");
+
+        item.className = "history-item";
+
+        item.innerHTML = `
+
+            <div>
+
+                <div class="tx-type">
+                    ${tx.name}
+                </div>
+
+                <div class="tx-date">
+                    Just now
+                </div>
+
+            </div>
+
+            <div class="tx-amount ${tx.type}">
+                ${tx.amount}
+            </div>
+
+        `;
+
+        history.appendChild(item);
+
+    });
+
 }
 
-function trackSafe(event){
+// =========================================
+// BUTTON EFFECTS
+// =========================================
 
-if(typeof track === "function"){
+function initializeButtons() {
 
-track(event);
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", e => {
+
+            createExplosion(e);
+
+            button.style.transform = "scale(.97)";
+
+            setTimeout(() => {
+
+                button.style.transform = "";
+
+            }, 150);
+
+        });
+
+    });
 
 }
 
+// =========================================
+// PARTICLE EXPLOSION
+// =========================================
+
+function createExplosion(e) {
+
+    for(let i = 0; i < 18; i++){
+
+        const particle = document.createElement("div");
+
+        particle.className = "click-particle";
+
+        document.body.appendChild(particle);
+
+        const x = e.clientX;
+        const y = e.clientY;
+
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+
+        const angle = Math.random() * 360;
+        const distance = Math.random() * 90;
+
+        const moveX =
+            Math.cos(angle) * distance;
+
+        const moveY =
+            Math.sin(angle) * distance;
+
+        particle.animate([
+
+            {
+
+                transform:
+                    "translate(0,0) scale(1)",
+
+                opacity: 1
+
+            },
+
+            {
+
+                transform:
+                    `translate(${moveX}px,${moveY}px) scale(0)`,
+
+                opacity: 0
+
+            }
+
+        ], {
+
+            duration: 700,
+            easing: "cubic-bezier(.2,.8,.2,1)"
+
+        });
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        }, 700);
+
+    }
+
 }
 
-console.log(
-"CORΛX Dashboard Ready"
-);
+// =========================================
+// LIVE MARKET CHART
+// =========================================
+
+function initializeCharts() {
+
+    const canvas = document.getElementById("marketChart");
+
+    if(!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    const gradient = ctx.createLinearGradient(0,0,0,300);
+
+    gradient.addColorStop(0,"rgba(168,85,247,.6)");
+    gradient.addColorStop(1,"rgba(168,85,247,0)");
+
+    new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+            labels: [
+
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat",
+                "Sun"
+
+            ],
+
+            datasets: [{
+
+                label: "CRX",
+
+                data: [
+
+                    18,
+                    24,
+                    22,
+                    36,
+                    42,
+                    40,
+                    55
+
+                ],
+
+                borderColor: "#A855F7",
+
+                backgroundColor: gradient,
+
+                tension: .5,
+
+                fill: true,
+
+                borderWidth: 3,
+
+                pointRadius: 0
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            scales: {
+
+                x: {
+
+                    ticks: {
+
+                        color: "rgba(255,255,255,.5)"
+
+                    },
+
+                    grid: {
+
+                        color: "rgba(255,255,255,.03)"
+
+                    }
+
+                },
+
+                y: {
+
+                    ticks: {
+
+                        color: "rgba(255,255,255,.5)"
+
+                    },
+
+                    grid: {
+
+                        color: "rgba(255,255,255,.03)"
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+// =========================================
+// LIVE VALUE UPDATE
+// =========================================
+
+function startLiveUpdates() {
+
+    setInterval(() => {
+
+        const livePrice = document.getElementById("livePrice");
+
+        if(!livePrice) return;
+
+        const value =
+            (Math.random() * 3 + 0.4).toFixed(2);
+
+        livePrice.innerText =
+            "+ " + value + "%";
+
+    }, 3000);
+
+}
+
+// =========================================
+// LOGOUT
+// =========================================
+
+function logout() {
+
+    localStorage.removeItem("corax_user");
+
+    window.location.href = "index.html";
+
+}
+
+// =========================================
+// NAVIGATION
+// =========================================
+
+function goTo(page){
+
+    window.location.href = page;
+
+}
