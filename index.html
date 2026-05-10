@@ -1,3 +1,8 @@
+<!-- =========================================
+     CORΛX INDEX.HTML
+     Premium Web3 Auth Gateway
+========================================= -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,57 +15,92 @@
         content="width=device-width, initial-scale=1.0"
     />
 
-    <title>CORΛX — Money Without Borders</title>
+    <title>CORΛX</title>
 
-    <!-- PWA -->
-    <meta name="theme-color" content="#050505" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- =====================================
+         META
+    ====================================== -->
 
-    <!-- FONT -->
+    <meta
+        name="theme-color"
+        content="#A855F7"
+    />
+
+    <meta
+        name="description"
+        content="Money Without Borders"
+    />
+
+    <!-- =====================================
+         PWA
+    ====================================== -->
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="manifest"
+        href="manifest.json"
+    />
+
+    <!-- =====================================
+         FONTS
+    ====================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet"
     />
 
-    <!-- CSS -->
+    <!-- =====================================
+         CSS
+    ====================================== -->
+
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="charts.css" />
-    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="pwa.css" />
+
 </head>
 
 <body>
 
-    <!-- =========================================
-         BACKGROUND FX
-    ========================================== -->
-
-    <div class="bg-gradient"></div>
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
 
     <div class="grid-overlay"></div>
 
     <div class="orb orb1"></div>
+
     <div class="orb orb2"></div>
+
     <div class="orb orb3"></div>
 
-    <!-- PARTICLES -->
     <div id="particles"></div>
 
-    <!-- =========================================
+    <!-- =====================================
          APP
-    ========================================== -->
+    ====================================== -->
 
-    <div class="app">
+    <main class="app">
 
-        <!-- =====================================
-             HEADER
-        ====================================== -->
+        <!-- =================================
+             HERO
+        ================================== -->
 
-        <header class="hero">
+        <section class="hero">
 
-            <!-- LOGO -->
             <div class="logo-wrapper">
 
+                <!-- CROW -->
                 <div class="crow-container">
 
                     <div class="crow-wing left"></div>
@@ -71,312 +111,396 @@
 
                 </div>
 
+                <!-- LOGO -->
                 <h1 class="logo-text">
+
                     COR<span>Λ</span>X
+
                 </h1>
 
             </div>
 
+            <!-- TAG -->
             <p class="tagline">
+
                 Money Without Borders
+
             </p>
 
-        </header>
+        </section>
 
-        <!-- =====================================
-             AUTH SCREEN
-        ====================================== -->
+        <!-- =================================
+             AUTH CARD
+        ================================== -->
 
-        <section
-            id="authScreen"
-            class="glass-card auth-card"
-        >
+        <section class="glass-card">
 
             <div class="card-glow"></div>
 
             <h2 class="title">
+
                 Welcome Back
+
             </h2>
 
             <p class="subtitle">
-                Enter the future of decentralized payments.
+
+                Access your decentralized financial ecosystem.
+
             </p>
 
-            <!-- INPUTS -->
+            <!-- =============================
+                 FORM
+            ============================== -->
 
-            <div class="input-group">
+            <form
+                id="authForm"
+                style="
+                    margin-top:28px;
+                    display:grid;
+                    gap:16px;
+                "
+            >
 
+                <!-- EMAIL -->
                 <input
-                    type="email"
                     id="email"
-                    placeholder="Email"
+                    type="email"
+                    placeholder="Email Address"
+                    required
+                    style="
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        font-size:15px;
+                        outline:none;
+                    "
                 />
 
-            </div>
-
-            <div class="input-group">
-
+                <!-- PASSWORD -->
                 <input
-                    type="password"
                     id="password"
+                    type="password"
                     placeholder="Password"
+                    required
+                    style="
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        font-size:15px;
+                        outline:none;
+                    "
                 />
 
-            </div>
-
-            <!-- BUTTONS -->
-
-            <button
-                id="loginBtn"
-                class="primary-btn"
-            >
-                Login
-            </button>
-
-            <button
-                id="registerBtn"
-                class="secondary-btn"
-            >
-                Create Account
-            </button>
-
-        </section>
-
-        <!-- =====================================
-             DASHBOARD
-        ====================================== -->
-
-        <section
-            id="dashboard"
-            class="dashboard"
-            style="display:none;"
-        >
-
-            <!-- BALANCE -->
-
-            <div
-                class="glass-card balance-card"
-                id="balanceCard"
-            >
-
-                <div class="card-glow"></div>
-
-                <div class="balance-top">
-
-                    <span>
-                        Total Balance
-                    </span>
-
-                    <div class="live-badge">
-
-                        <div class="live-dot"></div>
-
-                        LIVE
-
-                    </div>
-
-                </div>
-
-                <h2 id="balanceValue">
-                    $0.00
-                </h2>
-
-                <p id="userEmail">
-                    CORΛX Wallet
-                </p>
-
-            </div>
-
-            <!-- SEND -->
-
-            <div class="glass-card send-card">
-
-                <div class="card-glow"></div>
-
-                <h3>
-                    Send Payment
-                </h3>
-
-                <input
-                    type="text"
-                    id="sendTo"
-                    placeholder="Recipient"
-                />
-
-                <input
-                    type="number"
-                    id="sendAmount"
-                    placeholder="Amount"
-                />
-
+                <!-- LOGIN -->
                 <button
-                    id="sendBtn"
+                    type="submit"
                     class="primary-btn"
                 >
-                    Send Now
+
+                    Login
+
                 </button>
 
-            </div>
+                <!-- CREATE -->
+                <button
+                    type="button"
+                    id="createBtn"
+                    class="secondary-btn"
+                >
 
-            <!-- CHART -->
+                    Create Account
 
-            <section class="chart-section">
+                </button>
 
-                <div class="chart-grid"></div>
+            </form>
 
-                <div class="chart-orb one"></div>
-                <div class="chart-orb two"></div>
+        </section>
 
-                <div class="chart-top">
+        <!-- =================================
+             FEATURES
+        ================================== -->
 
-                    <div>
+        <section class="glass-card">
 
-                        <div class="chart-title">
-                            CRX Performance
-                        </div>
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Why CORΛX?
+
+            </h2>
+
+            <p class="subtitle">
+
+                Built for the future of global payments.
+
+            </p>
+
+            <!-- FEATURE -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Instant Transfers
 
                     </div>
 
-                    <div class="chart-price">
+                    <div class="tx-date">
 
-                        <div class="chart-value">
-                            +28.4%
-                        </div>
-
-                        <div class="chart-growth">
-                            This Month
-                        </div>
+                        Lightning-fast settlements
 
                     </div>
 
                 </div>
 
-                <canvas id="coraxChart"></canvas>
+                <div class="positive">
 
-                <div class="chart-filters">
-
-                    <button class="chart-filter active">
-                        1H
-                    </button>
-
-                    <button class="chart-filter">
-                        24H
-                    </button>
-
-                    <button class="chart-filter">
-                        7D
-                    </button>
-
-                    <button class="chart-filter">
-                        1M
-                    </button>
-
-                    <button class="chart-filter">
-                        ALL
-                    </button>
-
-                </div>
-
-            </section>
-
-            <!-- HISTORY -->
-
-            <div class="glass-card history-card">
-
-                <div class="card-glow"></div>
-
-                <div class="history-header">
-
-                    <h3>
-                        Transaction History
-                    </h3>
-
-                </div>
-
-                <div id="historyList">
-
-                    <div class="history-item">
-
-                        <div class="tx-type">
-                            CRX Staking
-                        </div>
-
-                        <div class="tx-amount positive">
-                            +$420
-                        </div>
-
-                    </div>
-
-                    <div class="history-item">
-
-                        <div class="tx-type">
-                            Payment Sent
-                        </div>
-
-                        <div class="tx-amount negative">
-                            -$120
-                        </div>
-
-                    </div>
+                    LIVE
 
                 </div>
 
             </div>
 
-            <!-- LOGOUT -->
+            <!-- FEATURE -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Multi-Chain
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Cross-network compatibility
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ACTIVE
+
+                </div>
+
+            </div>
+
+            <!-- FEATURE -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Self Custody
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Full ownership of assets
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    SECURE
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             CTA
+        ================================== -->
+
+        <section
+            style="
+                margin-top:20px;
+            "
+        >
 
             <button
-                id="logoutBtn"
-                class="logout-btn"
+                class="primary-btn"
+                style="
+                    width:100%;
+                "
+                onclick="window.location.href='dashboard.html'"
             >
-                Logout
+
+                Explore Ecosystem
+
             </button>
 
         </section>
 
-    </div>
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
 
-    <!-- =========================================
-         SCRIPTS
-    ========================================== -->
+    </main>
 
-    <script src="app.js"></script>
-
-    <script src="charts.js"></script>
-
-    <!-- =========================================
-         PARTICLE SYSTEM
-    ========================================== -->
+    <!-- =====================================
+         APP.JS
+    ====================================== -->
 
     <script>
 
-        const particles =
-            document.getElementById("particles");
+        // =================================
+        // LOGIN
+        // =================================
 
-        for (let i = 0; i < 45; i++) {
+        const authForm =
+            document.getElementById("authForm");
 
-            const p =
-                document.createElement("span");
+        authForm.addEventListener(
 
-            p.classList.add("particle-bg");
+            "submit",
 
-            p.style.left =
-                Math.random() * 100 + "%";
+            e => {
 
-            p.style.top =
-                Math.random() * 100 + "%";
+                e.preventDefault();
 
-            p.style.animationDelay =
-                Math.random() * 8 + "s";
+                const email =
+                    document.getElementById("email").value;
 
-            p.style.animationDuration =
-                5 + Math.random() * 10 + "s";
+                const password =
+                    document.getElementById("password").value;
 
-            particles.appendChild(p);
+                if(
+
+                    email.length > 3
+                    &&
+                    password.length > 3
+
+                ){
+
+                    localStorage.setItem(
+                        "corax_user",
+                        email
+                    );
+
+                    createToast(
+                        "Login successful 🚀"
+                    );
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    },1200);
+
+                }
+
+            }
+
+        );
+
+        // =================================
+        // CREATE ACCOUNT
+        // =================================
+
+        const createBtn =
+            document.getElementById("createBtn");
+
+        createBtn.addEventListener(
+
+            "click",
+
+            () => {
+
+                const email =
+                    document.getElementById("email").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+                if(
+
+                    email.length > 3
+                    &&
+                    password.length > 3
+
+                ){
+
+                    localStorage.setItem(
+                        "corax_user",
+                        email
+                    );
+
+                    createToast(
+                        "Account created 💎"
+                    );
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    },1200);
+
+                } else {
+
+                    createToast(
+                        "Fill all fields"
+                    );
+
+                }
+
+            }
+
+        );
+
+        // =================================
+        // TOAST
+        // =================================
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
 
         }
 
     </script>
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
 
 </body>
 </html>
