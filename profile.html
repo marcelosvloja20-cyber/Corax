@@ -1,0 +1,612 @@
+<!-- =========================================
+     CORΛX PROFILE.HTML
+     User Profile Dashboard
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Profile | CORΛX</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    PROFILE
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Identity & Wallet Overview
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             PROFILE CARD
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <!-- TOP -->
+            <div
+                style="
+                    display:flex;
+                    flex-direction:column;
+                    align-items:center;
+                    text-align:center;
+                "
+            >
+
+                <!-- AVATAR -->
+                <div
+                    style="
+                        width:110px;
+                        height:110px;
+                        border-radius:50%;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #A855F7,
+                            #7C3AED
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:42px;
+                        font-weight:900;
+                        box-shadow:
+                        0 0 40px rgba(168,85,247,.45);
+                    "
+                >
+
+                    M
+
+                </div>
+
+                <!-- NAME -->
+                <h2
+                    style="
+                        margin-top:18px;
+                        font-size:30px;
+                        font-weight:800;
+                    "
+                >
+
+                    Marcelo
+
+                </h2>
+
+                <!-- EMAIL -->
+                <p
+                    style="
+                        color:rgba(255,255,255,.55);
+                        margin-top:6px;
+                    "
+                >
+
+                    premium@corax.io
+
+                </p>
+
+                <!-- BADGE -->
+                <div
+                    class="live-badge"
+                    style="
+                        margin-top:18px;
+                    "
+                >
+
+                    <div class="live-dot"></div>
+
+                    VERIFIED USER
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:14px;
+                    margin-top:28px;
+                "
+            >
+
+                <!-- CARD -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.5);
+                            font-size:13px;
+                        "
+                    >
+
+                        Wallet Balance
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            font-size:30px;
+                            font-weight:900;
+                        "
+                    >
+
+                        $48.2K
+
+                    </div>
+
+                </div>
+
+                <!-- CARD -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.5);
+                            font-size:13px;
+                        "
+                    >
+
+                        Staking APY
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            font-size:30px;
+                            font-weight:900;
+                        "
+                    >
+
+                        12%
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             BADGES
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Achievements
+
+            </h2>
+
+            <p class="subtitle">
+
+                Ecosystem participation badges
+
+            </p>
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:14px;
+                    margin-top:24px;
+                "
+            >
+
+                <!-- BADGE -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:22px;
+                        text-align:center;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:34px;
+                        "
+                    >
+
+                        🚀
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-weight:700;
+                        "
+                    >
+
+                        Early User
+
+                    </div>
+
+                </div>
+
+                <!-- BADGE -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:22px;
+                        text-align:center;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:34px;
+                        "
+                    >
+
+                        💎
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-weight:700;
+                        "
+                    >
+
+                        Premium Holder
+
+                    </div>
+
+                </div>
+
+                <!-- BADGE -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:22px;
+                        text-align:center;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:34px;
+                        "
+                    >
+
+                        🔥
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-weight:700;
+                        "
+                    >
+
+                        Top Staker
+
+                    </div>
+
+                </div>
+
+                <!-- BADGE -->
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:22px;
+                        text-align:center;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:34px;
+                        "
+                    >
+
+                        🌎
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-weight:700;
+                        "
+                    >
+
+                        Global User
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACCOUNT SETTINGS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Account Settings
+
+            </h2>
+
+            <p class="subtitle">
+
+                Manage your ecosystem preferences
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Two-Factor Authentication
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ENABLED
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Face ID Security
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ACTIVE
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Wallet Backup
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    VERIFIED
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    editProfile()
+                "
+            >
+
+                Edit Profile
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        function editProfile(){
+
+            createToast(
+                "Profile editor coming soon ✨"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
