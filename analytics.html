@@ -1,0 +1,688 @@
+<!-- =========================================
+     CORΛX ANALYTICS.HTML
+     Ecosystem Analytics Dashboard
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Analytics | CORΛX</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+    <!-- CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    ANALYTICS
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Real-Time Ecosystem Metrics
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             KPI CARDS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+            "
+        >
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.5);
+                        font-size:13px;
+                    "
+                >
+
+                    Total TVL
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:10px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    $482M
+
+                </div>
+
+                <div
+                    class="positive"
+                    style="
+                        margin-top:8px;
+                    "
+                >
+
+                    +18.4%
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.5);
+                        font-size:13px;
+                    "
+                >
+
+                    Daily Volume
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:10px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    $28M
+
+                </div>
+
+                <div
+                    class="positive"
+                    style="
+                        margin-top:8px;
+                    "
+                >
+
+                    +12.1%
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.5);
+                        font-size:13px;
+                    "
+                >
+
+                    Holders
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:10px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    82,441
+
+                </div>
+
+                <div
+                    class="positive"
+                    style="
+                        margin-top:8px;
+                    "
+                >
+
+                    +2,104
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.5);
+                        font-size:13px;
+                    "
+                >
+
+                    Burned CRX
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:10px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    24M
+
+                </div>
+
+                <div
+                    class="negative"
+                    style="
+                        margin-top:8px;
+                    "
+                >
+
+                    Deflationary
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             CHART
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:18px;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Ecosystem Growth
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        User adoption & liquidity
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <!-- CANVAS -->
+            <div
+                style="
+                    width:100%;
+                    height:260px;
+                "
+            >
+
+                <canvas id="analyticsChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             NETWORK DATA
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Network Activity
+
+            </h2>
+
+            <p class="subtitle">
+
+                Multi-chain ecosystem usage
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Ethereum
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Main liquidity chain
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    48%
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Solana
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Fast transactions
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    26%
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Polygon
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Low fee payments
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    14%
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Base
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Institutional onboarding
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    12%
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    refreshAnalytics()
+                "
+            >
+
+                Refresh Data
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        const ctx =
+            document
+            .getElementById(
+                "analyticsChart"
+            )
+            .getContext("2d");
+
+        const gradient =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                260
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(168,85,247,.45)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(168,85,247,0)"
+        );
+
+        new Chart(ctx, {
+
+            type:"line",
+
+            data:{
+
+                labels:[
+                    "JAN",
+                    "FEB",
+                    "MAR",
+                    "APR",
+                    "MAY",
+                    "JUN",
+                    "JUL"
+                ],
+
+                datasets:[{
+
+                    label:"Growth",
+
+                    data:[
+                        12,
+                        18,
+                        26,
+                        42,
+                        58,
+                        74,
+                        92
+                    ],
+
+                    borderColor:"#A855F7",
+
+                    backgroundColor:
+                    gradient,
+
+                    fill:true,
+
+                    tension:.45,
+
+                    borderWidth:4,
+
+                    pointRadius:0
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+                plugins:{
+
+                    legend:{
+
+                        display:false
+
+                    }
+
+                },
+
+                scales:{
+
+                    x:{
+
+                        grid:{
+
+                            display:false
+
+                        },
+
+                        ticks:{
+
+                            color:
+                            "rgba(255,255,255,.45)"
+
+                        }
+
+                    },
+
+                    y:{
+
+                        grid:{
+
+                            color:
+                            "rgba(255,255,255,.05)"
+
+                        },
+
+                        ticks:{
+
+                            color:
+                            "rgba(255,255,255,.45)"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        function refreshAnalytics(){
+
+            createToast(
+                "Analytics updated 📊"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
