@@ -1,225 +1,463 @@
+<!-- =========================================
+     CORΛX LOGIN.HTML
+     Premium Authentication
+========================================= -->
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CORΛX Login</title>
+    <meta charset="UTF-8" />
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    <title>Login | CORΛX</title>
 
-body{
-font-family:Arial, Helvetica, sans-serif;
-background:#050505;
-color:#fff;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-overflow:hidden;
-position:relative;
-}
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
 
-.glow{
-position:absolute;
-width:420px;
-height:420px;
-background:rgba(168,85,247,.16);
-border-radius:50%;
-filter:blur(120px);
-animation:pulse 7s infinite ease-in-out;
-}
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
 
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.12);}
-100%{transform:scale(1);}
-}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
 
-.card{
-position:relative;
-z-index:2;
-width:100%;
-max-width:420px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(14px);
-border-radius:28px;
-padding:32px 24px;
-box-shadow:0 0 40px rgba(168,85,247,.08);
-}
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
 
-.logo{
-font-size:72px;
-text-align:center;
-filter:drop-shadow(0 0 22px rgba(168,85,247,.55));
-}
+    <link rel="stylesheet" href="pwa.css" />
 
-.brand{
-text-align:center;
-margin-top:10px;
-font-size:34px;
-letter-spacing:10px;
-font-weight:300;
-}
-
-.sub{
-text-align:center;
-margin-top:8px;
-font-size:14px;
-color:#aaa;
-}
-
-.form{
-margin-top:26px;
-display:grid;
-gap:14px;
-}
-
-.input{
-width:100%;
-padding:16px;
-border:none;
-border-radius:14px;
-background:#111;
-color:#fff;
-outline:none;
-border:1px solid rgba(255,255,255,.06);
-font-size:15px;
-}
-
-.input:focus{
-border-color:#a855f7;
-}
-
-.btn{
-width:100%;
-padding:16px;
-border:none;
-border-radius:14px;
-font-weight:700;
-letter-spacing:4px;
-cursor:pointer;
-transition:.3s;
-font-size:14px;
-}
-
-.primary{
-background:#a855f7;
-color:#fff;
-box-shadow:0 0 24px rgba(168,85,247,.35);
-}
-
-.primary:hover{
-transform:translateY(-3px);
-}
-
-.secondary{
-background:#111;
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-}
-
-.secondary:hover{
-border-color:#a855f7;
-}
-
-.wallet-box{
-margin-top:12px;
-font-size:13px;
-color:#999;
-text-align:center;
-word-break:break-all;
-}
-
-.foot{
-margin-top:20px;
-text-align:center;
-font-size:13px;
-color:#888;
-}
-</style>
 </head>
 
 <body>
 
-<div class="glow"></div>
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
 
-<div class="card">
+    <div class="grid-overlay"></div>
 
-<div class="logo">🐦‍⬛</div>
-<h1 class="brand">CORΛX</h1>
-<p class="sub">Money Without Borders</p>
+    <div class="orb orb1"></div>
 
-<div class="form">
+    <div class="orb orb2"></div>
 
-<input type="email" class="input" placeholder="Email">
-<input type="password" class="input" placeholder="Senha">
+    <div class="orb orb3"></div>
 
-<button class="btn primary" onclick="login()">
-ENTRAR
-</button>
+    <div id="particles"></div>
 
-<button class="btn secondary" onclick="connectWallet()">
-CONNECT WALLET
-</button>
+    <!-- =====================================
+         APP
+    ====================================== -->
 
-<div class="wallet-box" id="walletStatus">
-Nenhuma wallet conectada
-</div>
+    <main class="app auth-page">
 
-</div>
+        <!-- =================================
+             HERO
+        ================================== -->
 
-<div class="foot">
-Acesso seguro multi-chain
-</div>
+        <section class="hero">
 
-</div>
+            <div class="logo-wrapper">
 
-<script>
-async function connectWallet(){
+                <div class="crow-container">
 
-if(typeof window.ethereum === 'undefined'){
-alert('MetaMask não encontrada.');
-return;
-}
+                    <div class="crow-wing left"></div>
 
-try{
-await ethereum.request({
-method:'eth_requestAccounts'
-});
+                    <div class="crow-body"></div>
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
-const address = await signer.getAddress();
+                    <div class="crow-wing right"></div>
 
-document.getElementById('walletStatus').innerText =
-'Wallet: ' +
-address.substring(0,6) +
-'...' +
-address.substring(address.length-4);
+                </div>
 
-setTimeout(()=>{
-window.location.href='app.html';
-},1200);
+                <h1 class="logo-text">
 
-}catch(error){
-alert('Conexão cancelada.');
-}
-}
+                    COR<span>Λ</span>X
 
-function login(){
-window.location.href='app.html';
-}
-</script>
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Money Without Borders
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             LOGIN CARD
+        ================================== -->
+
+        <section class="glass-card auth-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Welcome Back
+
+            </h2>
+
+            <p class="subtitle">
+
+                Access your decentralized wallet.
+
+            </p>
+
+            <!-- EMAIL -->
+            <div
+                style="
+                    margin-top:26px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Email
+
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- PASSWORD -->
+            <div
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Password
+
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- REMEMBER -->
+            <div
+                style="
+                    margin-top:18px;
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    font-size:14px;
+                    color:rgba(255,255,255,.55);
+                "
+            >
+
+                <label
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                    "
+                >
+
+                    <input type="checkbox" />
+
+                    Remember me
+
+                </label>
+
+                <span
+                    style="
+                        cursor:pointer;
+                    "
+                >
+
+                    Forgot Password?
+
+                </span>
+
+            </div>
+
+            <!-- LOGIN -->
+            <button
+                class="primary-btn"
+                style="
+                    margin-top:26px;
+                "
+                onclick="
+                    login()
+                "
+            >
+
+                Login
+
+            </button>
+
+            <!-- REGISTER -->
+            <button
+                class="secondary-btn"
+                style="
+                    margin-top:14px;
+                "
+                onclick="
+                    window.location.href='register.html'
+                "
+            >
+
+                Create Account
+
+            </button>
+
+        </section>
+
+        <!-- =================================
+             SECURITY
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Secure Access
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Enterprise-grade protection
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    SECURE
+
+                </div>
+
+            </div>
+
+            <!-- FEATURES -->
+            <div
+                style="
+                    margin-top:24px;
+                    display:grid;
+                    gap:14px;
+                "
+            >
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            End-to-End Encryption
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        ACTIVE
+
+                    </div>
+
+                </div>
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Multi-Chain Security
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        ENABLED
+
+                    </div>
+
+                </div>
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Self-Custody Protection
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        VERIFIED
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        async function login(){
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value;
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+            if(!email || !password){
+
+                createToast(
+                    "Fill all fields"
+                );
+
+                return;
+
+            }
+
+            localStorage.setItem(
+                "corax_user",
+                email
+            );
+
+            createToast(
+                "Login successful 🚀"
+            );
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            },1200);
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
 
 </body>
 </html>
