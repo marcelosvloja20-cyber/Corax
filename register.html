@@ -1,0 +1,545 @@
+<!-- =========================================
+     CORΛX REGISTER.HTML
+     Premium Account Creation
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Create Account | CORΛX</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app auth-page">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    COR<span>Λ</span>X
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Create Your Borderless Wallet
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             REGISTER CARD
+        ================================== -->
+
+        <section class="glass-card auth-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Create Account
+
+            </h2>
+
+            <p class="subtitle">
+
+                Join the future of decentralized finance.
+
+            </p>
+
+            <!-- NAME -->
+            <div
+                style="
+                    margin-top:26px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Full Name
+
+                </label>
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- EMAIL -->
+            <div
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Email
+
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- PASSWORD -->
+            <div
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Password
+
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Create a password"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- CONFIRM -->
+            <div
+                style="
+                    margin-top:20px;
+                "
+            >
+
+                <label
+                    style="
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
+                    "
+                >
+
+                    Confirm Password
+
+                </label>
+
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm your password"
+                    style="
+                        margin-top:10px;
+                        width:100%;
+                        padding:18px;
+                        border-radius:20px;
+                        border:1px solid rgba(255,255,255,.08);
+                        background:rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:15px;
+                    "
+                />
+
+            </div>
+
+            <!-- TERMS -->
+            <div
+                style="
+                    margin-top:18px;
+                    display:flex;
+                    align-items:flex-start;
+                    gap:10px;
+                    font-size:14px;
+                    color:rgba(255,255,255,.55);
+                "
+            >
+
+                <input
+                    id="terms"
+                    type="checkbox"
+                    style="
+                        margin-top:2px;
+                    "
+                />
+
+                <span>
+
+                    I agree to the Terms of Service
+                    and Privacy Policy.
+
+                </span>
+
+            </div>
+
+            <!-- REGISTER -->
+            <button
+                class="primary-btn"
+                style="
+                    margin-top:26px;
+                "
+                onclick="
+                    register()
+                "
+            >
+
+                Create Wallet
+
+            </button>
+
+            <!-- LOGIN -->
+            <button
+                class="secondary-btn"
+                style="
+                    margin-top:14px;
+                "
+                onclick="
+                    window.location.href='login.html'
+                "
+            >
+
+                Already Have Account
+
+            </button>
+
+        </section>
+
+        <!-- =================================
+             BENEFITS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Why CORΛX?
+
+            </h2>
+
+            <p class="subtitle">
+
+                Built for global decentralized finance
+
+            </p>
+
+            <div
+                style="
+                    margin-top:24px;
+                    display:grid;
+                    gap:14px;
+                "
+            >
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Borderless Payments
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        GLOBAL
+
+                    </div>
+
+                </div>
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Self-Custody Wallet
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        SECURE
+
+                    </div>
+
+                </div>
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Multi-Chain Swaps
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        FAST
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        async function register(){
+
+            const name =
+                document.getElementById(
+                    "name"
+                ).value;
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value;
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+            const confirmPassword =
+                document.getElementById(
+                    "confirmPassword"
+                ).value;
+
+            const terms =
+                document.getElementById(
+                    "terms"
+                ).checked;
+
+            if(
+                !name ||
+                !email ||
+                !password ||
+                !confirmPassword
+            ){
+
+                createToast(
+                    "Fill all fields"
+                );
+
+                return;
+
+            }
+
+            if(password !== confirmPassword){
+
+                createToast(
+                    "Passwords do not match"
+                );
+
+                return;
+
+            }
+
+            if(!terms){
+
+                createToast(
+                    "Accept the terms"
+                );
+
+                return;
+
+            }
+
+            localStorage.setItem(
+                "corax_user",
+                email
+            );
+
+            createToast(
+                "Account created 🚀"
+            );
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            },1200);
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
