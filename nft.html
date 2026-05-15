@@ -1,0 +1,619 @@
+<!-- =========================================
+     CORΛX NFT.HTML
+     NFT Gallery & Wallet
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>NFT Gallery | CORΛX</title>
+
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    NFT GALLERY
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Digital Ownership Reimagined
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             COLLECTION OVERVIEW
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Your Collection
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Multi-chain NFT assets
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    VERIFIED
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:14px;
+                    margin-top:24px;
+                "
+            >
+
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.5);
+                            font-size:13px;
+                        "
+                    >
+
+                        Total NFTs
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            font-size:32px;
+                            font-weight:900;
+                        "
+                    >
+
+                        48
+
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.08);
+                        border-radius:22px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.5);
+                            font-size:13px;
+                        "
+                    >
+
+                        Floor Value
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            font-size:32px;
+                            font-weight:900;
+                        "
+                    >
+
+                        18.4 ETH
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             NFT GRID
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:16px;
+                margin-top:18px;
+            "
+        >
+
+            <!-- NFT -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        width:100%;
+                        height:160px;
+                        border-radius:22px;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #A855F7,
+                            #4C1D95
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:54px;
+                    "
+                >
+
+                    🐦‍⬛
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:16px;
+                        font-size:18px;
+                        font-weight:700;
+                    "
+                >
+
+                    CORΛX Genesis
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        color:rgba(255,255,255,.55);
+                        font-size:14px;
+                    "
+                >
+
+                    #001
+
+                </div>
+
+            </div>
+
+            <!-- NFT -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        width:100%;
+                        height:160px;
+                        border-radius:22px;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #7C3AED,
+                            #111111
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:54px;
+                    "
+                >
+
+                    💎
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:16px;
+                        font-size:18px;
+                        font-weight:700;
+                    "
+                >
+
+                    Neon Vault
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        color:rgba(255,255,255,.55);
+                        font-size:14px;
+                    "
+                >
+
+                    #118
+
+                </div>
+
+            </div>
+
+            <!-- NFT -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        width:100%;
+                        height:160px;
+                        border-radius:22px;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #4C1D95,
+                            #A855F7
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:54px;
+                    "
+                >
+
+                    🌌
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:16px;
+                        font-size:18px;
+                        font-weight:700;
+                    "
+                >
+
+                    Galaxy Pass
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        color:rgba(255,255,255,.55);
+                        font-size:14px;
+                    "
+                >
+
+                    #402
+
+                </div>
+
+            </div>
+
+            <!-- NFT -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        width:100%;
+                        height:160px;
+                        border-radius:22px;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #111111,
+                            #A855F7
+                        );
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:54px;
+                    "
+                >
+
+                    ⚡
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:16px;
+                        font-size:18px;
+                        font-weight:700;
+                    "
+                >
+
+                    Chain Runner
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:8px;
+                        color:rgba(255,255,255,.55);
+                        font-size:14px;
+                    "
+                >
+
+                    #089
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             MARKET STATUS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Marketplace Status
+
+            </h2>
+
+            <p class="subtitle">
+
+                NFT ecosystem activity
+
+            </p>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Active Collections
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    248
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Daily NFT Volume
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $4.2M
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Creator Royalties
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ENABLED
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="primary-btn"
+                onclick="
+                    mintNFT()
+                "
+            >
+
+                Mint NFT
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        function mintNFT(){
+
+            createToast(
+                "NFT minting portal opening 🚀"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></
