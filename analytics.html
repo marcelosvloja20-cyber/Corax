@@ -34,13 +34,13 @@
         rel="stylesheet"
     />
 
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
 
     <link rel="stylesheet" href="pwa.css" />
-
-    <!-- CHART -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -94,14 +94,14 @@
 
             <p class="tagline">
 
-                Real-Time Ecosystem Metrics
+                Real-Time Ecosystem Intelligence
 
             </p>
 
         </section>
 
         <!-- =================================
-             KPI CARDS
+             GLOBAL METRICS
         ================================== -->
 
         <section
@@ -119,18 +119,18 @@
 
                 <div
                     style="
-                        color:rgba(255,255,255,.5);
+                        color:rgba(255,255,255,.55);
                         font-size:13px;
                     "
                 >
 
-                    Total TVL
+                    Total Volume
 
                 </div>
 
                 <div
                     style="
-                        margin-top:10px;
+                        margin-top:12px;
                         font-size:34px;
                         font-weight:900;
                     "
@@ -140,14 +140,33 @@
 
                 </div>
 
+            </div>
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
                 <div
-                    class="positive"
                     style="
-                        margin-top:8px;
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
                     "
                 >
 
-                    +18.4%
+                    Active Wallets
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    184K
 
                 </div>
 
@@ -160,35 +179,24 @@
 
                 <div
                     style="
-                        color:rgba(255,255,255,.5);
+                        color:rgba(255,255,255,.55);
                         font-size:13px;
                     "
                 >
 
-                    Daily Volume
+                    Daily Transactions
 
                 </div>
 
                 <div
                     style="
-                        margin-top:10px;
+                        margin-top:12px;
                         font-size:34px;
                         font-weight:900;
                     "
                 >
 
-                    $28M
-
-                </div>
-
-                <div
-                    class="positive"
-                    style="
-                        margin-top:8px;
-                    "
-                >
-
-                    +12.1%
+                    2.8M
 
                 </div>
 
@@ -201,76 +209,24 @@
 
                 <div
                     style="
-                        color:rgba(255,255,255,.5);
+                        color:rgba(255,255,255,.55);
                         font-size:13px;
                     "
                 >
 
-                    Holders
+                    Bridge Volume
 
                 </div>
 
                 <div
                     style="
-                        margin-top:10px;
+                        margin-top:12px;
                         font-size:34px;
                         font-weight:900;
                     "
                 >
 
-                    82,441
-
-                </div>
-
-                <div
-                    class="positive"
-                    style="
-                        margin-top:8px;
-                    "
-                >
-
-                    +2,104
-
-                </div>
-
-            </div>
-
-            <!-- CARD -->
-            <div class="glass-card">
-
-                <div class="card-glow"></div>
-
-                <div
-                    style="
-                        color:rgba(255,255,255,.5);
-                        font-size:13px;
-                    "
-                >
-
-                    Burned CRX
-
-                </div>
-
-                <div
-                    style="
-                        margin-top:10px;
-                        font-size:34px;
-                        font-weight:900;
-                    "
-                >
-
-                    24M
-
-                </div>
-
-                <div
-                    class="negative"
-                    style="
-                        margin-top:8px;
-                    "
-                >
-
-                    Deflationary
+                    $91M
 
                 </div>
 
@@ -279,7 +235,73 @@
         </section>
 
         <!-- =================================
-             CHART
+             TRANSACTION CHART
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Network Growth
+
+            </h2>
+
+            <p class="subtitle">
+
+                Transaction activity over time
+
+            </p>
+
+            <div
+                style="
+                    margin-top:24px;
+                    height:300px;
+                "
+            >
+
+                <canvas id="growthChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             MARKET DISTRIBUTION
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Payment Distribution
+
+            </h2>
+
+            <p class="subtitle">
+
+                Ecosystem usage segmentation
+
+            </p>
+
+            <div
+                style="
+                    margin-top:24px;
+                    height:320px;
+                "
+            >
+
+                <canvas id="distributionChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             LIVE ACTIVITY
         ================================== -->
 
         <section class="glass-card">
@@ -291,7 +313,6 @@
                     display:flex;
                     justify-content:space-between;
                     align-items:center;
-                    margin-bottom:18px;
                 "
             >
 
@@ -299,13 +320,13 @@
 
                     <h2 class="title">
 
-                        Ecosystem Growth
+                        Live Activity
 
                     </h2>
 
                     <p class="subtitle">
 
-                        User adoption & liquidity
+                        Real-time ecosystem movement
 
                     </p>
 
@@ -321,54 +342,19 @@
 
             </div>
 
-            <!-- CANVAS -->
-            <div
-                style="
-                    width:100%;
-                    height:260px;
-                "
-            >
-
-                <canvas id="analyticsChart"></canvas>
-
-            </div>
-
-        </section>
-
-        <!-- =================================
-             NETWORK DATA
-        ================================== -->
-
-        <section class="glass-card">
-
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Network Activity
-
-            </h2>
-
-            <p class="subtitle">
-
-                Multi-chain ecosystem usage
-
-            </p>
-
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Ethereum
+                        Institutional Transfer
 
                     </div>
 
                     <div class="tx-date">
 
-                        Main liquidity chain
+                        Ethereum → Base
 
                     </div>
 
@@ -376,26 +362,25 @@
 
                 <div class="positive">
 
-                    48%
+                    +$2.4M
 
                 </div>
 
             </div>
 
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Solana
+                        Retail Checkout
 
                     </div>
 
                     <div class="tx-date">
 
-                        Fast transactions
+                        São Paulo • Brazil
 
                     </div>
 
@@ -403,26 +388,25 @@
 
                 <div class="positive">
 
-                    26%
+                    +$482
 
                 </div>
 
             </div>
 
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Polygon
+                        Staking Deposit
 
                     </div>
 
                     <div class="tx-date">
 
-                        Low fee payments
+                        Multi-chain vault
 
                     </div>
 
@@ -430,34 +414,7 @@
 
                 <div class="positive">
 
-                    14%
-
-                </div>
-
-            </div>
-
-            <!-- ITEM -->
-            <div class="history-item">
-
-                <div>
-
-                    <div class="tx-type">
-
-                        Base
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        Institutional onboarding
-
-                    </div>
-
-                </div>
-
-                <div class="positive">
-
-                    12%
+                    +48K CRX
 
                 </div>
 
@@ -479,13 +436,13 @@
         >
 
             <button
-                class="secondary-btn"
+                class="primary-btn"
                 onclick="
-                    refreshAnalytics()
+                    exportReport()
                 "
             >
 
-                Refresh Data
+                Export Report
 
             </button>
 
@@ -508,131 +465,123 @@
     </main>
 
     <!-- =====================================
-         SCRIPT
+         CHARTS
     ====================================== -->
 
     <script>
 
-        const ctx =
+        // =========================
+        // GROWTH CHART
+        // =========================
+
+        const growthCtx =
             document
             .getElementById(
-                "analyticsChart"
-            )
-            .getContext("2d");
-
-        const gradient =
-            ctx.createLinearGradient(
-                0,
-                0,
-                0,
-                260
+                "growthChart"
             );
 
-        gradient.addColorStop(
-            0,
-            "rgba(168,85,247,.45)"
-        );
+        new Chart(growthCtx, {
 
-        gradient.addColorStop(
-            1,
-            "rgba(168,85,247,0)"
-        );
+            type: "line",
 
-        new Chart(ctx, {
+            data: {
 
-            type:"line",
-
-            data:{
-
-                labels:[
-                    "JAN",
-                    "FEB",
-                    "MAR",
-                    "APR",
-                    "MAY",
-                    "JUN",
-                    "JUL"
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul"
                 ],
 
-                datasets:[{
+                datasets: [{
 
-                    label:"Growth",
+                    label:
+                        "Transactions",
 
-                    data:[
-                        12,
-                        18,
-                        26,
-                        42,
-                        58,
-                        74,
-                        92
+                    data: [
+                        120,
+                        180,
+                        260,
+                        340,
+                        520,
+                        710,
+                        920
                     ],
 
-                    borderColor:"#A855F7",
+                    borderColor:
+                        "#A855F7",
 
                     backgroundColor:
-                    gradient,
+                        "rgba(168,85,247,.15)",
 
-                    fill:true,
+                    tension: .45,
 
-                    tension:.45,
+                    fill: true,
 
-                    borderWidth:4,
+                    borderWidth: 3,
 
-                    pointRadius:0
+                    pointRadius: 4
 
                 }]
 
             },
 
-            options:{
+            options: {
 
-                responsive:true,
+                responsive: true,
 
-                maintainAspectRatio:false,
+                maintainAspectRatio: false,
 
-                plugins:{
+                plugins: {
 
-                    legend:{
+                    legend: {
 
-                        display:false
+                        labels: {
+
+                            color: "#fff"
+
+                        }
 
                     }
 
                 },
 
-                scales:{
+                scales: {
 
-                    x:{
+                    x: {
 
-                        grid:{
+                        ticks: {
 
-                            display:false
+                            color:
+                                "rgba(255,255,255,.6)"
 
                         },
 
-                        ticks:{
+                        grid: {
 
                             color:
-                            "rgba(255,255,255,.45)"
+                                "rgba(255,255,255,.04)"
 
                         }
 
                     },
 
-                    y:{
+                    y: {
 
-                        grid:{
+                        ticks: {
 
                             color:
-                            "rgba(255,255,255,.05)"
+                                "rgba(255,255,255,.6)"
 
                         },
 
-                        ticks:{
+                        grid: {
 
                             color:
-                            "rgba(255,255,255,.45)"
+                                "rgba(255,255,255,.04)"
 
                         }
 
@@ -644,10 +593,87 @@
 
         });
 
-        function refreshAnalytics(){
+        // =========================
+        // DISTRIBUTION CHART
+        // =========================
+
+        const distributionCtx =
+            document
+            .getElementById(
+                "distributionChart"
+            );
+
+        new Chart(distributionCtx, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Retail",
+                    "Institutional",
+                    "DeFi",
+                    "Staking"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        42,
+                        28,
+                        18,
+                        12
+                    ],
+
+                    backgroundColor: [
+                        "#A855F7",
+                        "#7C3AED",
+                        "#4C1D95",
+                        "#C084FC"
+                    ],
+
+                    borderWidth: 0
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            color: "#fff",
+
+                            padding: 20
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        // =========================
+        // ACTION
+        // =========================
+
+        function exportReport(){
 
             createToast(
-                "Analytics updated 📊"
+                "Analytics report exported 📊"
             );
 
         }
