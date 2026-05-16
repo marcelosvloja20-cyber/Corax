@@ -1,6 +1,6 @@
 <!-- =========================================
      CORΛX LOGIN.HTML
-     Premium Authentication
+     Authentication Portal
 ========================================= -->
 
 <!DOCTYPE html>
@@ -18,6 +18,7 @@
     <title>Login | CORΛX</title>
 
     <!-- FONT -->
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -35,6 +36,7 @@
     />
 
     <!-- CSS -->
+
     <link rel="stylesheet" href="style.css" />
 
     <link rel="stylesheet" href="pwa.css" />
@@ -43,9 +45,7 @@
 
 <body>
 
-    <!-- =====================================
-         BACKGROUND
-    ====================================== -->
+    <!-- BACKGROUND -->
 
     <div class="grid-overlay"></div>
 
@@ -57,17 +57,13 @@
 
     <div id="particles"></div>
 
-    <!-- =====================================
-         APP
-    ====================================== -->
+    <!-- AUTH -->
 
-    <main class="app auth-page">
+    <main class="auth-container">
 
-        <!-- =================================
-             HERO
-        ================================== -->
+        <!-- LOGO -->
 
-        <section class="hero">
+        <div class="hero">
 
             <div class="logo-wrapper">
 
@@ -83,7 +79,7 @@
 
                 <h1 class="logo-text">
 
-                    COR<span>Λ</span>X
+                    CORΛX
 
                 </h1>
 
@@ -95,11 +91,9 @@
 
             </p>
 
-        </section>
+        </div>
 
-        <!-- =================================
-             LOGIN CARD
-        ================================== -->
+        <!-- LOGIN CARD -->
 
         <section class="glass-card auth-card">
 
@@ -113,93 +107,62 @@
 
             <p class="subtitle">
 
-                Access your decentralized wallet.
+                Access your multi-chain ecosystem
 
             </p>
 
             <!-- EMAIL -->
+
             <div
                 style="
                     margin-top:26px;
                 "
             >
 
-                <label
-                    style="
-                        color:rgba(255,255,255,.6);
-                        font-size:13px;
-                    "
-                >
+                <label class="input-label">
 
-                    Email
+                    Email Address
 
                 </label>
 
                 <input
-                    id="email"
                     type="email"
-                    placeholder="Enter your email"
-                    style="
-                        margin-top:10px;
-                        width:100%;
-                        padding:18px;
-                        border-radius:20px;
-                        border:1px solid rgba(255,255,255,.08);
-                        background:rgba(255,255,255,.04);
-                        color:#fff;
-                        outline:none;
-                        font-size:15px;
-                    "
+                    placeholder="you@example.com"
+                    class="corax-input"
                 />
 
             </div>
 
             <!-- PASSWORD -->
+
             <div
                 style="
-                    margin-top:20px;
+                    margin-top:22px;
                 "
             >
 
-                <label
-                    style="
-                        color:rgba(255,255,255,.6);
-                        font-size:13px;
-                    "
-                >
+                <label class="input-label">
 
                     Password
 
                 </label>
 
                 <input
-                    id="password"
                     type="password"
-                    placeholder="Enter your password"
-                    style="
-                        margin-top:10px;
-                        width:100%;
-                        padding:18px;
-                        border-radius:20px;
-                        border:1px solid rgba(255,255,255,.08);
-                        background:rgba(255,255,255,.04);
-                        color:#fff;
-                        outline:none;
-                        font-size:15px;
-                    "
+                    placeholder="••••••••••"
+                    class="corax-input"
                 />
 
             </div>
 
-            <!-- REMEMBER -->
+            <!-- OPTIONS -->
+
             <div
                 style="
                     margin-top:18px;
                     display:flex;
                     justify-content:space-between;
                     align-items:center;
-                    font-size:14px;
-                    color:rgba(255,255,255,.55);
                 "
             >
 
@@ -208,6 +171,8 @@
                         display:flex;
                         align-items:center;
                         gap:8px;
+                        color:rgba(255,255,255,.65);
+                        font-size:14px;
                     "
                 >
 
@@ -217,26 +182,31 @@
 
                 </label>
 
-                <span
+                <a
+                    href="#"
                     style="
-                        cursor:pointer;
+                        color:#A855F7;
+                        text-decoration:none;
+                        font-size:14px;
+                        font-weight:600;
                     "
                 >
 
                     Forgot Password?
 
-                </span>
+                </a>
 
             </div>
 
-            <!-- LOGIN -->
+            <!-- BUTTON -->
+
             <button
                 class="primary-btn"
                 style="
                     margin-top:26px;
                 "
                 onclick="
-                    login()
+                    loginUser()
                 "
             >
 
@@ -244,193 +214,193 @@
 
             </button>
 
-            <!-- REGISTER -->
-            <button
-                class="secondary-btn"
-                style="
-                    margin-top:14px;
-                "
-                onclick="
-                    window.location.href='register.html'
-                "
-            >
-
-                Create Account
-
-            </button>
-
-        </section>
-
-        <!-- =================================
-             SECURITY
-        ================================== -->
-
-        <section class="glass-card">
-
-            <div class="card-glow"></div>
+            <!-- DIVIDER -->
 
             <div
                 style="
+                    margin:28px 0;
                     display:flex;
-                    justify-content:space-between;
                     align-items:center;
+                    gap:14px;
+                    color:rgba(255,255,255,.35);
+                    font-size:13px;
                 "
             >
 
-                <div>
+                <div
+                    style="
+                        flex:1;
+                        height:1px;
+                        background:
+                        rgba(255,255,255,.08);
+                    "
+                ></div>
 
-                    <h2 class="title">
+                OR CONTINUE WITH
 
-                        Secure Access
-
-                    </h2>
-
-                    <p class="subtitle">
-
-                        Enterprise-grade protection
-
-                    </p>
-
-                </div>
-
-                <div class="live-badge">
-
-                    <div class="live-dot"></div>
-
-                    SECURE
-
-                </div>
+                <div
+                    style="
+                        flex:1;
+                        height:1px;
+                        background:
+                        rgba(255,255,255,.08);
+                    "
+                ></div>
 
             </div>
 
-            <!-- FEATURES -->
+            <!-- SOCIAL -->
+
             <div
                 style="
-                    margin-top:24px;
                     display:grid;
+                    grid-template-columns:1fr 1fr;
                     gap:14px;
                 "
             >
 
-                <div class="history-item">
+                <button class="secondary-btn">
 
-                    <div>
+                    Google
 
-                        <div class="tx-type">
+                </button>
 
-                            End-to-End Encryption
+                <button class="secondary-btn">
 
-                        </div>
+                    Wallet
 
-                    </div>
+                </button>
 
-                    <div class="positive">
+            </div>
 
-                        ACTIVE
+            <!-- REGISTER -->
 
-                    </div>
+            <div
+                style="
+                    margin-top:28px;
+                    text-align:center;
+                    color:rgba(255,255,255,.65);
+                    font-size:14px;
+                "
+            >
 
-                </div>
+                Don’t have an account?
 
-                <div class="history-item">
+                <a
+                    href="register.html"
+                    style="
+                        color:#A855F7;
+                        text-decoration:none;
+                        font-weight:700;
+                    "
+                >
 
-                    <div>
+                    Create Account
 
-                        <div class="tx-type">
-
-                            Multi-Chain Security
-
-                        </div>
-
-                    </div>
-
-                    <div class="positive">
-
-                        ENABLED
-
-                    </div>
-
-                </div>
-
-                <div class="history-item">
-
-                    <div>
-
-                        <div class="tx-type">
-
-                            Self-Custody Protection
-
-                        </div>
-
-                    </div>
-
-                    <div class="positive">
-
-                        VERIFIED
-
-                    </div>
-
-                </div>
+                </a>
 
             </div>
 
         </section>
 
-        <!-- SPACER -->
-        <div style="height:120px;"></div>
-
     </main>
 
-    <!-- =====================================
-         SCRIPT
-    ====================================== -->
+    <!-- STYLE -->
+
+    <style>
+
+        .auth-container{
+
+            min-height:100vh;
+
+            display:flex;
+
+            flex-direction:column;
+
+            justify-content:center;
+
+            padding:24px;
+
+        }
+
+        .auth-card{
+
+            max-width:520px;
+
+            margin:0 auto;
+
+            width:100%;
+
+        }
+
+        .input-label{
+
+            display:block;
+
+            margin-bottom:10px;
+
+            color:rgba(255,255,255,.65);
+
+            font-size:13px;
+
+        }
+
+        .corax-input{
+
+            width:100%;
+
+            padding:20px;
+
+            border-radius:22px;
+
+            border:
+            1px solid rgba(255,255,255,.08);
+
+            background:
+            rgba(255,255,255,.04);
+
+            color:#fff;
+
+            outline:none;
+
+            font-size:16px;
+
+        }
+
+        .corax-input::placeholder{
+
+            color:
+            rgba(255,255,255,.35);
+
+        }
+
+    </style>
+
+    <!-- SCRIPT -->
 
     <script>
 
-        async function login(){
-
-            const email =
-                document.getElementById(
-                    "email"
-                ).value;
-
-            const password =
-                document.getElementById(
-                    "password"
-                ).value;
-
-            if(!email || !password){
-
-                createToast(
-                    "Fill all fields"
-                );
-
-                return;
-
-            }
-
-            localStorage.setItem(
-                "corax_user",
-                email
-            );
+        function loginUser(){
 
             createToast(
-                "Login successful 🚀"
+                "Authentication successful 🔐"
             );
 
             setTimeout(() => {
 
                 window.location.href =
-                    "dashboard.html";
+                "dashboard.html";
 
-            },1200);
+            },1500);
 
         }
 
         function createToast(message){
 
             const toast =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             toast.className =
                 "corax-toast show";
@@ -453,7 +423,6 @@
     </script>
 
     <!-- JS -->
-    <script src="wallet.js"></script>
 
     <script src="fx.js"></script>
 
