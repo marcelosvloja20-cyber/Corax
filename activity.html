@@ -1,0 +1,549 @@
+<!-- =========================================
+     CORΛX ACTIVITY.HTML
+     Ecosystem Activity Feed
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Activity | CORΛX</title>
+
+    <!-- FONT -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- APP -->
+
+    <main class="app">
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    ACTIVITY
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Real-Time CORΛX Ecosystem Feed
+
+            </p>
+
+        </section>
+
+        <!-- GLOBAL STATS -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+            "
+        >
+
+            <!-- CARD -->
+
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Live Transactions
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    24,812
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Active Wallets
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    182K
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- LIVE FEED -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Live Ecosystem Feed
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Updated every second
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <!-- EVENT -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Institutional Transfer
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Ethereum → Base Network
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +$4.2M
+
+                </div>
+
+            </div>
+
+            <!-- EVENT -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        NFT Mint Completed
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Genesis Collection
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    SUCCESS
+
+                </div>
+
+            </div>
+
+            <!-- EVENT -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Merchant Checkout
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Retail Payment • Brazil
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +$240
+
+                </div>
+
+            </div>
+
+            <!-- EVENT -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Validator Reward
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Staking Pool #14
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +820 CRX
+
+                </div>
+
+            </div>
+
+            <!-- EVENT -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Cross-Chain Swap
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Polygon → Solana
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    COMPLETED
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- NETWORK STATUS -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Network Status
+
+            </h2>
+
+            <p class="subtitle">
+
+                Multi-chain infrastructure monitoring
+
+            </p>
+
+            <!-- NETWORK -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Ethereum
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ONLINE
+
+                </div>
+
+            </div>
+
+            <!-- NETWORK -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Polygon
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ONLINE
+
+                </div>
+
+            </div>
+
+            <!-- NETWORK -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Solana
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ONLINE
+
+                </div>
+
+            </div>
+
+            <!-- NETWORK -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Base
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    ONLINE
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ACTIONS -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="primary-btn"
+                onclick="
+                    refreshFeed()
+                "
+            >
+
+                Refresh Feed
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        function refreshFeed(){
+
+            createToast(
+                "Live activity refreshed ⚡"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
