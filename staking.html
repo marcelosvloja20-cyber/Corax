@@ -1,6 +1,6 @@
 <!-- =========================================
      CORΛX STAKING.HTML
-     Premium Staking Platform
+     Staking & Yield Dashboard
 ========================================= -->
 
 <!DOCTYPE html>
@@ -43,9 +43,7 @@
 
 <body>
 
-    <!-- =====================================
-         BACKGROUND
-    ====================================== -->
+    <!-- BACKGROUND -->
 
     <div class="grid-overlay"></div>
 
@@ -57,15 +55,11 @@
 
     <div id="particles"></div>
 
-    <!-- =====================================
-         APP
-    ====================================== -->
+    <!-- APP -->
 
     <main class="app">
 
-        <!-- =================================
-             HERO
-        ================================== -->
+        <!-- HERO -->
 
         <section class="hero">
 
@@ -83,7 +77,7 @@
 
                 <h1 class="logo-text">
 
-                    ST<span>Λ</span>KE
+                    STAKING
 
                 </h1>
 
@@ -91,15 +85,13 @@
 
             <p class="tagline">
 
-                Earn Passive Rewards
+                Earn Passive Rewards Across Chains
 
             </p>
 
         </section>
 
-        <!-- =================================
-             STAKED BALANCE
-        ================================== -->
+        <!-- MAIN STAKING -->
 
         <section class="glass-card">
 
@@ -117,13 +109,13 @@
 
                     <h2 class="title">
 
-                        Your Staking
+                        CORΛX Validator Pool
 
                     </h2>
 
                     <p class="subtitle">
 
-                        Locked CRX rewards
+                        Institutional-grade staking infrastructure
 
                     </p>
 
@@ -133,48 +125,220 @@
 
                     <div class="live-dot"></div>
 
-                    LIVE
+                    ACTIVE
 
                 </div>
 
             </div>
 
-            <!-- VALUE -->
+            <!-- APY -->
+
+            <div
+                style="
+                    margin-top:30px;
+                    text-align:center;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:68px;
+                        font-weight:900;
+                        background:
+                        linear-gradient(
+                            135deg,
+                            #A855F7,
+                            #C084FC
+                        );
+                        -webkit-background-clip:text;
+                        -webkit-text-fill-color:transparent;
+                    "
+                >
+
+                    14.8%
+
+                </div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.6);
+                        margin-top:6px;
+                    "
+                >
+
+                    Estimated Annual Yield
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:14px;
+                    margin-top:30px;
+                "
+            >
+
+                <!-- CARD -->
+
+                <div
+                    style="
+                        padding:20px;
+                        border-radius:22px;
+                        background:
+                        rgba(255,255,255,.04);
+                        border:
+                        1px solid rgba(255,255,255,.08);
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.55);
+                            font-size:13px;
+                        "
+                    >
+
+                        Total Staked
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-size:28px;
+                            font-weight:900;
+                        "
+                    >
+
+                        8.4M
+
+                    </div>
+
+                </div>
+
+                <!-- CARD -->
+
+                <div
+                    style="
+                        padding:20px;
+                        border-radius:22px;
+                        background:
+                        rgba(255,255,255,.04);
+                        border:
+                        1px solid rgba(255,255,255,.08);
+                    "
+                >
+
+                    <div
+                        style="
+                            color:rgba(255,255,255,.55);
+                            font-size:13px;
+                        "
+                    >
+
+                        Rewards Earned
+
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:12px;
+                            font-size:28px;
+                            font-weight:900;
+                        "
+                    >
+
+                        42K CRX
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- INPUT -->
+
             <div
                 style="
                     margin-top:28px;
                 "
             >
 
-                <div
+                <label
                     style="
-                        font-size:48px;
-                        font-weight:900;
+                        color:rgba(255,255,255,.6);
+                        font-size:13px;
                     "
                 >
 
-                    48,220 CRX
+                    Stake Amount
 
-                </div>
+                </label>
 
-                <div
+                <input
+                    type="number"
+                    placeholder="0.00 CRX"
                     style="
-                        margin-top:10px;
-                        color:rgba(255,255,255,.5);
+                        width:100%;
+                        margin-top:12px;
+                        padding:20px;
+                        border-radius:22px;
+                        border:
+                        1px solid rgba(255,255,255,.08);
+                        background:
+                        rgba(255,255,255,.04);
+                        color:#fff;
+                        outline:none;
+                        font-size:22px;
+                        font-weight:700;
+                    "
+                />
+
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:14px;
+                    margin-top:24px;
+                "
+            >
+
+                <button
+                    class="primary-btn"
+                    onclick="
+                        stakeNow()
                     "
                 >
 
-                    ≈ $119,584
+                    Stake
 
-                </div>
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="
+                        unstakeNow()
+                    "
+                >
+
+                    Unstake
+
+                </button>
 
             </div>
 
         </section>
 
-        <!-- =================================
-             APY
-        ================================== -->
+        <!-- REWARD HISTORY -->
 
         <section class="glass-card">
 
@@ -182,46 +346,103 @@
 
             <h2 class="title">
 
-                Current APY
+                Reward History
 
             </h2>
 
             <p class="subtitle">
 
-                Estimated annual rewards
+                Recent validator rewards
 
             </p>
 
-            <!-- APY -->
-            <div
-                style="
-                    margin-top:26px;
-                    font-size:64px;
-                    font-weight:900;
-                    color:#22C55E;
-                "
-            >
+            <!-- ITEM -->
 
-                14%
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Validator Reward
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        12 hours ago
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +182 CRX
+
+                </div>
 
             </div>
 
-            <div
-                style="
-                    margin-top:12px;
-                    color:rgba(255,255,255,.5);
-                "
-            >
+            <!-- ITEM -->
 
-                Compounded rewards active
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Pool Bonus
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Network incentive
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +420 CRX
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Institutional Pool
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Governance reward
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +1,200 CRX
+
+                </div>
 
             </div>
 
         </section>
 
-        <!-- =================================
-             REWARDS
-        ================================== -->
+        <!-- NETWORKS -->
 
         <section class="glass-card">
 
@@ -229,30 +450,23 @@
 
             <h2 class="title">
 
-                Rewards Overview
+                Supported Networks
 
             </h2>
 
             <p class="subtitle">
 
-                Earnings generated by staking
+                Multi-chain validator ecosystem
 
             </p>
 
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Daily Rewards
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        Estimated earnings
+                        Ethereum
 
                     </div>
 
@@ -260,26 +474,19 @@
 
                 <div class="positive">
 
-                    +18.4 CRX
+                    LIVE
 
                 </div>
 
             </div>
 
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Monthly Rewards
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        30-day estimate
+                        Polygon
 
                     </div>
 
@@ -287,26 +494,19 @@
 
                 <div class="positive">
 
-                    +552 CRX
+                    LIVE
 
                 </div>
 
             </div>
 
-            <!-- ITEM -->
             <div class="history-item">
 
                 <div>
 
                     <div class="tx-type">
 
-                        Lifetime Rewards
-
-                    </div>
-
-                    <div class="tx-date">
-
-                        Total generated
+                        Solana
 
                     </div>
 
@@ -314,7 +514,7 @@
 
                 <div class="positive">
 
-                    +8,422 CRX
+                    LIVE
 
                 </div>
 
@@ -322,64 +522,7 @@
 
         </section>
 
-        <!-- =================================
-             STAKE INPUT
-        ================================== -->
-
-        <section class="glass-card">
-
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Stake CRX
-
-            </h2>
-
-            <p class="subtitle">
-
-                Lock your assets and earn.
-
-            </p>
-
-            <!-- INPUT -->
-            <input
-                id="stakeAmount"
-                type="number"
-                placeholder="Amount of CRX"
-                style="
-                    width:100%;
-                    margin-top:22px;
-                    padding:18px;
-                    border-radius:20px;
-                    border:1px solid rgba(255,255,255,.08);
-                    background:rgba(255,255,255,.04);
-                    color:#fff;
-                    outline:none;
-                    font-size:15px;
-                "
-            />
-
-            <!-- BUTTON -->
-            <button
-                class="primary-btn"
-                style="
-                    margin-top:18px;
-                "
-                onclick="
-                    stakeCRX()
-                "
-            >
-
-                Start Staking
-
-            </button>
-
-        </section>
-
-        <!-- =================================
-             ACTIONS
-        ================================== -->
+        <!-- ACTIONS -->
 
         <section
             style="
@@ -391,13 +534,13 @@
         >
 
             <button
-                class="secondary-btn"
+                class="primary-btn"
                 onclick="
-                    claimRewards()
+                    compoundRewards()
                 "
             >
 
-                Claim Rewards
+                Compound
 
             </button>
 
@@ -415,43 +558,35 @@
         </section>
 
         <!-- SPACER -->
+
         <div style="height:120px;"></div>
 
     </main>
 
-    <!-- =====================================
-         SCRIPT
-    ====================================== -->
+    <!-- SCRIPT -->
 
     <script>
 
-        function stakeCRX(){
-
-            const amount =
-                document.getElementById(
-                    "stakeAmount"
-                ).value;
-
-            if(!amount){
-
-                createToast(
-                    "Enter CRX amount"
-                );
-
-                return;
-
-            }
+        function stakeNow(){
 
             createToast(
-                `${amount} CRX Staked 🚀`
+                "Stake submitted successfully 🔥"
             );
 
         }
 
-        function claimRewards(){
+        function unstakeNow(){
 
             createToast(
-                "Rewards claimed 💰"
+                "Unstake request submitted ⛓️"
+            );
+
+        }
+
+        function compoundRewards(){
+
+            createToast(
+                "Rewards compounded automatically 💎"
             );
 
         }
@@ -459,7 +594,9 @@
         function createToast(message){
 
             const toast =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             toast.className =
                 "corax-toast show";
@@ -482,6 +619,7 @@
     </script>
 
     <!-- JS -->
+
     <script src="wallet.js"></script>
 
     <script src="fx.js"></script>
