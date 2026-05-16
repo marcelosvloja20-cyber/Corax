@@ -1,90 +1,619 @@
+<!-- =========================================
+     CORΛX NOTIFICATIONS.HTML
+     Notification Center
+========================================= -->
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORAX | System Alerts</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root { --p: #9d4edd; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); --red: #ff4d4d; --blue: #4cc9f0; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; }
 
-        header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid rgba(157, 78, 221, 0.2); padding-bottom: 15px; }
-        .back-link { color: var(--p); text-decoration: none; font-size: 1.5rem; }
-        h1 { font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 3px; }
+    <meta charset="UTF-8" />
 
-        /* Lista de Notificações */
-        .notif-list { display: flex; flex-direction: column; gap: 12px; }
-        
-        .notif-item { 
-            background: var(--glass); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            padding: 15px; border-radius: 10px; 
-            display: flex; gap: 15px; align-items: flex-start;
-            position: relative; overflow: hidden;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
-        .notif-item::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; }
+    <title>Notifications | CORΛX</title>
 
-        /* Estilos por Tipo */
-        .critical::before { background: var(--red); box-shadow: 0 0 10px var(--red); }
-        .info::before { background: var(--blue); box-shadow: 0 0 10px var(--blue); }
-        .success::before { background: var(--p); box-shadow: 0 0 10px var(--p); }
+    <!-- FONT -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
 
-        .icon { font-size: 1.2rem; }
-        .content h3 { font-family: 'Orbitron'; font-size: 0.65rem; letter-spacing: 1px; margin-bottom: 5px; }
-        .content p { font-size: 0.8rem; color: #aaa; line-height: 1.4; }
-        .time { font-size: 0.55rem; color: #444; margin-top: 8px; font-family: 'Orbitron'; }
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
 
-        .clear-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid #222; color: #444; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 30px; cursor: pointer; letter-spacing: 2px; }
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
 </head>
+
 <body>
 
-    <div class="container">
-        <header>
-            <a href="app.html" class="back-link">←</a>
-            <h1>CENTRO DE ALERTAS</h1>
-        </header>
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
 
-        <div class="notif-list">
-            
-            <!-- Notificação Crítica -->
-            <div class="notif-item critical">
-                <div class="icon">⚠️</div>
-                <div class="content">
-                    <h3>ALERTA DE SEGURANÇA</h3>
-                    <p>Novo acesso detectado IP: 189.12.0.4 (São Paulo, BR). Se não foi você, altere seu PIN.</p>
-                    <div class="time">HÁ 2 MINUTOS</div>
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <main class="app">
+
+        <!-- =================================
+             HERO
+        ================================== -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
                 </div>
+
+                <h1 class="logo-text">
+
+                    NOTIFICATIONS
+
+                </h1>
+
             </div>
 
-            <!-- Notificação Sucesso -->
-            <div class="notif-item success">
-                <div class="icon">💜</div>
-                <div class="content">
-                    <h3>TRANSAÇÃO CONCLUÍDA</h3>
-                    <p>Você recebeu +1.200 CRX da carteira 0x99...B11C. Verifique seu histórico.</p>
-                    <div class="time">HÁ 15 MINUTOS</div>
+            <p class="tagline">
+
+                Real-Time Ecosystem Alerts
+
+            </p>
+
+        </section>
+
+        <!-- =================================
+             ALERT SUMMARY
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+            "
+        >
+
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Unread Alerts
+
                 </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    12
+
+                </div>
+
             </div>
 
-            <!-- Notificação Info -->
-            <div class="notif-item info">
-                <div class="icon">ℹ️</div>
-                <div class="content">
-                    <h3>ATUALIZAÇÃO DE REDE</h3>
-                    <p>A Mainnet Corax passará por manutenção preventiva às 03:00 UTC.</p>
-                    <div class="time">HÁ 2 HORAS</div>
+            <!-- CARD -->
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Security Alerts
+
                 </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    2
+
+                </div>
+
             </div>
 
-        </div>
+        </section>
 
-        <button class="clear-btn">LIMPAR TODOS OS REGISTROS</button>
-    </div>
+        <!-- =================================
+             LIVE FEED
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Live Notifications
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Latest ecosystem activity
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Incoming Transfer
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        +2,400 USDC received
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    NOW
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Staking Rewards
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        +182 CRX earned
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    5 MIN
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Login Verification
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        New trusted device added
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    VERIFIED
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Bridge Completed
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Ethereum → Solana
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    SUCCESS
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ALERT SETTINGS
+        ================================== -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Alert Preferences
+
+            </h2>
+
+            <p class="subtitle">
+
+                Configure your notifications
+
+            </p>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Push Notifications
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Mobile app alerts
+
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        checked
+                    />
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Email Alerts
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Security & payment updates
+
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        checked
+                    />
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+            <!-- ITEM -->
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Whale Tracking
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Institutional movements
+
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                    />
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="primary-btn"
+                onclick="
+                    markAllRead()
+                "
+            >
+
+                Mark All Read
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- =====================================
+         STYLE
+    ====================================== -->
+
+    <style>
+
+        .switch{
+
+            position:relative;
+
+            display:inline-block;
+
+            width:56px;
+
+            height:30px;
+
+        }
+
+        .switch input{
+
+            opacity:0;
+
+            width:0;
+
+            height:0;
+
+        }
+
+        .slider{
+
+            position:absolute;
+
+            inset:0;
+
+            cursor:pointer;
+
+            background:
+            rgba(255,255,255,.12);
+
+            border-radius:50px;
+
+            transition:.3s;
+
+        }
+
+        .slider:before{
+
+            content:"";
+
+            position:absolute;
+
+            width:22px;
+
+            height:22px;
+
+            left:4px;
+
+            bottom:4px;
+
+            background:#fff;
+
+            border-radius:50%;
+
+            transition:.3s;
+
+        }
+
+        input:checked + .slider{
+
+            background:
+            linear-gradient(
+                135deg,
+                #A855F7,
+                #7C3AED
+            );
+
+        }
+
+        input:checked + .slider:before{
+
+            transform:
+            translateX(26px);
+
+        }
+
+    </style>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script>
+
+        function markAllRead(){
+
+            createToast(
+                "All notifications marked as read 🔔"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement("div");
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
 
 </body>
 </html>
