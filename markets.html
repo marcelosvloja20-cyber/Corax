@@ -1,0 +1,521 @@
+<!-- =========================================
+     CORΛX MARKETS.HTML
+     Live Market Overview
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Markets | CORΛX</title>
+
+    <!-- FONT -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="pwa.css" />
+
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="grid-overlay"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div id="particles"></div>
+
+    <!-- APP -->
+
+    <main class="app">
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="logo-wrapper">
+
+                <div class="crow-container">
+
+                    <div class="crow-wing left"></div>
+
+                    <div class="crow-body"></div>
+
+                    <div class="crow-wing right"></div>
+
+                </div>
+
+                <h1 class="logo-text">
+
+                    MARKETS
+
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+
+                Real-Time Multi-Chain Market Data
+
+            </p>
+
+        </section>
+
+        <!-- GLOBAL MARKET -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+            "
+        >
+
+            <!-- CARD -->
+
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Global Volume
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:32px;
+                        font-weight:900;
+                    "
+                >
+
+                    $2.4B
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Total Liquidity
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:12px;
+                        font-size:32px;
+                        font-weight:900;
+                    "
+                >
+
+                    $980M
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- LIVE MARKETS -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                "
+            >
+
+                <div>
+
+                    <h2 class="title">
+
+                        Live Markets
+
+                    </h2>
+
+                    <p class="subtitle">
+
+                        Updated in real-time
+
+                    </p>
+
+                </div>
+
+                <div class="live-badge">
+
+                    <div class="live-dot"></div>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <!-- MARKET -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        BTC / USDT
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Bitcoin
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $108,420
+
+                </div>
+
+            </div>
+
+            <!-- MARKET -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        ETH / USDC
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Ethereum
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $6,820
+
+                </div>
+
+            </div>
+
+            <!-- MARKET -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        CRX / USDC
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        CORΛX Token
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $12.84
+
+                </div>
+
+            </div>
+
+            <!-- MARKET -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        SOL / USDT
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Solana
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $420
+
+                </div>
+
+            </div>
+
+            <!-- MARKET -->
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        AVAX / USDT
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Avalanche
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    $168
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TRENDING -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Trending Assets
+
+            </h2>
+
+            <p class="subtitle">
+
+                Highest market momentum
+
+            </p>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        CORΛX
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +48%
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        SOLANA
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +22%
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        ETHEREUM
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +11%
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ACTIONS -->
+
+        <section
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+                margin-top:18px;
+            "
+        >
+
+            <button
+                class="primary-btn"
+                onclick="
+                    refreshMarkets()
+                "
+            >
+
+                Refresh
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="
+                    window.location.href='dashboard.html'
+                "
+            >
+
+                Dashboard
+
+            </button>
+
+        </section>
+
+        <!-- SPACER -->
+
+        <div style="height:120px;"></div>
+
+    </main>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        function refreshMarkets(){
+
+            createToast(
+                "Market data refreshed 📈"
+            );
+
+        }
+
+        function createToast(message){
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+            toast.className =
+                "corax-toast show";
+
+            toast.innerText =
+                message;
+
+            document.body.appendChild(
+                toast
+            );
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            },3000);
+
+        }
+
+    </script>
+
+    <!-- JS -->
+
+    <script src="wallet.js"></script>
+
+    <script src="fx.js"></script>
+
+    <script src="register-sw.js"></script>
+
+</body>
+</html>
