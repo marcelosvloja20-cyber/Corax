@@ -1,6 +1,6 @@
 <!-- =========================================
      CORΛX ANALYTICS.HTML
-     Ecosystem Analytics Dashboard
+     Institutional Analytics Dashboard
 ========================================= -->
 
 <!DOCTYPE html>
@@ -18,6 +18,7 @@
     <title>Analytics | CORΛX</title>
 
     <!-- FONT -->
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -34,10 +35,8 @@
         rel="stylesheet"
     />
 
-    <!-- CHART JS -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- CSS -->
+
     <link rel="stylesheet" href="style.css" />
 
     <link rel="stylesheet" href="pwa.css" />
@@ -46,9 +45,7 @@
 
 <body>
 
-    <!-- =====================================
-         BACKGROUND
-    ====================================== -->
+    <!-- BACKGROUND -->
 
     <div class="grid-overlay"></div>
 
@@ -60,15 +57,11 @@
 
     <div id="particles"></div>
 
-    <!-- =====================================
-         APP
-    ====================================== -->
+    <!-- APP -->
 
     <main class="app">
 
-        <!-- =================================
-             HERO
-        ================================== -->
+        <!-- HERO -->
 
         <section class="hero">
 
@@ -94,15 +87,13 @@
 
             <p class="tagline">
 
-                Real-Time Ecosystem Intelligence
+                Institutional-Grade Intelligence Layer
 
             </p>
 
         </section>
 
-        <!-- =================================
-             GLOBAL METRICS
-        ================================== -->
+        <!-- KPI GRID -->
 
         <section
             style="
@@ -112,7 +103,8 @@
             "
         >
 
-            <!-- CARD -->
+            <!-- KPI -->
+
             <div class="glass-card">
 
                 <div class="card-glow"></div>
@@ -124,25 +116,26 @@
                     "
                 >
 
-                    Total Volume
+                    Daily Volume
 
                 </div>
 
                 <div
                     style="
-                        margin-top:12px;
+                        margin-top:10px;
                         font-size:34px;
                         font-weight:900;
                     "
                 >
 
-                    $482M
+                    $842M
 
                 </div>
 
             </div>
 
-            <!-- CARD -->
+            <!-- KPI -->
+
             <div class="glass-card">
 
                 <div class="card-glow"></div>
@@ -154,43 +147,13 @@
                     "
                 >
 
-                    Active Wallets
+                    Transactions
 
                 </div>
 
                 <div
                     style="
-                        margin-top:12px;
-                        font-size:34px;
-                        font-weight:900;
-                    "
-                >
-
-                    184K
-
-                </div>
-
-            </div>
-
-            <!-- CARD -->
-            <div class="glass-card">
-
-                <div class="card-glow"></div>
-
-                <div
-                    style="
-                        color:rgba(255,255,255,.55);
-                        font-size:13px;
-                    "
-                >
-
-                    Daily Transactions
-
-                </div>
-
-                <div
-                    style="
-                        margin-top:12px;
+                        margin-top:10px;
                         font-size:34px;
                         font-weight:900;
                     "
@@ -202,7 +165,8 @@
 
             </div>
 
-            <!-- CARD -->
+            <!-- KPI -->
+
             <div class="glass-card">
 
                 <div class="card-glow"></div>
@@ -214,19 +178,50 @@
                     "
                 >
 
-                    Bridge Volume
+                    Active Users
 
                 </div>
 
                 <div
                     style="
-                        margin-top:12px;
+                        margin-top:10px;
                         font-size:34px;
                         font-weight:900;
                     "
                 >
 
-                    $91M
+                    482K
+
+                </div>
+
+            </div>
+
+            <!-- KPI -->
+
+            <div class="glass-card">
+
+                <div class="card-glow"></div>
+
+                <div
+                    style="
+                        color:rgba(255,255,255,.55);
+                        font-size:13px;
+                    "
+                >
+
+                    Revenue
+
+                </div>
+
+                <div
+                    style="
+                        margin-top:10px;
+                        font-size:34px;
+                        font-weight:900;
+                    "
+                >
+
+                    $18.2M
 
                 </div>
 
@@ -234,75 +229,7 @@
 
         </section>
 
-        <!-- =================================
-             TRANSACTION CHART
-        ================================== -->
-
-        <section class="glass-card">
-
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Network Growth
-
-            </h2>
-
-            <p class="subtitle">
-
-                Transaction activity over time
-
-            </p>
-
-            <div
-                style="
-                    margin-top:24px;
-                    height:300px;
-                "
-            >
-
-                <canvas id="growthChart"></canvas>
-
-            </div>
-
-        </section>
-
-        <!-- =================================
-             MARKET DISTRIBUTION
-        ================================== -->
-
-        <section class="glass-card">
-
-            <div class="card-glow"></div>
-
-            <h2 class="title">
-
-                Payment Distribution
-
-            </h2>
-
-            <p class="subtitle">
-
-                Ecosystem usage segmentation
-
-            </p>
-
-            <div
-                style="
-                    margin-top:24px;
-                    height:320px;
-                "
-            >
-
-                <canvas id="distributionChart"></canvas>
-
-            </div>
-
-        </section>
-
-        <!-- =================================
-             LIVE ACTIVITY
-        ================================== -->
+        <!-- PERFORMANCE -->
 
         <section class="glass-card">
 
@@ -320,13 +247,13 @@
 
                     <h2 class="title">
 
-                        Live Activity
+                        Ecosystem Performance
 
                     </h2>
 
                     <p class="subtitle">
 
-                        Real-time ecosystem movement
+                        Cross-chain activity metrics
 
                     </p>
 
@@ -342,79 +269,165 @@
 
             </div>
 
-            <div class="history-item">
+            <!-- BAR -->
 
-                <div>
+            <div
+                style="
+                    margin-top:26px;
+                "
+            >
 
-                    <div class="tx-type">
+                <div class="history-item">
 
-                        Institutional Transfer
+                    <div>
 
-                    </div>
+                        <div class="tx-type">
 
-                    <div class="tx-date">
+                            Ethereum
 
-                        Ethereum → Base
-
-                    </div>
-
-                </div>
-
-                <div class="positive">
-
-                    +$2.4M
-
-                </div>
-
-            </div>
-
-            <div class="history-item">
-
-                <div>
-
-                    <div class="tx-type">
-
-                        Retail Checkout
+                        </div>
 
                     </div>
 
-                    <div class="tx-date">
+                    <div class="positive">
 
-                        São Paulo • Brazil
+                        42%
 
                     </div>
 
                 </div>
 
-                <div class="positive">
+                <div class="progress-line">
 
-                    +$482
+                    <div
+                        class="progress-fill"
+                        style="
+                            width:42%;
+                        "
+                    ></div>
 
                 </div>
 
             </div>
 
-            <div class="history-item">
+            <!-- BAR -->
 
-                <div>
+            <div
+                style="
+                    margin-top:22px;
+                "
+            >
 
-                    <div class="tx-type">
+                <div class="history-item">
 
-                        Staking Deposit
+                    <div>
+
+                        <div class="tx-type">
+
+                            Polygon
+
+                        </div>
 
                     </div>
 
-                    <div class="tx-date">
+                    <div class="positive">
 
-                        Multi-chain vault
+                        26%
 
                     </div>
 
                 </div>
 
-                <div class="positive">
+                <div class="progress-line">
 
-                    +48K CRX
+                    <div
+                        class="progress-fill"
+                        style="
+                            width:26%;
+                        "
+                    ></div>
+
+                </div>
+
+            </div>
+
+            <!-- BAR -->
+
+            <div
+                style="
+                    margin-top:22px;
+                "
+            >
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Solana
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        18%
+
+                    </div>
+
+                </div>
+
+                <div class="progress-line">
+
+                    <div
+                        class="progress-fill"
+                        style="
+                            width:18%;
+                        "
+                    ></div>
+
+                </div>
+
+            </div>
+
+            <!-- BAR -->
+
+            <div
+                style="
+                    margin-top:22px;
+                "
+            >
+
+                <div class="history-item">
+
+                    <div>
+
+                        <div class="tx-type">
+
+                            Base
+
+                        </div>
+
+                    </div>
+
+                    <div class="positive">
+
+                        14%
+
+                    </div>
+
+                </div>
+
+                <div class="progress-line">
+
+                    <div
+                        class="progress-fill"
+                        style="
+                            width:14%;
+                        "
+                    ></div>
 
                 </div>
 
@@ -422,9 +435,105 @@
 
         </section>
 
-        <!-- =================================
-             ACTIONS
-        ================================== -->
+        <!-- INSIGHTS -->
+
+        <section class="glass-card">
+
+            <div class="card-glow"></div>
+
+            <h2 class="title">
+
+                Smart Insights
+
+            </h2>
+
+            <p class="subtitle">
+
+                AI-powered ecosystem intelligence
+
+            </p>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Transaction Growth
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Last 24h performance
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +18%
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        Liquidity Expansion
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Cross-chain inflows
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    +$82M
+
+                </div>
+
+            </div>
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="tx-type">
+
+                        User Retention
+
+                    </div>
+
+                    <div class="tx-date">
+
+                        Monthly active wallets
+
+                    </div>
+
+                </div>
+
+                <div class="positive">
+
+                    92%
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ACTIONS -->
 
         <section
             style="
@@ -438,11 +547,11 @@
             <button
                 class="primary-btn"
                 onclick="
-                    exportReport()
+                    exportAnalytics()
                 "
             >
 
-                Export Report
+                Export Data
 
             </button>
 
@@ -460,220 +569,57 @@
         </section>
 
         <!-- SPACER -->
+
         <div style="height:120px;"></div>
 
     </main>
 
-    <!-- =====================================
-         CHARTS
-    ====================================== -->
+    <!-- STYLE -->
+
+    <style>
+
+        .progress-line{
+
+            width:100%;
+
+            height:10px;
+
+            border-radius:999px;
+
+            background:
+            rgba(255,255,255,.06);
+
+            overflow:hidden;
+
+            margin-top:10px;
+
+        }
+
+        .progress-fill{
+
+            height:100%;
+
+            border-radius:999px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #A855F7,
+                #7C3AED
+            );
+
+        }
+
+    </style>
+
+    <!-- SCRIPT -->
 
     <script>
 
-        // =========================
-        // GROWTH CHART
-        // =========================
-
-        const growthCtx =
-            document
-            .getElementById(
-                "growthChart"
-            );
-
-        new Chart(growthCtx, {
-
-            type: "line",
-
-            data: {
-
-                labels: [
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul"
-                ],
-
-                datasets: [{
-
-                    label:
-                        "Transactions",
-
-                    data: [
-                        120,
-                        180,
-                        260,
-                        340,
-                        520,
-                        710,
-                        920
-                    ],
-
-                    borderColor:
-                        "#A855F7",
-
-                    backgroundColor:
-                        "rgba(168,85,247,.15)",
-
-                    tension: .45,
-
-                    fill: true,
-
-                    borderWidth: 3,
-
-                    pointRadius: 4
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                plugins: {
-
-                    legend: {
-
-                        labels: {
-
-                            color: "#fff"
-
-                        }
-
-                    }
-
-                },
-
-                scales: {
-
-                    x: {
-
-                        ticks: {
-
-                            color:
-                                "rgba(255,255,255,.6)"
-
-                        },
-
-                        grid: {
-
-                            color:
-                                "rgba(255,255,255,.04)"
-
-                        }
-
-                    },
-
-                    y: {
-
-                        ticks: {
-
-                            color:
-                                "rgba(255,255,255,.6)"
-
-                        },
-
-                        grid: {
-
-                            color:
-                                "rgba(255,255,255,.04)"
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        });
-
-        // =========================
-        // DISTRIBUTION CHART
-        // =========================
-
-        const distributionCtx =
-            document
-            .getElementById(
-                "distributionChart"
-            );
-
-        new Chart(distributionCtx, {
-
-            type: "doughnut",
-
-            data: {
-
-                labels: [
-                    "Retail",
-                    "Institutional",
-                    "DeFi",
-                    "Staking"
-                ],
-
-                datasets: [{
-
-                    data: [
-                        42,
-                        28,
-                        18,
-                        12
-                    ],
-
-                    backgroundColor: [
-                        "#A855F7",
-                        "#7C3AED",
-                        "#4C1D95",
-                        "#C084FC"
-                    ],
-
-                    borderWidth: 0
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                plugins: {
-
-                    legend: {
-
-                        position: "bottom",
-
-                        labels: {
-
-                            color: "#fff",
-
-                            padding: 20
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        });
-
-        // =========================
-        // ACTION
-        // =========================
-
-        function exportReport(){
+        function exportAnalytics(){
 
             createToast(
-                "Analytics report exported 📊"
+                "Analytics exported successfully 📊"
             );
 
         }
@@ -681,7 +627,9 @@
         function createToast(message){
 
             const toast =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             toast.className =
                 "corax-toast show";
@@ -704,6 +652,7 @@
     </script>
 
     <!-- JS -->
+
     <script src="wallet.js"></script>
 
     <script src="fx.js"></script>
