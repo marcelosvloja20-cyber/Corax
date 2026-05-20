@@ -1,3 +1,5 @@
+import Web3Connect from "./Web3Connect";
+
 export default function Dashboard() {
 
   const token =
@@ -52,7 +54,7 @@ export default function Dashboard() {
           background: "#111111",
           padding: "30px",
           borderRadius: "20px",
-          maxWidth: "600px",
+          maxWidth: "700px",
           border: "1px solid #222"
         }}
       >
@@ -95,43 +97,43 @@ export default function Dashboard() {
           }}
         >
 
-          <div
-            style={cardStyle}
-          >
+          <div style={cardStyle}>
+
             <h3>Wallet Balance</h3>
 
-            <p
-              style={cardValue}
-            >
+            <p style={cardValue}>
               $0.00
             </p>
+
           </div>
 
-          <div
-            style={cardStyle}
-          >
+          <div style={cardStyle}>
+
             <h3>Staking</h3>
 
-            <p
-              style={cardValue}
-            >
+            <p style={cardValue}>
               0 CRX
             </p>
+
           </div>
 
-          <div
-            style={cardStyle}
-          >
+          <div style={cardStyle}>
+
             <h3>Network</h3>
 
-            <p
-              style={cardValue}
-            >
+            <p style={cardValue}>
               Multi-Chain
             </p>
+
           </div>
 
         </div>
+
+        {/* ===================================== */}
+        {/* WEB3 */}
+        {/* ===================================== */}
+
+        <Web3Connect />
 
         <button
           onClick={logout}
