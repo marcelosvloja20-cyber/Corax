@@ -2,6 +2,8 @@ import Web3Connect from "./Web3Connect";
 
 import Networks from "./Networks";
 
+import Staking from "./Staking";
+
 export default function Dashboard() {
 
   const token =
@@ -56,7 +58,7 @@ export default function Dashboard() {
           background: "#111111",
           padding: "30px",
           borderRadius: "20px",
-          maxWidth: "800px",
+          maxWidth: "850px",
           border: "1px solid #222"
         }}
       >
@@ -118,7 +120,7 @@ export default function Dashboard() {
             <h3>Staking</h3>
 
             <p style={cardValue}>
-              0 CRX
+              Active
             </p>
 
           </div>
@@ -146,6 +148,12 @@ export default function Dashboard() {
         {/* ===================================== */}
 
         <Networks />
+
+        {/* ===================================== */}
+        {/* STAKING */}
+        {/* ===================================== */}
+
+        <Staking />
 
         <button
           onClick={logout}
