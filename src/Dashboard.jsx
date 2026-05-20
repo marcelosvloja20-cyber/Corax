@@ -1,5 +1,7 @@
 import Web3Connect from "./Web3Connect";
 
+import Networks from "./Networks";
+
 export default function Dashboard() {
 
   const token =
@@ -54,7 +56,7 @@ export default function Dashboard() {
           background: "#111111",
           padding: "30px",
           borderRadius: "20px",
-          maxWidth: "700px",
+          maxWidth: "800px",
           border: "1px solid #222"
         }}
       >
@@ -89,6 +91,10 @@ export default function Dashboard() {
         >
           {token}
         </div>
+
+        {/* ===================================== */}
+        {/* STATS */}
+        {/* ===================================== */}
 
         <div
           style={{
@@ -134,6 +140,12 @@ export default function Dashboard() {
         {/* ===================================== */}
 
         <Web3Connect />
+
+        {/* ===================================== */}
+        {/* NETWORKS */}
+        {/* ===================================== */}
+
+        <Networks />
 
         <button
           onClick={logout}
