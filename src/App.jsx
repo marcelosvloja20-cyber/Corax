@@ -1,21 +1,4 @@
-Perfeito. Então substitua TODO o conteúdo do:
-
-src/App.jsx
-
-por este bloco COMPLETO já integrado com:
-
-login
-
-registro
-
-JWT
-
-dashboard
-
-frontend CORΛX
-
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import API_URL from "./api";
 
@@ -32,6 +15,23 @@ export default function App() {
   const [message, setMessage] = useState("");
 
   const [logged, setLogged] = useState(false);
+
+  // =====================================
+  // AUTO LOGIN
+  // =====================================
+
+  useEffect(() => {
+
+    const token =
+      localStorage.getItem("token");
+
+    if (token) {
+
+      setLogged(true);
+
+    }
+
+  }, []);
 
   // =====================================
   // REGISTER
@@ -80,12 +80,6 @@ export default function App() {
         );
 
         setLogged(true);
-
-        setMessage(
-
-          "Account created successfully"
-
-        );
 
       }
 
@@ -159,12 +153,6 @@ export default function App() {
         );
 
         setLogged(true);
-
-        setMessage(
-
-          "Login successful"
-
-        );
 
       }
 
