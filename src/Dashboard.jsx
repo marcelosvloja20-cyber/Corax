@@ -4,6 +4,8 @@ import Networks from "./Networks";
 
 import Staking from "./Staking";
 
+import Swap from "./Swap";
+
 export default function Dashboard() {
 
   const token =
@@ -58,7 +60,7 @@ export default function Dashboard() {
           background: "#111111",
           padding: "30px",
           borderRadius: "20px",
-          maxWidth: "850px",
+          maxWidth: "900px",
           border: "1px solid #222"
         }}
       >
@@ -154,6 +156,12 @@ export default function Dashboard() {
         {/* ===================================== */}
 
         <Staking />
+
+        {/* ===================================== */}
+        {/* SWAP */}
+        {/* ===================================== */}
+
+        <Swap />
 
         <button
           onClick={logout}
