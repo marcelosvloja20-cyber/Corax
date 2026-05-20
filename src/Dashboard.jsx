@@ -3,6 +3,18 @@ export default function Dashboard() {
   const token =
     localStorage.getItem("token");
 
+  // =====================================
+  // LOGOUT
+  // =====================================
+
+  const logout = () => {
+
+    localStorage.removeItem("token");
+
+    window.location.reload();
+
+  };
+
   return (
 
     <div
@@ -18,8 +30,9 @@ export default function Dashboard() {
       <h1
         style={{
           color: "#A855F7",
-          fontSize: "48px",
-          marginBottom: "10px"
+          fontSize: "52px",
+          marginBottom: "10px",
+          letterSpacing: "4px"
         }}
       >
         CORΛX Dashboard
@@ -39,7 +52,8 @@ export default function Dashboard() {
           background: "#111111",
           padding: "30px",
           borderRadius: "20px",
-          maxWidth: "500px"
+          maxWidth: "600px",
+          border: "1px solid #222"
         }}
       >
 
@@ -57,7 +71,7 @@ export default function Dashboard() {
             marginBottom: "20px"
           }}
         >
-          JWT Token detected.
+          JWT authentication active.
         </p>
 
         <div
@@ -67,11 +81,64 @@ export default function Dashboard() {
             borderRadius: "12px",
             border: "1px solid #222",
             wordBreak: "break-all",
-            color: "#888"
+            color: "#888",
+            marginBottom: "30px"
           }}
         >
           {token}
         </div>
+
+        <div
+          style={{
+            display: "grid",
+            gap: "15px"
+          }}
+        >
+
+          <div
+            style={cardStyle}
+          >
+            <h3>Wallet Balance</h3>
+
+            <p
+              style={cardValue}
+            >
+              $0.00
+            </p>
+          </div>
+
+          <div
+            style={cardStyle}
+          >
+            <h3>Staking</h3>
+
+            <p
+              style={cardValue}
+            >
+              0 CRX
+            </p>
+          </div>
+
+          <div
+            style={cardStyle}
+          >
+            <h3>Network</h3>
+
+            <p
+              style={cardValue}
+            >
+              Multi-Chain
+            </p>
+          </div>
+
+        </div>
+
+        <button
+          onClick={logout}
+          style={logoutButton}
+        >
+          Logout
+        </button>
 
       </div>
 
@@ -80,3 +147,53 @@ export default function Dashboard() {
   );
 
 }
+
+// =====================================
+// STYLES
+// =====================================
+
+const cardStyle = {
+
+  background: "#050505",
+
+  padding: "20px",
+
+  borderRadius: "14px",
+
+  border: "1px solid #222"
+
+};
+
+const cardValue = {
+
+  color: "#A855F7",
+
+  marginTop: "10px",
+
+  fontSize: "22px",
+
+  fontWeight: "bold"
+
+};
+
+const logoutButton = {
+
+  width: "100%",
+
+  marginTop: "30px",
+
+  padding: "14px",
+
+  background: "#EF4444",
+
+  border: "none",
+
+  borderRadius: "12px",
+
+  color: "white",
+
+  cursor: "pointer",
+
+  fontWeight: "bold"
+
+};
