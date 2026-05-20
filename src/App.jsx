@@ -1,6 +1,25 @@
+Perfeito. Então substitua TODO o conteúdo do:
+
+src/App.jsx
+
+por este bloco COMPLETO já integrado com:
+
+login
+
+registro
+
+JWT
+
+dashboard
+
+frontend CORΛX
+
+
 import { useState } from "react";
 
 import API_URL from "./api";
+
+import Dashboard from "./Dashboard";
 
 export default function App() {
 
@@ -11,6 +30,8 @@ export default function App() {
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState("");
+
+  const [logged, setLogged] = useState(false);
 
   // =====================================
   // REGISTER
@@ -57,6 +78,8 @@ export default function App() {
           data.token
 
         );
+
+        setLogged(true);
 
         setMessage(
 
@@ -135,6 +158,8 @@ export default function App() {
 
         );
 
+        setLogged(true);
+
         setMessage(
 
           "Login successful"
@@ -167,6 +192,20 @@ export default function App() {
 
   };
 
+  // =====================================
+  // DASHBOARD
+  // =====================================
+
+  if (logged) {
+
+    return <Dashboard />;
+
+  }
+
+  // =====================================
+  // UI
+  // =====================================
+
   return (
 
     <div
@@ -183,7 +222,8 @@ export default function App() {
         style={{
           color: "#A855F7",
           fontSize: "54px",
-          marginBottom: "10px"
+          marginBottom: "10px",
+          letterSpacing: "4px"
         }}
       >
         CORΛX
@@ -203,7 +243,8 @@ export default function App() {
           maxWidth: "420px",
           background: "#111111",
           padding: "30px",
-          borderRadius: "20px"
+          borderRadius: "20px",
+          border: "1px solid #222"
         }}
       >
 
