@@ -1,25 +1,189 @@
 import { useState } from "react";
 
+import API_URL from "./api";
+
 export default function App() {
+
+  const [username, setUsername] = useState("");
+
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
 
+  const [message, setMessage] = useState("");
+
+  // =====================================
+  // REGISTER
+  // =====================================
+
+  const register = async () => {
+
+    try {
+
+      const response = await fetch(
+
+        `${API_URL}/auth/register`,
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type": "application/json"
+
+          },
+
+          body: JSON.stringify({
+
+            username,
+            email,
+            password
+
+          })
+
+        }
+
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+
+        localStorage.setItem(
+
+          "token",
+
+          data.token
+
+        );
+
+        setMessage(
+
+          "Account created successfully"
+
+        );
+
+      }
+
+      else {
+
+        setMessage(
+
+          data.message
+
+        );
+
+      }
+
+    }
+
+    catch (error) {
+
+      setMessage(
+
+        "Server connection error"
+
+      );
+
+    }
+
+  };
+
+  // =====================================
+  // LOGIN
+  // =====================================
+
+  const login = async () => {
+
+    try {
+
+      const response = await fetch(
+
+        `${API_URL}/auth/login`,
+
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type": "application/json"
+
+          },
+
+          body: JSON.stringify({
+
+            email,
+            password
+
+          })
+
+        }
+
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+
+        localStorage.setItem(
+
+          "token",
+
+          data.token
+
+        );
+
+        setMessage(
+
+          "Login successful"
+
+        );
+
+      }
+
+      else {
+
+        setMessage(
+
+          data.message
+
+        );
+
+      }
+
+    }
+
+    catch (error) {
+
+      setMessage(
+
+        "Server connection error"
+
+      );
+
+    }
+
+  };
+
   return (
+
     <div
       style={{
         background: "#050505",
-        color: "#F5F5F5",
         minHeight: "100vh",
+        color: "white",
         padding: "40px",
-        fontFamily: "Inter, sans-serif"
+        fontFamily: "Inter"
       }}
     >
+
       <h1
         style={{
-          fontSize: "52px",
-          marginBottom: "10px",
           color: "#A855F7",
-          letterSpacing: "4px"
+          fontSize: "54px",
+          marginBottom: "10px"
         }}
       >
         CORΛX
@@ -27,8 +191,8 @@ export default function App() {
 
       <p
         style={{
-          color: "#999",
-          marginBottom: "50px"
+          color: "#888",
+          marginBottom: "40px"
         }}
       >
         Money Without Borders
@@ -39,137 +203,125 @@ export default function App() {
           maxWidth: "420px",
           background: "#111111",
           padding: "30px",
-          borderRadius: "20px",
-          border: "1px solid #222"
+          borderRadius: "20px"
         }}
       >
-        <h2
-          style={{
-            marginBottom: "10px"
-          }}
-        >
-          Welcome Back
-        </h2>
-
-        <p
-          style={{
-            color: "#888",
-            marginBottom: "30px"
-          }}
-        >
-          Access your decentralized financial ecosystem.
-        </p>
 
         <input
-          type="email"
-          placeholder="Email Address"
+          placeholder="Username"
+          value={username}
+          onChange={(e) =>
+            setUsername(e.target.value)
+          }
+          style={inputStyle}
+        />
+
+        <input
+          placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "15px",
-            borderRadius: "12px",
-            border: "1px solid #333",
-            background: "#050505",
-            color: "white"
-          }}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+          style={inputStyle}
         />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "20px",
-            borderRadius: "12px",
-            border: "1px solid #333",
-            background: "#050505",
-            color: "white"
-          }}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          style={inputStyle}
         />
 
         <button
-          style={{
-            width: "100%",
-            padding: "14px",
-            border: "none",
-            borderRadius: "12px",
-            background: "#A855F7",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-            marginBottom: "12px"
-          }}
+          onClick={register}
+          style={primaryButton}
+        >
+          Create Account
+        </button>
+
+        <button
+          onClick={login}
+          style={secondaryButton}
         >
           Login
         </button>
 
-        <button
+        <p
           style={{
-            width: "100%",
-            padding: "14px",
-            borderRadius: "12px",
-            border: "1px solid #333",
-            background: "transparent",
-            color: "white",
-            cursor: "pointer"
+            marginTop: "20px",
+            color: "#22C55E"
           }}
         >
-          Create Account
-        </button>
+          {message}
+        </p>
+
       </div>
 
-      <div
-        style={{
-          marginTop: "70px"
-        }}
-      >
-        <h2
-          style={{
-            marginBottom: "20px"
-          }}
-        >
-          Why CORΛX?
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gap: "20px"
-          }}
-        >
-          <div>
-            <h3 style={{ color: "#A855F7" }}>
-              Instant Transfers
-            </h3>
-            <p style={{ color: "#888" }}>
-              Lightning-fast settlements worldwide.
-            </p>
-          </div>
-
-          <div>
-            <h3 style={{ color: "#A855F7" }}>
-              Multi-Chain
-            </h3>
-            <p style={{ color: "#888" }}>
-              Cross-network compatibility.
-            </p>
-          </div>
-
-          <div>
-            <h3 style={{ color: "#A855F7" }}>
-              Self Custody
-            </h3>
-            <p style={{ color: "#888" }}>
-              Full ownership of your assets.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
+
   );
-          }
+
+}
+
+// =====================================
+// STYLES
+// =====================================
+
+const inputStyle = {
+
+  width: "100%",
+
+  padding: "14px",
+
+  marginBottom: "15px",
+
+  borderRadius: "12px",
+
+  border: "1px solid #333",
+
+  background: "#050505",
+
+  color: "white"
+
+};
+
+const primaryButton = {
+
+  width: "100%",
+
+  padding: "14px",
+
+  background: "#A855F7",
+
+  border: "none",
+
+  borderRadius: "12px",
+
+  color: "white",
+
+  marginBottom: "10px",
+
+  cursor: "pointer"
+
+};
+
+const secondaryButton = {
+
+  width: "100%",
+
+  padding: "14px",
+
+  background: "transparent",
+
+  border: "1px solid #333",
+
+  borderRadius: "12px",
+
+  color: "white",
+
+  cursor: "pointer"
+
+};
