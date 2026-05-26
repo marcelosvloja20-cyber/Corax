@@ -1,93 +1,74 @@
-import { useEffect, useState } from "react";
-
-import API_URL from "./api";
+import { useState } from "react";
 
 import Dashboard from "./Dashboard";
 
+import logo from "./assets/logo.png";
+
+import {
+
+  loginUser,
+  registerUser
+
+} from "./api";
+
 export default function App() {
 
-  const [username, setUsername] = useState("");
+  const [isLogin, setIsLogin] =
+    useState(true);
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] =
+    useState("");
 
-  const [password, setPassword] = useState("");
+  const [email, setEmail] =
+    useState("");
 
-  const [message, setMessage] = useState("");
+  const [password, setPassword] =
+    useState("");
 
-  const [logged, setLogged] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-  // =====================================
-  // AUTO LOGIN
-  // =====================================
-
-  useEffect(() => {
-
-    const token =
-      localStorage.getItem("token");
-
-    if (token) {
-
-      setLogged(true);
-
-    }
-
-  }, []);
+  const token =
+    localStorage.getItem("token");
 
   // =====================================
-  // REGISTER
+  // LOGIN
   // =====================================
 
-  const register = async () => {
+  const handleLogin = async () => {
 
     try {
 
-      const response = await fetch(
+      setLoading(true);
 
-        `${API_URL}/auth/register`,
+      const response =
+        await loginUser(
 
-        {
+          email,
+          password
 
-          method: "POST",
+        );
 
-          headers: {
-
-            "Content-Type": "application/json"
-
-          },
-
-          body: JSON.stringify({
-
-            username,
-            email,
-            password
-
-          })
-
-        }
-
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
+      if (response.token) {
 
         localStorage.setItem(
 
           "token",
-
-          data.token
+          response.token
 
         );
 
-        setLogged(true);
+        window.location.reload();
 
       }
 
       else {
 
-        setMessage(
+        alert(
 
-          data.message
+          response.message ||
+
+          "Login failed"
 
         );
 
@@ -97,70 +78,58 @@ export default function App() {
 
     catch (error) {
 
-      setMessage(
+      console.log(error);
 
-        "Server connection error"
+      alert("Server error");
 
-      );
+    }
+
+    finally {
+
+      setLoading(false);
 
     }
 
   };
 
   // =====================================
-  // LOGIN
+  // REGISTER
   // =====================================
 
-  const login = async () => {
+  const handleRegister = async () => {
 
     try {
 
-      const response = await fetch(
+      setLoading(true);
 
-        `${API_URL}/auth/login`,
+      const response =
+        await registerUser(
 
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type": "application/json"
-
-          },
-
-          body: JSON.stringify({
-
-            email,
-            password
-
-          })
-
-        }
-
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-
-        localStorage.setItem(
-
-          "token",
-
-          data.token
+          username,
+          email,
+          password
 
         );
 
-        setLogged(true);
+      if (response.success) {
+
+        alert(
+
+          "Account created successfully"
+
+        );
+
+        setIsLogin(true);
 
       }
 
       else {
 
-        setMessage(
+        alert(
 
-          data.message
+          response.message ||
+
+          "Register failed"
 
         );
 
@@ -170,11 +139,15 @@ export default function App() {
 
     catch (error) {
 
-      setMessage(
+      console.log(error);
 
-        "Server connection error"
+      alert("Server error");
 
-      );
+    }
+
+    finally {
+
+      setLoading(false);
 
     }
 
@@ -184,14 +157,14 @@ export default function App() {
   // DASHBOARD
   // =====================================
 
-  if (logged) {
+  if (token) {
 
     return <Dashboard />;
 
   }
 
   // =====================================
-  // UI
+  // AUTH SCREEN
   // =====================================
 
   return (
@@ -201,90 +174,214 @@ export default function App() {
         background: "#050505",
         minHeight: "100vh",
         color: "white",
-        padding: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
         fontFamily: "Inter"
       }}
     >
 
-      <h1
-        style={{
-          color: "#A855F7",
-          fontSize: "54px",
-          marginBottom: "10px",
-          letterSpacing: "4px"
-        }}
-      >
-        CORΛX
-      </h1>
-
-      <p
-        style={{
-          color: "#888",
-          marginBottom: "40px"
-        }}
-      >
-        Money Without Borders
-      </p>
-
       <div
         style={{
+          width: "100%",
           maxWidth: "420px",
           background: "#111111",
-          padding: "30px",
-          borderRadius: "20px",
-          border: "1px solid #222"
+          border: "1px solid #222",
+          borderRadius: "24px",
+          padding: "40px",
+          boxShadow:
+            "0 0 40px rgba(168,85,247,0.15)"
         }}
       >
 
+        {/* LOGO */}
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "35px"
+          }}
+        >
+
+          <img
+            src={logo}
+            alt="CORΛX"
+            style={{
+              width: "120px",
+              marginBottom: "20px",
+              filter:
+                "drop-shadow(0 0 20px rgba(168,85,247,0.5))"
+            }}
+          />
+
+          <h1
+            style={{
+              color: "#A855F7",
+              fontSize: "48px",
+              letterSpacing: "6px",
+              marginBottom: "10px"
+            }}
+          >
+            CORΛX
+          </h1>
+
+          <p
+            style={{
+              color: "#888",
+              textAlign: "center"
+            }}
+          >
+            Money Without Borders
+          </p>
+
+        </div>
+
+        {/* TITLE */}
+
+        <h2
+          style={{
+            marginBottom: "25px",
+            textAlign: "center"
+          }}
+        >
+          {
+
+            isLogin
+
+              ? "Welcome Back"
+
+              : "Create Account"
+
+          }
+        </h2>
+
+        {/* USERNAME */}
+
+        {
+
+          !isLogin && (
+
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) =>
+
+                setUsername(
+
+                  e.target.value
+
+                )
+
+              }
+              style={inputStyle}
+            />
+
+          )
+
+        }
+
+        {/* EMAIL */}
+
         <input
-          placeholder="Username"
-          value={username}
+          type="email"
+          placeholder="Email Address"
+          value={email}
           onChange={(e) =>
-            setUsername(e.target.value)
+
+            setEmail(
+
+              e.target.value
+
+            )
+
           }
           style={inputStyle}
         />
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-          style={inputStyle}
-        />
+        {/* PASSWORD */}
 
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) =>
-            setPassword(e.target.value)
+
+            setPassword(
+
+              e.target.value
+
+            )
+
           }
           style={inputStyle}
         />
 
-        <button
-          onClick={register}
-          style={primaryButton}
-        >
-          Create Account
-        </button>
+        {/* BUTTON */}
 
         <button
-          onClick={login}
-          style={secondaryButton}
+          onClick={
+
+            isLogin
+
+              ? handleLogin
+
+              : handleRegister
+
+          }
+          disabled={loading}
+          style={buttonStyle}
         >
-          Login
+
+          {
+
+            loading
+
+              ? "Loading..."
+
+              : isLogin
+
+              ? "Login"
+
+              : "Create Account"
+
+          }
+
         </button>
+
+        {/* TOGGLE */}
 
         <p
+          onClick={() =>
+
+            setIsLogin(
+
+              !isLogin
+
+            )
+
+          }
           style={{
-            marginTop: "20px",
-            color: "#22C55E"
+            marginTop: "25px",
+            textAlign: "center",
+            color: "#888",
+            cursor: "pointer"
           }}
         >
-          {message}
+
+          {
+
+            isLogin
+
+              ? "Create new account"
+
+              : "Already have an account?"
+
+          }
+
         </p>
 
       </div>
@@ -305,19 +402,25 @@ const inputStyle = {
 
   padding: "14px",
 
-  marginBottom: "15px",
-
-  borderRadius: "12px",
-
-  border: "1px solid #333",
+  marginBottom: "18px",
 
   background: "#050505",
 
-  color: "white"
+  border: "1px solid #222",
+
+  borderRadius: "12px",
+
+  color: "white",
+
+  outline: "none",
+
+  fontSize: "15px",
+
+  boxSizing: "border-box"
 
 };
 
-const primaryButton = {
+const buttonStyle = {
 
   width: "100%",
 
@@ -331,26 +434,12 @@ const primaryButton = {
 
   color: "white",
 
-  marginBottom: "10px",
+  fontWeight: "bold",
 
-  cursor: "pointer"
+  cursor: "pointer",
 
-};
+  fontSize: "15px",
 
-const secondaryButton = {
-
-  width: "100%",
-
-  padding: "14px",
-
-  background: "transparent",
-
-  border: "1px solid #333",
-
-  borderRadius: "12px",
-
-  color: "white",
-
-  cursor: "pointer"
+  marginTop: "10px"
 
 };
