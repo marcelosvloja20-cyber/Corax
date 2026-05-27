@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import Dashboard from "./Dashboard";
 
+import logo from "./logo.png";
+
 import {
   loginUser,
   registerUser
@@ -143,12 +145,12 @@ export default function App() {
       style={{
         background: "#050505",
         minHeight: "100vh",
-        color: "white",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         padding: "20px",
-        fontFamily: "Inter"
+        fontFamily: "Inter",
+        color: "white"
       }}
     >
 
@@ -165,7 +167,7 @@ export default function App() {
         }}
       >
 
-        {/* LOGO TEXT */}
+        {/* LOGO */}
 
         <div
           style={{
@@ -175,6 +177,17 @@ export default function App() {
             marginBottom: "35px"
           }}
         >
+
+          <img
+            src={logo}
+            alt="CORΛX"
+            style={{
+              width: "120px",
+              marginBottom: "20px",
+              filter:
+                "drop-shadow(0 0 20px rgba(168,85,247,0.5))"
+            }}
+          />
 
           <h1
             style={{
