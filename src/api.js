@@ -2,13 +2,26 @@ const API_URL =
   "https://corax-backend.onrender.com";
 
 // =====================================
-// REGISTER
+// DEFAULT HEADERS
+// =====================================
+
+const headers = {
+
+  "Content-Type":
+    "application/json"
+
+};
+
+// =====================================
+// REGISTER USER
 // =====================================
 
 export async function registerUser(
+
   username,
   email,
   password
+
 ) {
 
   try {
@@ -18,17 +31,17 @@ export async function registerUser(
       `${API_URL}/register`,
 
       {
+
         method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+        headers,
 
         body: JSON.stringify({
+
           username,
           email,
           password
+
         })
 
       }
@@ -44,8 +57,12 @@ export async function registerUser(
     console.log(error);
 
     return {
+
       success: false,
-      message: "Server error"
+
+      message:
+        "Server error"
+
     };
 
   }
@@ -53,12 +70,14 @@ export async function registerUser(
 }
 
 // =====================================
-// LOGIN
+// LOGIN USER
 // =====================================
 
 export async function loginUser(
+
   email,
   password
+
 ) {
 
   try {
@@ -68,16 +87,16 @@ export async function loginUser(
       `${API_URL}/login`,
 
       {
+
         method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+        headers,
 
         body: JSON.stringify({
+
           email,
           password
+
         })
 
       }
@@ -93,8 +112,106 @@ export async function loginUser(
     console.log(error);
 
     return {
+
       success: false,
-      message: "Server error"
+
+      message:
+        "Server error"
+
+    };
+
+  }
+
+}
+
+// =====================================
+// GET PROFILE
+// =====================================
+
+export async function getProfile() {
+
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+    const response =
+      await fetch(
+
+        `${API_URL}/profile`,
+
+        {
+
+          headers: {
+
+            Authorization:
+              `Bearer ${token}`
+
+          }
+
+        }
+
+      );
+
+    return await response.json();
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    return {
+
+      success: false
+
+    };
+
+  }
+
+}
+
+// =====================================
+// GET WALLET
+// =====================================
+
+export async function getWallet() {
+
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+    const response =
+      await fetch(
+
+        `${API_URL}/wallet`,
+
+        {
+
+          headers: {
+
+            Authorization:
+              `Bearer ${token}`
+
+          }
+
+        }
+
+      );
+
+    return await response.json();
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    return {
+
+      success: false
+
     };
 
   }
