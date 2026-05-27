@@ -1,16 +1,4 @@
-import logo from "logo.png";
-
-import Web3Connect from "./Web3Connect";
-
-import Networks from "./Networks";
-
-import Staking from "./Staking";
-
-import Swap from "./Swap";
-
-import Transactions from "./Transactions";
-
-import Portfolio from "./Portfolio";
+import logo from "./logo.png";
 
 export default function Dashboard() {
 
@@ -35,8 +23,8 @@ export default function Dashboard() {
       style={{
         background: "#050505",
         minHeight: "100vh",
-        color: "white",
         padding: "25px",
+        color: "white",
         fontFamily: "Inter"
       }}
     >
@@ -121,51 +109,39 @@ export default function Dashboard() {
           background: "#111111",
           border: "1px solid #222",
           borderRadius: "24px",
-          padding: "30px",
-          boxShadow:
-            "0 0 40px rgba(168,85,247,0.08)"
+          padding: "30px"
         }}
       >
 
-        {/* SESSION */}
+        <h2
+          style={{
+            marginBottom: "20px"
+          }}
+        >
+          CORΛX Dashboard
+        </h2>
+
+        <p
+          style={{
+            color: "#22C55E",
+            marginBottom: "20px"
+          }}
+        >
+          Authentication Active
+        </p>
 
         <div
           style={{
+            background: "#050505",
+            border: "1px solid #222",
+            borderRadius: "12px",
+            padding: "15px",
+            wordBreak: "break-all",
+            color: "#666",
             marginBottom: "30px"
           }}
         >
-
-          <h2
-            style={{
-              marginBottom: "15px"
-            }}
-          >
-            Session Active
-          </h2>
-
-          <p
-            style={{
-              color: "#22C55E",
-              marginBottom: "20px"
-            }}
-          >
-            JWT authentication secured.
-          </p>
-
-          <div
-            style={{
-              background: "#050505",
-              border: "1px solid #222",
-              borderRadius: "12px",
-              padding: "15px",
-              color: "#666",
-              wordBreak: "break-all",
-              fontSize: "13px"
-            }}
-          >
-            {token}
-          </div>
-
+          {token}
         </div>
 
         {/* STATS */}
@@ -175,20 +151,13 @@ export default function Dashboard() {
             display: "grid",
             gridTemplateColumns:
               "repeat(auto-fit,minmax(220px,1fr))",
-            gap: "18px",
-            marginBottom: "30px"
+            gap: "20px"
           }}
         >
 
           <div style={cardStyle}>
 
-            <h3
-              style={{
-                color: "#888"
-              }}
-            >
-              Wallet Balance
-            </h3>
+            <h3>Wallet Balance</h3>
 
             <p style={valueStyle}>
               $16,390
@@ -198,13 +167,7 @@ export default function Dashboard() {
 
           <div style={cardStyle}>
 
-            <h3
-              style={{
-                color: "#888"
-              }}
-            >
-              Total Staking
-            </h3>
+            <h3>Staking</h3>
 
             <p style={valueStyle}>
               12,500 CRX
@@ -214,13 +177,7 @@ export default function Dashboard() {
 
           <div style={cardStyle}>
 
-            <h3
-              style={{
-                color: "#888"
-              }}
-            >
-              Network Status
-            </h3>
+            <h3>Network</h3>
 
             <p style={valueStyle}>
               Multi-Chain
@@ -229,20 +186,6 @@ export default function Dashboard() {
           </div>
 
         </div>
-
-        {/* COMPONENTS */}
-
-        <Portfolio />
-
-        <Web3Connect />
-
-        <Networks />
-
-        <Staking />
-
-        <Swap />
-
-        <Transactions />
 
       </div>
 
