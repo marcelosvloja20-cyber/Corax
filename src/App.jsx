@@ -2,13 +2,9 @@ import { useState } from "react";
 
 import Dashboard from "./Dashboard";
 
-import logo from "./assets/logo.png";
-
 import {
-
   loginUser,
   registerUser
-
 } from "./api";
 
 export default function App() {
@@ -43,48 +39,35 @@ export default function App() {
 
       const response =
         await loginUser(
-
           email,
           password
-
         );
 
       if (response.token) {
 
         localStorage.setItem(
-
           "token",
           response.token
-
         );
 
         window.location.reload();
 
-      }
-
-      else {
+      } else {
 
         alert(
-
           response.message ||
-
           "Login failed"
-
         );
 
       }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.log(error);
 
       alert("Server error");
 
-    }
-
-    finally {
+    } finally {
 
       setLoading(false);
 
@@ -104,48 +87,35 @@ export default function App() {
 
       const response =
         await registerUser(
-
           username,
           email,
           password
-
         );
 
       if (response.success) {
 
         alert(
-
           "Account created successfully"
-
         );
 
         setIsLogin(true);
 
-      }
-
-      else {
+      } else {
 
         alert(
-
           response.message ||
-
           "Register failed"
-
         );
 
       }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.log(error);
 
       alert("Server error");
 
-    }
-
-    finally {
+    } finally {
 
       setLoading(false);
 
@@ -195,7 +165,7 @@ export default function App() {
         }}
       >
 
-        {/* LOGO */}
+        {/* LOGO TEXT */}
 
         <div
           style={{
@@ -205,17 +175,6 @@ export default function App() {
             marginBottom: "35px"
           }}
         >
-
-          <img
-            src={logo}
-            alt="CORΛX"
-            style={{
-              width: "120px",
-              marginBottom: "20px",
-              filter:
-                "drop-shadow(0 0 20px rgba(168,85,247,0.5))"
-            }}
-          />
 
           <h1
             style={{
@@ -248,20 +207,15 @@ export default function App() {
           }}
         >
           {
-
             isLogin
-
               ? "Welcome Back"
-
               : "Create Account"
-
           }
         </h2>
 
         {/* USERNAME */}
 
         {
-
           !isLogin && (
 
             <input
@@ -269,19 +223,14 @@ export default function App() {
               placeholder="Username"
               value={username}
               onChange={(e) =>
-
                 setUsername(
-
                   e.target.value
-
                 )
-
               }
               style={inputStyle}
             />
 
           )
-
         }
 
         {/* EMAIL */}
@@ -291,13 +240,9 @@ export default function App() {
           placeholder="Email Address"
           value={email}
           onChange={(e) =>
-
             setEmail(
-
               e.target.value
-
             )
-
           }
           style={inputStyle}
         />
@@ -309,13 +254,9 @@ export default function App() {
           placeholder="Password"
           value={password}
           onChange={(e) =>
-
             setPassword(
-
               e.target.value
-
             )
-
           }
           style={inputStyle}
         />
@@ -324,30 +265,20 @@ export default function App() {
 
         <button
           onClick={
-
             isLogin
-
               ? handleLogin
-
               : handleRegister
-
           }
           disabled={loading}
           style={buttonStyle}
         >
 
           {
-
             loading
-
               ? "Loading..."
-
               : isLogin
-
               ? "Login"
-
               : "Create Account"
-
           }
 
         </button>
@@ -356,13 +287,9 @@ export default function App() {
 
         <p
           onClick={() =>
-
             setIsLogin(
-
               !isLogin
-
             )
-
           }
           style={{
             marginTop: "25px",
@@ -373,13 +300,9 @@ export default function App() {
         >
 
           {
-
             isLogin
-
               ? "Create new account"
-
               : "Already have an account?"
-
           }
 
         </p>
